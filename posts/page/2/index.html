@@ -132,10 +132,9 @@ A long term solution to the problem is to use DNS, an address name resolver. It 
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Future value import numpy as np import warnings warnings.filterwarnings(&#34;ignore&#34;) Fv represents the future value of an operation in a particular time. The value Pv is multiplied
-Fv representa o valor futuro de uma operação em determinado instante, cujo valor Presente P foi acrescido da taxa i (expressa em sua forma decimal), n vezes, de forma composta (juros sobre juros).
-\begin{align} Fv = Pv * (1 + i)^n \end{align}
-def fv(pv, n, i): print(&#39;{0:.
+      Future value import numpy as np import warnings warnings.filterwarnings(&#34;ignore&#34;) Fv represents the future value of an operation in a particular time.
+$$Fv = Pv * (1 + i)^n$$
+def fv(pv, n, i): print(&#39;{0:.2f}&#39;.format(np.fv(i/100, n, 0, -pv))) fv(5000, 9, 4.5) 7430.48 fv(5000, 12, 1.5) 5978.09 fv(1000, 18, 1.25) 1250.58 fv(2800, 3, 3.5) 3104.41 fv(2000, 3, 3.5) 2217.44 fv(1000, 3, 3.5) 1108.72 fv(340, 2, 5) 374.85 fv(1000, 48, 2.2) 2842.12 fv(3000, 3*12, 0.
     </div>
   </div>
 </div>
@@ -205,7 +204,36 @@ Configuration On tsung.xml we start the test plan, you can include here the list
 </article>
 
     </main>
-    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
     &copy; 2018 AK
