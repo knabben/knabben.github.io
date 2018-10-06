@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Tsung Capacity Test</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Tsung Capacity Test" />
+<meta property="og:description" content="Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/capacity/" /><meta property="article:published_time" content="2015-07-26T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2015-07-26T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Tsung Capacity Test">
+<meta itemprop="description" content="Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.">
+
+
+<meta itemprop="datePublished" content="2015-07-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2015-07-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="673">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tsung Capacity Test"/>
+<meta name="twitter:description" content="Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://example.org/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Tsung Capacity Test</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2015-07-26T00:00:00Z">July 26, 2015</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
+
+<p>In this post we are going to analyze a very interesting Erlang distributed load testing tool, called <strong>Tsung</strong> [1]. 
+ The cool things about this tool is the complete HTML report of each connection made.</p>
+
+<p><strong><strong>NOTE</strong></strong> If you are interested on real traffic replication, consider this project [2].</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</p>
+
+<h3 id="master">Master</h3>
+
+<p>We are going to start a distributed load with a base setup for clients and server. For this case we have 5 x M3.large instances, with shared VPC, SSH access and Tsung already installed.</p>
+
+<p>Configure your /etc/hosts file:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> <span style="color:#ae81ff">172</span>.31.24.176   node1
+ <span style="color:#ae81ff">172</span>.31.24.173   node2
+ <span style="color:#ae81ff">172</span>.31.24.174   node3
+ <span style="color:#ae81ff">172</span>.31.24.172   node4
+ <span style="color:#ae81ff">172</span>.31.24.175   node5
+ </code></pre></div>
+
+<p>Enable Nginx to host logs on /etc/nginx/sites-enabled/default:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"> <span style="color:#66d9ef">root</span> <span style="color:#e6db74">/home/admin/.tsung/log</span>;
+
+ <span style="color:#66d9ef">index</span> <span style="color:#e6db74">index.html</span> <span style="color:#e6db74">index.htm</span> <span style="color:#e6db74">index.nginx-debian.html</span>;
+ <span style="color:#66d9ef">server_name</span> <span style="color:#e6db74">_</span>;
+
+ <span style="color:#66d9ef">location</span> <span style="color:#e6db74">/</span> {
+    <span style="color:#f92672">autoindex</span> <span style="color:#66d9ef">on</span>;
+	 <span style="color:#f92672">try_files</span> $uri $uri/ =<span style="color:#ae81ff">404</span>;
+ }
+ </code></pre></div>
+
+<p>Lets enable the nginx.conf to handle more concurrent connections:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"> <span style="color:#66d9ef">worker_processes</span> <span style="color:#ae81ff">10</span>;
+ <span style="color:#66d9ef">pid</span> <span style="color:#e6db74">/run/nginx.pid</span>;
+
+ <span style="color:#66d9ef">events</span> {
+  <span style="color:#f92672">worker_connections</span> <span style="color:#ae81ff">20000</span>;
+  <span style="color:#f92672">multi_accept</span> <span style="color:#66d9ef">on</span>;
+ }
+ </code></pre></div>
+
+<p>In the sequence, we define the Tsung configuration file with the load and arrival packets time.
+  We are going to do a progressive load of 2 minutes on the first batch in a rate of 500 rps.
+ On the second batch it's going to be increased to 1000 rps for more 2 minutes</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"> <span style="color:#f92672">&lt;tsung</span> <span style="color:#a6e22e">loglevel=</span><span style="color:#e6db74">&#34;notice&#34;</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.0&#34;</span><span style="color:#f92672">&gt;</span>
+   <span style="color:#f92672">&lt;clients&gt;</span>
+    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;6000000&#34;</span> <span style="color:#a6e22e">use_controller_vm=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node1&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.176&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/client&gt;</span>
+    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node2&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.173&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/client&gt;</span>
+    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node3&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.174&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/client&gt;</span>
+    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node4&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.172&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/client&gt;</span>
+    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node5&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.175&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/client&gt;</span>
+   <span style="color:#f92672">&lt;/clients&gt;</span>
+
+   <span style="color:#f92672">&lt;servers&gt;</span>
+     <span style="color:#f92672">&lt;server</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;192.168.10.10&#34;</span> <span style="color:#a6e22e">port=</span><span style="color:#e6db74">&#34;80&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;tcp&#34;</span><span style="color:#f92672">&gt;&lt;/server&gt;</span>
+   <span style="color:#f92672">&lt;/servers&gt;</span>
+
+   <span style="color:#f92672">&lt;options&gt;</span>
+     <span style="color:#f92672">&lt;option</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;ts_http&#34;</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;user_agent&#34;</span><span style="color:#f92672">&gt;</span>
+       <span style="color:#f92672">&lt;user_agent</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;80&#34;</span><span style="color:#f92672">&gt;</span>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21<span style="color:#f92672">&lt;/user_agent&gt;</span>
+       <span style="color:#f92672">&lt;user_agent</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;20&#34;</span><span style="color:#f92672">&gt;</span>Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4<span style="color:#f92672">&lt;/user_agent&gt;</span>
+     <span style="color:#f92672">&lt;/option&gt;</span>
+   <span style="color:#f92672">&lt;/options&gt;</span>
+
+   <span style="color:#f92672">&lt;load&gt;</span>
+     <span style="color:#f92672">&lt;arrivalphase</span> <span style="color:#a6e22e">phase=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">duration=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;minute&#34;</span><span style="color:#f92672">&gt;</span>
+       <span style="color:#f92672">&lt;users</span> <span style="color:#a6e22e">arrivalrate=</span><span style="color:#e6db74">&#34;500&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;second&#34;</span><span style="color:#f92672">&gt;&lt;/users&gt;</span>
+     <span style="color:#f92672">&lt;/arrivalphase&gt;</span>
+
+     <span style="color:#f92672">&lt;arrivalphase</span> <span style="color:#a6e22e">phase=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">duration=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;minute&#34;</span><span style="color:#f92672">&gt;</span>
+       <span style="color:#f92672">&lt;users</span> <span style="color:#a6e22e">arrivalrate=</span><span style="color:#e6db74">&#34;1000&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;second&#34;</span><span style="color:#f92672">&gt;&lt;/users&gt;</span>
+     <span style="color:#f92672">&lt;/arrivalphase&gt;</span>
+   <span style="color:#f92672">&lt;/load&gt;</span>
+
+   <span style="color:#f92672">&lt;sessions&gt;</span>
+     <span style="color:#f92672">&lt;session</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;http-example&#34;</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;100&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;ts_http&#34;</span><span style="color:#f92672">&gt;</span>
+       <span style="color:#f92672">&lt;request&gt;</span> 
+         <span style="color:#f92672">&lt;http</span> <span style="color:#a6e22e">url=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">method=</span><span style="color:#e6db74">&#34;POST&#34;</span><span style="color:#f92672">&gt;&lt;/http&gt;</span> 
+       <span style="color:#f92672">&lt;/request&gt;</span>
+     <span style="color:#f92672">&lt;/session&gt;</span>
+   <span style="color:#f92672">&lt;/sessions&gt;</span>
+ <span style="color:#f92672">&lt;/tsung&gt;</span>
+ </code></pre></td></tr></table>
+</div>
+</div>
+
+<h2 id="running-the-load-test">Running the load test</h2>
+
+<p>Initialize the test against another M3.large machine:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ tsung -f tsung.xml start
+ </code></pre></div>
+
+<p>For this start configuration we have:</p>
+
+<h5 id="1000-rps-10-for-2-minutes">1000 rps * 10 for 2 minutes</h5>
+
+<h5 id="1-145-850-requests">1.145.850 requests</h5>
+
+<h5 id="11-18ms-average-response-time">11.18ms average response time</h5>
+
+<h5 id="1-18gb-of-data">1.18Gb of data</h5>
+
+<p>Nginx is handling 9.6k rps with 10 workers on 12% of CPU in the average.</p>
+
+<p><img src="req-100.png" alt="req-100.png" title="req-100.png" /></p>
+
+<p>In the second test we are going to increase the number of requests to 50</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">  &lt;session name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http-example&#34;</span> probability<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ts_http&#34;</span>&gt;
+    &lt;<span style="color:#66d9ef">for</span> from<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> to<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;50&#34;</span> var<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i&#34;</span>&gt;
+     &lt;request&gt; &lt;http url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GET&#34;</span> version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.1&#34;</span> &gt;&lt;/http&gt; &lt;/request&gt;
+    &lt;/for&gt;
+  &lt;/session&gt;
+ </code></pre></div>
+
+<p><img src="ntop.png" alt="ntop.png" title="ntop.png" /></p>
+
+<p>In the next 4 minutes we can see the increase of CPU usage to 100% distributed by the workers.</p>
+
+<h5 id="9-148-140-requests">9.148.140 requests</h5>
+
+<h5 id="27067-req-with-500-status-code">27067 req with 500 status code.</h5>
+
+<h5 id="182580-connection-50">182580 connection * 50.</h5>
+
+<p><img src="req-200.png" alt="req-200.png" title="req-200.png" />
+ <img src="req-201.png" alt="req-201.png" title="req-201.png" /></p>
+
+<p>On 120s our arrivalphase goes to 1000 conn/s, we can see the transaction duration increasing and the staled 25k rps.</p>
+
+<p>We hit the limit nginx for this server setup, so for more fun lets increase the workers by 100, and rerun the tests:</p>
+
+<p><img src="error-300.png" alt="error-300.png" title="error-300.png" />
+ <img src="mean-303.png" alt="mean-303.png" title="mean-303.png" /></p>
+
+<p>Now we have 1000 connections * 100 = 100k rps, after 120s we have a DDoS.</p>
+
+<p><img src="simul-301.png" alt="simul-301.png" title="simul-301.png" />
+ <img src="req-302.png" alt="req-302.png" title="req-302.png" /></p>
+
+<p>We have a huge amount of open connections in the queue and after 11 minutes it was still processing it.</p>
+
+<h2 id="elastic-load-balancing-2x">Elastic Load Balancing - 2x</h2>
+
+<p>To finalize this post lets scale it horizontally using EBS [3] of AWS. Lets put 2 instances M3.large behind it.</p>
+
+<p><img src="trans-400.png" alt="trans-400.png" title="trans-400.png" />
+<img src="trans-401.png" alt="trans-401.png" title="trans-401.png" />
+<img src="trans-402.png" alt="trans-402.png" title="trans-402.png" /></p>
+
+<p>We can see the split between the two boxes, there's still a high response time and:</p>
+
+<h4 id="5-974-601-req-with-status-code-200">5.974.601 req with status code 200</h4>
+
+<h4 id="1-172-873-req-with-status-code-503-unavailable-service">1.172.873 req with status code 503 (unavailable service).</h4>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This test served as an introduction on how to work with Tsung and organize a load test with our infrastructure, it shows some ideas and numbers 
+ for a better insight on how to build your own.</p>
+
+<h2 id="listening">Listening</h2>
+
+<p><iframe width="420" height="315" src="http://www.youtube.com/embed/VTndWNNzJiQ" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="bibliography">Bibliography</h2>
+
+<h5 id="1-http-tsung-erlang-projects-org">[1] http://tsung.erlang-projects.org/</h5>
+
+<h5 id="2-https-github-com-knabben-kaboom">[2] https://github.com/knabben/kaboom</h5>
+
+<h5 id="3-http-aws-amazon-com-pt-elasticloadbalancing">[3] http://aws.amazon.com/pt/elasticloadbalancing/</h5>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://example.org/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

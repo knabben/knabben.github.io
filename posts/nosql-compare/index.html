@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | NoSQL databases comparision</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="NoSQL databases comparision" />
+<meta property="og:description" content="NoSQL comparision between InfluxDB and MongoDB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/nosql-compare/" /><meta property="article:published_time" content="2015-05-30T09:26:48&#43;00:00"/>
+<meta property="article:modified_time" content="2015-05-30T09:26:48&#43;00:00"/>
+
+<meta itemprop="name" content="NoSQL databases comparision">
+<meta itemprop="description" content="NoSQL comparision between InfluxDB and MongoDB">
+
+
+<meta itemprop="datePublished" content="2015-05-30T09:26:48&#43;00:00" />
+<meta itemprop="dateModified" content="2015-05-30T09:26:48&#43;00:00" />
+<meta itemprop="wordCount" content="426">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="NoSQL databases comparision"/>
+<meta name="twitter:description" content="NoSQL comparision between InfluxDB and MongoDB"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://example.org/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">NoSQL databases comparision</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2015-05-30T09:26:48Z">May 30, 2015</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<h2 id="introdução">Introdução</h2>
+
+<p>A idéia desta série de posts é destacar as features principais do InfluxDB e MongoDB, levantando os pontos positivos e negativos de cada um deles. Para o ambiente utilizarei Debian Wheezy em uma AMI do tipo m1.large.</p>
+
+<h2 id="mongodb">MongoDB</h2>
+
+<p>O MongoDB tem ganhando bastante maturidade ao longo do tempo de desenvolvimento, como é uma base orientada a documento se destaca com um modelo de dados flexível, criação de indexes para rapidez nos resultados das queries, variedade de drivers disponíveis e alta escalabilidade.</p>
+
+<p>Para os testes usarei o binário disponível no site oficial com o último release.</p>
+
+<p>{% highlight bash %}
+wget <a href="https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-amazon-3.0.3.tgz">https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-amazon-3.0.3.tgz</a>
+tar zxvf mongodb-linux-x86_64-amazon-3.0.3.tgz
+mkdir -p /data/db
+/home/ec2-user/mongodb-linux-x86_64-amazon-3.0.3/bin/mongod
+{% endhighlight %}</p>
+
+<p>Não irei entrar em detalhes sobre o funcionamento e modelagem dos dados, sobre estrutura de documentos, relacionamento entre documentos, você pode pesquisar nos sites abaixo:</p>
+
+<p><a href="http://docs.mongodb.org/manual/core/data-modeling-introduction/">http://docs.mongodb.org/manual/core/data-modeling-introduction/</a>
+<a href="https://university.mongodb.com/courses/M101P/about">https://university.mongodb.com/courses/M101P/about</a></p>
+
+<p>Começaremos adicionando o nosso csv de exemplo no mongo, é possível importar utilizando o mongoimport:</p>
+
+<p>{% highlight bash %}
+wget <a href="https://raw.githubusercontent.com/knabben/knabben.github.io/master/bairros.csv">https://raw.githubusercontent.com/knabben/knabben.github.io/master/bairros.csv</a>
+mongoimport -d fpolis -c bairro -f cod_ibge,bairro,area,perim &ndash;file bairros.csv &ndash;type=csv
+{% endhighlight %}</p>
+
+<h2 id="influxdb">Influxdb</h2>
+
+<p>O InfluxDB é uma base de dados NoSQL também orientada a documento e focada em &ldquo;time series&rdquo;, métricas e analytics. É escrita em Go e sem dependências externas. Possui uma interface REST de acesso e uma boa interface de analytics dos dados separada (Grafana [2]).</p>
+
+<p>Entre outras features encontra-se a agregação por tempo built-in, uma linguagem SQL like, e políticas de retenção de dados (por tempo).</p>
+
+<p>Para os testes vou utilizar o latest 0.9 e instalar via .rpm, não existe nenhuma tools disponível para importação de CSV, utilize alguma biblioteca para ler o CSV e adicionar a query.</p>
+
+<p>{% highlight bash %}
+wget <a href="https://s3.amazonaws.com/influxdb/influxdb-latest-1.x86_64.rpm">https://s3.amazonaws.com/influxdb/influxdb-latest-1.x86_64.rpm</a>
+sudo rpm -ivh influxdb-latest-1.x86_64.rpm
+/opt/influxdb/current/influxdb -f config.toml
+{% endhighlight %}</p>
+
+<p>{% highlight python %}
+import csv
+from influxdb import InfluxDBClient</p>
+
+<p>fd_csv = csv.reader(open(&lsquo;ex1/bairros.csv&rsquo;))</p>
+
+<p>cli = InfluxDBClient(&lsquo;localhost&rsquo;, 8000, &lsquo;root&rsquo;, &lsquo;root&rsquo;, &lsquo;fpolis&rsquo;)
+cli.create_database(&lsquo;fpolis&rsquo;)</p>
+
+<p>points = []
+for d in fd_csv:
+    points.append({&ldquo;fields&rdquo;: {
+        &ldquo;cod_ibge&rdquo;: d[0], &ldquo;bairro&rdquo;: d[1],
+        &ldquo;area&rdquo;: float(d[2]), &ldquo;perim&rdquo;: float(d[3])
+    }, &ldquo;name&rdquo;: &ldquo;bairro&rdquo; })</p>
+
+<p>cli.write_points(points)
+{% endhighlight %}</p>
+
+<h2 id="conclusão">Conclusão</h2>
+
+<p>Pela maturidade dos projetos o MongoDB acaba se saindo melhor e ferramentas como tools de importação, monitoramento e backup ajudam bastante na administração das bases e gestão dos dados.</p>
+
+<p>Sobre os indexes, o MongoDB oferece indexes compostos, geoespaciais, de multichave, e index de texto, o que permite a busca rápida de tipos diferentes de dados.</p>
+
+<p>Enquanto o InfluxDB oferece tags e indexação por timestamp, se mostraando muito eficiente para situações em que precisamos agrupar dados por intervalos de tempo e agregá-los por contagem, soma, e estatísticas básicas descritivas baseadas em tempo.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://example.org/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
