@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Service Mesh - Part I</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Service Mesh - Part I" />
+<meta property="og:description" content="Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/sm/" /><meta property="article:published_time" content="2018-10-06T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-10-06T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Service Mesh - Part I">
+<meta itemprop="description" content="Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.">
+
+
+<meta itemprop="datePublished" content="2018-10-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-10-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2097">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Service Mesh - Part I"/>
+<meta name="twitter:description" content="Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Service Mesh - Part I</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2018-10-06T00:00:00Z">October 6, 2018</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introducing-kubernetes">Introducing Kubernetes</h2>
+
+<p>November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.</p>
+
+<p>Trying to create an orchestration system by hand looked like a mad task as you can read on the last posts, at least it was a lot of fun, some of the problems I faced with the setup are:</p>
+
+<p>1) Downtime - My container ran on a single machine, when I stopped the unit and started again via fleetctl I had the bootstrap time and the new docker pull couting as a downtime of the service.</p>
+
+<p>2) Volume persistence - This is a real pain, the volume mounted on a machine stays on there if the docker is killed, I had to do some X-fleet units hack to keep the container always on that machine.</p>
+
+<p>3) Shared configurations - it were solved with etcd</p>
+
+<p>4) Service discovery - A consul + registration + workarounds</p>
+
+<p>5) Monitoring - A painful (cadvisor + prometheus + alertmanager) setup</p>
+
+<p>But as stated on [1], "With the realization that large, expensive, proprietary supercomputers are being replaced by a clusters of commodity boxes running Linux (commoditization), at a fraction of the cost, it is not too much of a stretch to see apllication of this type of technology widespread in the engineering and traditional IT world. The availability of commodity clusters make it possible for small research organizations, It deps, and engineering groups to have their own supercomupters at a fraction of the cost previously required for the equivalten computing capability."</p>
+
+<p>The last definition of a cluster from the same book is: "A closely coupled collection of computer systems that shares a common infrastructure and provides a parallel set of resources to services or applications."</p>
+
+<p>For the problems above (at least) and at the same time a software that fits well on the description is <strong>Kubernetes</strong>.  I could say a container orchestration abstraction layer for the masses. We are not using Maui Cluster Scheduler, ganglia or Nagios anymore, but the core concepts still remains the same.</p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>You can start in a few ways, if you want a single machine to play around try minikube or vagrant, if you have some resources you can use kube-aws to setup an AWS cluster with CoreOS or go with get.k8s.io. The brave ones can test the hack/local-up-cluster.sh and RTFM +1 for this option.</p>
+
+<h2 id="problems">Problems</h2>
+
+<h3 id="monitoring">Monitoring</h3>
+
+<p>Here is where Prometheus [2] shines. Sysdig [3] is other technology that is integrating very well with kubernetes nowadays, it can be used for deep pod inspection from the replica set to end process syscall, pretty cool.</p>
+
+<p>Want to see how to deploy the Prometheus stack go to the CoreOS blog [3]. Well, this is really content for another post.</p>
+
+<h3 id="service-discovery">Service Discovery</h3>
+
+<p>Kubernetes uses kube-dns, a SkyDNS based solution to create automatic registers of the existent services, so you can reach other pods on differents namespaces like - my-svc.my-namespace.svc.cluster.local, with kube-aws each pod uses it as a default nameserver.</p>
+
+<h3 id="shared-configuration">Shared configuration</h3>
+
+<p>Kubernetes have two kinds of sharing data, with the old setup we passed variables to systemd units and had to encrypt the .service files with Blackbox for example before commiting to git, now we have ConfigMaps, key/values pairs of configuration data, think of .ini files shared between the pods on the cluster. We can use secrets and import both on pods specification like</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: USE_CRON
+  valueFrom:
+    configMapKeyRef:
+      name: cron-data
+      key: use_cron</code></pre></div>
+
+<h3 id="volume-persistence">Volume persistence</h3>
+
+<p>On AWS when you create a POD as part of the specification one can use, the volume goes to other machine if the pod is reeschuleded:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  containers:
+  - image: nginx
+    name: nginx
+    volumeMounts:
+    - mountPath: /var/log/nginx
+      name: nginx-log
+  volumes:
+  - name: nginx-log
+    awsElasticBlockStore:
+      volumeID: vol-<span style="color:#ae81ff">333333</span>
+      fsType: ext4</code></pre></div>
+
+<h3 id="downtime-deployments">Downtime deployments</h3>
+
+<p>It uses the idea of deployments for replicasets and pods, in a descriptive form you just say the final state you want your pods to have. You can edit an existing template, or simple set a new container image like:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl set image deployment/nginx-deployment nginx<span style="color:#f92672">=</span>nginx:1.9.1
+deployment <span style="color:#e6db74">&#34;nginx-deployment&#34;</span> image updated</code></pre></div>
+
+<p>From deployments documentation [5]:</p>
+
+<p>You will see that it first created a new Pod, then deleted some old Pods and created new ones. It does not kill old Pods until a sufficient number of new Pods have come up, and does not create new Pods until a sufficient number of old Pods have been killed</p>
+
+<h2 id="service-mesh">Service mesh</h2>
+
+<p>Microservices cluster management complexity grows easily while your app evolve, questions like how to track the request between services, how to apply A/B tests, how to add metrics for services without changing any code on your application are common when deploying containers on an orchestrator. L4/L7 proxies try to solve these problems in an elegant way.</p>
+
+<h3 id="pre-requisites-for-this-tutorial">Pre - requisites for this tutorial</h3>
+
+<p>On the assumption that all systems bellow are installed and working A.K.A you are able to access a running Kubernetes cluster with Istio:</p>
+
+<h5 id="1-kubernetes">[1] Kubernetes</h5>
+
+<h5 id="2-istio">[2] Istio</h5>
+
+<h5 id="3-grpc-gateway">[3] GRPC gateway</h5>
+
+<p>I really recommend doing the workshops and exercises above but if you don't have the motivation to run the stack step by step, try [4], Google Cloud Platform offers 300 USD of credits with an automatic Istio deployment interface.</p>
+
+<h2 id="the-grpc-gateway">The GRPC gateway</h2>
+
+<p>For this example we will deploy 2 different services, the first POD offers a simple GRPC server, the second POD offers a REST API gateway for the GRPC server.</p>
+
+<h2 id="istio">Istio</h2>
+
+<p>From the oficial documentation: Istio provides an easy way to create a network of deployed services with load balancing, service-to-service authentication, monitoring, and more, without requiring any changes in service code. <strong>You add Istio support to services by deploying a special sidecar proxy throughout your environment that intercepts all network communication between microservices, configured and managed using Istio’s control plane functionality.</strong></p>
+
+<p>Long story short: This special sidecar proxy is injected on each pod, basically it's a modified and dynamic configured envoy (data plane), the other part of this mesh stack is the control plane composed by:</p>
+
+<h5 id="pilot-provides-service-discovery-for-the-envoy-sidecars-traffic-management-capabilities-for-intelligent-routing">Pilot - provides service discovery for the Envoy sidecars, traffic management capabilities for intelligent routing.</h5>
+
+<h5 id="mixer-a-platform-independent-component-responsible-for-enforcing-access-control-and-usage-policies-across-the-service-mesh-and-collecting-telemetry-data-from-the-envoy-proxy-and-other-services">Mixer - a platform-independent component responsible for enforcing access control and usage policies across the service mesh and collecting telemetry data from the Envoy proxy and other services.</h5>
+
+<h5 id="istio-auth-provides-strong-service-to-service-and-end-user-authentication-using-mutual-tls-with-built-in-identity-and-credential-management">Istio-Auth - provides strong service-to-service and end-user authentication using mutual TLS, with built-in identity and credential management.</h5>
+
+<p>The official documentation is full of good resources and information, our goal here is to be more pragmatic and have some overview and details of Istio capabilities.</p>
+
+<h2 id="istio-components">Istio components</h2>
+
+<p>After installing Istio you can see the following PODS on istio-system ns.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+kubectl get pods --namespace istio-system
+NAME                                 READY     STATUS    RESTARTS   AGE
+grafana-2369932619-9nsjq             <span style="color:#ae81ff">1</span>/1       Running   <span style="color:#ae81ff">0</span>          17h
+istio-ca-191975193-tk62c             <span style="color:#ae81ff">1</span>/1       Running   <span style="color:#ae81ff">0</span>          17h
+istio-ingress-596799894-40g4p        <span style="color:#ae81ff">1</span>/1       Running   <span style="color:#ae81ff">0</span>          17h
+istio-initializer-2169589188-35lfx   <span style="color:#ae81ff">1</span>/1       Running   <span style="color:#ae81ff">0</span>          17h
+istio-mixer-3168313471-0svbr         <span style="color:#ae81ff">3</span>/3       Running   <span style="color:#ae81ff">0</span>          17h
+istio-pilot-2277488234-j270h         <span style="color:#ae81ff">2</span>/2       Running   <span style="color:#ae81ff">0</span>          17h
+prometheus-168775884-t7zhd           <span style="color:#ae81ff">1</span>/1       Running   <span style="color:#ae81ff">0</span>          17h
+servicegraph-2857261069-6d2vg        <span style="color:#ae81ff">1</span>/1       Running   <span style="color:#ae81ff">0</span>          17h
+zipkin-3660596538-92wv9              <span style="color:#ae81ff">1</span>/1       Running   <span style="color:#ae81ff">0</span>          17h</code></pre></div>
+
+<p>### Istio automatic initializer</p>
+
+<p>First, lets take a look on istio-initializer [5], running this POD enable us to automaticaly do the sidecar injection with this disable we need manually recreate the YAML files with istioctl kube-inject command, lets try to see the logs of this pod:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+kubectl logs istio-initializer-2169589188-35lfx -n istio-system
+
+http.go:100<span style="color:#f92672">]</span> Starting HTTP service at :8083                                                                       
+initializer.go:229<span style="color:#f92672">]</span> Starting Istio sidecar initializer...
+initializer.go:230<span style="color:#f92672">]</span> Initializer name set to: sidecar.initializer.istio.io
+initializer.go:233<span style="color:#f92672">]</span> Supported kinds:
+initializer.go:238<span style="color:#f92672">]</span>     /v1 ReplicationController
+initializer.go:238<span style="color:#f92672">]</span>     extensions/v1beta1 Deployment
+initializer.go:238<span style="color:#f92672">]</span>     extensions/v1beta1 DaemonSet
+initializer.go:238<span style="color:#f92672">]</span>     extensions/v1beta1 ReplicaSet
+initializer.go:238<span style="color:#f92672">]</span>     batch/v1 Job
+initializer.go:238<span style="color:#f92672">]</span>     batch/v2alpha1 CronJob
+initializer.go:238<span style="color:#f92672">]</span>     apps/v1beta1 StatefulSet
+
+<span style="color:#75715e"># After running
+</span><span style="color:#75715e"></span>helm install --name grpc ./chart
+
+initializer.go:174<span style="color:#f92672">]</span> ObjectMeta initializer info extensions/v1beta1, Kind<span style="color:#f92672">=</span>Deployment default/http-serve policy:<span style="color:#e6db74">&#34;&#34;</span> status:<span style="color:#e6db74">&#34;&#34;</span> &amp;Initializers<span style="color:#f92672">{</span>Pending:<span style="color:#f92672">[{</span>sidecar.initializer.istio.io<span style="color:#f92672">}]</span>,Result:nil,<span style="color:#f92672">}</span>
+inject.go:302<span style="color:#f92672">]</span> Sidecar injection policy <span style="color:#66d9ef">for</span> default/http-serve: namespacePolicy:enabled useDefault:true inject:false status:<span style="color:#e6db74">&#34;&#34;</span> required:true
+initializer.go:174<span style="color:#f92672">]</span> ObjectMeta initializer info extensions/v1beta1, Kind<span style="color:#f92672">=</span>ReplicaSet default/http-serve-1172935448 policy:<span style="color:#e6db74">&#34;&#34;</span> status:<span style="color:#e6db74">&#34;injected-version-0.3.0&#34;</span> nil
+initializer.go:174<span style="color:#f92672">]</span> ObjectMeta initializer info extensions/v1beta1, Kind<span style="color:#f92672">=</span>Deployment default/grpc-internal policy:<span style="color:#e6db74">&#34;&#34;</span> status:<span style="color:#e6db74">&#34;&#34;</span> &amp;Initializers<span style="color:#f92672">{</span>Pending:<span style="color:#f92672">[{</span>sidecar.initializer.istio.io<span style="color:#f92672">}]</span>,Result:nil,<span style="color:#f92672">}</span>
+inject.go:302<span style="color:#f92672">]</span> Sidecar injection policy <span style="color:#66d9ef">for</span> default/grpc-internal: namespacePolicy:enabled useDefault:true inject:false status:<span style="color:#e6db74">&#34;&#34;</span> required:true
+initializer.go:174<span style="color:#f92672">]</span> ObjectMeta initializer info extensions/v1beta1, Kind<span style="color:#f92672">=</span>ReplicaSet default/grpc-internal-2913712020 policy:<span style="color:#e6db74">&#34;&#34;</span> status:<span style="color:#e6db74">&#34;injected-version-0.3.0&#34;</span> nil</code></pre></div>
+
+<p>If you describe the pod you can see the istio-proxy sidecar attached to the main container.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+grpc:
+...
+istio-proxy:
+    Image:         docker.io/istio/proxy_debug:0.3.0
+    ...
+    Args:
+      proxy
+      sidecar
+      -v
+      <span style="color:#ae81ff">2</span>
+      --configPath
+      /etc/istio/proxy
+      --serviceCluster
+      http-serve
+      --discoveryAddress
+      istio-pilot.istio-system:15003
+      --zipkinAddress
+      zipkin.istio-system:9411
+      --statsdUdpAddress
+      istio-mixer.istio-system:9125
+      ...
+    State:          Running
+    ...</code></pre></div>
+
+<h3 id="the-automatic-initializer">The automatic initializer</h3>
+
+<p>This is a very interesting use of Kubernetes Initializer, here occurs the injection of the proxy sidecar before starting the pod.</p>
+
+<p>1) kubernetes adds sidecar.initializer.istio.io to the list of pending initializers in the workload.</p>
+
+<p>This is achieved by the following InitializerConfiguration, that comes with Istio setup:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: admissionregistration.k8s.io/v1alpha1
+kind: InitializerConfiguration
+metadata:
+  name: istio-sidecar
+initializers:
+  - name: sidecar.initializer.istio.io
+    rules:
+      - apiGroups:
+          - <span style="color:#e6db74">&#34;*&#34;</span>
+        apiVersions:
+          - <span style="color:#e6db74">&#34;*&#34;</span>
+        resources:
+          - deployments
+          - statefulsets
+          - jobs
+          - daemonsets
+---</code></pre></div>
+
+<p>2) istio-initializer controller observes a new uninitialized workload was created. It finds its configured name sidecar.initializer.istio.io as the first in the list of pending initializers.</p>
+
+<p>The [NewInitializer](https://github.com/istio/istio/blob/master/pilot/platform/kube/inject/initializer.go#L94) function uses the [ListWatch](https://github.com/kubernetes/client-go/blob/master/tools/cache/listwatch.go#L52) struct, to monitor the new resources created:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// ListWatch knows how to list and watch a set of apiserver resources.  It satisfies the ListerWatcher interface.
+</span><span style="color:#75715e">// It is a convenience function for users of NewReflector, etc.
+</span><span style="color:#75715e">// ListFunc and WatchFunc must not be nil
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ListWatch</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">ListFunc</span>  <span style="color:#a6e22e">ListFunc</span>
+	<span style="color:#a6e22e">WatchFunc</span> <span style="color:#a6e22e">WatchFunc</span>
+	<span style="color:#75715e">// DisableChunking requests no chunking for this list watcher.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">DisableChunking</span> <span style="color:#66d9ef">bool</span>
+}
+
+<span style="color:#75715e">// Snippet of watcher including the Uninitialized assets.
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">WatchFunc</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">options</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">ListOptions</span>) (<span style="color:#a6e22e">watch</span>.<span style="color:#a6e22e">Interface</span>, <span style="color:#66d9ef">error</span>) {
+    <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">IncludeUninitialized</span> = <span style="color:#66d9ef">true</span>
+    <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">Watch</span> = <span style="color:#66d9ef">true</span>
+    <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">FieldSelector</span> = <span style="color:#a6e22e">fields</span>.<span style="color:#a6e22e">Everything</span>().<span style="color:#a6e22e">String</span>()
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">kindClient</span>.<span style="color:#a6e22e">Get</span>().
+        <span style="color:#a6e22e">Namespace</span>(<span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">NamespaceAll</span>).
+        <span style="color:#a6e22e">Resource</span>(<span style="color:#a6e22e">kind</span>.<span style="color:#a6e22e">resource</span>).
+        <span style="color:#a6e22e">VersionedParams</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">options</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">ParameterCodec</span>).
+        <span style="color:#a6e22e">Watch</span>()
+},</code></pre></div>
+
+<p>3) istio-initializer checks to see if it was responsible for initializing workloads in the namespace of the workload. No further work is done and the initializer ignores the workload if the initializer is not configured for the namespace. By default the initializer is responsible for all namespaces (see configuration options).</p>
+
+<p>The function [injectRequired](https://github.com/istio/istio/blob/master/pilot/platform/kube/inject/inject.go#L232) above is responsible to check the namespace.</p>
+
+<p>4) istio-initializer removes itself from the list of pending initializers. Kubernetes will not finish creating workloads if the list of pending initializers is non-empty. A misconfigured initializer means a broken cluster.</p>
+
+<p>The function [initialize](https://github.com/istio/istio/blob/master/pilot/platform/kube/inject/initializer.go#L202) (handler from watch) is responsible to remove itself from pending initializer.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Remove self from the list of pending Initializers while
+</span><span style="color:#75715e">// preserving ordering.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">pending</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">GetInitializers</span>().<span style="color:#a6e22e">Pending</span>; len(<span style="color:#a6e22e">pending</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> {
+    <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">SetInitializers</span>(<span style="color:#66d9ef">nil</span>)
+} <span style="color:#66d9ef">else</span> {
+    <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">GetInitializers</span>().<span style="color:#a6e22e">Pending</span> = append(<span style="color:#a6e22e">pending</span>[:<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">pending</span>[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">...</span>)
+}</code></pre></div>
+
+<p>5) istio-initializer checks the default injection policy for the mesh and any possible per-workload overrides to determine whether the sidecar should be injected.</p>
+
+<p>The function [injectRequired](https://github.com/istio/istio/blob/master/pilot/platform/kube/inject/inject.go#L270) defines the default injection policy</p>
+
+<p>6) istio-initializer injects the sidecar template into the workload and submits it back to kubernetes via PATCH.</p>
+
+<p>The patcher is passed to the [event handler function](https://github.com/istio/istio/blob/master/pilot/platform/kube/inject/initializer.go#L224):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">return</span> <span style="color:#a6e22e">patcher</span>(<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">GetNamespace</span>(), <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">GetName</span>(), <span style="color:#a6e22e">patchBytes</span>, <span style="color:#a6e22e">rObj</span>)</code></pre></div>
+
+<p>7) kubernetes finishes creating the workload as normal and the workload includes the injected sidecar.</p>
+
+<h3 id="service-access-and-ingress">Service access and Ingress</h3>
+
+<p>You can access the service with port-forward yet:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+kubectl port-forward http-serve-1172935448-zw527 <span style="color:#ae81ff">8080</span>:8080
+
+<span style="color:#75715e"># Accessing http://localhost:8080/v1/health
+</span><span style="color:#75715e"></span>
+HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+&lt; Date: Mon, <span style="color:#ae81ff">01</span> Jan <span style="color:#ae81ff">2018</span> <span style="color:#ae81ff">12</span>:53:02 GMT
+&lt; Content-Length: <span style="color:#ae81ff">3</span>
+&lt; Content-Type: text/plain; charset<span style="color:#f92672">=</span>utf-8
+&lt;
+OK</code></pre></div>
+
+<p>For external access you can use the Istio Ingress Controller (with the kubernetes.io/ingress.class: istio annotation). The ingress looks like:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+Name:             simple-ingress
+Namespace:        default
+Address:          <span style="color:#ae81ff">35</span>.202.0.31
+Default backend:  default-http-backend:80 <span style="color:#f92672">(</span><span style="color:#ae81ff">10</span>.56.0.4:8080<span style="color:#f92672">)</span>
+Rules:
+  Host  Path  Backends
+  ----  ----  --------
+  *
+        /v1/.*   http-serve:8080 <span style="color:#f92672">(</span>&lt;none&gt;<span style="color:#f92672">)</span>
+                 grpc-internal:9090 <span style="color:#f92672">(</span>&lt;none&gt;<span style="color:#f92672">)</span>
+                 
+<span style="color:#75715e"># Access the server via your cluster external IP, note the envoy added headers:
+</span><span style="color:#75715e"></span>
+&lt; HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+&lt; date: Mon, <span style="color:#ae81ff">01</span> Jan <span style="color:#ae81ff">2018</span> <span style="color:#ae81ff">12</span>:52:39 GMT
+&lt; content-length: <span style="color:#ae81ff">3</span>
+&lt; content-type: text/plain; charset<span style="color:#f92672">=</span>utf-8
+&lt; x-envoy-upstream-service-time: <span style="color:#ae81ff">2</span>
+&lt; server: envoy
+&lt;
+OK</code></pre></div>
+
+<h3 id="metrics">Metrics</h3>
+
+<p>Start the loop curl request and checkout the servicegraph, based on prometheus data.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> curl -d <span style="color:#e6db74">&#39;{&#34;value&#34;:  &#34;myvalue&#34; }&#39;</span> http://<span style="color:#e6db74">${</span>INGRESS_ADDRESS<span style="color:#e6db74">}</span>/v1/damage; <span style="color:#66d9ef">done</span></code></pre></div>
+
+<p><img src="istio-1.png" alt="istio-1.png" title="istio-1.png" /></p>
+
+<p>This is a good example of your services flow, after you can track your request via opentracing and Zipkin:</p>
+
+<p><img src="istio-2.png" alt="istio-2.png" title="istio-2.png" /></p>
+
+<p>Or you can check out both services usage on Grafana, the metrics are grabbed automatically.</p>
+
+<p><img src="istio-5.png" alt="istio-5.png" title="istio-5.png" />
+<img src="istio-3.png" alt="istio-3.png" title="istio-3.png" /></p>
+
+<h3 id="custom-http-metric">Custom HTTP metric</h3>
+
+<p>This new metric will increment a counter each time the endpoint is called with analytic=true. To enable the counter run the following command inside the project repo, and call the endpoint with the parameter.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+make set-metric
+$ curl ... http://<span style="color:#e6db74">${</span>INGRESS_ADDRESS<span style="color:#e6db74">}</span>/v1/damage?analytic<span style="color:#f92672">=</span>true</code></pre></div>
+
+<p>The rule will be applied after the match filter and the prometheus adapter being used.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: <span style="color:#e6db74">&#34;config.istio.io/v1alpha2&#34;</span>
+kind: rule
+metadata:
+  name: analyticprom
+  namespace: istio-system
+spec:
+  match: match(request.path, <span style="color:#e6db74">&#34;/v1/damage?analytic=*&#34;</span>)
+  actions:
+  - handler: promhandler.prometheus
+    instances:
+    - analyticcounter.metric</code></pre></div>
+
+<p>You can create new Grafana visualizations in the dashboard from Prometheus metrics.</p>
+
+<p><img src="istio-4.png" alt="istio-4.png" title="istio-4.png" /></p>
+
+<h2 id="bibliography">Bibliography</h2>
+
+<h5 id="1-https-github-com-kelseyhightower-kubernetes-the-hard-way">[1] https://github.com/kelseyhightower/kubernetes-the-hard-way</h5>
+
+<h5 id="2-http-blog-christianposta-com-istio-workshop-slides-title">[2] http://blog.christianposta.com/istio-workshop/slides/#/title</h5>
+
+<h5 id="3-https-github-com-knabben-grpc-ex">[3] https://github.com/knabben/grpc-ex</h5>
+
+<h5 id="4-https-istio-io-docs-setup-kubernetes-quick-start-gke-dm-html">[4] https://istio.io/docs/setup/kubernetes/quick-start-gke-dm.html</h5>
+
+<h5 id="5-https-istio-io-docs-setup-kubernetes-sidecar-injection-html-automatic-sidecar-injection">[5] https://istio.io/docs/setup/kubernetes/sidecar-injection.html#automatic-sidecar-injection</h5>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

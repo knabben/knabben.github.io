@@ -3,8 +3,53 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://knabben.github.io/posts/sm/</loc>
+    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://knabben.github.io/posts/technical/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/statsmore/</loc>
+    <lastmod>2017-10-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/prob/</loc>
+    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/stats/</loc>
+    <lastmod>2017-06-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/apk/</loc>
+    <lastmod>2016-12-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/cddeis/</loc>
+    <lastmod>2016-11-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/ecto/</loc>
+    <lastmod>2016-06-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/cpython/</loc>
+    <lastmod>2016-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/gopython/</loc>
+    <lastmod>2016-01-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -28,52 +73,8 @@
   </url>
   
   <url>
-    <loc>http://knabben.github.io/posts/apk/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/cddeis/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/cpython/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/ecto/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/gopython/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/kube/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/prob/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/smi/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/smii/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/stats-more/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/stats/</loc>
-  </url>
-  
-  <url>
     <loc>http://knabben.github.io/</loc>
-    <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -84,7 +85,7 @@
   
   <url>
     <loc>http://knabben.github.io/posts/</loc>
-    <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

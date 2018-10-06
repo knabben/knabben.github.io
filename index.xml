@@ -6,10 +6,19 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Service Mesh - Part I</title>
+      <link>http://knabben.github.io/posts/sm/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/sm/</guid>
+      <description>Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.</description>
+    </item>
     
     <item>
       <title>Technical indicators</title>
@@ -19,6 +28,89 @@
       <guid>http://knabben.github.io/posts/technical/</guid>
       <description>Introduction According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
 The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.</description>
+    </item>
+    
+    <item>
+      <title>More statistics and Python</title>
+      <link>http://knabben.github.io/posts/statsmore/</link>
+      <pubDate>Thu, 12 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/statsmore/</guid>
+      <description>Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.</description>
+    </item>
+    
+    <item>
+      <title>Probability</title>
+      <link>http://knabben.github.io/posts/prob/</link>
+      <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/prob/</guid>
+      <description>Sample space An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.
+| Experiment | Outcomes | Sample Space ||------------------|-------------|-------------------|| Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} || Tooss a coin once| Head, Tail | S = {Head, Tail} | Events An event, usually signified by E or any capital letter other than S, is the specification of the outcome of a trial and can consist of a single outcome or a set of outcomes.</description>
+    </item>
+    
+    <item>
+      <title>Statistics and Python</title>
+      <link>http://knabben.github.io/posts/stats/</link>
+      <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/stats/</guid>
+      <description>Descriptive Measures Measures of Central tendency for Ungrouped data Mean Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.
+import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0 Median Is the value of the middle term in a dataset that has been ranked in increasing order. If the dataset is odd the median is given by the value of the middle term, if even the median is given by the average of the values of the two middle terms.</description>
+    </item>
+    
+    <item>
+      <title>Android APK hacking</title>
+      <link>http://knabben.github.io/posts/apk/</link>
+      <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/apk/</guid>
+      <description>Introduction The post today is about fun, Kali Linux and Android apps hacking. Check it out!
+Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
+Host enumeration The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary.</description>
+    </item>
+    
+    <item>
+      <title>Continuous Deployment and DEIS</title>
+      <link>http://knabben.github.io/posts/cddeis/</link>
+      <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/cddeis/</guid>
+      <description>Introduction Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
+&#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;
+What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback.</description>
+    </item>
+    
+    <item>
+      <title>Ecto vs. Django ORM</title>
+      <link>http://knabben.github.io/posts/ecto/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/ecto/</guid>
+      <description>Introduction Django [1] is awesome, it applies a lot of design patterns in different layers. First of you have the model layer, or the abstraction layer (models), you can define models that maps to the tables of your database. We are going to see some features that the Django ORM offers.
+On the other side, Phoenix Framework [2] is a web framework written in Elixir, it applies the MVC pattern too, and have Ecto as a &#34;</description>
+    </item>
+    
+    <item>
+      <title>CPython Debugging</title>
+      <link>http://knabben.github.io/posts/cpython/</link>
+      <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/cpython/</guid>
+      <description>Introduction Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.
+The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?</description>
+    </item>
+    
+    <item>
+      <title>Golang vs. Python</title>
+      <link>http://knabben.github.io/posts/gopython/</link>
+      <pubDate>Sat, 23 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/gopython/</guid>
+      <description>Introduction Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
+For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang.
+It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files.</description>
     </item>
     
     <item>
@@ -62,105 +154,6 @@ def fv(pv, n, i): print(&amp;#39;{0:.</description>
       <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
 NOTE If you are interested on real traffic replication, consider this project [2].
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/apk/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/apk/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/cddeis/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/cddeis/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/cpython/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/cpython/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/ecto/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/ecto/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/gopython/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/gopython/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/kube/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/kube/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/prob/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/prob/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/smi/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/smi/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/smii/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/smii/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/stats-more/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/stats-more/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/stats/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/stats/</guid>
-      <description></description>
     </item>
     
   </channel>

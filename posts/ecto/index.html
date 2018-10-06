@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Ecto vs. Django ORM</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Ecto vs. Django ORM" />
+<meta property="og:description" content="Introduction Django [1] is awesome, it applies a lot of design patterns in different layers. First of you have the model layer, or the abstraction layer (models), you can define models that maps to the tables of your database. We are going to see some features that the Django ORM offers.
+On the other side, Phoenix Framework [2] is a web framework written in Elixir, it applies the MVC pattern too, and have Ecto as a &#34;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/ecto/" /><meta property="article:published_time" content="2016-06-18T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-06-18T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Ecto vs. Django ORM">
+<meta itemprop="description" content="Introduction Django [1] is awesome, it applies a lot of design patterns in different layers. First of you have the model layer, or the abstraction layer (models), you can define models that maps to the tables of your database. We are going to see some features that the Django ORM offers.
+On the other side, Phoenix Framework [2] is a web framework written in Elixir, it applies the MVC pattern too, and have Ecto as a &#34;">
+
+
+<meta itemprop="datePublished" content="2016-06-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-06-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1033">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ecto vs. Django ORM"/>
+<meta name="twitter:description" content="Introduction Django [1] is awesome, it applies a lot of design patterns in different layers. First of you have the model layer, or the abstraction layer (models), you can define models that maps to the tables of your database. We are going to see some features that the Django ORM offers.
+On the other side, Phoenix Framework [2] is a web framework written in Elixir, it applies the MVC pattern too, and have Ecto as a &#34;"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Ecto vs. Django ORM</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-06-18T00:00:00Z">June 18, 2016</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
+
+<p>Django [1] is awesome, it applies a lot of design patterns in different layers. First of you have the model layer, or the abstraction layer (models), you can define models that maps to the tables of your database. We are going to see some features that the Django ORM offers.</p>
+
+<p>On the other side, Phoenix Framework [2] is a web framework written in Elixir, it applies the MVC pattern too, and have Ecto as a "language integrated query composition tool" and a database wrapper. There is nothing really new on this post blog, is just a basic scaffold of how to use some functionalities of each project, you can find more on both projects documentation.</p>
+
+<h2 id="connection-and-database-initialization">Connection and database initialization</h2>
+
+<h3 id="django">Django</h3>
+
+<p>To start a new app create a virtualenv and install django:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ workon app
+app$ pip install django
+app$ django-admin startproject app ; cd app</code></pre></div>
+
+<p>Configure the database on app/settings.py:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">DATABASES <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;default&#39;</span>: {
+        <span style="color:#e6db74">&#39;ENGINE&#39;</span>: <span style="color:#e6db74">&#39;django.db.backends.postgresql_psycopg2&#39;</span>,
+        <span style="color:#e6db74">&#39;NAME&#39;</span>: <span style="color:#e6db74">&#39;django&#39;</span>,
+        <span style="color:#e6db74">&#39;HOST&#39;</span>: <span style="color:#e6db74">&#39;192.168.0.4&#39;</span>,
+        <span style="color:#e6db74">&#39;USER&#39;</span>: <span style="color:#e6db74">&#39;django&#39;</span>,
+        <span style="color:#e6db74">&#39;PASSWORD&#39;</span>: <span style="color:#e6db74">&#39;django&#39;</span>
+    }
+}</code></pre></div>
+
+<p>Sync your database with the models (you dont have any for now):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ python manage.py syncdb
+Operations to perform:
+  Apply all migrations: admin, contenttypes, auth, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+You have installed Django<span style="color:#e6db74">&#39;s auth system, and don&#39;</span>t have any superusers defined.
+Would you like to create one now? <span style="color:#f92672">(</span>yes/no<span style="color:#f92672">)</span>: yes
+Username <span style="color:#f92672">(</span>leave blank to use <span style="color:#e6db74">&#39;ndb&#39;</span><span style="color:#f92672">)</span>: ndb
+Email address: ndb@ndb.com
+Password:
+Password <span style="color:#f92672">(</span>again<span style="color:#f92672">)</span>:
+Superuser created successfully.</code></pre></div>
+
+<p>Django creates 10 tables, it contains auth_user/auth_group for authentication, django_session and django_migrations.</p>
+
+<h3 id="ecto">Ecto</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mix phoenix.new app2</code></pre></div>
+
+<p>Open the config/dev.exs</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir"><span style="color:#75715e"># Configure your database</span>
+config <span style="color:#e6db74">:app2</span>, <span style="color:#a6e22e">App2.Repo</span>,
+  <span style="color:#e6db74">adapter</span>: <span style="color:#a6e22e">Ecto.Adapters.Postgres</span>,
+  <span style="color:#e6db74">username</span>: <span style="color:#e6db74">&#34;elixir&#34;</span>,
+  <span style="color:#e6db74">password</span>: <span style="color:#e6db74">&#34;elixir&#34;</span>,
+  <span style="color:#e6db74">database</span>: <span style="color:#e6db74">&#34;app2_dev&#34;</span>,
+  <span style="color:#e6db74">hostname</span>: <span style="color:#e6db74">&#34;192.168.0.4&#34;</span>,
+  <span style="color:#e6db74">pool_size</span>: <span style="color:#ae81ff">10</span></code></pre></div>
+
+<p>Create the database, there's no default databases:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mix ecto.create</code></pre></div>
+
+<h2 id="the-first-model">The first model</h2>
+
+<h3 id="django-1">Django</h3>
+
+<p>We are going to create two simple tables via the ORM, with a very whacky example: Album and Music</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ django-admin startapp recorder</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">app<span style="color:#f92672">/</span>settings<span style="color:#f92672">.</span>py:
+
+INSTALLED_APPS <span style="color:#f92672">=</span> (
+    <span style="color:#f92672">...</span>
+    <span style="color:#e6db74">&#39;recorder&#39;</span>
+)
+
+app<span style="color:#f92672">/</span>recorder<span style="color:#f92672">/</span>models<span style="color:#f92672">.</span>py:
+
+<span style="color:#f92672">from</span> django.db <span style="color:#f92672">import</span> models
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Album</span>(models<span style="color:#f92672">.</span>Model):
+    name <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+    producer <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Music</span>(models<span style="color:#f92672">.</span>Model):
+    album <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>ForeignKey(Album)
+    name <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)</code></pre></div>
+
+<p>The next step is to create a migration and create the tables on database, Django have some very cool tools to make it:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Create migrate file
+</span><span style="color:#75715e"></span>$ django-admin makemigrations
+
+Migrations <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;recorder&#39;</span>:
+  0001_initial.py:
+    - Create model Album
+    - Create model Music
+
+<span style="color:#75715e"># List migrations
+</span><span style="color:#75715e"></span>$ django-admin migrate -l
+recorder
+ <span style="color:#f92672">[</span> <span style="color:#f92672">]</span> 0001_initial
+
+<span style="color:#75715e"># Print SQL data
+</span><span style="color:#75715e"></span>$ django-admin sqlmigrate recorder 0001_initial
+
+BEGIN;
+CREATE TABLE <span style="color:#e6db74">&#34;recorder_album&#34;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span> serial NOT NULL PRIMARY KEY, <span style="color:#e6db74">&#34;name&#34;</span> varchar<span style="color:#f92672">(</span><span style="color:#ae81ff">100</span><span style="color:#f92672">)</span> NOT NULL, <span style="color:#e6db74">&#34;producer&#34;</span> varchar<span style="color:#f92672">(</span><span style="color:#ae81ff">100</span><span style="color:#f92672">)</span> NOT NULL<span style="color:#f92672">)</span>;
+CREATE TABLE <span style="color:#e6db74">&#34;recorder_music&#34;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span> serial NOT NULL PRIMARY KEY, <span style="color:#e6db74">&#34;name&#34;</span> varchar<span style="color:#f92672">(</span><span style="color:#ae81ff">200</span><span style="color:#f92672">)</span> NOT NULL, <span style="color:#e6db74">&#34;album_id&#34;</span> integer NOT NULL<span style="color:#f92672">)</span>;
+ALTER TABLE <span style="color:#e6db74">&#34;recorder_music&#34;</span> ADD CONSTRAINT <span style="color:#e6db74">&#34;recorder_music_album_id_511dc046afa6a74a_fk_recorder_album_id&#34;</span> FOREIGN KEY <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;album_id&#34;</span><span style="color:#f92672">)</span> REFERENCES <span style="color:#e6db74">&#34;recorder_album&#34;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span> DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX <span style="color:#e6db74">&#34;recorder_music_95c3b9df&#34;</span> ON <span style="color:#e6db74">&#34;recorder_music&#34;</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;album_id&#34;</span><span style="color:#f92672">)</span>;
+
+<span style="color:#75715e"># Apply the migrations (run SQL)
+</span><span style="color:#75715e"></span>$ django-admin migrate</code></pre></div>
+
+<h3 id="ecto-1">Ecto</h3>
+
+<p>With Ecto we create the models via command line, we can generate CRUD templates and controllers with phoenix.gen.html, but for new lets analyse the models:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mix phoenix.gen.model Album album name:string producer:string
+* creating web/models/album.ex
+* creating test/models/album_test.exs
+* creating priv/repo/migrations/20160618120835_create_album.exs
+
+Remember to update your repository by running migrations:
+
+    $ mix ecto.migrate
+
+$ mix phoenix.gen.model Music music name:string album_id:references:album
+* creating web/models/music.ex
+* creating test/models/music_test.exs
+* creating priv/repo/migrations/20160618120923_create_music.exs
+
+Remember to update your repository by running migrations:
+
+    $ mix ecto.migrate</code></pre></div>
+
+<p>As you can see phoenix created the models, a unit test file and a migration file, it created a schema_migration tables to hold this difference either.</p>
+
+<p>We have created a one-to-one relationship, so you can see a belongs_to.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir">defmodule <span style="color:#a6e22e">App2.Music</span> do
+  use <span style="color:#a6e22e">App2.Web</span>, <span style="color:#e6db74">:model</span>
+
+  schema <span style="color:#e6db74">&#34;music&#34;</span> do
+    field <span style="color:#e6db74">:name</span>, <span style="color:#e6db74">:string</span>
+    belongs_to <span style="color:#e6db74">:album</span>, <span style="color:#a6e22e">App2.Album</span>
+
+    timestamps
+  end
+  ...
+end</code></pre></div>
+
+<p>Run your migrate command to create the tables on the database, there's lots of boilerplate code :</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mix ecto.migrate
+...
+<span style="color:#ae81ff">11</span>:37:34.299 <span style="color:#f92672">[</span>info<span style="color:#f92672">]</span>  <span style="color:#f92672">==</span> Running App2.Repo.Migrations.CreateMusic.change/0 forward
+
+<span style="color:#ae81ff">11</span>:37:34.299 <span style="color:#f92672">[</span>info<span style="color:#f92672">]</span>  create table music
+
+<span style="color:#ae81ff">11</span>:37:34.444 <span style="color:#f92672">[</span>info<span style="color:#f92672">]</span>  create index music_album_id_index</code></pre></div>
+
+<h2 id="insert-and-get-data">Insert and get data</h2>
+
+<p>Install ipython on your virtualenv and give a try:</p>
+
+<h3 id="django-2">Django</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">$</span> django<span style="color:#f92672">-</span>admin shell
+
+In [<span style="color:#ae81ff">3</span>]: <span style="color:#f92672">from</span> recorder.models <span style="color:#f92672">import</span> Album
+
+<span style="color:#75715e"># Basic insert</span>
+
+In [<span style="color:#ae81ff">4</span>]: album1 <span style="color:#f92672">=</span> Album<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>create(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;new_album&#34;</span>, producer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;old_prod&#34;</span>)
+Out[<span style="color:#ae81ff">4</span>]: <span style="color:#f92672">&lt;</span>Album: Album object<span style="color:#f92672">&gt;</span>
+
+<span style="color:#75715e"># Fetch all</span>
+
+In [<span style="color:#ae81ff">5</span>]: map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>name, Album<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>all())
+Out[<span style="color:#ae81ff">5</span>]: [<span style="color:#e6db74">&#39;new_album&#39;</span>]
+
+<span style="color:#75715e"># Create with one-to-one relationship</span>
+
+In [<span style="color:#ae81ff">6</span>]: music1 <span style="color:#f92672">=</span> Music<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>create(album<span style="color:#f92672">=</span>album1, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;new_music&#34;</span>)
+Out[<span style="color:#ae81ff">6</span>]: <span style="color:#f92672">&lt;</span>Music: Music object<span style="color:#f92672">&gt;</span>
+
+<span style="color:#75715e"># Filter by LIKE</span>
+
+In[<span style="color:#ae81ff">7</span>]: music2 <span style="color:#f92672">=</span> Music<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>filter(name__contains<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;new&#39;</span>)<span style="color:#f92672">.</span>order_by(<span style="color:#e6db74">&#39;id&#39;</span>)
+<span style="color:#75715e"># SELECT &#34;recorder_music&#34;.&#34;id&#34;, &#34;recorder_music&#34;.&#34;album_id&#34;,</span>
+<span style="color:#75715e">#        &#34;recorder_music&#34;.&#34;name&#34; FROM &#34;recorder_music&#34;</span>
+<span style="color:#75715e"># WHERE UPPER(&#34;recorder_music&#34;.&#34;name&#34;::text)</span>
+<span style="color:#75715e"># LIKE UPPER(&#39;%new%&#39;) ORDER BY &#34;recorder_music&#34;.&#34;id&#34; ASC LIMIT 21</span>
+
+<span style="color:#75715e"># Fetch related data with default INNER JOIN</span>
+
+In[<span style="color:#ae81ff">8</span>]: music3 <span style="color:#f92672">=</span> Music<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>select_related(<span style="color:#e6db74">&#39;album&#39;</span>)<span style="color:#f92672">.</span>get(pk<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>name
+<span style="color:#75715e"># SELECT &#34;recorder_music&#34;.&#34;id&#34;, &#34;recorder_music&#34;.&#34;album_id&#34;,</span>
+<span style="color:#75715e">#        &#34;recorder_music&#34;.&#34;name&#34;, &#34;recorder_album&#34;.&#34;id&#34;,</span>
+<span style="color:#75715e">#        &#34;recorder_album&#34;.&#34;name&#34;, &#34;recorder_album&#34;.&#34;producer&#34;</span>
+<span style="color:#75715e"># FROM &#34;recorder_music&#34;</span>
+<span style="color:#75715e"># INNER JOIN &#34;recorder_album&#34; ON ( &#34;recorder_music&#34;.&#34;album_id&#34; = &#34;recorder_album&#34;.&#34;id&#34; )</span>
+<span style="color:#75715e"># ORDER BY &#34;recorder_music&#34;.&#34;id&#34; ASC LIMIT 1</span></code></pre></div>
+
+<h3 id="ecto-2">Ecto</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir"><span style="color:#960050;background-color:#1e0010">$</span> iex <span style="color:#f92672">-</span><span style="color:#a6e22e">S</span> mix
+
+<span style="color:#75715e"># Basic insert</span>
+
+iex(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">&gt;</span> album1 <span style="color:#f92672">=</span> <span style="color:#a6e22e">App2.Repo</span><span style="color:#f92672">.</span>insert!(%<span style="color:#a6e22e">App2.Album</span>{<span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;new_album&#34;</span>, <span style="color:#e6db74">producer</span>: <span style="color:#e6db74">&#34;old_prod&#34;</span>})
+
+<span style="color:#75715e"># Fetch all</span>
+
+iex(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">App2.Album.Repo.All</span>(<span style="color:#a6e22e">App3.Album</span>) <span style="color:#f92672">|&gt;</span> <span style="color:#a6e22e">Enum</span><span style="color:#f92672">.</span>map(fn(x) <span style="color:#f92672">-&gt;</span> x<span style="color:#f92672">.</span>name end)
+[<span style="color:#e6db74">&#34;new_album&#34;</span>]
+
+<span style="color:#75715e"># Create with one-to-one relationship</span>
+
+iex(<span style="color:#ae81ff">3</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">App2.Repo</span><span style="color:#f92672">.</span>insert!(%<span style="color:#a6e22e">App3.Music</span>{<span style="color:#e6db74">album_id</span>: album1<span style="color:#f92672">.</span>id, <span style="color:#e6db74">name</span>: <span style="color:#e6db74">&#34;new_album&#34;</span>})
+<span style="color:#75715e"># INSERT INTO &#34;music&#34; (&#34;inserted_at&#34;, &#34;updated_at&#34;, &#34;album_id&#34;, &#34;name&#34;) VALUES ($1, $2, $3, $4)</span>
+
+<span style="color:#75715e"># Filter by LIKE</span>
+
+iex(<span style="color:#ae81ff">4</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">App2.Repo</span><span style="color:#f92672">.</span>all(from p in <span style="color:#a6e22e">App2.Album</span>, <span style="color:#e6db74">where</span>: like(p<span style="color:#f92672">.</span>name, <span style="color:#e6db74">~s&#39;%new%&#39;</span>) , <span style="color:#e6db74">select</span>: p, <span style="color:#e6db74">order_by</span>: p<span style="color:#f92672">.</span>id)
+<span style="color:#75715e"># SELECT a0.&#34;id&#34;, a0.&#34;name&#34;, a0.&#34;producer&#34;, a0.&#34;inserted_at&#34;, a0.&#34;updated_at&#34;</span>
+<span style="color:#75715e"># FROM &#34;album&#34; AS a0 WHERE (a0.&#34;name&#34; LIKE &#39;%new%&#39;) ORDER BY a0.&#34;id&#34;</span>
+
+<span style="color:#75715e"># Fetch related data</span>
+iex(<span style="color:#ae81ff">5</span>)<span style="color:#f92672">&gt;</span> music2 <span style="color:#f92672">=</span> <span style="color:#a6e22e">App2.Repo</span><span style="color:#f92672">.</span>get <span style="color:#a6e22e">Music</span>, <span style="color:#ae81ff">1</span> <span style="color:#f92672">|&gt;</span> <span style="color:#a6e22e">App2.Repo</span><span style="color:#f92672">.</span>preload(<span style="color:#e6db74">:album</span>)
+iex(<span style="color:#ae81ff">6</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>puts music2<span style="color:#f92672">.</span>album<span style="color:#f92672">.</span>name
+<span style="color:#75715e"># SELECT m0.&#34;id&#34;, m0.&#34;name&#34;, m0.&#34;album_id&#34;, m0.&#34;inserted_at&#34;, m0.&#34;updated_at&#34;</span>
+<span style="color:#75715e"># FROM &#34;music&#34; AS m0 WHERE (m0.&#34;id&#34; = $1)</span>
+<span style="color:#75715e"># SELECT a0.&#34;id&#34;, a0.&#34;name&#34;, a0.&#34;producer&#34;, a0.&#34;inserted_at&#34;, a0.&#34;updated_at&#34;</span>
+<span style="color:#75715e"># FROM &#34;album&#34; AS a0 WHERE (a0.&#34;id&#34; IN ($1))</span></code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Python have a very strong codebase for  ORMs, see Django ORM and SQLAlchemy, but is very interesting see how new languages are solving the ORM situation and how they are evolving.</p>
+
+<p>It can take time to develop the same cool features that old projects have, but the community of Elixir is getting bigger and bigger. As a counterpart complex problems take time to get in shape, and some of them can stay without a solution after a long time. [3]</p>
+
+<p>The subject is very complex, and again, cool to see projects like Ecto or Gorm [4] getting traction. Keep an eye on it and help as you can!</p>
+
+<h2 id="listening">Listening</h2>
+
+<p><iframe width="420" height="315" src="https://www.youtube.com/embed/A60nxws_iVs" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="biliography">Biliography</h2>
+
+<h5 id="1-http-www-phoenixframework-org">[1] http://www.phoenixframework.org</h5>
+
+<h5 id="2-https-www-djangoproject-com">[2] https://www.djangoproject.com/</h5>
+
+<h5 id="3-https-code-djangoproject-com-ticket-10060">[3] https://code.djangoproject.com/ticket/10060</h5>
+
+<h5 id="4-http-jinzhu-me-gorm">[4] http://jinzhu.me/gorm/</h5>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

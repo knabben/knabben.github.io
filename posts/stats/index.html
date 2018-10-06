@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Statistics and Python</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Statistics and Python" />
+<meta property="og:description" content="Descriptive Measures Measures of Central tendency for Ungrouped data Mean Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.
+import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0 Median Is the value of the middle term in a dataset that has been ranked in increasing order. If the dataset is odd the median is given by the value of the middle term, if even the median is given by the average of the values of the two middle terms." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/stats/" /><meta property="article:published_time" content="2017-06-25T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-06-25T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Statistics and Python">
+<meta itemprop="description" content="Descriptive Measures Measures of Central tendency for Ungrouped data Mean Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.
+import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0 Median Is the value of the middle term in a dataset that has been ranked in increasing order. If the dataset is odd the median is given by the value of the middle term, if even the median is given by the average of the values of the two middle terms.">
+
+
+<meta itemprop="datePublished" content="2017-06-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-06-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2206">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Statistics and Python"/>
+<meta name="twitter:description" content="Descriptive Measures Measures of Central tendency for Ungrouped data Mean Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.
+import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0 Median Is the value of the middle term in a dataset that has been ranked in increasing order. If the dataset is odd the median is given by the value of the middle term, if even the median is given by the average of the values of the two middle terms."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Statistics and Python</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2017-06-25T00:00:00Z">June 25, 2017</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="descriptive-measures">Descriptive Measures</h1>
+
+<h2 id="measures-of-central-tendency-for-ungrouped-data">Measures of Central tendency for Ungrouped data</h2>
+
+<h3 id="mean">Mean</h3>
+
+<p>Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+np<span style="color:#f92672">.</span>mean([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">50</span>])
+
+<span style="color:#75715e"># 15.0</span></code></pre></div>
+
+<h3 id="median">Median</h3>
+
+<p>Is the value of the middle term in a dataset that has been ranked in increasing order. If the dataset is odd the median is given by the value of the middle term, if even the median is given by the average of the values of the two middle terms.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>median([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>]))
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>median([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>]))
+
+<span style="color:#75715e">#  5.0</span>
+<span style="color:#75715e">#  5.5</span></code></pre></div>
+
+<h3 id="mode">Mode</h3>
+
+<p>Is the value that occours with the highest frequency in the dataset.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> stats
+
+stats<span style="color:#f92672">.</span>mode([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>])
+
+<span style="color:#75715e"># ModeResult(mode=array([2]), count=array([3]))</span></code></pre></div>
+
+<h2 id="measures-of-dispersion-for-ungrouped-data">Measures of dispersion for Ungrouped data</h2>
+
+<h3 id="variance-and-standard-deviation">Variance and Standard Deviation</h3>
+
+<p>The standard deviation is the most-used measure of dispersion. The value of the standard deviation tells how closely the values of a data set are clustered around the mean. The standard deviation is obtained by taking the positive square root of the variance:</p>
+
+<h3 id="sqrt-sigma-sum-x-mean-2-n">sqrt(sigma) = sum(x - mean) ** 2 / N *</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">import</span> math
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#39;values&#39;</span>: [<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">7.8</span>, <span style="color:#ae81ff">8</span>]
+})
+
+mean <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;values&#39;</span>]<span style="color:#f92672">.</span>mean()
+df[<span style="color:#e6db74">&#39;deviation&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;values&#39;</span>] <span style="color:#f92672">-</span> mean
+df[<span style="color:#e6db74">&#39;dev**2&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;deviation&#39;</span>] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+
+<span style="color:#75715e">#       values  deviation  dev**2</span>
+<span style="color:#75715e">#    0     6.0       -1.2    1.44</span>
+<span style="color:#75715e">#    1     7.0       -0.2    0.04</span>
+<span style="color:#75715e">#    2     7.8        0.6    0.36</span>
+<span style="color:#75715e">#    3     8.0        0.8    0.64</span>
+
+<span style="color:#75715e"># population</span>
+
+len_pop, len_sam <span style="color:#f92672">=</span> len(df), len(df)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+
+variance <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;dev**2&#39;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len_pop, <span style="color:#ae81ff">2</span>)
+standard_dev <span style="color:#f92672">=</span> round(math<span style="color:#f92672">.</span>sqrt(variance), <span style="color:#ae81ff">2</span>)
+
+<span style="color:#75715e">#  Variance pop:  0.62</span>
+<span style="color:#75715e">#  StdDev pop:  0.79</span>
+
+<span style="color:#75715e"># sample</span>
+
+variance <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;dev**2&#39;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len_sam, <span style="color:#ae81ff">2</span>)
+standard_dev <span style="color:#f92672">=</span> round(math<span style="color:#f92672">.</span>sqrt(variance), <span style="color:#ae81ff">2</span>)
+
+<span style="color:#75715e"># Variance sam:  0.83</span>
+<span style="color:#75715e"># StdDev sam:  0.91</span>
+
+
+<span style="color:#75715e"># Using default describe pandas method</span>
+<span style="color:#66d9ef">print</span>(df[<span style="color:#e6db74">&#39;values&#39;</span>]<span style="color:#f92672">.</span>describe())
+
+<span style="color:#75715e">#    count    4.000000</span>
+<span style="color:#75715e">#    mean     7.200000</span>
+<span style="color:#75715e">#    std      0.909212</span>
+<span style="color:#75715e">#    min      6.000000</span>
+<span style="color:#75715e">#    25%      6.750000</span>
+<span style="color:#75715e">#    50%      7.400000</span>
+<span style="color:#75715e">#    75%      7.850000</span>
+<span style="color:#75715e">#    max      8.000000</span>
+<span style="color:#75715e">#    Name: values, dtype: float64</span></code></pre></div>
+
+<h2 id="measures-of-central-tendency-and-dispersion-for-grouped-data">Measures of central tendency and dispersion for grouped data</h2>
+
+<h3 id="mean-1">Mean</h3>
+
+<p>For the mean on grouped data calculate the range mean of the class, the higher + lower / 2, and multiply it by the frequency.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#39;l&#39;</span>: [<span style="color:#ae81ff">15.9</span>, <span style="color:#ae81ff">18.7</span>, <span style="color:#ae81ff">21.5</span>, <span style="color:#ae81ff">24.3</span>, <span style="color:#ae81ff">27.1</span>, <span style="color:#ae81ff">29.9</span>, <span style="color:#ae81ff">32.7</span>],
+    <span style="color:#e6db74">&#39;h&#39;</span>: [<span style="color:#ae81ff">18.7</span>, <span style="color:#ae81ff">21.5</span>, <span style="color:#ae81ff">24.3</span>, <span style="color:#ae81ff">27.1</span>, <span style="color:#ae81ff">29.9</span>, <span style="color:#ae81ff">32.7</span>, <span style="color:#ae81ff">35.5</span>],
+    <span style="color:#e6db74">&#39;months&#39;</span>: [<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">10</span>]
+})
+
+df[<span style="color:#e6db74">&#39;mean_r&#39;</span>] <span style="color:#f92672">=</span> (df[<span style="color:#e6db74">&#39;h&#39;</span>] <span style="color:#f92672">+</span> df[<span style="color:#e6db74">&#39;l&#39;</span>]) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+df[<span style="color:#e6db74">&#39;mean_f&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;mean_r&#39;</span>] <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#39;months&#39;</span>]
+
+total_freq <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;months&#39;</span>]<span style="color:#f92672">.</span>sum()
+mean <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;mean_f&#39;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> total_freq
+
+<span style="color:#75715e"># Mean of grouped data: 24.75</span></code></pre></div>
+
+<h3 id="variance-and-standard-deviation-1">Variance and Standard Deviation</h3>
+
+<p>For a continuous grouped data we have again to calculate the mean of the class and multiply for the frequency. Let's get the same example below to calculate the variance and standard deviation:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+df[<span style="color:#e6db74">&#39;variance&#39;</span>] <span style="color:#f92672">=</span> ((df[<span style="color:#e6db74">&#39;mean_r&#39;</span>] <span style="color:#f92672">-</span> mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#39;months&#39;</span>]
+
+          h     l  months  mean_r  mean_f  variance
+    <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">18.7</span>  <span style="color:#ae81ff">15.9</span>      <span style="color:#ae81ff">12</span>    <span style="color:#ae81ff">17.3</span>   <span style="color:#ae81ff">207.6</span>  <span style="color:#ae81ff">666.0300</span>
+    <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">21.5</span>  <span style="color:#ae81ff">18.7</span>       <span style="color:#ae81ff">8</span>    <span style="color:#ae81ff">20.1</span>   <span style="color:#ae81ff">160.8</span>  <span style="color:#ae81ff">172.9800</span>
+    <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">24.3</span>  <span style="color:#ae81ff">21.5</span>      <span style="color:#ae81ff">12</span>    <span style="color:#ae81ff">22.9</span>   <span style="color:#ae81ff">274.8</span>   <span style="color:#ae81ff">41.0700</span>
+    <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">27.1</span>  <span style="color:#ae81ff">24.3</span>       <span style="color:#ae81ff">5</span>    <span style="color:#ae81ff">25.7</span>   <span style="color:#ae81ff">128.5</span>    <span style="color:#ae81ff">4.5125</span>
+    <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">29.9</span>  <span style="color:#ae81ff">27.1</span>       <span style="color:#ae81ff">3</span>    <span style="color:#ae81ff">28.5</span>    <span style="color:#ae81ff">85.5</span>   <span style="color:#ae81ff">42.1875</span>
+    <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">32.7</span>  <span style="color:#ae81ff">29.9</span>       <span style="color:#ae81ff">6</span>    <span style="color:#ae81ff">31.3</span>   <span style="color:#ae81ff">187.8</span>  <span style="color:#ae81ff">257.4150</span>
+    <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">35.5</span>  <span style="color:#ae81ff">32.7</span>      <span style="color:#ae81ff">10</span>    <span style="color:#ae81ff">34.1</span>   <span style="color:#ae81ff">341.0</span>  <span style="color:#ae81ff">874.2250</span>
+
+variance <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;variance&#39;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> total_freq, <span style="color:#ae81ff">4</span>)
+
+<span style="color:#75715e"># Variance:  36.7575</span>
+<span style="color:#75715e"># StdDev:  6.06</span></code></pre></div>
+
+<h2 id="measures-of-position">Measures of Position</h2>
+
+<p>Quartiles and interquartile range, the measure are first, second and third quartile (Q1, Q2, Q3). Q2 is the median, the interquartile = Q3 - Q1.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+data <span style="color:#f92672">=</span> [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">45</span>]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_quartile</span>(data):
+    Q2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>median(data)
+    Q3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>median(data[len(data)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>:])
+    Q1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>median(data[:len(data)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>])
+    
+    <span style="color:#66d9ef">return</span> Q1, Q2, Q3
+    
+<span style="color:#66d9ef">print</span>(find_quartile(data))
+<span style="color:#75715e"># (9.5, 12.5, 15.5)</span>
+
+<span style="color:#66d9ef">print</span>(pd<span style="color:#f92672">.</span>Series(data)<span style="color:#f92672">.</span>describe())
+<span style="color:#75715e">#   count    12.000000</span>
+<span style="color:#75715e">#    mean     14.666667</span>
+<span style="color:#75715e">#    std      10.066446</span>
+<span style="color:#75715e">#    min       7.000000</span>
+<span style="color:#75715e">#    25%       9.750000</span>
+<span style="color:#75715e">#    50%      12.500000</span>
+<span style="color:#75715e">#    75%      14.750000</span>
+<span style="color:#75715e">#    max      45.000000</span>
+<span style="color:#75715e">#    dtype: float64</span></code></pre></div>
+
+<h2 id="exercises">Exercises</h2>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#75715e"># 1 - A company studied the use of alcohol by his </span>
+<span style="color:#75715e"># employers this is the frequency by days, calculate the mean:</span>
+
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#39;days&#39;</span>: [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>],
+    <span style="color:#e6db74">&#39;emp_num&#39;</span>: [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>]
+})
+df[<span style="color:#e6db74">&#39;xi.fi&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;days&#39;</span>] <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#39;emp_num&#39;</span>]
+<span style="color:#66d9ef">print</span>(round(df[<span style="color:#e6db74">&#39;xi.fi&#39;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> df[<span style="color:#e6db74">&#39;emp_num&#39;</span>]<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">2</span>))
+
+Mean: <span style="color:#ae81ff">2.39</span></code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#75715e"># 2 - The data above shows up the families income per year in thousands.</span>
+<span style="color:#75715e"># calculate the variance and standard deviation.</span>
+
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#39;l&#39;</span>: [<span style="color:#ae81ff">112</span>, <span style="color:#ae81ff">115</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">121</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">127</span>],
+    <span style="color:#e6db74">&#39;h&#39;</span>: [<span style="color:#ae81ff">115</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">121</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">130</span>],
+    <span style="color:#e6db74">&#39;freq&#39;</span>: [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">7</span>]
+})
+df[<span style="color:#e6db74">&#39;mean_r&#39;</span>] <span style="color:#f92672">=</span> (df[<span style="color:#e6db74">&#39;h&#39;</span>] <span style="color:#f92672">+</span> df[<span style="color:#e6db74">&#39;l&#39;</span>]) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+df[<span style="color:#e6db74">&#39;mean_f&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;mean_r&#39;</span>] <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#39;freq&#39;</span>]
+
+total_freq <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;freq&#39;</span>]<span style="color:#f92672">.</span>sum()
+mean <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;mean_f&#39;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> total_freq
+
+df[<span style="color:#e6db74">&#39;deviance&#39;</span>] <span style="color:#f92672">=</span> ((df[<span style="color:#e6db74">&#39;mean_r&#39;</span>] <span style="color:#f92672">-</span> mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#39;freq&#39;</span>]
+
+variance <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;deviance&#39;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> (total_freq <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), <span style="color:#ae81ff">4</span>)
+
+Variance:  <span style="color:#ae81ff">21.0857</span>
+StdDev:  <span style="color:#ae81ff">4.59</span></code></pre></div>
+
+<h1 id="frequency-distribution">Frequency distribution</h1>
+
+<h2 id="python-notes-on-statistics">Python Notes on Statistics</h2>
+
+<p>Statistics is a group of methods to collect, analyze, present and interpret data and to make decisions. Decisions made by using stats methods are called educated guesses, decisions made without it are called pure guesses. Statistics is divided in two kind of studies, the first is descriptive, where are described methods for organizing, displaying and describing data by using tables, graphs and summary measures. The seconds kind is the inferencial stats consist of methods that use sample results to help make desicisions or predictions about the population.</p>
+
+<p>About the basic terms we have the element or member, is a specific subject or object about which information is collected, and the variable, the characteristic under study that assumes different values for different elements. With this in mind we can assume that in the following table:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">| Sex  | Interviewd# | Sentiment |<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>|------|-------------|-----------|<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>| M    | 295         |  good     |<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>| F    | 345         |  bad      |</code></pre></div>
+
+<p>Sex is the element/member and the interviwed is our variable, being the scalar numbers the measurements or observations.</p>
+
+<p>Variables can be divided in Quantitatives and Qualitatives variables.</p>
+
+<h2 id="quantitative-variables">Quantitative variables</h2>
+
+<h3 id="discrete-variables">Discrete variables</h3>
+
+<p>Whose a value are countable we call discrete, in other words a discrete variable can assume only certain values with no intermediate value. A finite number of values for example, the number of people in a sector, quantity of items on a store).</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>, dtype<span style="color:#f92672">=</span>int)
+
+array([ <span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">3</span>,  <span style="color:#ae81ff">5</span>,  <span style="color:#ae81ff">7</span>,  <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">20</span>])</code></pre></div>
+
+<h3 id="continuous-variables">Continuous variables</h3>
+
+<p>A variable that can assume any numerical  value over a certain interval or intervals, it can exist in an infinite set of values. For example: The weight, height, time or temperature. E.g the time taken may be 42.6 min, 50 min or 42.34 min. It can't be counted in a discrete fashion.</p>
+
+<h3 id="qualitative-variable">Qualitative variable</h3>
+
+<p>It is a varaible that cannot assume a numerical value but can be classified into two or more nonnumeric categories, for example:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">categories <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;Blue&#39;</span>, <span style="color:#e6db74">&#39;Red&#39;</span>, <span style="color:#e6db74">&#39;Yellow&#39;</span>]
+
+np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(categories, <span style="color:#ae81ff">6</span>)
+
+array([<span style="color:#e6db74">&#39;Blue&#39;</span>, <span style="color:#e6db74">&#39;Yellow&#39;</span>, <span style="color:#e6db74">&#39;Red&#39;</span>, <span style="color:#e6db74">&#39;Yellow&#39;</span>, <span style="color:#e6db74">&#39;Yellow&#39;</span>, <span style="color:#e6db74">&#39;Red&#39;</span>], 
+      dtype<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&lt;U6&#39;</span>)</code></pre></div>
+
+<h2 id="cross-section-vs-time-series">Cross-section vs. Time-Series</h2>
+
+<p>Other important concept we need to make clear (since it have impact on methods and Python functions) is the cross-sections and time-series data. The cross-section data is collected on different elements at the same point in time or for the same period of time:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> display
+
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">from</span> pandas <span style="color:#f92672">import</span> DataFrame
+
+<span style="color:#75715e"># Cross-section data</span>
+DataFrame({
+    <span style="color:#e6db74">&#39;Company&#39;</span>: [<span style="color:#e6db74">&#39;X&#39;</span>,<span style="color:#e6db74">&#39;y&#39;</span>,<span style="color:#e6db74">&#39;Z&#39;</span>,<span style="color:#e6db74">&#39;Q&#39;</span>],
+    <span style="color:#e6db74">&#39;Values in one year&#39;</span>: [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">57</span>,<span style="color:#ae81ff">32</span>] 
+})
+
+  Company  Values <span style="color:#f92672">in</span> one year
+<span style="color:#ae81ff">0</span>       X                   <span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">1</span>       y                   <span style="color:#ae81ff">4</span>
+<span style="color:#ae81ff">2</span>       Z                  <span style="color:#ae81ff">57</span>
+<span style="color:#ae81ff">3</span>       Q                  <span style="color:#ae81ff">32</span>
+
+
+<span style="color:#75715e"># Timeseries data</span>
+DataFrame({
+    <span style="color:#e6db74">&#39;BS Year&#39;</span>: pd<span style="color:#f92672">.</span>date_range(<span style="color:#e6db74">&#39;2017-06-23&#39;</span>, periods<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, freq<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;A&#39;</span>),
+    <span style="color:#e6db74">&#39;Values&#39;</span>: [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">57</span>,<span style="color:#ae81ff">32</span>] 
+})
+
+     BS Year  Values
+<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2017</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">31</span>       <span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2018</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">31</span>       <span style="color:#ae81ff">4</span>
+<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2019</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">31</span>      <span style="color:#ae81ff">57</span>
+<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">2020</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">31</span>      <span style="color:#ae81ff">32</span></code></pre></div>
+
+<h2 id="frequency-distribution-1">Frequency distribution</h2>
+
+<h3 id="categorical-or-qualitative">Categorical or qualitative</h3>
+
+<p>Now let's see the frequency distribution for a qualitative variables table:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">categories <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;Blue&#39;</span>, <span style="color:#e6db74">&#39;Red&#39;</span>, <span style="color:#e6db74">&#39;Yellow&#39;</span>]
+
+<span style="color:#75715e"># Create a Pandas series to count occurences</span>
+
+measures <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(
+    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(categories, <span style="color:#ae81ff">200</span>)
+)
+
+<span style="color:#75715e"># Frequency distribution</span>
+frequency_dist <span style="color:#f92672">=</span> measures<span style="color:#f92672">.</span>value_counts()
+
+    Frequency distribution
+    Blue      <span style="color:#ae81ff">71</span>
+    Yellow    <span style="color:#ae81ff">68</span>
+    Red       <span style="color:#ae81ff">61</span>
+    dtype: int64
+ 
+
+<span style="color:#75715e"># Total frequency (sum)</span>
+total_freq <span style="color:#f92672">=</span> frequency_dist<span style="color:#f92672">.</span>sum()
+
+<span style="color:#ae81ff">200</span></code></pre></div>
+
+<h3 id="relative-frequency-and-percentage-distribution">Relative frequency and percentage distribution</h3>
+
+<p>The relative frequency is obtained by dividing the frequency of that category by the sum of all frequencies, showing up the fractional part or porportion of the total frequency belongs to the corresponding category.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">relative_freq <span style="color:#f92672">=</span> freq <span style="color:#f92672">/</span> sum(freq)</code></pre></div>
+
+<p>The percentge of the category is obtained by multiplying the relative frequency on that category by 100:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">percentage <span style="color:#f92672">=</span> (relative_freq) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span></code></pre></div>
+
+<p>How to calculate it on a new DataFrame using the last frequency distribution data:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">distribution <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74">&#39;freq_dist&#39;</span>: frequency_dist})
+
+distribution[<span style="color:#e6db74">&#39;relative_freq&#39;</span>] <span style="color:#f92672">=</span> distribution[<span style="color:#e6db74">&#39;freq_dist&#39;</span>] <span style="color:#f92672">/</span> total_freq
+distribution[<span style="color:#e6db74">&#39;percentage&#39;</span>] <span style="color:#f92672">=</span> distribution[<span style="color:#e6db74">&#39;relative_freq&#39;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
+
+
+        freq_dist  relative_freq  percentage
+Blue           <span style="color:#ae81ff">71</span>           <span style="color:#ae81ff">3.55</span>       <span style="color:#ae81ff">355.0</span>
+Yellow         <span style="color:#ae81ff">68</span>           <span style="color:#ae81ff">3.40</span>       <span style="color:#ae81ff">340.0</span>
+Red            <span style="color:#ae81ff">61</span>           <span style="color:#ae81ff">3.05</span>       <span style="color:#ae81ff">305.0</span></code></pre></div>
+
+<h3 id="graphical-representation">Graphical representation</h3>
+
+<p>Here I am going to present two kind of simple graphing with categorical and usage of percentage/relative frequency, bar graphs and pie chart:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> seaborn
+
+distribution[<span style="color:#e6db74">&#39;freq_dist&#39;</span>]<span style="color:#f92672">.</span>plot(kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bar&#39;</span>)</code></pre></div>
+
+<p><img src="output_15_1.png" alt="output_15_1.png" title="output_15_1.png" /></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">distribution[<span style="color:#e6db74">&#39;percentage&#39;</span>]<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>pie(
+    figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>), autopct<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%.2f</span><span style="color:#e6db74">&#34;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span>
+)<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)</code></pre></div>
+
+<p><img src="output_16_1.png" alt="output_16_1.png" title="output_16_1.png" /></p>
+
+<h2 id="quantitative">Quantitative</h2>
+
+<p>To build a table of frequency distribution with quantitative data the prefered method is the table with intervals. An interval that includes all the values that fall within two numbers - the lower and upper limits - is called a class. Classes should be not overlapped. In the case the frequency of a class represents the number o values in the data set that fall in that class, each class has a lower limit and an upper limit.</p>
+
+<h4 id="the-first-step-to-build-this-is-to-sort-the-data-asc">The first step to build this is to sort the data ASC,</h4>
+
+<h4 id="find-the-number-of-intervals-k-sqrt-n-n-len-samples">Find the number of intervals <strong>(k) = sqrt(n), n = len(samples)</strong></h4>
+
+<h4 id="total-amplitude-of-the-distribution-highest-value-lowest-value">Total amplitude of the distribution (highest value - lowest value)</h4>
+
+<h4 id="approximate-class-width-int-total-amp-interval-number">Approximate class width = <strong>int(total_amp / interval_number)</strong></h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> math
+
+sample <span style="color:#f92672">=</span> sorted([np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">20</span>)])
+<span style="color:#66d9ef">print</span>(sample[:<span style="color:#ae81ff">10</span>])
+<span style="color:#75715e">#    [3, 4, 4, 5, 5, 8, 8, 9, 9, 10]</span>
+
+lower, highest <span style="color:#f92672">=</span> min(sample), max(sample)
+total_amp <span style="color:#f92672">=</span> highest <span style="color:#f92672">-</span> lower
+
+<span style="color:#75715e">#    Lower:  3</span>
+<span style="color:#75715e">#    Highest:  19</span>
+
+num_classes <span style="color:#f92672">=</span> int(math<span style="color:#f92672">.</span>ceil(math<span style="color:#f92672">.</span>sqrt(len(sample))))
+
+<span style="color:#75715e">#    Number of classes:  5</span>
+
+aprox_width <span style="color:#f92672">=</span> int(math<span style="color:#f92672">.</span>ceil(total_amp <span style="color:#f92672">/</span> num_classes))
+
+<span style="color:#75715e">#    Aproxim Class Width:  4</span>
+<span style="color:#75715e">#    Length of sample:  20</span></code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_classes</span>(lower, num_class, width, sample):
+    df <span style="color:#f92672">=</span> DataFrame({<span style="color:#e6db74">&#39;value&#39;</span>: sample})
+    
+    classes <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> range(num_class):
+        lower_lim <span style="color:#f92672">=</span> n <span style="color:#f92672">*</span> width
+        upper_lim <span style="color:#f92672">=</span> lower_lim <span style="color:#f92672">+</span> width
+        
+        klass <span style="color:#f92672">=</span> (lower_lim, upper_lim)
+        classes<span style="color:#f92672">.</span>append(klass)
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_classes</span>(x):
+        <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> classes:
+            l, h <span style="color:#f92672">=</span> c
+            <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> l <span style="color:#f92672">and</span> x <span style="color:#f92672">&lt;=</span> h:
+                <span style="color:#66d9ef">return</span> c
+            <span style="color:#66d9ef">if</span> x <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                <span style="color:#66d9ef">return</span> c
+            
+    df[<span style="color:#e6db74">&#39;class&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;value&#39;</span>]<span style="color:#f92672">.</span>apply(set_classes)
+    <span style="color:#66d9ef">return</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;class&#39;</span>)<span style="color:#f92672">.</span>size()
+    
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_classes_df</span>(sample, num_classes):
+    series <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(sample)
+    ser_ret <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>qcut(series, num_classes)<span style="color:#f92672">.</span>value_counts()
+    ser_ret<span style="color:#f92672">.</span>sort_index(inplace<span style="color:#f92672">=</span>True)
+    <span style="color:#66d9ef">return</span> ser_ret
+
+<span style="color:#75715e">#   Creating by hand:</span>
+<span style="color:#66d9ef">print</span>(create_classes(lower, num_classes, aprox_width, sample))
+
+<span style="color:#75715e">#    class</span>
+<span style="color:#75715e">#    (0, 4)      3</span>
+<span style="color:#75715e">#    (4, 8)      4</span>
+<span style="color:#75715e">#    (8, 12)     7</span>
+<span style="color:#75715e">#    (12, 16)    2</span>
+<span style="color:#75715e">#    (16, 20)    4</span>
+<span style="color:#75715e">#    dtype: int64</span>
+
+<span style="color:#75715e">#   Creating automatic with Pandas:</span>
+freq_class <span style="color:#f92672">=</span> create_classes_df(sample, num_classes)
+total_freq <span style="color:#f92672">=</span> freq_class<span style="color:#f92672">.</span>sum()
+
+
+freq_data <span style="color:#f92672">=</span> DataFrame({<span style="color:#e6db74">&#34;freq_class&#34;</span>: freq_class})
+
+<span style="color:#75715e">#                freq_class</span>
+<span style="color:#75715e">#    [3, 5]               5</span>
+<span style="color:#75715e">#    (5, 9]               4</span>
+<span style="color:#75715e">#    (9, 10]              5</span>
+<span style="color:#75715e">#    (10, 16.2]           2</span>
+<span style="color:#75715e">#    (16.2, 19]           4</span></code></pre></div>
+
+<h3 id="more-frequencies-types-percetual-cumulative-and-relative">More frequencies types - Percetual, cumulative and relative</h3>
+
+<p>The cumulative frequency gives the overview of cumulative values until get to that point, the relative frequency gets the relative frequency for a measure per the entire number of observation and the percentage is the relative frequency in percent format:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">freq_data[<span style="color:#e6db74">&#34;relative_freq&#34;</span>] <span style="color:#f92672">=</span> freq_class<span style="color:#f92672">/</span>total_freq
+freq_data[<span style="color:#e6db74">&#34;prec_freq&#34;</span>] <span style="color:#f92672">=</span> freq_class<span style="color:#f92672">/</span>total_freq <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
+freq_data[<span style="color:#e6db74">&#34;cum&#34;</span>] <span style="color:#f92672">=</span> freq_data[<span style="color:#e6db74">&#39;relative_freq&#39;</span>]<span style="color:#f92672">.</span>cumsum() 
+
+<span style="color:#75715e">#            freq_class  relative_freq  prec_freq   cum</span>
+<span style="color:#75715e">#[3, 5]               5           0.25       25.0  0.25</span>
+<span style="color:#75715e">#(5, 9]               4           0.20       20.0  0.45</span>
+<span style="color:#75715e">#(9, 10]              5           0.25       25.0  0.70</span>
+<span style="color:#75715e">#(10, 16.2]           2           0.10       10.0  0.80</span>
+<span style="color:#75715e">#(16.2, 19]           4           0.20       20.0  1.00</span></code></pre></div>
+
+<h3 id="graphical-representation-1">Graphical representation</h3>
+
+<p>The more common visualization for quantitative data on a frequency classed distribution is the histogram:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+
+df <span style="color:#f92672">=</span> create_classes_df(sample, num_classes)
+out <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>hist(sample, bins<span style="color:#f92672">=</span>num_classes)</code></pre></div>
+
+<p><img src="output_23_0.png" alt="output_23_0.png" title="output_23_0.png" /></p>
+
+<h2 id="exercises-1">Exercises</h2>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1 - A recent report had 6 motives of tension (stress). The research result is in the table above. Construct the frequency table:</span>
+
+table1 <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;DO&#39;</span>, <span style="color:#e6db74">&#39;DG&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;DM&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, 
+          <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DG&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, 
+          <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DO&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, 
+          <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DM&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DO&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DM&#39;</span>, <span style="color:#e6db74">&#39;DG&#39;</span>, 
+          <span style="color:#e6db74">&#39;DM&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, 
+          <span style="color:#e6db74">&#39;DO&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DG&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DG&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, 
+          <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MP&#39;</span>, <span style="color:#e6db74">&#39;DO&#39;</span>, <span style="color:#e6db74">&#39;DO&#39;</span>, <span style="color:#e6db74">&#39;DO&#39;</span>, <span style="color:#e6db74">&#39;DM&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, 
+          <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;DM&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>, <span style="color:#e6db74">&#39;DG&#39;</span>, <span style="color:#e6db74">&#39;DO&#39;</span>, 
+          <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;DG&#39;</span>, <span style="color:#e6db74">&#39;MF&#39;</span>, <span style="color:#e6db74">&#39;MC&#39;</span>]
+
+pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74">&#39;values&#39;</span>: table1})<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;values&#39;</span>)<span style="color:#f92672">.</span>size()
+
+    values
+    DG     <span style="color:#ae81ff">7</span>
+    DM     <span style="color:#ae81ff">6</span>
+    DO     <span style="color:#ae81ff">8</span>
+    MC    <span style="color:#ae81ff">12</span>
+    MF    <span style="color:#ae81ff">16</span>
+    MP    <span style="color:#ae81ff">11</span>
+    dtype: int64</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 2 - The following data presents the profit from families on a specific neighborhood, construct the frequency distribution, being k = 6, calculating the size of interval ceil the number: 3.84 ~= 4.</span>
+
+data <span style="color:#f92672">=</span> [<span style="color:#ae81ff">115</span>,<span style="color:#ae81ff">121</span>,<span style="color:#ae81ff">117</span>,<span style="color:#ae81ff">124</span>,<span style="color:#ae81ff">122</span>,<span style="color:#ae81ff">116</span>,<span style="color:#ae81ff">123</span>,<span style="color:#ae81ff">118</span>,
+        <span style="color:#ae81ff">123</span>,<span style="color:#ae81ff">119</span>,<span style="color:#ae81ff">123</span>,<span style="color:#ae81ff">126</span>,<span style="color:#ae81ff">128</span>,<span style="color:#ae81ff">122</span>,<span style="color:#ae81ff">112</span>,<span style="color:#ae81ff">125</span>,
+        <span style="color:#ae81ff">124</span>,<span style="color:#ae81ff">126</span>,<span style="color:#ae81ff">125</span>,<span style="color:#ae81ff">121</span>,<span style="color:#ae81ff">129</span>,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">128</span>,<span style="color:#ae81ff">129</span>,
+        <span style="color:#ae81ff">113</span>,<span style="color:#ae81ff">115</span>,<span style="color:#ae81ff">116</span>,<span style="color:#ae81ff">124</span>,<span style="color:#ae81ff">119</span>,<span style="color:#ae81ff">118</span>,<span style="color:#ae81ff">126</span>,<span style="color:#ae81ff">129</span>,
+        <span style="color:#ae81ff">116</span>,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">123</span>,<span style="color:#ae81ff">121</span>]
+
+v, bins, _ <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>hist(data, <span style="color:#ae81ff">6</span>)
+
+<span style="color:#75715e"># values</span>
+<span style="color:#75715e">#    [ 2.  6.  4.  9.  8.  7.]</span>
+
+<span style="color:#75715e"># bins</span>
+<span style="color:#75715e">#    [ 112.          114.83        117.66</span>
+<span style="color:#75715e">#       120.5         123.33        126.16</span>
+<span style="color:#75715e">#       129.        ]</span></code></pre></div>
+
+<p><img src="output_27_1.png" alt="output_27_1.png" title="output_27_1.png" /></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 3 - Number of accidents by month grouping is in the following table, find the cumulative frequency, relative frequency and percentage:</span>
+
+
+df <span style="color:#f92672">=</span> DataFrame({
+    <span style="color:#e6db74">&#39;accidents&#39;</span>: [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>],
+    <span style="color:#e6db74">&#39;months&#39;</span>: [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]
+})
+
+df[<span style="color:#e6db74">&#39;cum&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;months&#39;</span>]<span style="color:#f92672">.</span>cumsum()
+df[<span style="color:#e6db74">&#39;fr&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;months&#39;</span>] <span style="color:#f92672">/</span> df[<span style="color:#e6db74">&#39;months&#39;</span>]<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">4</span>)
+df[<span style="color:#e6db74">&#39;perc&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;fr&#39;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">2</span>)
+
+
+   accidents  months  cum      fr   perc
+<span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">3</span>       <span style="color:#ae81ff">4</span>    <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">0.1111</span>  <span style="color:#ae81ff">11.11</span>
+<span style="color:#ae81ff">1</span>          <span style="color:#ae81ff">4</span>       <span style="color:#ae81ff">5</span>    <span style="color:#ae81ff">9</span>  <span style="color:#ae81ff">0.1389</span>  <span style="color:#ae81ff">13.89</span>
+<span style="color:#ae81ff">2</span>          <span style="color:#ae81ff">5</span>       <span style="color:#ae81ff">9</span>   <span style="color:#ae81ff">18</span>  <span style="color:#ae81ff">0.2500</span>  <span style="color:#ae81ff">25.00</span>
+<span style="color:#ae81ff">3</span>          <span style="color:#ae81ff">6</span>       <span style="color:#ae81ff">7</span>   <span style="color:#ae81ff">25</span>  <span style="color:#ae81ff">0.1944</span>  <span style="color:#ae81ff">19.44</span>
+<span style="color:#ae81ff">4</span>          <span style="color:#ae81ff">7</span>       <span style="color:#ae81ff">5</span>   <span style="color:#ae81ff">30</span>  <span style="color:#ae81ff">0.1389</span>  <span style="color:#ae81ff">13.89</span>
+<span style="color:#ae81ff">5</span>          <span style="color:#ae81ff">8</span>       <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">36</span>  <span style="color:#ae81ff">0.1667</span>  <span style="color:#ae81ff">16.67</span></code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 4 - Construct the polygon of frequency and histogram for this frequency distribution:</span>
+
+df <span style="color:#f92672">=</span> DataFrame({
+    <span style="color:#e6db74">&#39;time_sleep&#39;</span>: [(<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">12</span>), (<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">17</span>), (<span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">22</span>), (<span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">27</span>), (<span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">32</span>), (<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">37</span>)],
+    <span style="color:#e6db74">&#39;rats&#39;</span>: [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">2</span>]
+})
+df<span style="color:#f92672">.</span>set_index(<span style="color:#e6db74">&#39;time_sleep&#39;</span>, inplace<span style="color:#f92672">=</span>True)
+
+df<span style="color:#f92672">.</span>plot(subplots<span style="color:#f92672">=</span>df<span style="color:#f92672">.</span>plot(kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bar&#39;</span>))</code></pre></div>
+
+<p><img src="output_31_1.png" alt="output_31_1.png" title="output_31_1.png" />
+<img src="output_31_2.png" alt="output_31_2.png" title="output_31_2.png" /></p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

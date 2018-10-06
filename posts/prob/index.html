@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Probability</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Probability" />
+<meta property="og:description" content="Sample space An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.
+| Experiment | Outcomes | Sample Space ||------------------|-------------|-------------------|| Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} || Tooss a coin once| Head, Tail | S = {Head, Tail} | Events An event, usually signified by E or any capital letter other than S, is the specification of the outcome of a trial and can consist of a single outcome or a set of outcomes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/prob/" /><meta property="article:published_time" content="2017-07-01T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-07-01T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Probability">
+<meta itemprop="description" content="Sample space An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.
+| Experiment | Outcomes | Sample Space ||------------------|-------------|-------------------|| Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} || Tooss a coin once| Head, Tail | S = {Head, Tail} | Events An event, usually signified by E or any capital letter other than S, is the specification of the outcome of a trial and can consist of a single outcome or a set of outcomes.">
+
+
+<meta itemprop="datePublished" content="2017-07-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-07-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2428">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Probability"/>
+<meta name="twitter:description" content="Sample space An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.
+| Experiment | Outcomes | Sample Space ||------------------|-------------|-------------------|| Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} || Tooss a coin once| Head, Tail | S = {Head, Tail} | Events An event, usually signified by E or any capital letter other than S, is the specification of the outcome of a trial and can consist of a single outcome or a set of outcomes."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Probability</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2017-07-01T00:00:00Z">July 1, 2017</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="sample-space">Sample space</h2>
+
+<p>An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>| Experiment       | Outcomes    | Sample Space      |<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>|------------------|-------------|-------------------|<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>| Roll a die       | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} |<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>| Tooss a coin once| Head, Tail  | S = {Head, Tail}  |</code></pre></div>
+
+<h2 id="events">Events</h2>
+
+<p>An event, usually signified by E or any capital letter other than S, is the specification
+of the outcome of a trial and can consist of a single outcome or a set of outcomes. Is a collectoin of one or more of the outcomes of an experiment. These are devided in simple (includes one and only one of the final outcomes) and compound events (is a collection of more than one outcome).</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>Simple event: For example, the head in flipping the coin <span style="color:#66d9ef">-</span> E = {heads}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>Compount event: For example, the roll of a dice which events are less than 4 - E = {1,2,3,4}</code></pre></div>
+
+<h2 id="calculating-probability">Calculating probability</h2>
+
+<p>The probability of an event always lies in the range 0 to 1</p>
+
+<p>The sum of the probabilities of all simple events (or final outcomes) for an experiment, denoted by sum(P(E)) is always 1.</p>
+
+<h2 id="marginal-or-simple">Marginal or simple</h2>
+
+<p>Simple probability or marginal, is the probability of a single event without consideration of any other event. With the table below we can extract the 4 possible probabilities, of P(female), P(male), P(in_favor), P(against):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">from</span> pandas <span style="color:#f92672">import</span> DataFrame
+
+df <span style="color:#f92672">=</span> DataFrame({
+    <span style="color:#e6db74">&#39;in_favor&#39;</span>: [<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">4</span>], 
+    <span style="color:#e6db74">&#39;against&#39;</span>: [<span style="color:#ae81ff">45</span>, <span style="color:#ae81ff">36</span>]
+}, index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#e6db74">&#39;female&#39;</span>])
+
+df_total <span style="color:#f92672">=</span> DataFrame({
+    <span style="color:#e6db74">&#39;in_favor&#39;</span>: df[<span style="color:#e6db74">&#39;in_favor&#39;</span>]<span style="color:#f92672">.</span>sum(), 
+    <span style="color:#e6db74">&#39;against&#39;</span>: df[<span style="color:#e6db74">&#39;against&#39;</span>]<span style="color:#f92672">.</span>sum()
+},index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;total&#39;</span>])
+
+df_table <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([df, df_total])
+df_table[<span style="color:#e6db74">&#39;total&#39;</span>] <span style="color:#f92672">=</span> df_table<span style="color:#f92672">.</span>sum(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+<span style="color:#75715e">#            against  in_favor  total</span>
+<span style="color:#75715e">#    male         45        15     60</span>
+<span style="color:#75715e">#    female       36         4     40</span>
+<span style="color:#75715e">#    total        81        19    100</span></code></pre></div>
+
+<p>Probabilities calculations:</p>
+
+<h5 id="p-male-60-100-60">P_male = 60/100 = 60</h5>
+
+<h5 id="p-female-40-100-40">P_female = 40/100 = .40</h5>
+
+<h5 id="p-in-favor-19-100-19">P_in_favor =  19/100 = .19</h5>
+
+<h5 id="p-against-81-100-81">P_against = 81/100 = .81</h5>
+
+<h2 id="conditional-probability">Conditional Probability</h2>
+
+<p>Is the probability of that an event will occur given that another event has already occurred. If A and B are two events, then the conditional probability of A given B is written as P(A\|B), the probability of A given that B has already ocurred.</p>
+
+<p>Given the same data compute the conditional probability P(in_favor\|male):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(in_favor|male) = male_in_favor / total_males = 15 / 60 = .25</code></pre></div>
+
+<h2 id="mutually-exclusive-events">Mutually Exclusive Events</h2>
+
+<p>Events that cannot occur together, for example: <strong>A = {2,4,6}, B = {1,3,5}</strong></p>
+
+<h2 id="independent-vs-dependend-events">Independent vs. Dependend Events</h2>
+
+<p>Two events are said to be independent if the occurence of one does not affect the probability of occurence of the other. In other words A and B are independent events if:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A|B) = P(A) or P(B|A) = P(B)</code></pre></div>
+
+<p>If the occurence of one event affects the probability of the occurence of the other event, then the two events are said to be dependent evetns.</p>
+
+<h2 id="intersection-of-events">Intersection of Events</h2>
+
+<p>The intersection of A and B represents the collection of all outcomes that are common to both, it's is called joint probability. For example A = {1,3} and B = {1,2} = {1}</p>
+
+<p>The probability of intersections of two events is calculated by <strong>P(A and B) = P(A) P(B\|A)</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>From the same table before what&#39;s the probability of a random selected person be male and in favor?<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A) = 60 / 100 = .60<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(B|A) = P(in_favor|male) = 15 / 60 = .25<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A and B) = P(A) <span style="font-style:italic">* P(B|A) = .60 *</span> .25 = .15</code></pre></div>
+
+<h2 id="union-of-events">Union of Events</h2>
+
+<p>Union of several simple events creates a compound event that occurs if one or more of the events occour, on the same dice A = {1,3} and B = {1,2}, A or B = {1,2,3}.</p>
+
+<p>For not mutually exclusive we use this: <strong>P(A or B) = P(A) + P(B) - P(A and B)</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>Again from the table above find the probability of the random selected person be a female OR against.<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A) = 40 / 100 = .40<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(B) = 81 / 100 = .81<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(against|female) = 36 / 40 = 0.9<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A and B) = .40 <span style="color:#66d9ef">*</span> .9 = 0.36<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>(.40 + .81) <span style="color:#66d9ef">-</span> 0.36 = 0.85<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>Or 40 (total_fem) + 45 (other against) = 85</code></pre></div>
+
+<h2 id="complement">Complement</h2>
+
+<p>Means everything in the sample space that is not that event. The complement of event A is written as ~A and is read as "not A" or "A complement", if on a dice roll A = {1,2}, ~A = {3,4,5,6}.</p>
+
+<p>The equation to calculate the probability for it is: <strong>~P(A) = 1 - P(A)</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>For example, in a groups of 5000 adults, 3500 are in favor of stricter gun control law, 1200 are against such laws, and 300 have no opinion. A is the event that this adult is in favor of stricter gun control law. What is the complementary event of A?<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A) = 3500/5000 = .70<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>~P(A) = 1 - .70 = .30</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+A, B <span style="color:#f92672">=</span> set([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>]), set([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>])
+<span style="color:#75715e"># Union</span>
+<span style="color:#66d9ef">print</span>(A <span style="color:#f92672">&amp;</span> B)
+{<span style="color:#ae81ff">1</span>}
+
+<span style="color:#75715e"># Intersection</span>
+<span style="color:#66d9ef">print</span>(A <span style="color:#f92672">|</span> B)
+{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}
+
+<span style="color:#75715e"># Complement</span>
+space <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>}
+<span style="color:#66d9ef">print</span>(space <span style="color:#f92672">-</span> A)
+{<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>}</code></pre></div>
+
+<h2 id="permutations">Permutations</h2>
+
+<p>Are all possible ways elements in a set can be arranged. If a set consists of the elements (a,b,c) then the permutations sets are: (a,b,c) (a,c,b) (b,a,c) (b,c,a) (c,a,b) and (c,b,a)</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">import</span> math
+<span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> permutations
+
+<span style="color:#66d9ef">print</span>(list(permutations([<span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#e6db74">&#39;b&#39;</span>,<span style="color:#e6db74">&#39;c&#39;</span>])))
+[(<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>), (<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>), (<span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>), (<span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>), (<span style="color:#e6db74">&#39;c&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>), (<span style="color:#e6db74">&#39;c&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>)]
+
+<span style="color:#66d9ef">print</span>(math<span style="color:#f92672">.</span>factorial(<span style="color:#ae81ff">3</span>))
+<span style="color:#ae81ff">6</span></code></pre></div>
+
+<h2 id="combinations">Combinations</h2>
+
+<p>Are similar to permutations with the diference that the order of elements is not significant in combinations. Therefore (a,b,c) is the same combination as (b,a,c). So there is only one combination (a,b,c).</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> combinations
+
+list(combinations([<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>], <span style="color:#ae81ff">3</span>))
+[(<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>)]</code></pre></div>
+
+<p>NOTE: Using the notation the number of permutation possible when drawing 2 
+elements from a set of 3 is written 3P2, and the number of combinations of 2 elements from a set of 3 is 3C2 for the set (a,b,c) 3P2 = 6, because there are 6 permutations of 2 elements drawn from a set of 3. Three combinations of 2 are possible from this set as 3C2 = 3.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>The calculation of permutation for this is nPk = n! / (n-k)!. <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>The calculation for combinations for this is nCk = n! / k!(n -k)!</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#66d9ef">print</span>(list(combinations([<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>], <span style="color:#ae81ff">2</span>)))
+[(<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>), (<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>), (<span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>)]
+
+<span style="color:#66d9ef">print</span>(list(permutations([<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>], <span style="color:#ae81ff">2</span>)))
+[(<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>), (<span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>), (<span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>), (<span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;c&#39;</span>), (<span style="color:#e6db74">&#39;c&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>), (<span style="color:#e6db74">&#39;c&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>)]
+
+n <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+
+<span style="color:#75715e"># Permutation</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calc_perm</span>(n, k):
+    <span style="color:#66d9ef">return</span> math<span style="color:#f92672">.</span>factorial(n) <span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>factorial(n <span style="color:#f92672">-</span> k)
+<span style="color:#66d9ef">print</span>(calc_perm(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>))
+<span style="color:#ae81ff">6.0</span>
+
+<span style="color:#75715e"># Combination</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calc_comb</span>(n, k):
+    <span style="color:#66d9ef">return</span> math<span style="color:#f92672">.</span>factorial(n) <span style="color:#f92672">/</span> (math<span style="color:#f92672">.</span>factorial(k) <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>factorial(n <span style="color:#f92672">-</span> k))
+
+<span style="color:#66d9ef">print</span>(calc_comb(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>))
+<span style="color:#ae81ff">3.0</span></code></pre></div>
+
+<h2 id="bayes-theorem">Bayes' theorem</h2>
+
+<p>A very cool applied problem is extracted from the book, it's called the Cookie problem. Suppose there are two bowls of cookies.</p>
+
+<h3 id="bowl-1-contains-30-vanilla-cookies-and-10-chocolate-cookies">Bowl 1 contains 30 vanilla cookies and 10 chocolate cookies.</h3>
+
+<h3 id="bowl-2-contains-20-vanilla-cookies-and-20-chocolate-cookies">Bowl 2 contains 20 vanilla cookies and 20 chocolate cookies.</h3>
+
+<p>Suppose you choose one of the bowls at random, and without looking, select a cookie at random. The cookie is vanilla. What is the probability that it came from Bowl 1?</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>We want p(Bowl 1|vanilla) not p(vanilla|Bowl 1), the answer for this second is 30/40, and the answer would be What is the probability of get a vanilla cookie from Bowl <span style="color:#66d9ef">1.</span> p(A|B) != p(B|A). To find the answer we can go to the Baye&#39;s theorem, find out more on the book:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A|B) = P(A) <span style="color:#66d9ef">*</span> p(B|A) / P(B)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A) = 1/2 (random bowl) = .5<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(B|A) = 30/40<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(B) = 50 / 80 (probability of get it from both bowls)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>P(A|B) = (.5 * .75) / 0.625 = 0.6 for bowl 1 and 1 - .6 = .4 for bowl 2</code></pre></div>
+
+<p>It makes sense since we have more cookies on Bowl 1, so the chance to have the cookie there is higher.</p>
+
+<p>Gaussian Naive Bayes is a supervised learning algorithm based on applying the Baye's theorem with the "naive" assumption of independence between every pair of feature. It uses</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> sklearn.naive_bayes <span style="color:#f92672">import</span> GaussianNB
+
+<span style="color:#75715e"># Suppose vanilla cookie is represented by 1 and chocolate by 2</span>
+<span style="color:#75715e"># lets fill the bowls</span>
+    
+bowl_1 <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> x: [x], ([<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">30</span>) <span style="color:#f92672">+</span> ([<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>)))
+bowl_2 <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> x: [x], ([<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">20</span>) <span style="color:#f92672">+</span> ([<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">20</span>)))
+
+<span style="color:#75715e"># To create the target list we fill a list with B1 for bowl_1</span>
+<span style="color:#75715e"># and B2 for bowl_2</span>
+data <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(bowl_1 <span style="color:#f92672">+</span> bowl_2)
+target <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;b1&#39;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">40</span> <span style="color:#f92672">+</span> [<span style="color:#e6db74">&#39;b2&#39;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">40</span>
+
+<span style="color:#75715e"># Training the predictor</span>
+pred <span style="color:#f92672">=</span> GaussianNB()
+pred<span style="color:#f92672">.</span>fit(data, target)
+
+<span style="color:#75715e"># Where&#39;s my vanilla cookie came from?</span>
+<span style="color:#66d9ef">print</span>(pred<span style="color:#f92672">.</span>predict(<span style="color:#ae81ff">1</span>))
+[<span style="color:#e6db74">&#39;b1&#39;</span>]
+
+<span style="color:#75715e"># What are the probabilities?</span>
+<span style="color:#66d9ef">print</span>(pred<span style="color:#f92672">.</span>classes_)
+[<span style="color:#e6db74">&#39;b1&#39;</span> <span style="color:#e6db74">&#39;b2&#39;</span>]
+
+<span style="color:#66d9ef">print</span>(pred<span style="color:#f92672">.</span>predict_proba(<span style="color:#ae81ff">1</span>))
+[[ <span style="color:#ae81ff">0.61708042</span>  <span style="color:#ae81ff">0.38291958</span>]]</code></pre></div>
+
+<h3 id="exercises">Exercises</h3>
+
+<p>1- If I draw one card from an ordinary deck of 52 playing cards, what is the probabiliy that it will be a red card.</p>
+
+<h5 id="trial-is-a-single-draw-of-one-card-from-a-deck-of-52">Trial is a single draw of one card from a deck of 52</h5>
+
+<h5 id="s-all-card-which-have-an-equal-prob">S = {all card which have an equal prob}</h5>
+
+<h5 id="e-red-card">E = {red card}</h5>
+
+<h5 id="prob-26-52-0-5-100-50-of-chances">prob = 26/52 = 0.5 * 100 (50%) of chances.</h5>
+
+<p>2- If I roll a dice once, what is the probability of getting a number lower than 5?</p>
+
+<h5 id="the-trial-is-a-single-roll-of-a-six-sided-dice">The trial is a single roll of a six-sided dice.</h5>
+
+<h5 id="s-1-6">S = {1..6}</h5>
+
+<h5 id="e-5">E = {< 5}</h5>
+
+<h5 id="prop-4-6-0-67-67-of-chance">prop = 4/6 = 0.67 (67%) of chance.</h5>
+
+<p>3- If order is not significant, how many ways are there to select a subset of 5 students from a classroom of 20?</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#75715e"># 20C5</span>
+n <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+<span style="color:#66d9ef">print</span>(calc_comb(n, k))
+
+<span style="color:#ae81ff">15504.0</span></code></pre></div>
+
+<p>4- If I flip a fair coin twice, what is the probability that I will get at least on head?</p>
+
+<p>The probability of getting two heads of independent tosses are P(A and B) = 0.5 * 0.5 = 0.25, so we can get the complement with 1 - ~P(A and B) = 0.75</p>
+
+<h2 id="distribution">Distribution</h2>
+
+<h3 id="discrete-random-variables">Discrete Random Variables</h3>
+
+<p>A random variable is a variable whose value is determinated by the outcome of a random experiment. A discrete variable that assumes countable values is called a discrete random variable</p>
+
+<h3 id="binomial-probability-distribution">Binomial Probability Distribution</h3>
+
+<p>Conditions:</p>
+
+<h4 id="there-are-n-identical-trials">There are n identical trials.</h4>
+
+<h4 id="each-trial-has-only-two-possible-outcomes">Each trial has only two possible outcomes.</h4>
+
+<h4 id="the-probabilities-of-the-two-outcomes-remain-constant">the probabilities of the two outcomes remain constant.</h4>
+
+<h4 id="the-trails-are-independent">The trails are independent.</h4>
+
+<p>One of the two outcomes of a trial is called a success and the other a failure.</p>
+
+<p>The binomial formula is: P(x) = nCx * (p**x) * (q**n-x)</p>
+
+<h4 id="n-total-number-of-trials">n = total number of trials</h4>
+
+<h4 id="p-probability-of-success">p = probability of success</h4>
+
+<h4 id="q-1-p-probability-of-failure">q = 1 - p = probability of failure</h4>
+
+<h4 id="x-number-of-successes-in-n-trials">x = number of successes in n trials</h4>
+
+<h4 id="n-x-number-of-failures-in-n-trials">n - x = number of failures in n trials</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">import</span> math
+<span style="color:#f92672">import</span> scipy.stats
+
+<span style="color:#75715e"># Given an example, 10% of all machines manufactured by a large </span>
+<span style="color:#75715e"># eletronic company are defective. A quality control inspetor randonmly </span>
+<span style="color:#75715e"># selects three machines from the production line. </span>
+<span style="color:#75715e"># What is the probability that exactly ONE of the THREE machines is</span>
+<span style="color:#75715e"># defective?</span>
+
+p <span style="color:#f92672">=</span> <span style="color:#f92672">.</span><span style="color:#ae81ff">10</span>  <span style="color:#75715e"># p(success) - get a defective machine</span>
+q <span style="color:#f92672">=</span> <span style="color:#f92672">.</span><span style="color:#ae81ff">90</span>  <span style="color:#75715e"># 1 - p</span>
+n <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e">#  number of trials - machines</span>
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># number of success</span>
+
+three_comb_1 <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>factorial(n) <span style="color:#f92672">/</span> (math<span style="color:#f92672">.</span>factorial(x) <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>factorial(n <span style="color:#f92672">-</span> x))
+
+p_x_1 <span style="color:#f92672">=</span> three_comb_1 <span style="color:#f92672">*</span> (p <span style="color:#f92672">**</span> x) <span style="color:#f92672">*</span> (q <span style="color:#f92672">**</span> (n <span style="color:#f92672">-</span> x))
+<span style="color:#66d9ef">print</span>(p_x_1)
+<span style="color:#ae81ff">0.24300000000000005</span>
+
+<span style="color:#75715e"># Using ScipPy</span>
+<span style="color:#66d9ef">print</span>(round(scipy<span style="color:#f92672">.</span>stats<span style="color:#f92672">.</span>binom<span style="color:#f92672">.</span>pmf(x, n, p), <span style="color:#ae81ff">4</span>))
+<span style="color:#ae81ff">0.243</span></code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#75715e"># For the other example, we have a test&#39;s question with 5 alternatives, </span>
+<span style="color:#75715e"># just ONE is correct, which is the probability of miss TWO questions?</span>
+
+n <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+p <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>
+q <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>
+
+four_comb_2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>
+
+p_x_2 <span style="color:#f92672">=</span> four_comb_2 <span style="color:#f92672">*</span> (p<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> (q<span style="color:#f92672">**</span>(n<span style="color:#f92672">-</span>x))
+<span style="color:#66d9ef">print</span>(p_x_2)
+<span style="color:#ae81ff">0.15360000000000007</span>
+
+<span style="color:#75715e"># Using ScipPy</span>
+<span style="color:#66d9ef">print</span>(round(scipy<span style="color:#f92672">.</span>stats<span style="color:#f92672">.</span>binom<span style="color:#f92672">.</span>pmf(x, n, p), <span style="color:#ae81ff">4</span>))
+<span style="color:#ae81ff">0.1536</span></code></pre></div>
+
+<h2 id="continuous-random-variables">Continuous Random Variables</h2>
+
+<h3 id="probability-distribution">Probability distribution</h3>
+
+<p>A continuous random variable is a random variables whose values are not countables. Because the number of values in the interval can be infinite. The probability distribution of a continuous random variable possesses the following two characteristics:</p>
+
+<h5 id="the-probability-that-x-assumes-a-value-in-any-interval-lies-in-the-range-0-to-1">The probability that x assumes a value in any interval lies in the range 0 to 1.</h5>
+
+<h5 id="the-total-probability-of-all-the-mutually-exclusive-intervals-within-which-x-can-assume-a-value-is-1-0">The total probability of all the (mutually exclusive) intervals within which x can assume a value is 1.0</h5>
+
+<p>The probability that a continuous random variable x assumes a single value is always zero.</p>
+
+<h2 id="normal-distribution">Normal distribution</h2>
+
+<p>A continuous random variable x that has a normal distrubution is called a normal random variable. The charactestics for these kind of distribution is:</p>
+
+<h5 id="the-total-area-under-the-curve-is-1-0">The total area under the curve is 1.0.</h5>
+
+<h5 id="the-curve-is-symmetric-about-the-mean">The curve is symmetric about the mean.</h5>
+
+<h5 id="the-two-tails-of-the-the-curve-extends-indefinitely">The two tails of the the curve extends indefinitely.</h5>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#f92672">%</span>matplotlib inline
+
+<span style="color:#f92672">import</span> numpy
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+
+<span style="color:#75715e"># Creating standard normal distribution data</span>
+mu, sigma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+s <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(mu, sigma, <span style="color:#ae81ff">1000</span>)
+
+count, bins, ignored <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>hist(s, <span style="color:#ae81ff">30</span>, normed<span style="color:#f92672">=</span>True)
+
+<span style="color:#75715e"># Display histogram of distribution and PDF</span>
+plt<span style="color:#f92672">.</span>plot(bins, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>(sigma <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>pi)) <span style="color:#f92672">*</span>
+         np<span style="color:#f92672">.</span>exp( <span style="color:#f92672">-</span> (bins <span style="color:#f92672">-</span> mu)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> sigma<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>) ))</code></pre></div>
+
+<p><img src="output_4_1.png" alt="output_4_1.png" title="output_4_1.png" /></p>
+
+<h2 id="standard-normal-distribution">Standard normal distribution</h2>
+
+<p>The normal distribution with a mean of 0 and a standard deviation of 1 is known as the standard normal distribution or Z distribution. The random variable that possesses the standard normal distribution is denoted by Z. The units are called z values or z scores.</p>
+
+<p>Any normal distribution can be transformed to the standard normal distribution by converting the original values to standardized scores.</p>
+
+<p>Converting an x Value to a z Value: For a normal random variable x, a particular value of x can be converted to its corresponding z value by using the formula:</p>
+
+<h4 id="z-x-mu-sigma">z = (x - mu) / sigma</h4>
+
+<p>You can use a table like:</p>
+
+<p>http://math.arizona.edu/~rsims/ma464/standardnormaltable.pdf</p>
+
+<p>Or numpy to help us find the probability that a X number is inside a range of two points of the curve.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#75715e"># Exercises</span>
+
+<span style="color:#75715e"># 1. A delivery company have measured that mean time to delivery is</span>
+<span style="color:#75715e"># 21 minutes and the standard deviation is 7 minutes. For a random</span>
+<span style="color:#75715e"># delivery, what is the probability of the time be in 21 - 28 minutes.</span>
+
+<span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> norm
+mu, sigma <span style="color:#f92672">=</span> <span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">7</span>
+
+z1 <span style="color:#f92672">=</span> norm(mu, sigma)<span style="color:#f92672">.</span>cdf(<span style="color:#ae81ff">21</span>)
+z2 <span style="color:#f92672">=</span> norm(mu, sigma)<span style="color:#f92672">.</span>cdf(<span style="color:#ae81ff">28</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Probability %&#34;</span>, (z2 <span style="color:#f92672">-</span> z1) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>)
+
+Probability <span style="color:#f92672">%</span> <span style="color:#ae81ff">34.1344746069</span></code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+<span style="color:#75715e"># 2. For a mean of 24 years and a standard deviation of 6 years, what</span>
+<span style="color:#75715e"># is the probability of a machine long between 17.52 and 29.7 years.</span>
+
+mu, sigma <span style="color:#f92672">=</span> <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">6</span>
+
+z1 <span style="color:#f92672">=</span> norm(mu, sigma)<span style="color:#f92672">.</span>cdf(<span style="color:#ae81ff">17.52</span>)
+z2 <span style="color:#f92672">=</span> norm(mu, sigma)<span style="color:#f92672">.</span>cdf(<span style="color:#ae81ff">29.7</span>)
+
+<span style="color:#66d9ef">print</span>((z2 <span style="color:#f92672">-</span> z1) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>)
+<span style="color:#ae81ff">68.8872783603</span></code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+mu, sigma <span style="color:#f92672">=</span> <span style="color:#ae81ff">126</span>, <span style="color:#ae81ff">10</span>
+<span style="color:#75715e"># 3. Calculate the zcore for 116, 136, 131, 141</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">zscore</span>(x, mu, sigma):
+    <span style="color:#66d9ef">return</span> (x <span style="color:#f92672">-</span> mu) <span style="color:#f92672">/</span> sigma
+
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> [<span style="color:#ae81ff">116</span>, <span style="color:#ae81ff">136</span>, <span style="color:#ae81ff">131</span>, <span style="color:#ae81ff">141</span>]:
+    <span style="color:#66d9ef">print</span>(zscore(x, mu, sigma))
+
+<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>
+<span style="color:#ae81ff">1.0</span>
+<span style="color:#ae81ff">0.5</span>
+<span style="color:#ae81ff">1.5</span>
+
+<span style="color:#75715e"># What is the probability of get someone with score higher than 136.</span>
+<span style="color:#66d9ef">print</span>( norm(mu, sigma)<span style="color:#f92672">.</span>cdf(<span style="color:#ae81ff">136</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0.5</span>)
+<span style="color:#ae81ff">0.341344746069</span></code></pre></div>
+
+<h2 id="bibliography">Bibliography</h2>
+
+<h5 id="1-http-www-greenteapress-com-thinkbayes-thinkbayes-pdf">[1] http://www.greenteapress.com/thinkbayes/thinkbayes.pdf</h5>
+
+<h5 id="2-http-shop-oreilly-com-product-0636920023074-do">[2] http://shop.oreilly.com/product/0636920023074.do</h5>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

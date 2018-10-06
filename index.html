@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
-<meta property="og:updated_time" content="2018-03-25T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2018-10-06T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -121,6 +121,30 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/sm/" class="color-inherit dim link">
+            Service Mesh - Part I
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
+        </div>
+          <a href="/posts/sm/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/technical/" class="color-inherit dim link">
             Technical indicators
             </a>
@@ -146,40 +170,15 @@ The idea of this post is to show up how to calculate the most common one using t
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/mysql/" class="color-inherit dim link">
-            Monitoring MySQL w/ Prometheus
+          <a href="/posts/statsmore/" class="color-inherit dim link">
+            More statistics and Python
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
-So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.
+          Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let's get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.
         </div>
-          <a href="/posts/mysql/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/consul/" class="color-inherit dim link">
-            Consul - Service Discovery
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
-A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?
-        </div>
-          <a href="/posts/consul/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+          <a href="/posts/statsmore/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -196,26 +195,26 @@ A long term solution to the problem is to use DNS, an address name resolver. It 
         
         
           <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/finance/" class="link black dim">
-              General finance formulas
+            <a href="/posts/prob/" class="link black dim">
+              Probability
             </a>
           </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/capacity/" class="link black dim">
-              Tsung Capacity Test
+            <a href="/posts/stats/" class="link black dim">
+              Statistics and Python
             </a>
           </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/apk/" class="link black dim">
-              
+              Android APK hacking
             </a>
           </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/cddeis/" class="link black dim">
-              
+              Continuous Deployment and DEIS
             </a>
           </h2>
         

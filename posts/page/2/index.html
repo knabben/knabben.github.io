@@ -35,6 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
+<meta property="og:updated_time" content="2016-01-16T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="">
@@ -94,12 +95,13 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube/" class="link black dim">
-        
+      <a href="/posts/mysql/" class="link black dim">
+        Monitoring MySQL w/ Prometheus
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      
+      Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.
     </div>
   </div>
 </div>
@@ -109,12 +111,13 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/prob/" class="link black dim">
-        
+      <a href="/posts/consul/" class="link black dim">
+        Consul - Service Discovery
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      
+      Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
+A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?
     </div>
   </div>
 </div>
@@ -124,12 +127,15 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/smi/" class="link black dim">
-        
+      <a href="/posts/finance/" class="link black dim">
+        General finance formulas
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      
+      Future value import numpy as np import warnings warnings.filterwarnings(&#34;ignore&#34;) Fv represents the future value of an operation in a particular time. The value Pv is multiplied
+Fv representa o valor futuro de uma operação em determinado instante, cujo valor Presente P foi acrescido da taxa i (expressa em sua forma decimal), n vezes, de forma composta (juros sobre juros).
+\begin{align} Fv = Pv * (1 + i)^n \end{align}
+def fv(pv, n, i): print(&#39;{0:.
     </div>
   </div>
 </div>
@@ -139,42 +145,14 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/smii/" class="link black dim">
-        
+      <a href="/posts/capacity/" class="link black dim">
+        Tsung Capacity Test
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/stats-more/" class="link black dim">
-        
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/stats/" class="link black dim">
-        
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      
+      Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.
     </div>
   </div>
 </div>
