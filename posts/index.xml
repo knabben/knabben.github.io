@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on AK</title>
-    <link>http://example.org/posts/</link>
+    <link>http://knabben.github.io/posts/</link>
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 26 Jul 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://example.org/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Tsung Capacity Test</title>
-      <link>http://example.org/posts/capacity/</link>
+      <link>http://knabben.github.io/posts/capacity/</link>
       <pubDate>Sun, 26 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/capacity/</guid>
+      <guid>http://knabben.github.io/posts/capacity/</guid>
       <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
 NOTE If you are interested on real traffic replication, consider this project [2].
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
@@ -24,10 +24,10 @@ Configuration On tsung.xml we start the test plan, you can include here the list
     
     <item>
       <title>NoSQL databases comparision</title>
-      <link>http://example.org/posts/nosql-compare/</link>
+      <link>http://knabben.github.io/posts/nosql-compare/</link>
       <pubDate>Sat, 30 May 2015 09:26:48 +0000</pubDate>
       
-      <guid>http://example.org/posts/nosql-compare/</guid>
+      <guid>http://knabben.github.io/posts/nosql-compare/</guid>
       <description>Introdução A idéia desta série de posts é destacar as features principais do InfluxDB e MongoDB, levantando os pontos positivos e negativos de cada um deles. Para o ambiente utilizarei Debian Wheezy em uma AMI do tipo m1.large.
 MongoDB O MongoDB tem ganhando bastante maturidade ao longo do tempo de desenvolvimento, como é uma base orientada a documento se destaca com um modelo de dados flexível, criação de indexes para rapidez nos resultados das queries, variedade de drivers disponíveis e alta escalabilidade.</description>
     </item>

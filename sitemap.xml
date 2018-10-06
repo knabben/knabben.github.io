@@ -3,40 +3,40 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/posts/capacity/</loc>
+    <loc>http://knabben.github.io/posts/capacity/</loc>
     <lastmod>2015-07-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/posts/nosql-compare/</loc>
+    <loc>http://knabben.github.io/posts/nosql-compare/</loc>
     <lastmod>2015-05-30T09:26:48+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>http://knabben.github.io/</loc>
     <lastmod>2015-07-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/categories/</loc>
+    <loc>http://knabben.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/categories/nosql-mongodb-influxdb/</loc>
+    <loc>http://knabben.github.io/categories/nosql-mongodb-influxdb/</loc>
     <lastmod>2015-05-30T09:26:48+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/posts/</loc>
+    <loc>http://knabben.github.io/posts/</loc>
     <lastmod>2015-07-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>http://knabben.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   

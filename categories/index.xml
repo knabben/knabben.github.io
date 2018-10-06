@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on AK</title>
-    <link>http://example.org/categories/</link>
+    <link>http://knabben.github.io/categories/</link>
     <description>Recent content in Categories on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="http://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://knabben.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Nosql Mongodb Influxdb</title>
-      <link>http://example.org/categories/nosql-mongodb-influxdb/</link>
+      <link>http://knabben.github.io/categories/nosql-mongodb-influxdb/</link>
       <pubDate>Sat, 30 May 2015 09:26:48 +0000</pubDate>
       
-      <guid>http://example.org/categories/nosql-mongodb-influxdb/</guid>
+      <guid>http://knabben.github.io/categories/nosql-mongodb-influxdb/</guid>
       <description></description>
     </item>
     

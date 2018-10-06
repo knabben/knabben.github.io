@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nosql Mongodb Influxdb on AK</title>
-    <link>http://example.org/categories/nosql-mongodb-influxdb/</link>
+    <link>http://knabben.github.io/categories/nosql-mongodb-influxdb/</link>
     <description>Recent content in Nosql Mongodb Influxdb on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 30 May 2015 09:26:48 +0000</lastBuildDate>
     
-	<atom:link href="http://example.org/categories/nosql-mongodb-influxdb/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://knabben.github.io/categories/nosql-mongodb-influxdb/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>NoSQL databases comparision</title>
-      <link>http://example.org/posts/nosql-compare/</link>
+      <link>http://knabben.github.io/posts/nosql-compare/</link>
       <pubDate>Sat, 30 May 2015 09:26:48 +0000</pubDate>
       
-      <guid>http://example.org/posts/nosql-compare/</guid>
+      <guid>http://knabben.github.io/posts/nosql-compare/</guid>
       <description>Introdução A idéia desta série de posts é destacar as features principais do InfluxDB e MongoDB, levantando os pontos positivos e negativos de cada um deles. Para o ambiente utilizarei Debian Wheezy em uma AMI do tipo m1.large.
 MongoDB O MongoDB tem ganhando bastante maturidade ao longo do tempo de desenvolvimento, como é uma base orientada a documento se destaca com um modelo de dados flexível, criação de indexes para rapidez nos resultados das queries, variedade de drivers disponíveis e alta escalabilidade.</description>
     </item>
