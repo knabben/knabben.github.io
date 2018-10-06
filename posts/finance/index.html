@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | General finance formulas</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="General finance formulas" />
+<meta property="og:description" content="Future value import numpy as np import warnings warnings.filterwarnings(&#34;ignore&#34;) Fv represents the future value of an operation in a particular time. The value Pv is multiplied
+Fv representa o valor futuro de uma operação em determinado instante, cujo valor Presente P foi acrescido da taxa i (expressa em sua forma decimal), n vezes, de forma composta (juros sobre juros).
+\begin{align} Fv = Pv * (1 &#43; i)^n \end{align}
+def fv(pv, n, i): print(&#39;{0:." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/finance/" /><meta property="article:published_time" content="2015-08-09T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2015-08-09T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="General finance formulas">
+<meta itemprop="description" content="Future value import numpy as np import warnings warnings.filterwarnings(&#34;ignore&#34;) Fv represents the future value of an operation in a particular time. The value Pv is multiplied
+Fv representa o valor futuro de uma operação em determinado instante, cujo valor Presente P foi acrescido da taxa i (expressa em sua forma decimal), n vezes, de forma composta (juros sobre juros).
+\begin{align} Fv = Pv * (1 &#43; i)^n \end{align}
+def fv(pv, n, i): print(&#39;{0:.">
+
+
+<meta itemprop="datePublished" content="2015-08-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2015-08-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="632">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="General finance formulas"/>
+<meta name="twitter:description" content="Future value import numpy as np import warnings warnings.filterwarnings(&#34;ignore&#34;) Fv represents the future value of an operation in a particular time. The value Pv is multiplied
+Fv representa o valor futuro de uma operação em determinado instante, cujo valor Presente P foi acrescido da taxa i (expressa em sua forma decimal), n vezes, de forma composta (juros sobre juros).
+\begin{align} Fv = Pv * (1 &#43; i)^n \end{align}
+def fv(pv, n, i): print(&#39;{0:."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">General finance formulas</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2015-08-09T00:00:00Z">August 9, 2015</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<h1 id="future-value">Future value</h1>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> warnings
+warnings<span style="color:#f92672">.</span>filterwarnings(<span style="color:#e6db74">&#34;ignore&#34;</span>)</code></pre></div>
+
+<p>Fv represents the future value of an operation in a particular time. The value Pv is multiplied</p>
+
+<p>Fv representa o valor futuro de uma operação em determinado instante,
+cujo valor Presente P foi acrescido da taxa i (expressa em sua forma decimal),
+n vezes, de forma composta (juros sobre juros).</p>
+
+<p>\begin{align}
+Fv = Pv * (1 + i)^n
+\end{align}</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fv</span>(pv, n, i):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;{0:.2f}&#39;</span><span style="color:#f92672">.</span>format(np<span style="color:#f92672">.</span>fv(i<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span>, n, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span>pv)))
+
+fv(<span style="color:#ae81ff">5000</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">4.5</span>)
+<span style="color:#ae81ff">7430.48</span>
+
+fv(<span style="color:#ae81ff">5000</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">1.5</span>)
+<span style="color:#ae81ff">5978.09</span>
+
+fv(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">1.25</span>)
+<span style="color:#ae81ff">1250.58</span>
+fv(<span style="color:#ae81ff">2800</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3.5</span>)
+<span style="color:#ae81ff">3104.41</span>
+fv(<span style="color:#ae81ff">2000</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3.5</span>)
+<span style="color:#ae81ff">2217.44</span>
+fv(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3.5</span>)
+<span style="color:#ae81ff">1108.72</span>
+fv(<span style="color:#ae81ff">340</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>)
+<span style="color:#ae81ff">374.85</span>
+
+fv(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">2.2</span>)
+<span style="color:#ae81ff">2842.12</span>
+fv(<span style="color:#ae81ff">3000</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span><span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">0.84</span>)
+<span style="color:#ae81ff">4054.18</span></code></pre></div>
+
+<h1 id="present-value">Present value</h1>
+
+<p>P representa o valor Presente da operação. O valor Futuro Fv, que é dado, deve ser descontado à taxa i (expressa em sua forma decimal) n vezes de forma composta (juros sobre juros).</p>
+
+<p>\begin{align}
+P = \frac{Fv}{(1 + i) ^ n}
+\end{align}</p>
+
+<p>{% highlight python %}
+def pv(fv, n, i):
+    print(&lsquo;{0:.2f}&lsquo;.format(np.pv(i/100, n, 0, -fv)))</p>
+
+<p>pv(1587, 5, 8)
+pv(28224.08, 4 * 3, 7.5)
+pv(9000, 2 * 12, 1.55)</p>
+
+<p>1080.09
+11850.00
+6221.92
+{% endhighlight %}</p>
+
+<h1 id="period">Period</h1>
+
+<p>n representa o tempo, P representa o valor Presente da operação e Fv, o valor Futuro; a taxa i é expressa em sua forma centesimal.</p>
+
+<p>\begin{align}
+n = \frac{ln(\frac{Fv}{P})}{ln(1+i)}
+\end{align}</p>
+
+<p>{% highlight python %}
+def nper(fv, pv, rate):
+    print(round(np.nper(rate/100, 0, -pv, fv)))</p>
+
+<p>nper(1610.51, 1000, 10)
+nper(4236, 3450, 2.3067)
+nper(600, 449.80, 5)
+nper(1425.76, 1000, 3)</p>
+
+<p>5.0
+9.0
+6.0
+12.0
+{% endhighlight %}</p>
+
+<h1 id="interest-rates">Interest rates</h1>
+
+<p>i representa a taxa expressa em sua forma centesimal, P representa o valor Presenta da operação e Fn, o valor Futuro; n é o tempo ou período.</p>
+
+<p>\begin{align}
+i = (\frac{Fv}{P}) ^ \frac{1}{n}
+\end{align}</p>
+
+<p>{% highlight python %}
+def rate(fv, pv, n):
+    print(&lsquo;{0:.2f}&lsquo;.format(np.rate(n, 0, -pv, fv) * 100))</p>
+
+<p>rate(1610.51, 1000, 5)
+rate(700+2150, 2150, 7)
+rate(2540.35, 1500, 18)
+rate(4796.06, 540, 18)</p>
+
+<p>10.00
+4.11
+2.97
+12.90
+{% endhighlight %}</p>
+
+<p>{% highlight python %}
+import numpy as np
+import warnings
+warnings.filterwarnings(&ldquo;ignore&rdquo;)
+{% endhighlight %}</p>
+
+<h1 id="sequência-uniforme-de-capitais-postecipados">Sequência uniforme de capitais postecipados</h1>
+
+<p>V representa o valor Presente de uma sequência uniformes postecipados R, construído em função de uma taxa i (expressa em sua forma decimal) e do tempo n vezes, de forma composta (juros sobre juros).
+\begin{align}
+V = R.\left[\frac{(1+i)^n-1}{(1+1)^n.i}\right]
+\end{align}</p>
+
+<p>{% highlight python %}
+def pmt(rate, n, pv): # pv = valor a vista
+    print(&lsquo;{0:.2f}&lsquo;.format(np.pmt(rate/100, n, -pv)))</p>
+
+<p>pmt(10, 5, -1000)
+pmt(5, 10, -1500)
+pv = 16000-3500</p>
+
+<p>pmt(2.7214, 36, -pv)
+pmt(3.0, 7, -1900)
+pmt(1.0, 120, -110000)</p>
+
+<p>-263.80
+-194.26
+-549.00
+-304.96
+-1578.18
+{% endhighlight %}</p>
+
+<h1 id="valor-presente-p-de-uma-sequência-de-pagamento-pmt-uniformes">Valor presente P de uma sequência de pagamento PMT uniformes</h1>
+
+<p>{% highlight python %}
+print(np.pv(0.10, 5, -263.79,0))
+print(np.pv(0.01, 10, -199.99 ,0))
+print(np.pv(0.03, 5, -100 ,0))</p>
+
+<p>999.971641902
+1894.1661931
+457.970718719
+{% endhighlight %}</p>
+
+<h1 id="sequência-de-pagamentos-uniformes-antecipados">Sequência de pagamentos uniformes antecipados</h1>
+
+<p>{% highlight python %}
+print(np.pmt(0.10, 5, 1000, 0, 1))
+print(np.pmt(0.03, 12, 900, 0, 1))</p>
+
+<p>-239.815891632
+-87.7824047822
+{% endhighlight %}</p>
+
+<h1 id="amortização-de-empréstimo">Amortização de empréstimo</h1>
+
+<p>Sistema de amortização francês (Price), o fato de o valor das prestações ser fixo é uma das virtudes desse método, porém os juros pagos no começo são altos, se comparados aos dos sistemas SAC e Sacre, e o valor a ser amortizado é muito pequeno.</p>
+
+<p>Esse sistema é muito utilizado nos financiamentos em geral, como na compra de um carro, emprestimo pessoal, etc.</p>
+
+<p>{% highlight python %}</p>
+
+<h1 id="um-amigo-lhe-empresta-1000-00-que-devem-ser-pagos-em-5-parcelas">Um amigo lhe empresta $ 1000,00 que devem ser pagos em 5 parcelas,</h1>
+
+<h1 id="utilizando-o-price-monte-o-esquema-de-amortização-com-taxa-de-10-ao-mês">utilizando o Price, monte o esquema de amortização com taxa de 10% ao mês.</h1>
+
+<p>principal = 1000
+nper = 5
+per = np.arange(5) + 1</p>
+
+<h1 id="calculo-dos-juros">Calculo dos juros</h1>
+
+<p>ipmt = np.ipmt(0.1, per, 5, principal)
+print(ipmt)</p>
+
+<h1 id="calculo-do-valor-amortizado">Calculo do valor amortizado</h1>
+
+<p>ppmt = np.ppmt(0.1, per, 5, principal)
+print(ppmt)
+print(1000 - ppmt)</p>
+
+<h1 id="calulo-da-parcela">Calulo da parcela</h1>
+
+<p>pmt = np.pmt(0.1, 5, principal)
+print(pmt)</p>
+
+<h1 id="juros">Juros</h1>
+
+<p>[-100., -83.62, -65.60, -45.78, -23.98]</p>
+
+<h1 id="amortização">Amortização</h1>
+
+<p>[-163.80, -180.18, -198.20, -218.01, -239.81]</p>
+
+<h1 id="parcela">Parcela</h1>
+
+<p>-263.797480795
+{% endhighlight %}</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

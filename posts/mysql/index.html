@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Monitoring MySQL w/ Prometheus</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Monitoring MySQL w/ Prometheus" />
+<meta property="og:description" content="Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/mysql/" /><meta property="article:published_time" content="2016-01-16T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-01-16T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Monitoring MySQL w/ Prometheus">
+<meta itemprop="description" content="Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.">
+
+
+<meta itemprop="datePublished" content="2016-01-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-01-16T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="419">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Monitoring MySQL w/ Prometheus"/>
+<meta name="twitter:description" content="Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Monitoring MySQL w/ Prometheus</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-01-16T00:00:00Z">January 16, 2016</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
+
+<p>On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.</p>
+
+<p>So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.</p>
+
+<h2 id="performance-analysis">Performance Analysis</h2>
+
+<p>Prometheus have two pieces of software that we will use for metrics gathering, the first one is an AWS metrics exporter (https://github.com/prometheus/cloudwatch_exporter), the other one is the mysqld_exporter.</p>
+
+<h2 id="initialization">Initialization</h2>
+
+<p>Start MySQL Prometheus metrics as Docker container:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker run -d -p <span style="color:#ae81ff">9104</span>:9104 -e DATA_SOURCE_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;monitoring:password@db-aws:3306)/database&#34;</span> prom/mysqld-exporter</code></pre></div>
+
+<p>If everything is ok, you can check with docker logs docker_id. Access your CoreOS host on port :9401/metrics, now we have some cool metrics like:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mysql_info_schema_table_rows<span style="color:#f92672">{</span>schema<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;database&#34;</span>,table<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table1&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">2030</span></code></pre></div>
+
+<p>The seconds part is to configure the Prometheus container, first we discovery on the lamest way, mysqld_exporter IP:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">core@coreos-512mb-nyc3-01 ~ $ docker network inspect bridge
+<span style="color:#f92672">[</span>
+    <span style="color:#f92672">{</span>
+        <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;bridge&#34;</span>,
+        <span style="color:#e6db74">&#34;Id&#34;</span>: <span style="color:#e6db74">&#34;7c7ac7c9effb9a9c5e00713e1818fbfef610c55df723ace8c4b5327068cdd342&#34;</span>,
+        <span style="color:#e6db74">&#34;Scope&#34;</span>: <span style="color:#e6db74">&#34;local&#34;</span>,
+        <span style="color:#e6db74">&#34;Driver&#34;</span>: <span style="color:#e6db74">&#34;bridge&#34;</span>,
+        <span style="color:#e6db74">&#34;IPAM&#34;</span>: <span style="color:#f92672">{</span>
+            <span style="color:#e6db74">&#34;Driver&#34;</span>: <span style="color:#e6db74">&#34;default&#34;</span>,
+            <span style="color:#e6db74">&#34;Config&#34;</span>: <span style="color:#f92672">[</span>
+                <span style="color:#f92672">{</span>
+                    <span style="color:#e6db74">&#34;Subnet&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.0/16&#34;</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">]</span>
+        <span style="color:#f92672">}</span>,
+        <span style="color:#e6db74">&#34;Containers&#34;</span>: <span style="color:#f92672">{</span>
+            <span style="color:#e6db74">&#34;67f370833d21de46752248b1a7fa6e1e845c8ce5f696892062c9bda1803e7c34&#34;</span>: <span style="color:#f92672">{</span>
+                <span style="color:#e6db74">&#34;EndpointID&#34;</span>: <span style="color:#e6db74">&#34;26f64899d1e4dc88d5bf27e808a1effdf319e5ed59c6ebb8f41c7dc30e639cd7&#34;</span>,
+                <span style="color:#e6db74">&#34;MacAddress&#34;</span>: <span style="color:#e6db74">&#34;02:42:ac:11:00:02&#34;</span>,
+                <span style="color:#e6db74">&#34;IPv4Address&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.2/16&#34;</span>,
+                <span style="color:#e6db74">&#34;IPv6Address&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+            <span style="color:#f92672">}</span>,
+            <span style="color:#e6db74">&#34;c32bd9ed8f1597635f30e6c59637813e1135030aef89651aea3cfd94b46dab12&#34;</span>: <span style="color:#f92672">{</span>
+                <span style="color:#e6db74">&#34;EndpointID&#34;</span>: <span style="color:#e6db74">&#34;e028b808080e34406acc963c0c93ca22cbda67daa4d5d5fc8c3902e62ed9bdcd&#34;</span>,
+                <span style="color:#e6db74">&#34;MacAddress&#34;</span>: <span style="color:#e6db74">&#34;02:42:ac:11:00:03&#34;</span>,
+                <span style="color:#e6db74">&#34;IPv4Address&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.3/16&#34;</span>,
+                <span style="color:#e6db74">&#34;IPv6Address&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+...</code></pre></div>
+
+<p>Now we configure the prometheus.yml, and start the container</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">/home/core/prometheus.yml --
+
+scrape_configs:
+	<span style="color:#75715e"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
+	- job_name: <span style="color:#e6db74">&#39;mysqld_explorer&#39;</span>
+	<span style="color:#75715e"># Override the global default and scrape targets from this job every 5 seconds.</span>
+	scrape_interval: 60s
+	scrape_timeout: 10s
+	target_groups:
+		- targets: [<span style="color:#e6db74">&#39;172.17.0.2:9104&#39;</span>]
+
+docker run -d -p <span style="color:#ae81ff">9090</span>:<span style="color:#ae81ff">9090</span> -v /home/core/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</code></pre></div>
+
+<h2 id="grafana">Grafana</h2>
+
+<p>Finally run Grafana:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">docker run -d --name=grafana -p <span style="color:#ae81ff">3000</span>:<span style="color:#ae81ff">3000</span> grafana/grafana</code></pre></div>
+
+<p>Basic status
+============</p>
+
+<p>First lets see the commands executed ( SELECT, INSERT, UPDATE, DELETE ) in one graph</p>
+
+<p><img src="d1.png" alt="d1.png" title="d1.png" /></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">Metrics come from:
+SHOW GLOBAL STATUS
+
+mysql_global_status_commands_total{command~=<span style="color:#e6db74">&#34;select|update|insert|delete&#34;</span>}</code></pre></div>
+
+<p>Other metric is the Threads running/Threads connected.</p>
+
+<p><img src="d2.png" alt="d2.png" title="d2.png" /></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_global_status_threads_connected
+mysql_global_status_threads_running
+
+mysql_global_status_questions
+mysql_global_status_queries</code></pre></div>
+
+<p>Besides that you have Tables sizes vs. Table lines</p>
+
+<p><img src="d3.png" alt="d3.png" title="d3.png" /></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_info_schema_table_size{schema=<span style="color:#e6db74">&#34;database&#34;</span>,component=<span style="color:#e6db74">&#34;data_length&#34;</span>}
+mysql_info_schema_table_rows{schema=<span style="color:#e6db74">&#34;database&#34;</span>} </code></pre></div>
+
+<p>To finish the basic dashboard lets configure some more 3 metrics:</p>
+
+<p><img src="d4.png" alt="d4.png" title="d4.png" /></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_global_status_aborted_connects
+mysql_global_status_aborted_clients
+mysql_global_status_slow_queries</code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I really recommend the read of High Perfomance MySQL, as well as the MySQL manual.</p>
+
+<p>For this post is fair enough to show some very basic metrics, we can correlate other information like machine CPU, memory, Disk I/O.</p>
+
+<p>We can create more dashboards with InnoDB storage details and Slave replication information.</p>
+
+<p>On the next posts I'll show how to integrate the AlertManager and integrate it with Slack for chatops.</p>
+
+<h2 id="listening">Listening</h2>
+
+<p><iframe width="420" height="315" src="https://www.youtube.com/embed/Zx0Q5SZ4l2Q" frameborder="0" allowfullscreen></iframe></p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

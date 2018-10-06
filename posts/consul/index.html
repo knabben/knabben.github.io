@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Consul - Service Discovery</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.49" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Consul - Service Discovery" />
+<meta property="og:description" content="Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
+A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/consul/" /><meta property="article:published_time" content="2015-09-03T18:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2015-09-03T18:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Consul - Service Discovery">
+<meta itemprop="description" content="Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
+A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?">
+
+
+<meta itemprop="datePublished" content="2015-09-03T18:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2015-09-03T18:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="610">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Consul - Service Discovery"/>
+<meta name="twitter:description" content="Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
+A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Consul - Service Discovery</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2015-09-03T18:00:00Z">September 3, 2015</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
+
+<p>Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.</p>
+
+<p>A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up? How much your client can trust your DNS TTL on his cache?</p>
+
+<p>From the universe of Dynamic Service Registries, we are going to talk about Consul, the system offers a built in DNS, Service Discovery, Health checks, a Key/Value shared storage and multiple data centers.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>Every node runs an agent write in Golang. It is capable to run as client or server, and can run the DNS||HTTP interface, besides that the agent is responsible for running checks and sync services.
+Lets start one server on a demo box, it comes with Consul source, the recommended number of boxes for fail-over is 3-5 boxes:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># git clone https://github.com/hashicorp/consul.git
+</span><span style="color:#75715e"># cd consul/demo/vagrant-cluster
+</span><span style="color:#75715e"># vagrant up
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e"># vagrant ssh n1
+</span><span style="color:#75715e"></span>
+vagrant@n1:/etc/consul.d$ consul agent -server -bootstrap-expect <span style="color:#ae81ff">1</span> -data-dir /etc/consul.d/ --bind<span style="color:#f92672">=</span><span style="color:#ae81ff">172</span>.20.20.10
+<span style="color:#f92672">==</span>&gt; WARNING: BootstrapExpect Mode is specified as <span style="color:#ae81ff">1</span>; this is the same as Bootstrap mode.
+<span style="color:#f92672">==</span>&gt; WARNING: Bootstrap mode enabled! Do not enable unless necessary
+<span style="color:#f92672">==</span>&gt; WARNING: It is highly recommended to set GOMAXPROCS higher than 1
+<span style="color:#f92672">==</span>&gt; Starting raft data migration...
+<span style="color:#f92672">==</span>&gt; Starting Consul agent...
+<span style="color:#f92672">==</span>&gt; Starting Consul agent RPC...
+<span style="color:#f92672">==</span>&gt; Consul agent running!
+         Node name: <span style="color:#e6db74">&#39;n1&#39;</span>
+        Datacenter: <span style="color:#e6db74">&#39;dc1&#39;</span>
+            Server: true <span style="color:#f92672">(</span>bootstrap: true<span style="color:#f92672">)</span>
+       Client Addr: <span style="color:#ae81ff">127</span>.0.0.1 <span style="color:#f92672">(</span>HTTP: <span style="color:#ae81ff">8500</span>, HTTPS: -1, DNS: <span style="color:#ae81ff">8600</span>, RPC: <span style="color:#ae81ff">8400</span><span style="color:#f92672">)</span>
+      Cluster Addr: <span style="color:#ae81ff">172</span>.20.20.10 <span style="color:#f92672">(</span>LAN: <span style="color:#ae81ff">8301</span>, WAN: <span style="color:#ae81ff">8302</span><span style="color:#f92672">)</span>
+    Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false
+             Atlas: &lt;disabled&gt;</code></pre></div>
+
+<p>On the remote agent</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@n2:~$ consul agent -data-dir /tmp/consul -node<span style="color:#f92672">=</span>node2 --bind <span style="color:#ae81ff">172</span>.20.20.11
+<span style="color:#f92672">==</span>&gt; WARNING: It is highly recommended to set GOMAXPROCS higher than 1
+<span style="color:#f92672">==</span>&gt; Starting Consul agent...
+<span style="color:#f92672">==</span>&gt; Starting Consul agent RPC...
+<span style="color:#f92672">==</span>&gt; Consul agent running!
+         Node name: <span style="color:#e6db74">&#39;node2&#39;</span>
+        Datacenter: <span style="color:#e6db74">&#39;dc1&#39;</span>
+            Server: false <span style="color:#f92672">(</span>bootstrap: false<span style="color:#f92672">)</span>
+       Client Addr: <span style="color:#ae81ff">127</span>.0.0.1 <span style="color:#f92672">(</span>HTTP: <span style="color:#ae81ff">8500</span>, HTTPS: -1, DNS: <span style="color:#ae81ff">8600</span>, RPC: <span style="color:#ae81ff">8400</span><span style="color:#f92672">)</span>
+      Cluster Addr: <span style="color:#ae81ff">172</span>.20.20.11 <span style="color:#f92672">(</span>LAN: <span style="color:#ae81ff">8301</span>, WAN: <span style="color:#ae81ff">8302</span><span style="color:#f92672">)</span>
+    Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false
+             Atlas: &lt;disabled&gt;</code></pre></div>
+
+<p>On consul server add the remote agent on the cluster:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@n2:~$ consul members
+Node   Address            Status  Type    Build  Protocol  DC
+node2  <span style="color:#ae81ff">172</span>.20.20.11:8301  alive   client  <span style="color:#ae81ff">0</span>.5.2  <span style="color:#ae81ff">2</span>         dc1
+
+vagrant@n2:~$ consul join <span style="color:#ae81ff">172</span>.20.20.10
+Successfully joined cluster by contacting <span style="color:#ae81ff">1</span> nodes.
+
+vagrant@n2:~$ consul members
+Node   Address            Status  Type    Build  Protocol  DC
+node2  <span style="color:#ae81ff">172</span>.20.20.11:8301  alive   client  <span style="color:#ae81ff">0</span>.5.2  <span style="color:#ae81ff">2</span>         dc1
+n1     <span style="color:#ae81ff">172</span>.20.20.10:8301  alive   server  <span style="color:#ae81ff">0</span>.5.2  <span style="color:#ae81ff">2</span>         dc1</code></pre></div>
+
+<h2 id="services">Services</h2>
+
+<p>Lets create two services, one on agent box, the service is monitoring HTTP port and we must use the check with a interval.</p>
+
+<p>Create the file /etc/consul.d/web.json</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;service&#34;</span>:
+  <span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+    <span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+    <span style="color:#e6db74">&#34;tags&#34;</span>: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;web&#34;</span><span style="color:#f92672">]</span>,
+    <span style="color:#e6db74">&#34;port&#34;</span>: <span style="color:#ae81ff">80</span>,
+    <span style="color:#e6db74">&#34;check&#34;</span>: <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;http&#34;</span>: <span style="color:#e6db74">&#34;http://172.20.20.11/&#34;</span>, <span style="color:#e6db74">&#34;interval&#34;</span>: <span style="color:#e6db74">&#34;10s&#34;</span><span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div>
+
+<p>You can specify the path of consul cfg_dir with --config-dir /etc/consul.d, on both server/client.</p>
+
+<p>We have now the service synced:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#ae81ff">2015</span>/09/03 <span style="color:#ae81ff">16</span>:34:32 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> agent: Synced service <span style="color:#e6db74">&#39;web&#39;</span></code></pre></div>
+
+<p>The system provides an hierarchial REST API to access the state of the service and nodes:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl http://localhost:8500/v1/catalog/service/web
+
+<span style="color:#f92672">[</span>
+    <span style="color:#f92672">{</span>
+        <span style="color:#e6db74">&#34;Node&#34;</span>: <span style="color:#e6db74">&#34;node2&#34;</span>,
+        <span style="color:#e6db74">&#34;Address&#34;</span>: <span style="color:#e6db74">&#34;172.20.20.11&#34;</span>,
+        <span style="color:#e6db74">&#34;ServiceID&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+        <span style="color:#e6db74">&#34;ServiceName&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+        <span style="color:#e6db74">&#34;ServiceTags&#34;</span>: <span style="color:#f92672">[</span>
+            <span style="color:#e6db74">&#34;web&#34;</span>
+        <span style="color:#f92672">]</span>,
+        <span style="color:#e6db74">&#34;ServiceAddress&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+        <span style="color:#e6db74">&#34;ServicePort&#34;</span>: <span style="color:#ae81ff">80</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">]</span></code></pre></div>
+
+<p>As a last test lets share some data between the boxes using the K/V capability:</p>
+
+<p>On consul server n1, try:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@n1:~$ curl -X PUT -d <span style="color:#e6db74">&#39;myvalue&#39;</span> http://localhost:8500/v1/kv/web/k1</code></pre></div>
+
+<p>On the agent box get the value, passing the key:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@n2:~$ curl http://localhost:8500/v1/kv/web/k1/
+
+<span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;CreateIndex&#34;</span>:74,<span style="color:#e6db74">&#34;ModifyIndex&#34;</span>:74,<span style="color:#e6db74">&#34;LockIndex&#34;</span>:0,<span style="color:#e6db74">&#34;Key&#34;</span>:<span style="color:#e6db74">&#34;web/k1/&#34;</span>,<span style="color:#e6db74">&#34;Flags&#34;</span>:0,<span style="color:#e6db74">&#34;Value&#34;</span>:<span style="color:#e6db74">&#34;bXl2YWx1ZQ==&#34;</span><span style="color:#f92672">}]</span></code></pre></div>
+
+<p>The value is on base64.</p>
+
+<h2 id="bibliography">Bibliography</h2>
+
+<h4 id="1-newman-sam-building-microservices-o-reilly-2005">[1] - NEWMAN, Sam. Building Microservices. O'Reilly, 2005.</h4>
+
+<h4 id="2-turnbull-james-the-docker-book-2014">[2] - TURNBULL, James. The Docker Book, 2014.</h4>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-ak.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2018 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

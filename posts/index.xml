@@ -6,10 +6,52 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Jul 2015 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Technical indicators</title>
+      <link>http://knabben.github.io/posts/technical/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/technical/</guid>
+      <description>Introduction According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
+The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.</description>
+    </item>
+    
+    <item>
+      <title>Monitoring MySQL w/ Prometheus</title>
+      <link>http://knabben.github.io/posts/mysql/</link>
+      <pubDate>Sat, 16 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/mysql/</guid>
+      <description>Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.</description>
+    </item>
+    
+    <item>
+      <title>Consul - Service Discovery</title>
+      <link>http://knabben.github.io/posts/consul/</link>
+      <pubDate>Thu, 03 Sep 2015 18:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/consul/</guid>
+      <description>Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
+A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?</description>
+    </item>
+    
+    <item>
+      <title>General finance formulas</title>
+      <link>http://knabben.github.io/posts/finance/</link>
+      <pubDate>Sun, 09 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/finance/</guid>
+      <description>Future value import numpy as np import warnings warnings.filterwarnings(&amp;#34;ignore&amp;#34;) Fv represents the future value of an operation in a particular time. The value Pv is multiplied
+Fv representa o valor futuro de uma operação em determinado instante, cujo valor Presente P foi acrescido da taxa i (expressa em sua forma decimal), n vezes, de forma composta (juros sobre juros).
+\begin{align} Fv = Pv * (1 + i)^n \end{align}
+def fv(pv, n, i): print(&amp;#39;{0:.</description>
+    </item>
     
     <item>
       <title>Tsung Capacity Test</title>
@@ -23,13 +65,102 @@ Configuration On tsung.xml we start the test plan, you can include here the list
     </item>
     
     <item>
-      <title>NoSQL databases comparision</title>
-      <link>http://knabben.github.io/posts/nosql-compare/</link>
-      <pubDate>Sat, 30 May 2015 09:26:48 +0000</pubDate>
+      <title></title>
+      <link>http://knabben.github.io/posts/apk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://knabben.github.io/posts/nosql-compare/</guid>
-      <description>Introdução A idéia desta série de posts é destacar as features principais do InfluxDB e MongoDB, levantando os pontos positivos e negativos de cada um deles. Para o ambiente utilizarei Debian Wheezy em uma AMI do tipo m1.large.
-MongoDB O MongoDB tem ganhando bastante maturidade ao longo do tempo de desenvolvimento, como é uma base orientada a documento se destaca com um modelo de dados flexível, criação de indexes para rapidez nos resultados das queries, variedade de drivers disponíveis e alta escalabilidade.</description>
+      <guid>http://knabben.github.io/posts/apk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/cddeis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/cddeis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/cpython/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/cpython/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/ecto/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/ecto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/gopython/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/gopython/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/kube/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/prob/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/prob/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/smi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/smi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/smii/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/smii/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/stats-more/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/stats-more/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/stats/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/stats/</guid>
+      <description></description>
     </item>
     
   </channel>
