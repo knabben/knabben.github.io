@@ -6,10 +6,23 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 May 2019 14:04:34 -0400</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bootstraping languages</title>
+      <link>http://knabben.github.io/posts/langs1/</link>
+      <pubDate>Mon, 27 May 2019 14:04:34 -0400</pubDate>
+      
+      <guid>http://knabben.github.io/posts/langs1/</guid>
+      <description>Long time I don&#39;t write here.
+And, as a matter to learn other languages I&#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey.
+As a good start let&#39;s grab two modern interesting languages,
+The summary bellow came from wikipedia an works as a good introduction about both:
+Summary Golang A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.</description>
+    </item>
     
     <item>
       <title>Service Mesh - Part I</title>

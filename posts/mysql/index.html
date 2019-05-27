@@ -9,7 +9,7 @@
     <meta name="MobileOptimized" content="320">
 
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.49" />
+    <meta name="generator" content="Hugo 0.54.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -32,7 +32,8 @@
 <meta property="og:description" content="Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
 So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://knabben.github.io/posts/mysql/" /><meta property="article:published_time" content="2016-01-16T00:00:00&#43;00:00"/>
+<meta property="og:url" content="http://knabben.github.io/posts/mysql/" />
+<meta property="article:published_time" content="2016-01-16T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2016-01-16T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Monitoring MySQL w/ Prometheus">
@@ -155,9 +156,9 @@ So we already have an infrastructure, we just need two more containers, the firs
 
 <p>Now we configure the prometheus.yml, and start the container</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">/home/core/prometheus.yml --
-
-scrape_configs:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">/home/core/prometheus.yml -<span style="color:#e6db74">-
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">scrape_configs:</span>
 	<span style="color:#75715e"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
 	- job_name: <span style="color:#e6db74">&#39;mysqld_explorer&#39;</span>
 	<span style="color:#75715e"># Override the global default and scrape targets from this job every 5 seconds.</span>
@@ -274,7 +275,7 @@ mysql_global_status_slow_queries</code></pre></div>
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2018 AK
+    &copy; 2019 AK
   </a>
     <div>
 

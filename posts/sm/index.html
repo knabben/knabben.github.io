@@ -9,7 +9,7 @@
     <meta name="MobileOptimized" content="320">
 
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.49" />
+    <meta name="generator" content="Hugo 0.54.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -31,7 +31,8 @@
     <meta property="og:title" content="Service Mesh - Part I" />
 <meta property="og:description" content="Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://knabben.github.io/posts/sm/" /><meta property="article:published_time" content="2018-10-06T00:00:00&#43;00:00"/>
+<meta property="og:url" content="http://knabben.github.io/posts/sm/" />
+<meta property="article:published_time" content="2018-10-06T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2018-10-06T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Service Mesh - Part I">
@@ -244,8 +245,8 @@ initializer.go:238<span style="color:#f92672">]</span>     batch/v1 Job
 initializer.go:238<span style="color:#f92672">]</span>     batch/v2alpha1 CronJob
 initializer.go:238<span style="color:#f92672">]</span>     apps/v1beta1 StatefulSet
 
-<span style="color:#75715e"># After running
-</span><span style="color:#75715e"></span>helm install --name grpc ./chart
+<span style="color:#75715e"># After running</span>
+helm install --name grpc ./chart
 
 initializer.go:174<span style="color:#f92672">]</span> ObjectMeta initializer info extensions/v1beta1, Kind<span style="color:#f92672">=</span>Deployment default/http-serve policy:<span style="color:#e6db74">&#34;&#34;</span> status:<span style="color:#e6db74">&#34;&#34;</span> &amp;Initializers<span style="color:#f92672">{</span>Pending:<span style="color:#f92672">[{</span>sidecar.initializer.istio.io<span style="color:#f92672">}]</span>,Result:nil,<span style="color:#f92672">}</span>
 inject.go:302<span style="color:#f92672">]</span> Sidecar injection policy <span style="color:#66d9ef">for</span> default/http-serve: namespacePolicy:enabled useDefault:true inject:false status:<span style="color:#e6db74">&#34;&#34;</span> required:true
@@ -368,8 +369,8 @@ initializers:
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
 kubectl port-forward http-serve-1172935448-zw527 <span style="color:#ae81ff">8080</span>:8080
 
-<span style="color:#75715e"># Accessing http://localhost:8080/v1/health
-</span><span style="color:#75715e"></span>
+<span style="color:#75715e"># Accessing http://localhost:8080/v1/health</span>
+
 HTTP/1.1 <span style="color:#ae81ff">200</span> OK
 &lt; Date: Mon, <span style="color:#ae81ff">01</span> Jan <span style="color:#ae81ff">2018</span> <span style="color:#ae81ff">12</span>:53:02 GMT
 &lt; Content-Length: <span style="color:#ae81ff">3</span>
@@ -391,8 +392,8 @@ Rules:
         /v1/.*   http-serve:8080 <span style="color:#f92672">(</span>&lt;none&gt;<span style="color:#f92672">)</span>
                  grpc-internal:9090 <span style="color:#f92672">(</span>&lt;none&gt;<span style="color:#f92672">)</span>
                  
-<span style="color:#75715e"># Access the server via your cluster external IP, note the envoy added headers:
-</span><span style="color:#75715e"></span>
+<span style="color:#75715e"># Access the server via your cluster external IP, note the envoy added headers:</span>
+
 &lt; HTTP/1.1 <span style="color:#ae81ff">200</span> OK
 &lt; date: Mon, <span style="color:#ae81ff">01</span> Jan <span style="color:#ae81ff">2018</span> <span style="color:#ae81ff">12</span>:52:39 GMT
 &lt; content-length: <span style="color:#ae81ff">3</span>
@@ -506,7 +507,7 @@ spec:
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2018 AK
+    &copy; 2019 AK
   </a>
     <div>
 

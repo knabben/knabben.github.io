@@ -9,7 +9,7 @@
     <meta name="MobileOptimized" content="320">
 
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.49" />
+    <meta name="generator" content="Hugo 0.54.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -33,7 +33,8 @@
 &#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;
 What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://knabben.github.io/posts/cddeis/" /><meta property="article:published_time" content="2016-11-27T00:00:00&#43;00:00"/>
+<meta property="og:url" content="http://knabben.github.io/posts/cddeis/" />
+<meta property="article:published_time" content="2016-11-27T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2016-11-27T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Continuous Deployment and DEIS">
@@ -181,8 +182,8 @@ What we want here is do reduce the cycle time of the project in a reliable, secu
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/bash
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e"># Remove old kubeadm stuff
-</span><span style="color:#75715e"></span>kubeadm reset
+<span style="color:#75715e"># Remove old kubeadm stuff</span>
+kubeadm reset
 systemctl restart kubelet
 
 kubeadm init
@@ -192,10 +193,10 @@ kubeadm init
 	export KUBECONFIG<span style="color:#f92672">=</span>/etc/kubernetes/kubelet.conf
 <span style="color:#66d9ef">fi</span>
 
-<span style="color:#75715e"># Create pod network
-</span><span style="color:#75715e"></span>kubectl apply -f https://git.io/weave-kube
-<span style="color:#75715e"># Enable pods start
-</span><span style="color:#75715e"></span>kubectl taint nodes --all dedicated-</code></pre></div>
+<span style="color:#75715e"># Create pod network</span>
+kubectl apply -f https://git.io/weave-kube
+<span style="color:#75715e"># Enable pods start</span>
+kubectl taint nodes --all dedicated-</code></pre></div>
 
 <p>So far so good, you have a bunch of docker containers check it with ps or try to run a new 'kubectl run nginx --image=nginx'</p>
 
@@ -258,12 +259,12 @@ deis-workflow-manager-2210821749-4lqkp   <span style="color:#ae81ff">1</span>/1 
 <p>DEIS Builder will handle your request and based on the server hooks start the builder pod, suppose we are using a Dockerfile commited on the project, lets take a look on the dockerbuild file:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">...
-<span style="color:#75715e"># The .tar.gz file artifact is fetched from the Builder Storage
-</span><span style="color:#75715e"></span>with tarfile.open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;apptar&#34;</span>, <span style="color:#e6db74">&#34;r:gz&#34;</span><span style="color:#f92672">)</span> as tar:
+<span style="color:#75715e"># The .tar.gz file artifact is fetched from the Builder Storage</span>
+with tarfile.open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;apptar&#34;</span>, <span style="color:#e6db74">&#34;r:gz&#34;</span><span style="color:#f92672">)</span> as tar:
     tar.extractall<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/app/&#34;</span><span style="color:#f92672">)</span>
 
-<span style="color:#75715e"># Use docker api to build and push docker to registry
-</span><span style="color:#75715e"></span>client <span style="color:#f92672">=</span> docker.Client<span style="color:#f92672">(</span>version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;auto&#39;</span><span style="color:#f92672">)</span>
+<span style="color:#75715e"># Use docker api to build and push docker to registry</span>
+client <span style="color:#f92672">=</span> docker.Client<span style="color:#f92672">(</span>version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;auto&#39;</span><span style="color:#f92672">)</span>
 registry <span style="color:#f92672">=</span> get_registry_name<span style="color:#f92672">()</span>
 imageName, imageTag <span style="color:#f92672">=</span> os.getenv<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;IMG_NAME&#39;</span><span style="color:#f92672">)</span>.split<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;:&#34;</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span>
 repo <span style="color:#f92672">=</span> registry + <span style="color:#e6db74">&#34;/&#34;</span> + os.getenv<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;IMG_NAME&#39;</span><span style="color:#f92672">)</span>
@@ -283,9 +284,9 @@ region <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;us-
 hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;...ecr.us-east-1.amazonaws.com&#34;</span>
 
 <span style="color:#f92672">[</span>s3<span style="color:#f92672">]</span>
-registry_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisregistry&#34;</span>  <span style="color:#75715e"># Docker Registry
-</span><span style="color:#75715e"></span>database_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisdb&#34;</span>  <span style="color:#75715e"># PGSql backups
-</span><span style="color:#75715e"></span>builder_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisbuild&#34;</span>  # Artifacts</code></pre></div>
+registry_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisregistry&#34;</span>  <span style="color:#75715e"># Docker Registry</span>
+database_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisdb&#34;</span>  <span style="color:#75715e"># PGSql backups</span>
+builder_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisbuild&#34;</span>  <span style="color:#75715e"># Artifacts</span></code></pre></div>
 
 <p>PS2: You can have a similar JOB on jenkins pipeline, something like:</p>
 
@@ -427,7 +428,7 @@ async_run(tasks)  <span style="color:#75715e"># Just a bunch of asyncio threads<
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2018 AK
+    &copy; 2019 AK
   </a>
     <div>
 

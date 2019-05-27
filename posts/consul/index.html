@@ -9,7 +9,7 @@
     <meta name="MobileOptimized" content="320">
 
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.49" />
+    <meta name="generator" content="Hugo 0.54.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -32,7 +32,8 @@
 <meta property="og:description" content="Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
 A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://knabben.github.io/posts/consul/" /><meta property="article:published_time" content="2015-09-03T18:00:00&#43;00:00"/>
+<meta property="og:url" content="http://knabben.github.io/posts/consul/" />
+<meta property="article:published_time" content="2015-09-03T18:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2015-09-03T18:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Consul - Service Discovery">
@@ -115,12 +116,12 @@ A long term solution to the problem is to use DNS, an address name resolver. It 
 <p>Every node runs an agent write in Golang. It is capable to run as client or server, and can run the DNS||HTTP interface, besides that the agent is responsible for running checks and sync services.
 Lets start one server on a demo box, it comes with Consul source, the recommended number of boxes for fail-over is 3-5 boxes:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># git clone https://github.com/hashicorp/consul.git
-</span><span style="color:#75715e"># cd consul/demo/vagrant-cluster
-</span><span style="color:#75715e"># vagrant up
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e"># vagrant ssh n1
-</span><span style="color:#75715e"></span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># git clone https://github.com/hashicorp/consul.git</span>
+<span style="color:#75715e"># cd consul/demo/vagrant-cluster</span>
+<span style="color:#75715e"># vagrant up</span>
+
+<span style="color:#75715e"># vagrant ssh n1</span>
+
 vagrant@n1:/etc/consul.d$ consul agent -server -bootstrap-expect <span style="color:#ae81ff">1</span> -data-dir /etc/consul.d/ --bind<span style="color:#f92672">=</span><span style="color:#ae81ff">172</span>.20.20.10
 <span style="color:#f92672">==</span>&gt; WARNING: BootstrapExpect Mode is specified as <span style="color:#ae81ff">1</span>; this is the same as Bootstrap mode.
 <span style="color:#f92672">==</span>&gt; WARNING: Bootstrap mode enabled! Do not enable unless necessary
@@ -274,7 +275,7 @@ n1     <span style="color:#ae81ff">172</span>.20.20.10:8301  alive   server  <sp
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2018 AK
+    &copy; 2019 AK
   </a>
     <div>
 
