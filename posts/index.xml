@@ -37,17 +37,6 @@ Summary Golang A statically typed, compiled programming language designed at Goo
     </item>
     
     <item>
-      <title>Speak languages</title>
-      <link>http://knabben.github.io/posts/langs2/</link>
-      <pubDate>Mon, 27 May 2019 14:04:34 -0400</pubDate>
-      
-      <guid>http://knabben.github.io/posts/langs2/</guid>
-      <description>Big-O time is the language and metric we use to describe the efficiency of algorithms.
-time complexity peed complexity space complexity
-Algorithms, 4th Edition</description>
-    </item>
-    
-    <item>
       <title>Service Mesh - Part I</title>
       <link>http://knabben.github.io/posts/sm/</link>
       <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
