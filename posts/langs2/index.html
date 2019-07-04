@@ -45,7 +45,7 @@ let mut guess = String::new();  For rust you can create an immutable and a mutab
 
 <meta itemprop="datePublished" content="2019-07-04T08:00:00-04:00" />
 <meta itemprop="dateModified" content="2019-07-04T08:00:00-04:00" />
-<meta itemprop="wordCount" content="845">
+<meta itemprop="wordCount" content="930">
 
 
 
@@ -283,6 +283,16 @@ compiler to check that the reference are valid.</p>
 <p>Not much to see here.</p>
 
 <h3 id="tag-0-0-4">Tag 0.0.4</h3>
+
+<p>Refactoring for modularity and error handling, the basics will be splitting the function in two
+the run/main functions and implemented a new struct to hold the args.</p>
+
+<p>The run functions returns a trait object Box<Error>, means the functions will
+return a type that implements the Error trait, but we don't have to specify
+what particular type the return value will be.</p>
+
+<p>Removed the expect in favor of the ? operator, it will return the error value
+from the current function for the caller to handle.</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
