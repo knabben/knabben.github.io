@@ -6,10 +6,21 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Jun 2019 16:50:00 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jul 2019 08:00:00 -0400</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title> Reviewing basics</title>
+      <link>http://knabben.github.io/posts/langs2/</link>
+      <pubDate>Thu, 04 Jul 2019 08:00:00 -0400</pubDate>
+      
+      <guid>http://knabben.github.io/posts/langs2/</guid>
+      <description>Introduction To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it:
+https://github.com/knabben/spec-lang/tree/master/go https://github.com/knabben/spec-lang/tree/master/rust Guess Tag 0.0.1 println! is used to send the value to stdout.
+let mut guess = String::new();  For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.</description>
+    </item>
     
     <item>
       <title>Hyperledger Sawtooth</title>
