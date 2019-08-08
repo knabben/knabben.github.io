@@ -3,7 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://knabben.github.io/posts/golang/</loc>
+    <loc>http://knabben.github.io/posts/gop2/</loc>
+    <lastmod>2019-08-07T01:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/gop1/</loc>
     <lastmod>2019-08-07T00:00:00+00:00</lastmod>
   </url>
   
@@ -94,7 +99,7 @@
   
   <url>
     <loc>http://knabben.github.io/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-07T01:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -105,7 +110,7 @@
   
   <url>
     <loc>http://knabben.github.io/posts/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-07T01:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>AK  | Service Mesh - Part I</title>
+    <title>AK  | Service Mesh</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -28,26 +28,26 @@
 
     
 
-    <meta property="og:title" content="Service Mesh - Part I" />
+    <meta property="og:title" content="Service Mesh" />
 <meta property="og:description" content="Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://knabben.github.io/posts/sm/" />
 <meta property="article:published_time" content="2018-10-06T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2018-10-06T00:00:00&#43;00:00"/>
 
-<meta itemprop="name" content="Service Mesh - Part I">
+<meta itemprop="name" content="Service Mesh">
 <meta itemprop="description" content="Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.">
 
 
 <meta itemprop="datePublished" content="2018-10-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-10-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2097">
+<meta itemprop="wordCount" content="2119">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Service Mesh - Part I"/>
+<meta name="twitter:title" content="Service Mesh"/>
 <meta name="twitter:description" content="Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable."/>
 
   </head>
@@ -95,7 +95,7 @@
           
         POSTS
       </p>
-      <h1 class="f1 athelas mb1">Service Mesh - Part I</h1>
+      <h1 class="f1 athelas mb1">Service Mesh</h1>
       
       <time class="f6 mv4 dib tracked" datetime="2018-10-06T00:00:00Z">October 6, 2018</time>
     </header>
@@ -446,7 +446,13 @@ spec:
 
 <p><img src="istio-4.png" alt="istio-4.png" title="istio-4.png" /></p>
 
-<h2 id="bibliography">Bibliography</h2>
+<h3 id="playing-around-with-mixer-adapter">Playing around with Mixer adapter</h3>
+
+<p>For those curious about the mixer usage here goes a plugin to send metrics to Librato.</p>
+
+<p>https://github.com/knabben/librato-adapter</p>
+
+<h3 id="bibliography">Bibliography</h3>
 
 <h5 id="1-https-github-com-kelseyhightower-kubernetes-the-hard-way">[1] https://github.com/kelseyhightower/kubernetes-the-hard-way</h5>
 

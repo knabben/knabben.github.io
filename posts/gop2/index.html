@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Golang essays (part II)</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Golang essays (part II)" />
+<meta property="og:description" content="Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
+The type *T is a pointer to a T. The operator that generates the pointer is the &.
+x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.Println(x) Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/gop2/" />
+<meta property="article:published_time" content="2019-08-07T01:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-08-07T01:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Golang essays (part II)">
+<meta itemprop="description" content="Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
+The type *T is a pointer to a T. The operator that generates the pointer is the &.
+x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.Println(x) Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:">
+
+
+<meta itemprop="datePublished" content="2019-08-07T01:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-08-07T01:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1987">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang essays (part II)"/>
+<meta name="twitter:description" content="Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
+The type *T is a pointer to a T. The operator that generates the pointer is the &.
+x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.Println(x) Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Golang essays (part II)</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-08-07T01:00:00Z">August 7, 2019</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="pointers">Pointers</h2>
+
+<p>A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.</p>
+
+<p>The type *T is a pointer to a T. The operator that generates the pointer is the &.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
+  <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">x</span> 		<span style="color:#75715e">// p, of type *int, points to x
+</span><span style="color:#75715e"></span>
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">p</span>) 	<span style="color:#75715e">// &#34;1&#34;
+</span><span style="color:#75715e"></span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">p</span> = <span style="color:#ae81ff">2</span> 			<span style="color:#75715e">// dereferencing or indirecting
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">x</span>)</code></pre></div>
+
+<h2 id="struct">Struct</h2>
+
+<p>Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"> <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Employee</span> <span style="color:#66d9ef">struct</span> {
+   <span style="color:#a6e22e">ID</span> <span style="color:#66d9ef">int</span>
+   <span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+   <span style="color:#a6e22e">Address</span> <span style="color:#66d9ef">string</span>
+   <span style="color:#a6e22e">DoB</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>
+   <span style="color:#a6e22e">Position</span> <span style="color:#66d9ef">string</span>
+   <span style="color:#a6e22e">Salary</span> <span style="color:#66d9ef">int</span>
+ }
+ <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">dilbert</span> <span style="color:#a6e22e">Employee</span>
+
+  <span style="color:#75715e">// Assign a value to the struct
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">dilbert</span>.<span style="color:#a6e22e">Salary</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">5000</span>
+
+  <span style="color:#75715e">// Fetch values via dot operator
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">dilbert</span>.<span style="color:#a6e22e">Salary</span>)
+
+  <span style="color:#75715e">// Accessing structs via pointers
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Employee</span>{<span style="color:#a6e22e">ID</span>: <span style="color:#ae81ff">1</span>}
+  (<span style="color:#f92672">*</span><span style="color:#a6e22e">v</span>).<span style="color:#a6e22e">Name</span> = <span style="color:#e6db74">&#34;Dilbert&#34;</span>
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v</span>)</code></pre></div>
+
+<p>For efficiency, larger struct types are usually passed to or returned from functions indirectly using a pointer (this is required if the function must modify its argument):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Bonus</span>(<span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Employee</span>, <span style="color:#a6e22e">percent</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> {
+    <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Salary</span> = <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Salary</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">percent</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">100</span>
+ }</code></pre></div>
+
+<p>For structs literal it is possible to instantiate the struct passing the arguments in order like:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Point</span> <span style="color:#66d9ef">struct</span> { <span style="color:#a6e22e">X</span>, <span style="color:#a6e22e">Y</span> <span style="color:#66d9ef">int</span>}
+  <span style="color:#a6e22e">P</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Point</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>}
+  <span style="color:#75715e">// OR you can list the fields
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">anim</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gif</span>.<span style="color:#a6e22e">GIF</span>{<span style="color:#a6e22e">LoopCount</span>: <span style="color:#a6e22e">nframes</span>}</code></pre></div>
+
+<h2 id="array">Array</h2>
+
+<p>An array is a fixed-length sequence of zero or more elements of a particular type. The type [n]T is an array of n values of type T.</p>
+
+<p>Individual array elements are accessed with the conventional subscript notation, where subscripts run from zero to one less than the array length.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> [<span style="color:#ae81ff">3</span>]<span style="color:#66d9ef">int</span>
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">0</span>]) <span style="color:#75715e">// Print the first element
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>[len(<span style="color:#a6e22e">a</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]) <span style="color:#75715e">// Print the last element
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// You can iterate in an array with indices and elements (keys, values)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">a</span> {
+	  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;%d %d\n&#34;</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span>)
+  }</code></pre></div>
+
+<p>We can use an array literal to initialize the array with a list of values</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">q</span> [<span style="color:#ae81ff">3</span>]<span style="color:#66d9ef">int</span> = [<span style="color:#ae81ff">3</span>]<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">r</span> [<span style="color:#ae81ff">3</span>]<span style="color:#66d9ef">int</span> = [<span style="color:#ae81ff">3</span>]<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>}
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>[<span style="color:#ae81ff">2</span>]) <span style="color:#f92672">//</span> <span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">zero</span> <span style="color:#a6e22e">value</span></code></pre></div>
+
+<p>If … appears in the place of the length [...]int the array length is determined by the number of initializers. q := [...]int{1, 2, 3}.</p>
+
+<h2 id="slices">Slices</h2>
+
+<p>While the array has a fixed size, a slice is a dynamically-sized, flexible view into the elements of an array. Arrays and slices are intimately connected. The type []T is a slice with elements of type T.
+A slice is formed by specifying two indices, a low and high bound, separated by a colon:</p>
+
+<p>a[low : high]</p>
+
+<p>Slicing beyond cap(s) causes a panic, but slicing beyond len(s) extends the slice, o the result may be longer than the original</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">summer</span>[:<span style="color:#ae81ff">20</span>]) <span style="color:#75715e">// panic: out of range
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">10</span>}
+<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">10</span>]		<span style="color:#75715e">// [1 2 3 4 5 6 7 8 9 10]
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">a</span>[:<span style="color:#ae81ff">10</span>]		<span style="color:#75715e">// [1 2 3 4 5 6 7 8 9 10]
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">0</span>:]		<span style="color:#75715e">// [1 2 3 4 5 6 7 8 9 10]
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">a</span>[:]		<span style="color:#f92672">//</span> [<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>]</code></pre></div>
+
+<p>The built-in append function appends items to slices:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">runes</span> []<span style="color:#66d9ef">rune</span>
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#e6db74">&#34;Hello, Florianópolis&#34;</span> {
+	  <span style="color:#a6e22e">runes</span> = append(<span style="color:#a6e22e">runes</span>, <span style="color:#a6e22e">r</span>)
+  }
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;%q\n&#34;</span>, <span style="color:#a6e22e">runes</span>)</code></pre></div>
+
+<h2 id="maps">Maps</h2>
+
+<p>A map maps keys to values, hash tables is one of the most ingenious and versatile of all data structures, It is an unordered collection of key/value pairs in which all the keys are distinct, and the value associated with a given key can be retrieved, updated, or removed using a constant number of key comparisons on the average, no matter how large the hash table.</p>
+
+<p>A map type is written map[K]V, where K and V are the types of its keys and values.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">ages</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int</span>)]
+<span style="color:#a6e22e">ages</span>[<span style="color:#e6db74">&#34;alice&#34;</span>] = <span style="color:#ae81ff">31</span>
+<span style="color:#a6e22e">ages</span>[<span style="color:#e6db74">&#34;charlie&#34;</span>] = <span style="color:#ae81ff">35</span>
+<span style="color:#75715e">// Deleting element
+</span><span style="color:#75715e"></span>delete(<span style="color:#a6e22e">ages</span>, <span style="color:#e6db74">&#34;alice&#34;</span>)</code></pre></div>
+
+<h2 id="functions-and-methods">Functions and methods</h2>
+
+<p>Functions as first-class values: like other values, function values have types, and they may be assigned to variables or passed to or returned from functions. A function value may be called like any other function. For example:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">square</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">n</span> }
+
+  <span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">square</span>
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">f</span>(<span style="color:#ae81ff">3</span>)) <span style="color:#f92672">//</span> <span style="color:#e6db74">&#34;9&#34;</span></code></pre></div>
+
+<p>The zero value of a function type is nil. Calling a nil function value causes a panic.</p>
+
+<p>Anonymous function are named functions can be declared only at the package level, but we can use a function literal to denote a function value within any expression.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">squares</span>() <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">int</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">int</span> {
+		<span style="color:#a6e22e">X</span><span style="color:#f92672">++</span>
+		<span style="color:#a6e22e">Return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">x</span>
+	}
+}
+<span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">squares</span>()
+<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">f</span>())</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// fibonacci is a function that returns
+</span><span style="color:#75715e">// a function that returns an int.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fibonacci</span>() <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">int</span> {
+	<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">int</span> {
+		<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> = <span style="color:#a6e22e">y</span>, <span style="color:#a6e22e">x</span><span style="color:#f92672">+</span><span style="color:#a6e22e">y</span>
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">y</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">x</span>
+	}
+}</code></pre></div>
+
+<h2 id="methods">Methods</h2>
+
+<p>Since the 1990s, object-oriented programming (OOP) has been the dominant programming paradigm in industry and education, and nearly all widely used languages developed since then have included support for it.</p>
+
+<p>An object is simply a value or variable that has methods, and a method is a function associated with a particular type. An object-oriented program is one that uses methods to express the properties and operations of each data structure so that clients need not access the object's representation directly. You can declare methods to a non-struct types, too.</p>
+
+<p>The receiver appears in its own argument list between the func keyword and the method name:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Vertex</span> <span style="color:#66d9ef">struct</span> {
+	  <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">float64</span>
+  }
+
+  <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#a6e22e">Vertex</span>) <span style="color:#a6e22e">Abs</span>() <span style="color:#66d9ef">float64</span> {
+	  <span style="color:#75715e">// return
+</span><span style="color:#75715e"></span>  }
+  <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Vertex</span>{<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>}
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Abs</span>())</code></pre></div>
+
+<p>Declare methods with Pointer receivers, the receiver type has the literal syntax <strong>T for some type T. Removing the </strong> we are operating in a copy of the original value.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Vertex</span>) <span style="color:#a6e22e">Scale</span>(<span style="color:#a6e22e">f</span> <span style="color:#66d9ef">float64</span>) {
+	  <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">X</span> = <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">X</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">f</span>
+  	<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Y</span> = <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Y</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">f</span>
+  }</code></pre></div>
+
+<p>Reasons to use a pointer receiver:
+The first is so that the method can modify the value that its receiver points to.
+The second is to avoid copying the value on each method call. This can be more efficient if the receiver is a large struct, for example.</p>
+
+<h2 id="interfaces">Interfaces</h2>
+
+<p>Interface types express generalizations and abstractions about the behaviour of other types. By generalizing, interfaces let us write functions that are more flexible and adaptable because they are not tied to the details of one particular implementation.</p>
+
+<p>An interface type specifies a set of methods that a concrete type must possess to be considered an instance of that interface.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Abser</span> <span style="color:#66d9ef">interface</span> {
+	  <span style="color:#a6e22e">abs</span>() <span style="color:#66d9ef">float64</span>
+  }
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Abser</span> = <span style="color:#a6e22e">Vertex</span>{<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>}</code></pre></div>
+
+<p>An empty interface interface{} is used by code that handles values of unknown type. Type assertions provides access to an interface value's underlying concrete value. This statement asserts that the interface value i holds the concrete type T and assign the underlying T value to the variable t.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">interface</span>{} = <span style="color:#e6db74">&#34;hello&#34;</span>
+  <span style="color:#a6e22e">T</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span>.(<span style="color:#a6e22e">T</span>)  <span style="color:#f92672">//</span> <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span>.(<span style="color:#66d9ef">string</span>)</code></pre></div>
+
+<p>You can have type switches like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">x</span>.(<span style="color:#66d9ef">type</span>) {
+    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">nil</span>:
+    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">uint</span>:
+    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">bool</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">string</span>: <span style="color:#960050;background-color:#1e0010">…</span>.
+  }</code></pre></div>
+
+<p>Some of the most common implementations of Interfaces includes, Stringer, Error and io.Reader/io.Writer type is one if the most widely used interfaces because it provides an abstraction of all the types to which bytes can be read/written, which includes files, memory buffers, network connections, HTTP clients, archivers, and so on.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// Stringer the equivalent of __str__ of a Python class
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Person</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%v (%v years)&#34;</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Age</span>)
+}
+
+<span style="color:#75715e">// Error interfaces allows implementation of custom errors
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">error</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span>
+}</code></pre></div>
+
+<h4 id="ex-6-exercise-errors">Ex. 6 - Exercise: Errors</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">   <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ErrNegativeSqrt</span> <span style="color:#66d9ef">float64</span>
+
+   <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">ErrNegativeSqrt</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
+  	 <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;cannot Sqrt negative number: %f&#34;</span>, float64(<span style="color:#a6e22e">e</span>))
+   }
+
+   <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Sqrt</span>(<span style="color:#a6e22e">x</span> <span style="color:#66d9ef">float64</span>) (<span style="color:#66d9ef">float64</span>, <span style="color:#66d9ef">error</span>) {
+	   <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> &lt; <span style="color:#ae81ff">0</span> {
+		   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0.0</span>, <span style="color:#a6e22e">ErrNegativeSqrt</span>(<span style="color:#a6e22e">x</span>)
+  	 }
+	 }
+   <span style="color:#f92672">...</span>
+ }
+ </code></pre></div>
+
+<h4 id="ex-7-stringers">Ex. 7 - Stringers</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ipAddr</span> <span style="color:#a6e22e">IPAddr</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+	  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%d.%d.%d.%d&#34;</span>, <span style="color:#a6e22e">ipAddr</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">ipAddr</span>[<span style="color:#ae81ff">1</span>], <span style="color:#a6e22e">ipAddr</span>[<span style="color:#ae81ff">2</span>], <span style="color:#a6e22e">ipAddr</span>[<span style="color:#ae81ff">3</span>])
+  }</code></pre></div>
+
+<h4 id="ex-8-readers">Ex. 8 - Readers</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MyReader</span> <span style="color:#66d9ef">struct</span>{}
+
+  <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">MyReader</span>) <span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">b</span> []<span style="color:#66d9ef">byte</span>) (<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">error</span>) {
+    <span style="color:#a6e22e">b</span>[<span style="color:#ae81ff">0</span>] = <span style="color:#e6db74">&#39;A&#39;</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">nil</span>
+  }
+
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	  <span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">Validate</span>(<span style="color:#a6e22e">MyReader</span>{})
+  }</code></pre></div>
+
+<h4 id="ex-9-rot13reader">Ex. 9 - rot13Reader</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">rot13</span>(<span style="color:#a6e22e">x</span> <span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">byte</span> {
+    <span style="color:#66d9ef">switch</span> {
+    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">77</span>:
+        <span style="color:#66d9ef">fallthrough</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">97</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">109</span>:
+        <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">13</span>
+    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">78</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">90</span>:
+        <span style="color:#66d9ef">fallthrough</span>
+  	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">110</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">122</span>:
+        <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">13</span>
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span>
+  }
+
+  <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">rot13Reader</span>) <span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">b</span> []<span style="color:#66d9ef">byte</span>) (<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">error</span>) {
+	  <span style="color:#a6e22e">stream</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">b</span>)
+   	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">stream</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+		  <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">rot13</span>(<span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">i</span>])
+	  }
+  	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">stream</span>, <span style="color:#66d9ef">nil</span>
+  }</code></pre></div>
+
+<p>When designing a new package, novice Go programmers often start by creating a set of interfaces and only later define the concrete types that satisfy them. This approach results in many interfaces, each of which has only a single implementation. Don't do that.</p>
+
+<h2 id="goroutines-https-tour-golang-org-concurrency-1">Goroutines - https://tour.golang.org/concurrency/1</h2>
+
+<p>Goroutine is a lightweight thread managed by the Go runtime. Go enables two styles of concurrent programming. Goroutines and Channels which support communication sequential process or CSP, a model of concurrency in which values are passed between independent activities (goroutines) but variables are for the most part confined to a single activity.</p>
+
+<p>Each concurrently executing activity is called a goroutine.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#a6e22e">f</span>() <span style="color:#75715e">// call f(); wait for it to return
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">Go</span> <span style="color:#a6e22e">f</span>() <span style="color:#f92672">//</span> <span style="color:#a6e22e">create</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">new</span> <span style="color:#a6e22e">goroutine</span> <span style="color:#a6e22e">that</span> <span style="color:#a6e22e">calls</span> <span style="color:#a6e22e">f</span>(); <span style="color:#a6e22e">don</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">t</span> <span style="color:#a6e22e">wait</span>.</code></pre></div>
+
+<p>On good example on how to use goroutine to execute a background job while waiting a final calculation:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	  <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">spinner</span>(<span style="color:#ae81ff">100</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Milliseconds</span>)
+  	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">n</span> = <span style="color:#ae81ff">45</span>
+   	<span style="color:#a6e22e">fibN</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fib</span>(<span style="color:#a6e22e">n</span>)
+	  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;\r Fibonnaci(%d) = %d\n&#34;</span>, <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">fibN</span>)
+  }
+
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">spinner</span>(<span style="color:#a6e22e">delay</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
+	  <span style="color:#66d9ef">for</span> {
+		  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#e6db74">`_\|/_`</span> {
+			  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;\r%c&#34;</span>, <span style="color:#a6e22e">r</span>)
+  			<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">delay</span>)
+		  }
+	  }
+  }</code></pre></div>
+
+<p>If goroutines are the activities of a concurrent Go program, channels are the connections between them. A channel is a communication mechanism that lets one goroutine send values to another goroutine. Each channel is a conduit for values of a particular type, called the channel's element type. The type of a channel whose elements have type int is written chan int.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>) <span style="color:#f92672">//</span> <span style="color:#a6e22e">ch</span> <span style="color:#a6e22e">has</span> <span style="color:#66d9ef">type</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span><span style="color:#960050;background-color:#1e0010">&#39;</span></code></pre></div>
+
+<p>A channel has two principal operations, send and receive, collectively known as communications:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">x</span> <span style="color:#75715e">// a send statement
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">x</span> = <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ch</span> <span style="color:#75715e">// a receives expression in an assignment statement
+</span><span style="color:#75715e"></span>  <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ch</span> <span style="color:#f92672">//</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">receives</span> <span style="color:#a6e22e">statement</span>; <span style="color:#a6e22e">result</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">discarded</span></code></pre></div>
+
+<p>A channel created with a simple call to make is called an unbuffered channel, but make accepts an optional second argument, an integer called the channel's capacity, if the capacity is non-zero make crates a buffered channel:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#a6e22e">ch</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>) <span style="color:#75715e">// unbuffered channel
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">ch</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">0</span>) <span style="color:#75715e">// unbuffered channel
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">ch</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">3</span>) <span style="color:#f92672">//</span> <span style="color:#a6e22e">buffered</span> <span style="color:#a6e22e">channel</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">capacity</span> <span style="color:#ae81ff">3</span></code></pre></div>
+
+<p>close(c) can be used to indicate a channel is being closed, and a second parameter to the received expression can indicate it: v, ok := <- ch, "ok" is false if there are no more values to receive.</p>
+
+<p>Select allows multiplexing these operations:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">select</span> {
+    <span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ch1</span>:
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ch2</span>:
+	  <span style="color:#75715e">// …. Use x …
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">ch3</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">y</span>:
+	  <span style="color:#75715e">// …
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">default</span> :
+   	<span style="color:#75715e">// …
+</span><span style="color:#75715e"></span>  }</code></pre></div>
+
+<h4 id="ex-10-binary-tree-walk">Ex 10. Binary tree walk</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+  <span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;golang.org/x/tour/tree&#34;</span>
+  )
+
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">WalkTree</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Tree</span>, <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>) {
+    <span style="color:#a6e22e">Walk</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">ch</span>)
+    close(<span style="color:#a6e22e">ch</span>)
+  }
+
+  <span style="color:#75715e">// Walk walks the tree t sending all values
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// from the tree to the channel ch.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Walk</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Tree</span>, <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>) {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Left</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+      <span style="color:#a6e22e">Walk</span>(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Left</span>, <span style="color:#a6e22e">ch</span>)
+    }
+    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Value</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Right</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+      <span style="color:#a6e22e">Walk</span>(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Right</span>, <span style="color:#a6e22e">ch</span>)
+    }
+  }
+
+  <span style="color:#75715e">// Same determines whether the trees
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// t1 and t2 contain the same values.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Same</span>(<span style="color:#a6e22e">t1</span>, <span style="color:#a6e22e">t2</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Tree</span>) <span style="color:#66d9ef">bool</span> {
+    <span style="color:#a6e22e">ch1</span>, <span style="color:#a6e22e">ch2</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>), make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">WalkTree</span>(<span style="color:#a6e22e">t1</span>, <span style="color:#a6e22e">ch1</span>)
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">WalkTree</span>(<span style="color:#a6e22e">t2</span>, <span style="color:#a6e22e">ch2</span>)
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">ch1</span> {
+      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">!=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch2</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+      }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+  }
+
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">WalkTree</span>(<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">New</span>(<span style="color:#ae81ff">10</span>), <span style="color:#a6e22e">ch</span>)
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">ch</span> {
+      <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+    }
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Should return true:&#34;</span>, <span style="color:#a6e22e">Same</span>(<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">New</span>(<span style="color:#ae81ff">1</span>), <span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">New</span>(<span style="color:#ae81ff">1</span>)))
+  }</code></pre></div>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2019 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

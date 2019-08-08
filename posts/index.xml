@@ -6,24 +6,35 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Aug 2019 01:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Golang essays (part II)</title>
+      <link>http://knabben.github.io/posts/gop2/</link>
+      <pubDate>Wed, 07 Aug 2019 01:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/gop2/</guid>
+      <description>Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
+The type *T is a pointer to a T. The operator that generates the pointer is the &amp;.
+x := 1 p := &amp;amp;x // p, of type *int, points to x  fmt.Println(*p) // &amp;#34;1&amp;#34;  *p = 2 // dereferencing or indirecting  fmt.Println(x) Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:</description>
+    </item>
+    
+    <item>
       <title>Golang essays (part I)</title>
-      <link>http://knabben.github.io/posts/golang/</link>
+      <link>http://knabben.github.io/posts/gop1/</link>
       <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://knabben.github.io/posts/golang/</guid>
+      <guid>http://knabben.github.io/posts/gop1/</guid>
       <description>Introduction Starting with the printed Hello World, create a main.go file with the following content:
 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;math/rand&amp;#34; ) func main() { fmt.Println(&amp;#34;Hello, world\n&amp;#34;, rand.Intn(10)) } On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.e. math/rand, use rand.*
 Open a terminal on VSCode and run your program:</description>
     </item>
     
     <item>
-      <title> Reviewing basics</title>
+      <title>Rust 101</title>
       <link>http://knabben.github.io/posts/langs2/</link>
       <pubDate>Thu, 04 Jul 2019 08:00:00 -0400</pubDate>
       
@@ -59,7 +70,7 @@ Summary Golang A statically typed, compiled programming language designed at Goo
     </item>
     
     <item>
-      <title>Service Mesh - Part I</title>
+      <title>Service Mesh</title>
       <link>http://knabben.github.io/posts/sm/</link>
       <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
       
