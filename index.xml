@@ -13,10 +13,10 @@
     
     <item>
       <title>Gossip networks</title>
-      <link>http://knabben.github.io/posts/gossip/gossip/</link>
+      <link>http://knabben.github.io/posts/gossip/</link>
       <pubDate>Mon, 11 Nov 2019 02:00:00 +0000</pubDate>
       
-      <guid>http://knabben.github.io/posts/gossip/gossip/</guid>
+      <guid>http://knabben.github.io/posts/gossip/</guid>
       <description>Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
 %load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&amp;#34;Starting&amp;#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.</description>
     </item>
