@@ -36,7 +36,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-11T01:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-11-11T02:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -122,6 +122,31 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/gossip/gossip/" class="color-inherit dim link">
+            Gossip networks
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
+%load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.
+        </div>
+          <a href="/posts/gossip/gossip/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/dev-poet/" class="color-inherit dim link">
             From dev to poet
             </a>
@@ -165,38 +190,18 @@ Configuration This shows how to handle basic command line arguments and environm
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/gop2/" class="color-inherit dim link">
-            Golang essays (part II)
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
-The type *T is a pointer to a T. The operator that generates the pointer is the &.
-x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.Println(x) Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:
-        </div>
-          <a href="/posts/gop2/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/gop2/" class="link black dim">
+              Golang essays (part II)
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/gop1/" class="link black dim">
@@ -213,12 +218,6 @@ x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#3
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/sawtooth/" class="link black dim">
               Hyperledger Sawtooth
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/langs1/" class="link black dim">
-              Bootstraping languages
             </a>
           </h2>
         
