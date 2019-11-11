@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | From dev to poet</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="From dev to poet" />
+<meta property="og:description" content="Introduction Changing live consensus on Sawtooth is a good capability that comes since 1.0.5, in this tutorial we are going to start 3 nodes in docker-compose with this version, the nodes are going to start with a Devmode consensus algorithm for our test network.
+We are going to spin up to a Poet consensus based network without the need of restarting the peer nodes.
+The Sawtooth 1.0.5 Test network Lets start with 3 simple validators, use the image hyperlegder/sawtooth-validator:1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/dev-poet/" />
+<meta property="article:published_time" content="2019-11-11T01:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-11-11T01:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="From dev to poet">
+<meta itemprop="description" content="Introduction Changing live consensus on Sawtooth is a good capability that comes since 1.0.5, in this tutorial we are going to start 3 nodes in docker-compose with this version, the nodes are going to start with a Devmode consensus algorithm for our test network.
+We are going to spin up to a Poet consensus based network without the need of restarting the peer nodes.
+The Sawtooth 1.0.5 Test network Lets start with 3 simple validators, use the image hyperlegder/sawtooth-validator:1.">
+
+
+<meta itemprop="datePublished" content="2019-11-11T01:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-11T01:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="782">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="From dev to poet"/>
+<meta name="twitter:description" content="Introduction Changing live consensus on Sawtooth is a good capability that comes since 1.0.5, in this tutorial we are going to start 3 nodes in docker-compose with this version, the nodes are going to start with a Devmode consensus algorithm for our test network.
+We are going to spin up to a Poet consensus based network without the need of restarting the peer nodes.
+The Sawtooth 1.0.5 Test network Lets start with 3 simple validators, use the image hyperlegder/sawtooth-validator:1."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">From dev to poet</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-11-11T01:00:00Z">November 11, 2019</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
+
+<p>Changing live consensus on Sawtooth is a good capability that comes
+since 1.0.5, in this tutorial we are going to start 3 nodes in docker-compose
+with this version, the nodes are going to start with a Devmode consensus
+algorithm for our test network.</p>
+
+<p>We are going to spin up to a Poet consensus based network without the need
+of restarting the peer nodes.</p>
+
+<h2 id="the-sawtooth-1-0-5-test-network">The Sawtooth 1.0.5 Test network</h2>
+
+<p>Lets start with 3 simple validators, use the image hyperlegder/sawtooth-validator:1.0:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">version: <span style="color:#e6db74">&#34;2.1&#34;</span>
+
+services:
+
+  validator-<span style="color:#ae81ff">0</span>:
+    image: hyperledger/sawtooth-validator:<span style="color:#ae81ff">1.0</span>
+    container_name: sawtooth-validator-default-<span style="color:#ae81ff">0</span>
+    expose:
+      - <span style="color:#ae81ff">4004</span>
+      - <span style="color:#ae81ff">5050</span>
+      - <span style="color:#ae81ff">8800</span>
+    volumes:
+      - poet-shared:/poet-shared
+    command: <span style="color:#e6db74">&#34;bash -c \&#34;\
+</span><span style="color:#e6db74">        sawadm keygen --force &amp;&amp; \
+</span><span style="color:#e6db74">        sawset genesis -k /etc/sawtooth/keys/validator.priv &amp;&amp; \
+</span><span style="color:#e6db74">        sawadm genesis config-genesis.batch &amp;&amp; \
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">        sawtooth-validator -v \
+</span><span style="color:#e6db74">          --bind network:tcp://eth0:8800 \
+</span><span style="color:#e6db74">          --bind component:tcp://eth0:4004 \
+</span><span style="color:#e6db74">          --bind consensus:tcp://eth0:5050 \
+</span><span style="color:#e6db74">          --peering static \
+</span><span style="color:#e6db74">          --endpoint tcp://validator-0:8800
+</span><span style="color:#e6db74">          --peers tcp://validator-1:8800
+</span><span style="color:#e6db74">          --peers tcp://validator-2:8800
+</span><span style="color:#e6db74">    \&#34;&#34;</span>
+    stop_signal: SIGKILL
+
+  validator-<span style="color:#ae81ff">1</span>:
+    image: hyperledger/sawtooth-validator:<span style="color:#ae81ff">1.0</span>
+    container_name: sawtooth-validator-default-<span style="color:#ae81ff">1</span>
+    expose:
+      - <span style="color:#ae81ff">4004</span>
+      - <span style="color:#ae81ff">5050</span>
+      - <span style="color:#ae81ff">8800</span>
+    volumes:
+      - poet-shared:/poet-shared
+    command: <span style="color:#e6db74">&#34;bash -c \&#34;\
+</span><span style="color:#e6db74">        sawadm keygen --force &amp;&amp; \
+</span><span style="color:#e6db74">        sawtooth-validator -v \
+</span><span style="color:#e6db74">          --bind network:tcp://eth0:8800 \
+</span><span style="color:#e6db74">          --bind component:tcp://eth0:4004 \
+</span><span style="color:#e6db74">          --bind consensus:tcp://eth0:5050 \
+</span><span style="color:#e6db74">          --peering static \
+</span><span style="color:#e6db74">          --endpoint tcp://validator-1:8800
+</span><span style="color:#e6db74">          --peers tcp://validator-0:8800
+</span><span style="color:#e6db74">          --peers tcp://validator-2:8800
+</span><span style="color:#e6db74">    \&#34;&#34;</span>
+    stop_signal: SIGKILL
+
+  validator-<span style="color:#ae81ff">2</span>:
+   image: hyperledger/sawtooth-validator:<span style="color:#ae81ff">1.0</span>
+    container_name: sawtooth-validator-default-<span style="color:#ae81ff">1</span>
+    expose:
+      - <span style="color:#ae81ff">4004</span>
+      - <span style="color:#ae81ff">5050</span>
+      - <span style="color:#ae81ff">8800</span>
+    volumes:
+      - poet-shared:/poet-shared
+    command: <span style="color:#e6db74">&#34;bash -c \&#34;\
+</span><span style="color:#e6db74">        sawadm keygen --force &amp;&amp; \
+</span><span style="color:#e6db74">        sawtooth-validator -v \
+</span><span style="color:#e6db74">          --bind network:tcp://eth0:8800 \
+</span><span style="color:#e6db74">          --bind component:tcp://eth0:4004 \
+</span><span style="color:#e6db74">          --bind consensus:tcp://eth0:5050 \
+</span><span style="color:#e6db74">          --peering static \
+</span><span style="color:#e6db74">          --endpoint tcp://validator-1:8800
+</span><span style="color:#e6db74">          --peers tcp://validator-0:8800
+</span><span style="color:#e6db74">          --peers tcp://validator-1:8800
+</span><span style="color:#e6db74">    \&#34;&#34;</span>
+    stop_signal: SIGKILL</code></pre></div>
+
+<p>Things to observe here, the peers in the validators are the opposite endpoint
+since they are being used to connect other peers and start the gossip network.</p>
+
+<p>Only the first node will have the genesis block created, the others block
+will sync via Devmode and are going to have the same HEAD. It is enough for
+a start.</p>
+
+<h2 id="other-containers">Other containers</h2>
+
+<p>Besides the validator we need a rest-api, settings Transaction processor and
+the intkey transaction processor generic test of the network.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  rest-api-<span style="color:#ae81ff">0</span>:
+    image: hyperledger/sawtooth-rest-api:<span style="color:#ae81ff">1.0</span>
+    container_name: sawtooth-rest-api-default-<span style="color:#ae81ff">0</span>
+    expose:
+      - <span style="color:#ae81ff">8008</span>
+    command: <span style="color:#e6db74">|
+</span><span style="color:#e6db74">      bash -c &#34;</span>
+        sawtooth-rest-api \
+          --connect tcp://validator-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4004</span> \
+          --bind rest-api-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">8008</span>
+      &#34;
+  intkey-tp-<span style="color:#ae81ff">0</span>:
+    image: hyperledger/sawtooth-intkey-tp-python:<span style="color:#ae81ff">1.0</span>
+    container_name: sawtooth-intkey-tp-python-default-<span style="color:#ae81ff">0</span>
+    expose:
+      - <span style="color:#ae81ff">4004</span>
+    command: intkey-tp-python -C tcp://validator-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4004</span>
+    stop_signal: SIGKILL
+
+  settings-tp-<span style="color:#ae81ff">0</span>:
+    image: hyperledger/sawtooth-settings-tp:<span style="color:#ae81ff">1.0</span>
+    container_name: sawtooth-settings-tp-default-<span style="color:#ae81ff">0</span>
+    expose:
+      - <span style="color:#ae81ff">4004</span>
+    command: settings-tp -C tcp://validator-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4004</span>
+    stop_signal: SIGKILL</code></pre></div>
+
+<p>Repeat these more 2 times as the validator containers, don't forget to replace
+the hostname and id on container name.</p>
+
+<p>I'm not a big fan of docker-compose for this prototype is the faster solution.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ docker-compose -f docker-compose.yaml up</code></pre></div>
+
+<h2 id="some-important-highlights">Some important highlights</h2>
+
+<p>For the validator-0:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Started the genesis block</span>
+genesis<span style="color:#f92672">]</span> Producing genesis block from /var/lib/sawtooth/genesis.batch
+
+<span style="color:#75715e"># Listening on 8800 for the gossip networking</span>
+interconnect<span style="color:#f92672">]</span> Listening on tcp://eth0:8800
+
+<span style="color:#75715e"># Chain controller started with chain on HEAD bb77fd9</span>
+chain<span style="color:#f92672">]</span> Chain controller initialized with chain head: bb77fd9
+
+<span style="color:#75715e"># Have two Transaction Processor created</span>
+processor_handlers<span style="color:#f92672">]</span> registered transaction processor: family<span style="color:#f92672">=</span>sawtooth_validator_registry, version<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.0
+processor_handlers<span style="color:#f92672">]</span> registered transaction processor: family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.0</code></pre></div>
+
+<p>For the validator-1 and validator-2:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Have two Transaction Processor created</span>
+processor_handlers<span style="color:#f92672">]</span> registered transaction processor: family<span style="color:#f92672">=</span>sawtooth_validator_registry, version<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.0
+processor_handlers<span style="color:#f92672">]</span> registered transaction processor: family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.0
+
+publisher<span style="color:#f92672">]</span> Now building on top of block: bb77fd90</code></pre></div>
+
+<p>This gensis block from validator-0 was sync on other nodes via peering mode.
+chain arrives after GOSSIP_BLOCK_REQUEST HEAD is made.</p>
+
+<h2 id="testing-with-intkey">Testing with intkey</h2>
+
+<p>Find a box with a intkey installed, you can use one of the rest-apis to insert
+a new key on it:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ docker exec -it sawtooth-shell-default bash
+root@ac7b765563e0:/# intkey set abc <span style="color:#ae81ff">100</span> --url http://sawtooth-rest-api-default-0:8008
+
+sawtooth-validator-default-1    | Choose new fork 3e7338c7: New fork head switches consensus to DevMode
+sawtooth-validator-default-0    | Choose new fork 3e7338c7: New fork head switches consensus to DevMode
+sawtooth-validator-default-2    | Choose new fork 21166a62: New fork head switches consensus to DevMode
+
+
+NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER
+<span style="color:#ae81ff">1</span>    8bfe1d2b7aeee4fdec798780cacc462264317b90faf6cfde3c98145270cd591354ba28f0584b05721a5abf65a0794d5b4c01c9579cb90d6ed3146196c56acd31  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     02b8ac3dbe2b167ad2f7166a8108f1c6b09fc008337a2a09d2fdfa...
+<span style="color:#ae81ff">0</span>    201d5625729e2de1bfd2610d90ea3e3c91d415fdbfbc9130b61d6c0b1c2dc9665a65744a7ddeb8c1d1fe843ecade5b2f0c87b1ffca8c13cd5dd2b92c4674cf4a  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     037d86b9a93a90c3bd353ef4140a2de81d0f54a53ee3dc850c393a...
+
+root@ac7b765563e0:/# sawtooth block list --url http://sawtooth-rest-api-default-1:8008
+NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER
+<span style="color:#ae81ff">1</span>    8bfe1d2b7aeee4fdec798780cacc462264317b90faf6cfde3c98145270cd591354ba28f0584b05721a5abf65a0794d5b4c01c9579cb90d6ed3146196c56acd31  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     02b8ac3dbe2b167ad2f7166a8108f1c6b09fc008337a2a09d2fdfa...
+<span style="color:#ae81ff">0</span>    201d5625729e2de1bfd2610d90ea3e3c91d415fdbfbc9130b61d6c0b1c2dc9665a65744a7ddeb8c1d1fe843ecade5b2f0c87b1ffca8c13cd5dd2b92c4674cf4a  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     037d86b9a93a90c3bd353ef4140a2de81d0f54a53ee3dc850c393a...
+
+root@ac7b765563e0:/# sawtooth block list --url http://sawtooth-rest-api-default-2:8008
+NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER
+<span style="color:#ae81ff">1</span>    8bfe1d2b7aeee4fdec798780cacc462264317b90faf6cfde3c98145270cd591354ba28f0584b05721a5abf65a0794d5b4c01c9579cb90d6ed3146196c56acd31  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     02b8ac3dbe2b167ad2f7166a8108f1c6b09fc008337a2a09d2fdfa...
+<span style="color:#ae81ff">0</span>    201d5625729e2de1bfd2610d90ea3e3c91d415fdbfbc9130b61d6c0b1c2dc9665a65744a7ddeb8c1d1fe843ecade5b2f0c87b1ffca8c13cd5dd2b92c4674cf4a  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     037d86b9a93a90c3bd353ef4140a2de81d0f54a53ee3dc850c393a...</code></pre></div>
+
+<p>Great, the system reach a consensus in the end, even with devmode, lets keep the system running like</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@ac7b765563e0:/# <span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> intkey  inc abc <span style="color:#ae81ff">1</span> --url http://sawtooth-rest-api-default-0:8008; sleep <span style="color:#ae81ff">5</span>; <span style="color:#66d9ef">done</span></code></pre></div>
+
+<h2 id="changing-the-consensus-on-the-fly">Changing the consensus on the fly</h2>
+
+<p>Bring up the new transaction processor for Poet, we are going to use the simulator, CFT, again one for each validator node.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  poet-validator-registry-tp-<span style="color:#ae81ff">0</span>:
+    image: hyperledger/sawtooth-poet-validator-registry-tp:<span style="color:#ae81ff">1.0</span>
+    container_name: sawtooth-poet-validator-registry-tp-<span style="color:#ae81ff">0</span>
+    expose:
+      - <span style="color:#ae81ff">4004</span>
+    command: poet-validator-registry-tp -C tcp://validator-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4004</span>
+    stop_signal: SIGKILL</code></pre></div>
+
+<p>Finally go to one of the nodes containers and start the new change proposal:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   sawtooth.algorithm.name<span style="color:#f92672">=</span>poet <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   -k /etc/sawtooth/keys/validator.priv 
+   --url http://sawtooth-rest-api-default-0:8008
+
+root@392073ef9789:/# sawtooth settings list --url http://sawtooth-rest-api-default-2:8008
+sawtooth.algorithm.name: poet
+sawtooth.settings.vote.authorized_keys: 03eb80a5cf0aa95a170be0fb04e3724c83b848dc5f0d08d3324a67a0527b5401cd</code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This is some notes on how the on-chain settings works, don't use this in production, some
+odd behavior can happen.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2019 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

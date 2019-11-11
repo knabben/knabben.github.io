@@ -6,10 +6,31 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Aug 2019 01:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 Nov 2019 01:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>From dev to poet</title>
+      <link>http://knabben.github.io/posts/dev-poet/</link>
+      <pubDate>Mon, 11 Nov 2019 01:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/dev-poet/</guid>
+      <description>Introduction Changing live consensus on Sawtooth is a good capability that comes since 1.0.5, in this tutorial we are going to start 3 nodes in docker-compose with this version, the nodes are going to start with a Devmode consensus algorithm for our test network.
+We are going to spin up to a Poet consensus based network without the need of restarting the peer nodes.
+The Sawtooth 1.0.5 Test network Lets start with 3 simple validators, use the image hyperlegder/sawtooth-validator:1.</description>
+    </item>
+    
+    <item>
+      <title>microservices (I) </title>
+      <link>http://knabben.github.io/posts/ws_p1/</link>
+      <pubDate>Mon, 09 Sep 2019 16:50:00 -0400</pubDate>
+      
+      <guid>http://knabben.github.io/posts/ws_p1/</guid>
+      <description>Introduction This is a compilation of code examples and topics about microservices and libraries used to compose a 12-factor compliant service, the idea is to continue extending the basic topics and the final coverage is to detail each framework: Python (aiohttp), Rust (actix-web) and Golang (gokit).
+Configuration This shows how to handle basic command line arguments and environment variables. It must have a subcommand called &#34;server&#34; and handle the following arguments on base command:</description>
+    </item>
     
     <item>
       <title>Golang essays (part II)</title>

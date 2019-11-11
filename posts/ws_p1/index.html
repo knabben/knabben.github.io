@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | microservices (I) </title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="microservices (I) " />
+<meta property="og:description" content="Introduction This is a compilation of code examples and topics about microservices and libraries used to compose a 12-factor compliant service, the idea is to continue extending the basic topics and the final coverage is to detail each framework: Python (aiohttp), Rust (actix-web) and Golang (gokit).
+Configuration This shows how to handle basic command line arguments and environment variables. It must have a subcommand called &#34;server&#34; and handle the following arguments on base command:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/ws_p1/" />
+<meta property="article:published_time" content="2019-09-09T16:50:00-04:00"/>
+<meta property="article:modified_time" content="2019-09-09T16:50:00-04:00"/>
+
+<meta itemprop="name" content="microservices (I) ">
+<meta itemprop="description" content="Introduction This is a compilation of code examples and topics about microservices and libraries used to compose a 12-factor compliant service, the idea is to continue extending the basic topics and the final coverage is to detail each framework: Python (aiohttp), Rust (actix-web) and Golang (gokit).
+Configuration This shows how to handle basic command line arguments and environment variables. It must have a subcommand called &#34;server&#34; and handle the following arguments on base command:">
+
+
+<meta itemprop="datePublished" content="2019-09-09T16:50:00-04:00" />
+<meta itemprop="dateModified" content="2019-09-09T16:50:00-04:00" />
+<meta itemprop="wordCount" content="323">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="microservices (I) "/>
+<meta name="twitter:description" content="Introduction This is a compilation of code examples and topics about microservices and libraries used to compose a 12-factor compliant service, the idea is to continue extending the basic topics and the final coverage is to detail each framework: Python (aiohttp), Rust (actix-web) and Golang (gokit).
+Configuration This shows how to handle basic command line arguments and environment variables. It must have a subcommand called &#34;server&#34; and handle the following arguments on base command:"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">microservices (I) </h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-09-09T16:50:00-04:00">September 9, 2019</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h3 id="introduction">Introduction</h3>
+
+<p>This is a compilation of code examples and topics about microservices and libraries
+ used to compose a 12-factor compliant service, the idea is to continue extending the 
+ basic topics and the final coverage is to detail each framework: Python (<strong>aiohttp</strong>), 
+ Rust (<strong>actix-web</strong>) and Golang (<strong>gokit</strong>).</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>This shows how to handle basic command line arguments and environment variables.
+ It must have a subcommand called "server" and handle the following arguments
+ on base command:</p>
+
+<h4 id="debug">--debug</h4>
+
+<p>And the following in the server subcommand:</p>
+
+<h4 id="bind-host-address">--bind (host address)</h4>
+
+<h3 id="python">Python</h3>
+
+<p>In Python a well known library is Click, we can setup the initial debug using the following code</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@click.group</span>()
+<span style="color:#a6e22e">@click.option</span>(<span style="color:#e6db74">&#34;--debug&#34;</span>, is_flag<span style="color:#f92672">=</span>True, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enable debugging&#34;</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cli</span>(debug):
+    <span style="color:#66d9ef">if</span> debug:
+        logging<span style="color:#f92672">.</span>basicConfig(level<span style="color:#f92672">=</span>logging<span style="color:#f92672">.</span>DEBUG)
+
+
+<span style="color:#a6e22e">@cli.command</span>()
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">serve</span>():
+    click<span style="color:#f92672">.</span>echo(<span style="color:#e6db74">&#34;App init&#34;</span>)
+    app <span style="color:#f92672">=</span> web<span style="color:#f92672">.</span>Application()
+    app<span style="color:#f92672">.</span>add_routes([web<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;/&#39;</span>, handle),
+                    web<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;/{name}&#39;</span>, handle)])
+
+    web<span style="color:#f92672">.</span>run_app(app)
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    cli()</code></pre></div>
+
+<h2 id="rust">Rust</h2>
+
+<p>Lets use Clap and verify the command in a match, binding the port 8080, 
+in the sequence we enable the actual DEBUG logging</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">serve</span>() -&gt; <span style="color:#a6e22e">std</span>::io::Result<span style="color:#f92672">&lt;</span>()<span style="color:#f92672">&gt;</span> {
+    HttpServer::new(
+        <span style="color:#f92672">||</span> App::new().service(
+              web::resource(<span style="color:#e6db74">&#34;/{id}/{name}/index.html&#34;</span>).to(index)))
+        .bind(<span style="color:#e6db74">&#34;127.0.0.1:8080&#34;</span>)<span style="color:#f92672">?</span>
+        .run()
+}
+
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> matches <span style="color:#f92672">=</span> clap_app<span style="color:#f92672">!</span>(myapp <span style="color:#f92672">=&gt;</span>
+        (<span style="color:#f92672">@</span>arg debug: <span style="color:#f92672">-</span>d ... <span style="color:#e6db74">&#34;Set the level of debugging&#34;</span>)
+        (<span style="color:#f92672">@</span>subcommand serve <span style="color:#f92672">=&gt;</span> 
+            (about: <span style="color:#e6db74">&#34;Serve REST API&#34;</span>)
+        )
+    ).get_matches();
+
+    <span style="color:#66d9ef">match</span> matches.occurrences_of(<span style="color:#e6db74">&#34;debug&#34;</span>) {
+        <span style="color:#ae81ff">0</span> <span style="color:#f92672">=&gt;</span> println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;Debug mode is off&#34;</span>),
+        <span style="color:#ae81ff">1</span> <span style="color:#f92672">=&gt;</span> println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;Debug mode is kind of on&#34;</span>),
+        <span style="color:#ae81ff">2</span> <span style="color:#f92672">=&gt;</span> println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;Debug mode is on&#34;</span>),
+        <span style="color:#ae81ff">3</span> <span style="color:#f92672">|</span> _ <span style="color:#f92672">=&gt;</span> println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;Don&#39;t be crazy&#34;</span>),
+    }
+
+    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(matches) <span style="color:#f92672">=</span> matches.subcommand_matches(<span style="color:#e6db74">&#34;serve&#34;</span>) {
+        serve.unwrap();
+    };
+}
+</code></pre></div>
+
+<h2 id="golang">Golang</h2>
+
+<p>The last example in the last is the well known library spf13 and viper, this enables the</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">debug</span> <span style="color:#66d9ef">bool</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">rootCmd</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+	<span style="color:#a6e22e">Use</span>:   <span style="color:#e6db74">&#34;rest&#34;</span>,
+	<span style="color:#a6e22e">Short</span>: <span style="color:#e6db74">&#34;REST API server&#34;</span>,
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">serveCmd</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+	<span style="color:#a6e22e">Use</span>:   <span style="color:#e6db74">&#34;serve&#34;</span>,
+	<span style="color:#a6e22e">Short</span>: <span style="color:#e6db74">&#34;Serve a service&#34;</span>,
+	<span style="color:#a6e22e">Run</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">cmd</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>, <span style="color:#a6e22e">args</span> []<span style="color:#66d9ef">string</span>) {
+		<span style="color:#a6e22e">svc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mainService</span>{}
+
+		<span style="color:#a6e22e">mainHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httptransport</span>.<span style="color:#a6e22e">NewServer</span>(
+			<span style="color:#a6e22e">makeMainEndpoint</span>(<span style="color:#a6e22e">svc</span>),
+			<span style="color:#a6e22e">decodeMainRequest</span>,
+			<span style="color:#a6e22e">encodeResponse</span>,
+		)
+
+		<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">mainHandler</span>)
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>))
+	},
+}
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+	<span style="color:#a6e22e">rootCmd</span>.<span style="color:#a6e22e">PersistentFlags</span>().<span style="color:#a6e22e">BoolVar</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">debug</span>, <span style="color:#e6db74">&#34;debug&#34;</span>, <span style="color:#66d9ef">false</span>, <span style="color:#e6db74">&#34;Debug&#34;</span>)
+	<span style="color:#a6e22e">rootCmd</span>.<span style="color:#a6e22e">AddCommand</span>(<span style="color:#a6e22e">serveCmd</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rootCmd</span>.<span style="color:#a6e22e">Execute</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+		<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
+	}
+}</code></pre></div>
+
+<h2 id="logging">Logging</h2>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2019 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
