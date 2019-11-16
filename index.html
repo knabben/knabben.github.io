@@ -36,7 +36,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-11T02:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-11-16T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -122,6 +122,32 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/sawtooth-grafana/" class="color-inherit dim link">
+            Sawtooth Network Monitoring
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It's easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana.
+        </div>
+          <a href="/posts/sawtooth-grafana/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/gossip/" class="color-inherit dim link">
             Gossip networks
             </a>
@@ -165,37 +191,18 @@ The Sawtooth 1.0.5 Test network Lets start with 3 simple validators, use the ima
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/ws_p1/" class="color-inherit dim link">
-            microservices (I) 
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Introduction This is a compilation of code examples and topics about microservices and libraries used to compose a 12-factor compliant service, the idea is to continue extending the basic topics and the final coverage is to detail each framework: Python (aiohttp), Rust (actix-web) and Golang (gokit).
-Configuration This shows how to handle basic command line arguments and environment variables. It must have a subcommand called "server" and handle the following arguments on base command:
-        </div>
-          <a href="/posts/ws_p1/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/ws_p1/" class="link black dim">
+              microservices (I) 
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/gop2/" class="link black dim">
@@ -212,12 +219,6 @@ Configuration This shows how to handle basic command line arguments and environm
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/langs2/" class="link black dim">
               Rust 101
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/sawtooth/" class="link black dim">
-              Hyperledger Sawtooth
             </a>
           </h2>
         

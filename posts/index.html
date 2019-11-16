@@ -36,7 +36,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
 
-<meta property="og:updated_time" content="2019-11-11T02:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-11-16T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="">
@@ -91,6 +91,23 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
   <main class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></main>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/sawtooth-grafana/" class="link black dim">
+        Sawtooth Network Monitoring
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It's easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -239,22 +256,6 @@ Summary Golang A statically typed, compiled programming language designed at Goo
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/technical/" class="link black dim">
-        Technical indicators
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
-The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
     </div>
   </div>
 </div>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Sawtooth Network Monitoring</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Sawtooth Network Monitoring" />
+<meta property="og:description" content="Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/sawtooth-grafana/" />
+<meta property="article:published_time" content="2019-11-16T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-11-16T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Sawtooth Network Monitoring">
+<meta itemprop="description" content="Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana.">
+
+
+<meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="656">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Sawtooth Network Monitoring"/>
+<meta name="twitter:description" content="Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Sawtooth Network Monitoring</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-11-16T00:00:00Z">November 16, 2019</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
+
+<p>I need to agree with Prometheus vision, instrument everything. Every library, subsystem 
+and service should have at least a few metrics to give you a rough idea of
+how it is performing.</p>
+
+<p>It's easier with instrumentation to get a snapshot of your system state
+in a particular time, the one can discovery outliers and misbehaviors
+and if you need more details you always have debugging logs.</p>
+
+<p>Saying that, in this post we will analyze how to monitor a Sawtooth Validator
+Node, using InfluxDB and Grafana.</p>
+
+<h2 id="installing-the-tools">Installing the tools</h2>
+
+<p>As usual we start with the KIND cluster, if you don't have this yet check it out, apply
+the RBAC for tiller and install it after:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cat <span style="color:#e6db74">&lt;&lt;EOF | kubectl apply -f -
+</span><span style="color:#e6db74">apiVersion: v1
+</span><span style="color:#e6db74">kind: ServiceAccount
+</span><span style="color:#e6db74">metadata:
+</span><span style="color:#e6db74">  name: tiller
+</span><span style="color:#e6db74">  namespace: kube-system
+</span><span style="color:#e6db74">---
+</span><span style="color:#e6db74">apiVersion: rbac.authorization.k8s.io/v1beta1
+</span><span style="color:#e6db74">kind: ClusterRoleBinding
+</span><span style="color:#e6db74">metadata:
+</span><span style="color:#e6db74">  name: tiller
+</span><span style="color:#e6db74">roleRef:
+</span><span style="color:#e6db74">  apiGroup: rbac.authorization.k8s.io
+</span><span style="color:#e6db74">  kind: ClusterRole
+</span><span style="color:#e6db74">  name: cluster-admin
+</span><span style="color:#e6db74">subjects:
+</span><span style="color:#e6db74">  - kind: ServiceAccount
+</span><span style="color:#e6db74">    name: tiller
+</span><span style="color:#e6db74">    namespace: kube-system
+</span><span style="color:#e6db74">EOF</span></code></pre></div>
+
+<p>Installing HELM, InfluxDB and Grafana</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ helm init --service-account tiller
+$ helm install stable/influxdb --name influxdb
+$ helm install stable/grafana --name grafana</code></pre></div>
+
+<h2 id="configuring-influxdb-and-grafana">Configuring InfluxDB and Grafana</h2>
+
+<p>First we need the get the DNS address and available ports for each service, you can use:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl get svc
+grafana      ClusterIP   <span style="color:#ae81ff">10</span>.102.250.186   &lt;none&gt;        <span style="color:#ae81ff">80</span>/TCP                                         9m34s
+influxdb     ClusterIP   <span style="color:#ae81ff">10</span>.101.193.193   &lt;none&gt;        <span style="color:#ae81ff">8086</span>/TCP,8088/TCP                              9m15s
+
+Host summary:
+
+grafana - grafana.default.svc
+influxdb - influxdb.default.svc</code></pre></div>
+
+<p>To test locally lets expose both ports in our client machine:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">INFLUXDB_HOST<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pods --namespace default -l app<span style="color:#f92672">=</span>influxdb -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{ .items[0].metadata.name }&#34;</span><span style="color:#66d9ef">)</span>
+GRAFANA_HOST<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pods --namespace default -l <span style="color:#e6db74">&#34;app=grafana,release=grafana&#34;</span> -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.items[0].metadata.name}&#34;</span><span style="color:#66d9ef">)</span>
+
+kubectl port-forward --namespace default $GRAFANA_HOST <span style="color:#ae81ff">3000</span>
+kubectl port-forward --namespace default $INFLUXDB_HOST <span style="color:#ae81ff">8086</span>:8086</code></pre></div>
+
+<h3 id="create-a-new-influx-database">Create a new Influx database</h3>
+
+<p>To create a new database in InfluxDB use:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; / <span style="color:#75715e"># influx -precision rfc3339</span>
+Connected to http://localhost:8086 version <span style="color:#ae81ff">1</span>.7.3
+InfluxDB shell version: <span style="color:#ae81ff">1</span>.7.3
+Enter an InfluxQL query
+&gt; CREATE DATABASE db1</code></pre></div>
+
+<h3 id="grafana-setup">Grafana setup</h3>
+
+<p>Go to http://localhost:3000, you can find your password on "helm status grafana" instructions. Lets add the InfluxDB database in the dashboard.</p>
+
+<img src="/posts/sawtooth-grafana/setup.png" alt="" class="" style="width: 80%; ">
+
+
+<p>Now, you need to import the dashboard from:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://raw.githubusercontent.com/hyperledger/sawtooth-core/master/docker/grafana/dashboards/dashboard.json</code></pre></div>
+
+<h2 id="enabling-in-the-validator">Enabling in the validator</h2>
+
+<p>Download the Sawtooth 1.1 - Kubernetes, find the ALL the validators lines in the YAML description (container name: sawtooth-validator) and 
+enable code instrumentation via arguments, the off-site configuration for configuration monitoring can be made on /etc/sawtooth/validator.toml as well.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ wget https://sawtooth.hyperledger.org/docs/core/releases/1.1/app_developers_guide/sawtooth-kubernetes-default-poet.yaml
+
+vi sawtooth-kubernetes-default-poet.yaml
+
+...
+  sawtooth-validator -vv <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --opentsdb-url http://influxdb.default:8086 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --opentsdb-db db1 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --endpoint tcp://$SAWTOOTH_0_SERVICE_HOST:8800 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    ...
+  sawtooth-validator -vv <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --opentsdb-url http://influxdb.default:8086 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --opentsdb-db db1 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --endpoint tcp://$SAWTOOTH_1_SERVICE_HOST:8800 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    ...
+  sawtooth-validator -vv <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --opentsdb-url http://influxdb.default:8086 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --opentsdb-db db1 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --endpoint tcp://$SAWTOOTH_2_SERVICE_HOST:8800 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    ...
+...
+
+$ kubectl create -f sawtooth-kubernetes-default-poet.yaml</code></pre></div>
+
+<p>Wait for the nodes startup and double check if all metrics are working accordingly</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># In the sawtooth-validators you can grab from logs</span>
+kubectl logs sawtooth-0-6bf8ddf79c-lmbsh -c sawtooth-validator | grep <span style="color:#ae81ff">8086</span>
+
+<span style="color:#f92672">[</span><span style="color:#ae81ff">2019</span>-11-16 <span style="color:#ae81ff">13</span>:59:36.120 INFO     cli<span style="color:#f92672">]</span> Adding metrics reporter: url<span style="color:#f92672">=</span>http://influxdb.default:8086, db<span style="color:#f92672">=</span>db1
+
+$ kubectl logs $INFLUXDB_HOST  <span style="color:#75715e"># check the influxdb host logs</span>
+
+<span style="color:#f92672">[</span>httpd<span style="color:#f92672">]</span> <span style="color:#ae81ff">10</span>.32.0.4 - - <span style="color:#f92672">[</span><span style="color:#ae81ff">16</span>/Nov/2019:14:00:46 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;POST /write?db=db1&amp;precision=s HTTP/1.1&#34;</span> <span style="color:#ae81ff">204</span> <span style="color:#ae81ff">0</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Python-urllib/3.5&#34;</span> 7ca56170-0879-11ea-819b-4a0c9068d373 <span style="color:#ae81ff">7050</span></code></pre></div>
+
+<h2 id="the-dashboard">The dashboard</h2>
+
+<p>Finally with every node sending metrics we can the Intkey Family to test our network:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl exec -it sawtooth-0-6bf8ddf79c-z9pvq -c sawtooth-shell bash  <span style="color:#75715e"># start the shell</span>
+
+$ intkey set a <span style="color:#ae81ff">10</span>  <span style="color:#75715e"># Initialize the first key</span>
+$ <span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> intkey inc a <span style="color:#ae81ff">10</span>; <span style="color:#66d9ef">done</span>  <span style="color:#75715e"># Increment it</span></code></pre></div>
+
+<img src="/posts/sawtooth-grafana/hosts.png" alt="" class="" style="width: 100%; ">
+
+
+<h2 id="about-the-metrics">About the metrics</h2>
+
+<p>Lets take a look closer on some of these metrics, since they are fundamental to correct network analysis of nodes behaviour.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://github.com/hyperledger/sawtooth-core/blob/v1.1.0/validator/sawtooth_validator/journal/chain.py#L660
+
+ * Chain Head - sawtooth_validator.chain.ChainController.chain_head 
+      ChainController with LAST block inserted HEAD hash
+      self._block_num_gauge <span style="color:#f92672">=</span> GaugeWrapper<span style="color:#f92672">(</span>metrics_registry.gauge<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;block_num&#39;</span><span style="color:#f92672">))</span>
+ 
+ * Committed Transactions - sawtooth_validator.chain.ChainController.committed_transactions_gauge
+      Number of commited transactions <span style="color:#f92672">(</span>it can exists more than one per block<span style="color:#f92672">)</span>
+      self._committed_transactions_count <span style="color:#f92672">=</span> CounterWrapper<span style="color:#f92672">(</span>metrics_registry.counter<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;committed_transactions_count&#39;</span><span style="color:#f92672">))</span>
+
+ * Block number - sawtooth_validator.chain.ChainController.block_num
+      Number of blocks in the chain
+      self._chain_head_gauge <span style="color:#f92672">=</span> GaugeWrapper<span style="color:#f92672">(</span>metrics_registry.gauge<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;chain_head&#39;</span>, default<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;no chain head&#39;</span><span style="color:#f92672">))</span>
+
+ * Chain Head Moved to Fork - sawtooth_validator.chain.ChainController.chain_head_moved_to_fork_count
+     Count the times the HEAD of the blockchain was moved to a new forked via consensus.
+     self._moved_to_fork_count <span style="color:#f92672">=</span> CounterWrapper<span style="color:#f92672">(</span>metrics_registry.counter<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;chain_head_moved_to_fork_count&#39;</span><span style="color:#f92672">))</span></code></pre></div>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2019 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

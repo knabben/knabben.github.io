@@ -6,10 +6,21 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Nov 2019 02:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Sawtooth Network Monitoring</title>
+      <link>http://knabben.github.io/posts/sawtooth-grafana/</link>
+      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/sawtooth-grafana/</guid>
+      <description>Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana.</description>
+    </item>
     
     <item>
       <title>Gossip networks</title>
@@ -242,6 +253,15 @@ def fv(pv, n, i): print(&amp;#39;{0:.2f}&amp;#39;.format(np.fv(i/100, n, 0, -pv)
       <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
 NOTE If you are interested on real traffic replication, consider this project [2].
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/sawtooth-consensus/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/sawtooth-consensus/</guid>
+      <description></description>
     </item>
     
   </channel>
