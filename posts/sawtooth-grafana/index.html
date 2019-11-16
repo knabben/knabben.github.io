@@ -45,7 +45,7 @@ Saying that, in this post we will analyze how to monitor a Sawtooth Validator No
 
 <meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="656">
+<meta itemprop="wordCount" content="715">
 
 
 
@@ -269,6 +269,13 @@ $ <span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do<
  * Chain Head Moved to Fork - sawtooth_validator.chain.ChainController.chain_head_moved_to_fork_count
      Count the times the HEAD of the blockchain was moved to a new forked via consensus.
      self._moved_to_fork_count <span style="color:#f92672">=</span> CounterWrapper<span style="color:#f92672">(</span>metrics_registry.counter<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;chain_head_moved_to_fork_count&#39;</span><span style="color:#f92672">))</span></code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Don't forget to add an username and password to InfluxDB and Grafana in a production environment, 
+other good practice can be move these argument configurations to the validator.toml file inside a configmap. 
+Other than that have fun checking where these metrics come from in the source code, you will be amazed how much
+you can learn from that.</p>
 <ul class="pa0">
   
 </ul>
