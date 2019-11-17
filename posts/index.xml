@@ -6,10 +6,21 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 Nov 2019 01:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>From Dev to PoET</title>
+      <link>http://knabben.github.io/posts/dev-poet/</link>
+      <pubDate>Sat, 16 Nov 2019 01:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/dev-poet/</guid>
+      <description>Introduction DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
+Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
+But without it this algorithm becomes Crash Fault Tolerant only, for our proposes it&#39;s enough.</description>
+    </item>
     
     <item>
       <title>Sawtooth Network Monitoring</title>
@@ -30,17 +41,6 @@ Saying that, in this post we will analyze how to monitor a Sawtooth Validator No
       <guid>http://knabben.github.io/posts/gossip/</guid>
       <description>Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
 %load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&amp;#34;Starting&amp;#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.</description>
-    </item>
-    
-    <item>
-      <title>From dev to poet</title>
-      <link>http://knabben.github.io/posts/dev-poet/</link>
-      <pubDate>Mon, 11 Nov 2019 01:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/dev-poet/</guid>
-      <description>Introduction Changing live consensus on Sawtooth is a good capability that comes since 1.0.5, in this tutorial we are going to start 3 nodes in docker-compose with this version, the nodes are going to start with a Devmode consensus algorithm for our test network.
-We are going to spin up to a Poet consensus based network without the need of restarting the peer nodes.
-The Sawtooth 1.0.5 Test network Lets start with 3 simple validators, use the image hyperlegder/sawtooth-validator:1.</description>
     </item>
     
     <item>
@@ -253,15 +253,6 @@ def fv(pv, n, i): print(&amp;#39;{0:.2f}&amp;#39;.format(np.fv(i/100, n, 0, -pv)
       <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
 NOTE If you are interested on real traffic replication, consider this project [2].
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/sawtooth-consensus/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/sawtooth-consensus/</guid>
-      <description></description>
     </item>
     
   </channel>

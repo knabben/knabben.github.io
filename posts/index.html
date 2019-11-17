@@ -36,7 +36,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
 
-<meta property="og:updated_time" content="2019-11-16T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-11-16T01:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="">
@@ -96,6 +96,23 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="/posts/dev-poet/" class="link black dim">
+        From Dev to PoET
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction DevMode is very cool for development of transaction processors, but when you go to production it don't grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
+Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
+But without it this algorithm becomes Crash Fault Tolerant only, for our proposes it's enough.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="/posts/sawtooth-grafana/" class="link black dim">
         Sawtooth Network Monitoring
       </a>
@@ -120,23 +137,6 @@ Saying that, in this post we will analyze how to monitor a Sawtooth Validator No
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
 %load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/dev-poet/" class="link black dim">
-        From dev to poet
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction Changing live consensus on Sawtooth is a good capability that comes since 1.0.5, in this tutorial we are going to start 3 nodes in docker-compose with this version, the nodes are going to start with a Devmode consensus algorithm for our test network.
-We are going to spin up to a Poet consensus based network without the need of restarting the peer nodes.
-The Sawtooth 1.0.5 Test network Lets start with 3 simple validators, use the image hyperlegder/sawtooth-validator:1.
     </div>
   </div>
 </div>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://knabben.github.io/posts/dev-poet/</loc>
+    <lastmod>2019-11-16T01:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://knabben.github.io/posts/sawtooth-grafana/</loc>
     <lastmod>2019-11-16T00:00:00+00:00</lastmod>
   </url>
@@ -10,11 +15,6 @@
   <url>
     <loc>http://knabben.github.io/posts/gossip/</loc>
     <lastmod>2019-11-11T02:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/dev-poet/</loc>
-    <lastmod>2019-11-11T01:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -118,12 +118,8 @@
   </url>
   
   <url>
-    <loc>http://knabben.github.io/posts/sawtooth-consensus/</loc>
-  </url>
-  
-  <url>
     <loc>http://knabben.github.io/</loc>
-    <lastmod>2019-11-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-16T01:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -134,7 +130,7 @@
   
   <url>
     <loc>http://knabben.github.io/posts/</loc>
-    <lastmod>2019-11-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-16T01:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
