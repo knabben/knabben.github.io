@@ -47,7 +47,7 @@ $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper i
 
 <meta itemprop="datePublished" content="2019-11-23T10:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-23T10:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="295">
+<meta itemprop="wordCount" content="615">
 
 
 
@@ -196,6 +196,118 @@ by the client gives an indexed lookup of objects and in-memory cache.</p>
 		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">pod</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">pods</span>:
 			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">pod</span>.<span style="color:#a6e22e">Namespace</span>, <span style="color:#a6e22e">pod</span>.<span style="color:#a6e22e">Name</span>)
 	}</code></pre></div>
+
+<h2 id="custom-resources">Custom Resources</h2>
+
+<p>Kubernetes let you extend your API via Custom resources and programmaticaly acccess it.
+There're two ways of accesing it.</p>
+
+<p>A resource is an endpoint in the Kubernetes API that stores a collection of API objects of a certain
+kind. A custom resrouce is an extension of a Kubernetes API that is not necessarily avaialble
+in a default installation. They can appear and disappear in a running cluster through dynamic
+registration.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/</code></pre></div>
+
+<p>On this example this CRD sawtooth.hyperledger.org/example-sawtooth has the following characteristics:</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: sawtooth.hyperledger.org/v1alpha1
+kind: Sawtooth
+metadata:
+  generation: <span style="color:#ae81ff">1</span>
+  name: example-sawtooth
+  namespace: default
+spec:
+  size: <span style="color:#ae81ff">3</span></code></pre></div>
+ There's two ways of accessing it, they are:</p>
+
+<h3 id="dynamic-client-access">Dynamic client access</h3>
+
+<p>Using client-go/dynamic, we have an agnotic way to access the attributes of the objects
+created, so it's possible to access the spec on this way.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#a6e22e">sawtoothRes</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">schema</span>.<span style="color:#a6e22e">GroupVersionResource</span>{
+		<span style="color:#a6e22e">Group</span>: <span style="color:#e6db74">&#34;sawtooth.hyperledger.org&#34;</span>,
+		<span style="color:#a6e22e">Version</span>: <span style="color:#e6db74">&#34;v1alpha1&#34;</span>,
+		<span style="color:#a6e22e">Resource</span>: <span style="color:#e6db74">&#34;sawtooths&#34;</span>,
+	}
+
+
+	<span style="color:#a6e22e">list</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Resource</span>(<span style="color:#a6e22e">sawtoothRes</span>).<span style="color:#a6e22e">Namespace</span>(<span style="color:#e6db74">&#34;default&#34;</span>).<span style="color:#a6e22e">List</span>(<span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">ListOptions</span>{})
+	<span style="color:#a6e22e">errPanic</span>(<span style="color:#a6e22e">err</span>)
+
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span>.<span style="color:#a6e22e">Items</span> {
+		<span style="color:#a6e22e">size</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">unstructured</span>.<span style="color:#a6e22e">NestedInt64</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Object</span>, <span style="color:#e6db74">&#34;spec&#34;</span>, <span style="color:#e6db74">&#34;size&#34;</span>)
+		<span style="color:#a6e22e">errPanic</span>(<span style="color:#a6e22e">err</span>)
+
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">size</span>)
+	}</code></pre></div>
+
+<h3 id="typed">Typed</h3>
+
+<p>But the first thing you need to do is to have a pkg/apis/sawtooth with the following files:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pkg
+└── apis
+    └── sawtooth
+        ├── register.go
+        └── v1alpha1
+            ├── doc.go
+            ├── register.go
+            ├── types.go</code></pre></div>
+
+<p>You can follow the sample-controller or the links bellow to understand what each file
+means or goes inside, but the spec stays at types.go, pay attention in the tags
+these are being used to generate our custom spec.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">v1alpha1</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#a6e22e">metav1</span> <span style="color:#e6db74">&#34;k8s.io/apimachinery/pkg/apis/meta/v1&#34;</span>
+)
+
+<span style="color:#75715e">// +genclient
+</span><span style="color:#75715e">// +genclient:noStatus
+</span><span style="color:#75715e">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// Sawtooth spec
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sawtooth</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">TypeMeta</span>   <span style="color:#e6db74">`json:&#34;,inline&#34;`</span>
+	<span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">ObjectMeta</span> <span style="color:#e6db74">`json:&#34;metadata,omitempty&#34;`</span>
+
+	<span style="color:#a6e22e">Spec</span>   <span style="color:#a6e22e">SawtoothSpec</span>   <span style="color:#e6db74">`json:&#34;spec,omitempty&#34;`</span>
+}
+
+<span style="color:#75715e">// SawtoothSpec is a spec
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SawtoothSpec</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Size</span> <span style="color:#66d9ef">int64</span>  <span style="color:#e6db74">`json:&#34;size&#34;`</span>
+
+}</code></pre></div>
+
+<p>Now, you can generate the clients and accessors automatically with:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ generate-groups.sh all <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   github.com/knabben/kube-audit/pkg/generated <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>   github.com/knabben/kube-audit/pkg/apis <span style="color:#e6db74">&#34;sawtooth:v1alpha1&#34;</span></code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">import</span> (
+    <span style="color:#a6e22e">client</span> <span style="color:#e6db74">&#34;github.com/knabben/kube-audit/pkg/generated/clientset/versioned&#34;</span>
+)
+
+<span style="color:#f92672">...</span>
+
+<span style="color:#a6e22e">clientset</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">NewForConfig</span>(<span style="color:#a6e22e">config</span>)
+<span style="color:#a6e22e">errPanic</span>(<span style="color:#a6e22e">err</span>)
+
+<span style="color:#a6e22e">list</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">clientset</span>.<span style="color:#a6e22e">SawtoothV1alpha1</span>().<span style="color:#a6e22e">Sawtooths</span>(<span style="color:#e6db74">&#34;default&#34;</span>)
+<span style="color:#a6e22e">sawtooth</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">list</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;example-sawtooth&#34;</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">GetOptions</span>{})
+<span style="color:#a6e22e">errPanic</span>(<span style="color:#a6e22e">err</span>)
+
+<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sawtooth</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">Nodes</span>)</code></pre></div>
+
+<p>For more information:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://blog.openshift.com/kubernetes-deep-dive-code-generation-customresources/</code></pre></div>
 <ul class="pa0">
   
 </ul>
