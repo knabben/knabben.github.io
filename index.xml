@@ -6,10 +6,31 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 Nov 2019 01:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 Nov 2019 10:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes API client</title>
+      <link>http://knabben.github.io/posts/kube-api/</link>
+      <pubDate>Sat, 23 Nov 2019 10:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-api/</guid>
+      <description>Introduction This is an overview and notes on how to use the client-go Kubernetes API.
+Kubernetes API resources Accessing via API The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).
+You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with
+$ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;amp;&amp;amp; kubectl api-version Accessing via client-go Its possible to access a Pod via a clientset and fetch attributes from it, in the example bellow, it must fetch the Image from a CoreDNS container in the Kube-system namespace.</description>
+    </item>
+    
+    <item>
+      <title>Sawtooth Permissioning</title>
+      <link>http://knabben.github.io/posts/sawtooth-permissions/</link>
+      <pubDate>Sun, 17 Nov 2019 09:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/sawtooth-permissions/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>From Dev to PoET</title>
@@ -253,6 +274,15 @@ def fv(pv, n, i): print(&amp;#39;{0:.2f}&amp;#39;.format(np.fv(i/100, n, 0, -pv)
       <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
 NOTE If you are interested on real traffic replication, consider this project [2].
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://knabben.github.io/posts/kube-audit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-audit/</guid>
+      <description></description>
     </item>
     
   </channel>
