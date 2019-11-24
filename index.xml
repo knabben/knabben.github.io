@@ -56,16 +56,6 @@ Saying that, in this post we will analyze how to monitor a Sawtooth Validator No
     </item>
     
     <item>
-      <title>microservices (I) </title>
-      <link>http://knabben.github.io/posts/ws_p1/</link>
-      <pubDate>Mon, 09 Sep 2019 16:50:00 -0400</pubDate>
-      
-      <guid>http://knabben.github.io/posts/ws_p1/</guid>
-      <description>Introduction This is a compilation of code examples and topics about microservices and libraries used to compose a 12-factor compliant service, the idea is to continue extending the basic topics and the final coverage is to detail each framework: Python (aiohttp), Rust (actix-web) and Golang (gokit).
-Configuration This shows how to handle basic command line arguments and environment variables. It must have a subcommand called &#34;server&#34; and handle the following arguments on base command:</description>
-    </item>
-    
-    <item>
       <title>Golang essays (part II)</title>
       <link>http://knabben.github.io/posts/gop2/</link>
       <pubDate>Wed, 07 Aug 2019 01:00:00 +0000</pubDate>
