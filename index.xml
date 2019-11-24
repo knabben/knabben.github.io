@@ -24,15 +24,6 @@ $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper i
     </item>
     
     <item>
-      <title>Sawtooth Permissioning</title>
-      <link>http://knabben.github.io/posts/sawtooth-permissions/</link>
-      <pubDate>Sun, 17 Nov 2019 09:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/sawtooth-permissions/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>From Dev to PoET</title>
       <link>http://knabben.github.io/posts/dev-poet/</link>
       <pubDate>Sat, 16 Nov 2019 01:00:00 +0000</pubDate>
@@ -274,15 +265,6 @@ def fv(pv, n, i): print(&amp;#39;{0:.2f}&amp;#39;.format(np.fv(i/100, n, 0, -pv)
       <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
 NOTE If you are interested on real traffic replication, consider this project [2].
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://knabben.github.io/posts/kube-audit/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/kube-audit/</guid>
-      <description></description>
     </item>
     
   </channel>
