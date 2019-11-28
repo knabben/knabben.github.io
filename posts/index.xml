@@ -6,10 +6,21 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Nov 2019 10:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 Nov 2019 10:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes Audit Sink</title>
+      <link>http://knabben.github.io/posts/kube-audit/</link>
+      <pubDate>Wed, 27 Nov 2019 10:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-audit/</guid>
+      <description>Introduction The idea of this post is to test the Audit dynamic backend with a KIND cluster.
+Kubernetes has 4 stages:
+RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain. ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.g. watch).</description>
+    </item>
     
     <item>
       <title>Kubernetes API client</title>
