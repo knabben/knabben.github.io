@@ -36,7 +36,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-27T10:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-12-08T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -122,6 +122,32 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/sawtooth-permission/" class="color-inherit dim link">
+            Sawtooth Permissioning
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Introduction Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
+For this debugging and testing scenario we will have 2 nodes:
+version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.
+        </div>
+          <a href="/posts/sawtooth-permission/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/kube-audit/" class="color-inherit dim link">
             Kubernetes Audit Sink
             </a>
@@ -167,38 +193,18 @@ $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper i
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/dev-poet/" class="color-inherit dim link">
-            From Dev to PoET
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Introduction DevMode is very cool for development of transaction processors, but when you go to production it don't grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
-Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
-But without it this algorithm becomes Crash Fault Tolerant only, for our proposes it's enough.
-        </div>
-          <a href="/posts/dev-poet/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/dev-poet/" class="link black dim">
+              From Dev to PoET
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/sawtooth-grafana/" class="link black dim">
@@ -215,12 +221,6 @@ But without it this algorithm becomes Crash Fault Tolerant only, for our propose
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/gop2/" class="link black dim">
               Golang essays (part II)
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/gop1/" class="link black dim">
-              Golang essays (part I)
             </a>
           </h2>
         

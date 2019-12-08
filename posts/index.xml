@@ -6,10 +6,21 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Nov 2019 10:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Sawtooth Permissioning</title>
+      <link>http://knabben.github.io/posts/sawtooth-permission/</link>
+      <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/sawtooth-permission/</guid>
+      <description>Introduction Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
+For this debugging and testing scenario we will have 2 nodes:
+version: &amp;#34;2.1&amp;#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.</description>
+    </item>
     
     <item>
       <title>Kubernetes Audit Sink</title>
