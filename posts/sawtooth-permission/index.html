@@ -45,7 +45,7 @@ version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 c
 
 <meta itemprop="datePublished" content="2019-12-08T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-08T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="452">
+<meta itemprop="wordCount" content="476">
 
 
 
@@ -171,13 +171,14 @@ the user must check the validator.toml and choose a ROLE = policy_name, the poli
 <p>This mode is available using the Identity namespace, so this requires an external daemon running the Identity TP.</p>
 
 <p>Now lets suppose an Operator exists, and this is an external user with REST API access, we need to enable his public key to change the configurations
-of the identity</p>
+of the identity using the Admin private key.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>03b6ffbc52e0c8b72a1141f85e016509f46d0cbe597828779cf75823398423654</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>03b6ffbc52e0c8b72a1141f85e016509f46d0cbe597828779cf75823398423654 -k /etc/sawtooth/keys/validator.priv</code></pre></div>
 
-<p>Start creating a new policy and bind it with the "network" role, it means we are going to deny all nodes to join the network.</p>
+<p>Start creating a new policy and bind it with the "network" role, it means we are going to deny the second node to join the network and allow other nodes
+to join, you can put multiple rules with space separation.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth identity policy create policy_1 <span style="color:#e6db74">&#34;DENY_KEY *&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth identity policy create policy_1 <span style="color:#e6db74">&#34;DENY_KEY 02ab649cd5579e87abc630314ef12b7aff1f2404308645046b8b0e23019eb94b16 PERMIT_KEY *&#34;</span>
 $ sawtooth identity role create network policy_1</code></pre></div>
 
 <p>If you start the second node (v2) and set --peers tcp://v1:8800. You can see the node is not allowed to join the Gossip network.</p>
