@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Sawtooth Cheatsheet</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Sawtooth Cheatsheet" />
+<meta property="og:description" content="Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
+$ vagrant init ubuntu/xenial64 $ vagrant up After the box is up we need to add the correct repository:
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update Install the package:
+$ sudo apt install -y sawtooth Docker Install Docker adding key and repo:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/sawtooth-cheatsheet/" />
+<meta property="article:published_time" content="2019-12-15T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-12-15T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Sawtooth Cheatsheet">
+<meta itemprop="description" content="Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
+$ vagrant init ubuntu/xenial64 $ vagrant up After the box is up we need to add the correct repository:
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update Install the package:
+$ sudo apt install -y sawtooth Docker Install Docker adding key and repo:">
+
+
+<meta itemprop="datePublished" content="2019-12-15T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-15T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="813">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Sawtooth Cheatsheet"/>
+<meta name="twitter:description" content="Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
+$ vagrant init ubuntu/xenial64 $ vagrant up After the box is up we need to add the correct repository:
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update Install the package:
+$ sudo apt install -y sawtooth Docker Install Docker adding key and repo:"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Sawtooth Cheatsheet</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-12-15T00:00:00Z">December 15, 2019</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h3 id="installation">Installation</h3>
+
+<h4 id="ubuntu">Ubuntu</h4>
+
+<p>For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ vagrant init ubuntu/xenial64
+$ vagrant up</code></pre></div>
+
+<p>After the box is up we need to add the correct repository:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+$ sudo add-apt-repository <span style="color:#e6db74">&#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39;</span>
+$ sudo apt update</code></pre></div>
+
+<p>Install the package:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo apt install -y sawtooth</code></pre></div>
+
+<h4 id="docker">Docker</h4>
+
+<p>Install Docker adding key and repo:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo add-apt-repository <span style="color:#e6db74">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span style="color:#66d9ef">$(</span>lsb_release -cs<span style="color:#66d9ef">)</span><span style="color:#e6db74"> stable&#34;</span>
+$ sudo apt update
+$ sudo apt install -y docker-ce docker-compose</code></pre></div>
+
+<h3 id="starting-components-services">Starting components services</h3>
+
+<h4 id="ubuntu-1">Ubuntu</h4>
+
+<p>Systemd is the default init system for many Linux distributions, init system is also used to manage serviecs and daemons 
+ for the server at any point while the system is running.</p>
+
+<p>Targets on systemd are called units, resourcers that systemd knows how to manage. Units are categorized by the type of 
+ resource they represent and they are defined with files know as unit files. To list all Units files inside the system use:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl list-unit-files | grep sawtooth</code></pre></div>
+
+<p>To fetch the ones running</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl list-unit</code></pre></div>
+
+<p>By default they are not enabled or started by default, to start a the <strong>Sawtooth validator</strong> service:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl start sawtooth-validator.service</code></pre></div>
+
+<p>To stop the Sawtooth Validator use:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemtl stop sawtooth-validator.service</code></pre></div>
+
+<p>To start the service use enable/disable, same works for reload/restart</p>
+
+<p>Finally to check the status:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status sawtooth-validator.service</code></pre></div>
+
+<h4 id="docker-1">Docker</h4>
+
+<p>Pieces can be found in docker-compose file.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> https://sawtooth.hyperledger.org/docs/core/releases/1.0/app_developers_guide/sawtooth-default.yaml</code></pre></div>
+
+<p>The images that follows are:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> hyperledger/sawtooth-settings-tp:1.0
+ hyperledger/sawtooth-intkey-tp-python:1.0
+ hyperledger/sawtooth-xo-tp-python:1.0
+ hyperledger/sawtooth-validator:1.0
+
+with the command:
+
+  sawadm keygen <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>         sawtooth keygen my_key <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>         sawset genesis -k /root/.sawtooth/keys/my_key.priv <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>         sawadm genesis config-genesis.batch <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>         sawtooth-validator -vv <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>           --endpoint tcp://validator:8800 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>           --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>           --bind network:tcp://eth0:8800 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>
+ hyperledger/sawtooth-rest-api:1.0
+ hyperledger/sawtooth-all:1.0</code></pre></div>
+
+<h3 id="generate-keys">Generate keys</h3>
+
+<h4 id="validator-keys">Validator keys</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ sawadm keygen 
+ /etc/validator/keys/validator.pub
+ /etc/validator/keys/validator.priv
+ </code></pre></div>
+
+<h4 id="user-keys">User keys</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ sawtooth keygen
+ ~/.sawtooth/keys/
+ </code></pre></div>
+
+<h3 id="create-a-genesis-block">Create a genesis block</h3>
+
+<p>Create the genesis blocks</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ sawset genesis -k /root/.sawtooth/my_priv.key
+ config-genesis.batch
+
+ $ sawadm genesis config-gensis.batch
+ /var/lib/sawtooth/genesis.batch
+ </code></pre></div>
+
+<h3 id="register-a-validator">Register a validator</h3>
+
+<p>After creating the genesis.batch:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ systemctl start sawtooth-validator.services
+ </code></pre></div>
+
+<h3 id="verify-installation-and-fix-problems">Verify installation and fix problems</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> /etc/default/sawtooth-validator
+
+ journalctl -u sawtooth-settings-tp -u sawtooth-validator
+
+ $ journalctl -u sawtooth-validator
+
+ genesis<span style="color:#f92672">]</span> genesis_batch_file: /var/lib/sawtooth/genesis.batch
+ genesis<span style="color:#f92672">]</span> block_chain_id: not yet specified
+ genesis<span style="color:#f92672">]</span> Producing genesis block from /var/lib/sawtooth/genesis.batch
+ genesis<span style="color:#f92672">]</span> Adding <span style="color:#ae81ff">1</span> batches
+ executor<span style="color:#f92672">]</span> no transaction processors registered <span style="color:#66d9ef">for</span> processor type sawtooth_settings: <span style="color:#ae81ff">1</span>.0
+ executor<span style="color:#f92672">]</span> Waiting <span style="color:#66d9ef">for</span> transaction processor <span style="color:#f92672">(</span>sawtooth_settings, <span style="color:#ae81ff">1</span>.0<span style="color:#f92672">)</span>
+
+ /etc/default/sawtooth-validator
+ </code></pre></div>
+
+<h3 id="connect-tp-to-a-validator">Connect TP to a validator</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ systemctl start sawtooth-settings-tp.services
+ processor_handlers<span style="color:#f92672">]</span> registered transaction processor: connection_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.0, namespaces<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;000000&#39;</span><span style="color:#f92672">]</span>
+ </code></pre></div>
+
+<h3 id="verify-system-meets-hardware-requirements">Verify system meets hardware, requirements</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> ps
+ top
+ </code></pre></div>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="configure-validator-peering-and-network">Configure validator peering and network</h3>
+
+<p>--peers tcp://127.0.0.1:8800 for static and --seeds for dynamic</p>
+
+<h3 id="configure-consensus">Configure consensus (?)</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">For PoET 
+
+sawset proposal create -k /etc/sawtooth/keys/validator.priv <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>sawtooth.consensus.algorithm<span style="color:#f92672">=</span>poet <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>sawtooth.poet.report_public_key_pem<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>cat /etc/sawtooth/ias_rk_pub.pem<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>sawtooth.poet.valid_enclave_measurements<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>poet enclave --enclave-module sgx measurement<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>sawtooth.poet.valid_enclave_basenames<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>poet enclave --enclave-module sgx basename<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>sawtooth.poet.enclave_module_name<span style="color:#f92672">=</span>sawtooth_poet_sgx.poet_enclave_sgx.poet_enclave <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>-o config.batch</code></pre></div>
+
+<h3 id="configure-logging">Configure logging</h3>
+
+<p>Can be found in: /etc/sawtooth/log_config</p>
+
+<h3 id="configure-rest-api">Configure REST API</h3>
+
+<p>Starting the REST API can be made via Ubuntu systemd scripts or by hand</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl start sawtooth-rest-api.service</code></pre></div>
+
+<p>Configuration for the service is made at /etc/default/sawtooth-rest-api
+ To set another port of validator node set --conect tcp://localhost:4004</p>
+
+<h3 id="configure-l3-network-ports-firewall">Configure L3 network ports/firewall</h3>
+
+<p>iptables</p>
+
+<h3 id="configure-metrics">Configure metrics</h3>
+
+<p>Setup InfluxDb - https://knabben.github.io/posts/sawtooth-grafana/</p>
+
+<h3 id="configure-transaction-processor-endpoint">Configure transaction processor endpoint</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> In the TP to connect use: -C tcp://localhost:4004
+ In the validator-process set: --bind component:tcp://127.0.0.1:4004</code></pre></div>
+
+<h3 id="configure-systemd-services">Configure systemd services</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> Systemd services setup
+ </code></pre></div>
+
+<h3 id="choose-parallel-sync-scheduler">Choose parallel/sync scheduler</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo -u sawtooth sawtooth-validator -vv --scheduler parallel <span style="color:#f92672">||</span> serial
+ </code></pre></div>
+
+<h3 id="configure-storage-paths">Configure storage paths</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> /etc/sawtooth/path.toml
+
+   key_dir
+   data_dir
+   log_dir
+   policy_dir
+  </code></pre></div>
+
+<h3 id="configure-sawtooth-cli">Configure sawtooth cli</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> /etc/sawtooth/cli.toml
+ </code></pre></div>
+
+<h2 id="lifecycle">Lifecycle</h2>
+
+<h3 id="create-new-network">Create new network</h3>
+
+<p>start the validators using Peering static or dynamic, with the first node with genesis block.</p>
+
+<h3 id="joining-an-existing-network">Joining an existing network</h3>
+
+<p>set --peers on all nodes</p>
+
+<h3 id="remove-validator-node-from-the-network">Remove validator node from the network</h3>
+
+<p>remove --peers value from the nodes, and turn the daemon off</p>
+
+<h3 id="rejoin-network-after-network-failure">Rejoin network after network failure</h3>
+
+<p>restart the sawtooth-validator</p>
+
+<h3 id="changing-consensus-mode">Changing consensus mode</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sawset proposal create -k /etc/sawtooth/keys/validator.priv sawtooth.consensus.algorithm<span style="color:#f92672">=</span>dev</code></pre></div>
+
+<h3 id="restart-validator-after-crash-or-maintenance">Restart validator after crash or maintenance</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo systemctl restart sawtooth-validator</code></pre></div>
+
+<h3 id="restart-component-after-crash-or-maintenance">Restart component after crash or maintenance</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl restart sawtooth-rest-api
+sudo systemctl restart sawtooth-settings-tp</code></pre></div>
+
+<h3 id="add-new-transaction-processor">Add new transaction processor</h3>
+
+<p>Set transaction processor connection to validator 4004 connect</p>
+
+<h3 id="change-network-configuration">Change network configuration</h3>
+
+<p>Edit configuration on /etc/sawtooth/validators.toml</p>
+
+<h3 id="update-sawtooth-software">Update sawtooth software</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo apt-get upgrade
+ </code></pre></div>
+
+<h3 id="update-transaction-processor-version">Update transaction processor version</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo apt-get install sawtooth*
+ </code></pre></div>
+
+<h2 id="permissioning-identity-management-and-security">Permissioning, Identity Management and Security</h2>
+
+<h3 id="identify-network-id-system-peer-id">Identify network ID / system / peer ID</h3>
+
+<p>cat /etc/sawtooth/keys/validator.pub</p>
+
+<h3 id="permission-a-transaction-processor">Permission a transaction processor</h3>
+
+<p>https://knabben.github.io/posts/sawtooth-permission/</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth-identity</code></pre></div>
+
+<h3 id="policy-management">Policy management</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth identity policy create policy <span style="color:#e6db74">&#34;DENY_KEY *&#34;</span></code></pre></div>
+
+<h3 id="validator-registration">Validator registration</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys</code></pre></div>
+
+<h3 id="system-permissions">System permissions</h3>
+
+<p>Network identity</p>
+
+<h3 id="configure-validator-local-policy-file">Configure validator local policy file</h3>
+
+<p>On policy_dir must create the correct policy_name file.</p>
+
+<h3 id="validator-key-permission">Validator key permission</h3>
+
+<p>Trust and challenge authorization types.</p>
+
+<h3 id="role-management-transactor-roles">Role management: transactor roles</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sawtooth identity role transactor policy_name</code></pre></div>
+
+<h3 id="role-management-network-roles">Role management: network roles</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sawtooth identity role network policy_name</code></pre></div>
+
+<h3 id="configure-transactor-permissions">Configure transactor permissions</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/sawtooth/validator.toml - <span style="color:#66d9ef">for</span> off-chain use the configuration file:
+
+<span style="color:#f92672">[</span>permissions<span style="color:#f92672">]</span> ROLE <span style="color:#f92672">=</span> POLICY_NAME
+policy_dir - policy_name</code></pre></div>
+
+<h3 id="secure-connections-between-components-validators">Secure connections between components/validators</h3>
+
+<h3 id="use-a-proxy-server-to-authorize-the-rest-api">Use a proxy server to authorize the REST API</h3>
+
+<p>Apache and Nginx</p>
+
+<h3 id="manage-validator-keys-and-secrets">Manage validator keys and secrets</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>xxx</code></pre></div>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-46699622-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2019 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -6,10 +6,22 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Sawtooth Cheatsheet</title>
+      <link>http://knabben.github.io/posts/sawtooth-cheatsheet/</link>
+      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/sawtooth-cheatsheet/</guid>
+      <description>Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
+$ vagrant init ubuntu/xenial64 $ vagrant up After the box is up we need to add the correct repository:
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &amp;#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&amp;#39; $ sudo apt update Install the package:
+$ sudo apt install -y sawtooth Docker Install Docker adding key and repo:</description>
+    </item>
     
     <item>
       <title>Sawtooth Permissioning</title>
