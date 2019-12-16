@@ -171,91 +171,84 @@ $ sudo apt install -y docker-ce docker-compose</code></pre></div>
 
 <p>Pieces can be found in docker-compose file.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> https://sawtooth.hyperledger.org/docs/core/releases/1.0/app_developers_guide/sawtooth-default.yaml</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://sawtooth.hyperledger.org/docs/core/releases/1.0/app_developers_guide/sawtooth-default.yaml</code></pre></div>
 
 <p>The images that follows are:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> hyperledger/sawtooth-settings-tp:1.0
- hyperledger/sawtooth-intkey-tp-python:1.0
- hyperledger/sawtooth-xo-tp-python:1.0
- hyperledger/sawtooth-validator:1.0
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hyperledger/sawtooth-settings-tp:1.0
+hyperledger/sawtooth-intkey-tp-python:1.0
+hyperledger/sawtooth-xo-tp-python:1.0
+hyperledger/sawtooth-validator:1.0
 
 with the command:
 
-  sawadm keygen <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>         sawtooth keygen my_key <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>         sawset genesis -k /root/.sawtooth/keys/my_key.priv <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>         sawadm genesis config-genesis.batch <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>         sawtooth-validator -vv <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>           --endpoint tcp://validator:8800 <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>           --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>           --bind network:tcp://eth0:8800 <span style="color:#ae81ff">\
+ sawadm keygen <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>        sawtooth keygen my_key <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>        sawset genesis -k /root/.sawtooth/keys/my_key.priv <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>        sawadm genesis config-genesis.batch <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>        sawtooth-validator -vv <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>          --endpoint tcp://validator:8800 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>          --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>          --bind network:tcp://eth0:8800 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>
- hyperledger/sawtooth-rest-api:1.0
- hyperledger/sawtooth-all:1.0</code></pre></div>
+hyperledger/sawtooth-rest-api:1.0
+hyperledger/sawtooth-all:1.0</code></pre></div>
 
 <h3 id="generate-keys">Generate keys</h3>
 
 <h4 id="validator-keys">Validator keys</h4>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ sawadm keygen 
- /etc/validator/keys/validator.pub
- /etc/validator/keys/validator.priv
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawadm keygen 
+/etc/validator/keys/validator.pub
+/etc/validator/keys/validator.priv</code></pre></div>
 
 <h4 id="user-keys">User keys</h4>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ sawtooth keygen
- ~/.sawtooth/keys/
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth keygen
+~/.sawtooth/keys/</code></pre></div>
 
 <h3 id="create-a-genesis-block">Create a genesis block</h3>
 
 <p>Create the genesis blocks</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ sawset genesis -k /root/.sawtooth/my_priv.key
- config-genesis.batch
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset genesis -k /root/.sawtooth/my_priv.key
+config-genesis.batch
 
- $ sawadm genesis config-gensis.batch
- /var/lib/sawtooth/genesis.batch
- </code></pre></div>
+$ sawadm genesis config-gensis.batch
+/var/lib/sawtooth/genesis.batch</code></pre></div>
 
 <h3 id="register-a-validator">Register a validator</h3>
 
 <p>After creating the genesis.batch:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ systemctl start sawtooth-validator.services
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl start sawtooth-validator.services</code></pre></div>
 
 <h3 id="verify-installation-and-fix-problems">Verify installation and fix problems</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> /etc/default/sawtooth-validator
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/default/sawtooth-validator
 
- journalctl -u sawtooth-settings-tp -u sawtooth-validator
+journalctl -u sawtooth-settings-tp -u sawtooth-validator
 
  $ journalctl -u sawtooth-validator
 
- genesis<span style="color:#f92672">]</span> genesis_batch_file: /var/lib/sawtooth/genesis.batch
- genesis<span style="color:#f92672">]</span> block_chain_id: not yet specified
- genesis<span style="color:#f92672">]</span> Producing genesis block from /var/lib/sawtooth/genesis.batch
- genesis<span style="color:#f92672">]</span> Adding <span style="color:#ae81ff">1</span> batches
- executor<span style="color:#f92672">]</span> no transaction processors registered <span style="color:#66d9ef">for</span> processor type sawtooth_settings: <span style="color:#ae81ff">1</span>.0
- executor<span style="color:#f92672">]</span> Waiting <span style="color:#66d9ef">for</span> transaction processor <span style="color:#f92672">(</span>sawtooth_settings, <span style="color:#ae81ff">1</span>.0<span style="color:#f92672">)</span>
+genesis<span style="color:#f92672">]</span> genesis_batch_file: /var/lib/sawtooth/genesis.batch
+genesis<span style="color:#f92672">]</span> block_chain_id: not yet specified
+genesis<span style="color:#f92672">]</span> Producing genesis block from /var/lib/sawtooth/genesis.batch
+genesis<span style="color:#f92672">]</span> Adding <span style="color:#ae81ff">1</span> batches
+executor<span style="color:#f92672">]</span> no transaction processors registered <span style="color:#66d9ef">for</span> processor type sawtooth_settings: <span style="color:#ae81ff">1</span>.0
+executor<span style="color:#f92672">]</span> Waiting <span style="color:#66d9ef">for</span> transaction processor <span style="color:#f92672">(</span>sawtooth_settings, <span style="color:#ae81ff">1</span>.0<span style="color:#f92672">)</span>
 
- /etc/default/sawtooth-validator
- </code></pre></div>
+/etc/default/sawtooth-validator</code></pre></div>
 
 <h3 id="connect-tp-to-a-validator">Connect TP to a validator</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ systemctl start sawtooth-settings-tp.services
- processor_handlers<span style="color:#f92672">]</span> registered transaction processor: connection_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.0, namespaces<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;000000&#39;</span><span style="color:#f92672">]</span>
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl start sawtooth-settings-tp.services
+processor_handlers<span style="color:#f92672">]</span> registered transaction processor: connection_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.0, namespaces<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;000000&#39;</span><span style="color:#f92672">]</span></code></pre></div>
 
 <h3 id="verify-system-meets-hardware-requirements">Verify system meets hardware, requirements</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> ps
- top
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ps
+top</code></pre></div>
 
 <h2 id="configuration">Configuration</h2>
 
@@ -298,33 +291,29 @@ sawset proposal create -k /etc/sawtooth/keys/validator.priv <span style="color:#
 
 <h3 id="configure-transaction-processor-endpoint">Configure transaction processor endpoint</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> In the TP to connect use: -C tcp://localhost:4004
- In the validator-process set: --bind component:tcp://127.0.0.1:4004</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">In the TP to connect use: -C tcp://localhost:4004
+In the validator-process set: --bind component:tcp://127.0.0.1:4004</code></pre></div>
 
 <h3 id="configure-systemd-services">Configure systemd services</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> Systemd services setup
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Systemd services setup</code></pre></div>
 
 <h3 id="choose-parallel-sync-scheduler">Choose parallel/sync scheduler</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo -u sawtooth sawtooth-validator -vv --scheduler parallel <span style="color:#f92672">||</span> serial
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo -u sawtooth sawtooth-validator -vv --scheduler parallel <span style="color:#f92672">||</span> serial</code></pre></div>
 
 <h3 id="configure-storage-paths">Configure storage paths</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> /etc/sawtooth/path.toml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/sawtooth/path.toml
 
-   key_dir
-   data_dir
-   log_dir
-   policy_dir
-  </code></pre></div>
+  key_dir
+  data_dir
+  log_dir
+  policy_dir</code></pre></div>
 
 <h3 id="configure-sawtooth-cli">Configure sawtooth cli</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> /etc/sawtooth/cli.toml
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/sawtooth/cli.toml</code></pre></div>
 
 <h2 id="lifecycle">Lifecycle</h2>
 
@@ -346,11 +335,11 @@ sawset proposal create -k /etc/sawtooth/keys/validator.priv <span style="color:#
 
 <h3 id="changing-consensus-mode">Changing consensus mode</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sawset proposal create -k /etc/sawtooth/keys/validator.priv sawtooth.consensus.algorithm<span style="color:#f92672">=</span>dev</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawset proposal create -k /etc/sawtooth/keys/validator.priv sawtooth.consensus.algorithm<span style="color:#f92672">=</span>dev</code></pre></div>
 
 <h3 id="restart-validator-after-crash-or-maintenance">Restart validator after crash or maintenance</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo systemctl restart sawtooth-validator</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl restart sawtooth-validator</code></pre></div>
 
 <h3 id="restart-component-after-crash-or-maintenance">Restart component after crash or maintenance</h3>
 
@@ -367,13 +356,11 @@ sudo systemctl restart sawtooth-settings-tp</code></pre></div>
 
 <h3 id="update-sawtooth-software">Update sawtooth software</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo apt-get upgrade
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get upgrade</code></pre></div>
 
 <h3 id="update-transaction-processor-version">Update transaction processor version</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sudo apt-get install sawtooth*
- </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get install sawtooth*</code></pre></div>
 
 <h2 id="permissioning-identity-management-and-security">Permissioning, Identity Management and Security</h2>
 
@@ -409,11 +396,11 @@ sudo systemctl restart sawtooth-settings-tp</code></pre></div>
 
 <h3 id="role-management-transactor-roles">Role management: transactor roles</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sawtooth identity role transactor policy_name</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawtooth identity role transactor policy_name</code></pre></div>
 
 <h3 id="role-management-network-roles">Role management: network roles</h3>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> sawtooth identity role network policy_name</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawtooth identity role network policy_name</code></pre></div>
 
 <h3 id="configure-transactor-permissions">Configure transactor permissions</h3>
 
