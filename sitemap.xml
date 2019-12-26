@@ -149,14 +149,6 @@
   </url>
   
   <url>
-    <loc>http://knabben.github.io/posts/kubectl/</loc>
-  </url>
-  
-  <url>
-    <loc>http://knabben.github.io/posts/kube-apply-state/</loc>
-  </url>
-  
-  <url>
     <loc>http://knabben.github.io/posts/</loc>
     <lastmod>2019-12-25T22:00:00+00:00</lastmod>
     <priority>0</priority>

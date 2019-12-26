@@ -305,24 +305,5 @@ NOTE If you are interested on real traffic replication, consider this project [2
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
     </item>
     
-    <item>
-      <title>Kubectl</title>
-      <link>http://knabben.github.io/posts/kubectl/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/kubectl/</guid>
-      <description>Introduction Kubectl book Kubectl introduction https://kubectl.docs.kubernetes.io/
-Kubectl debugging and API server Authentication Primitive API types Conversion Kubectl internals Kubectl command groupping Shortcuts and tricks </description>
-    </item>
-    
-    <item>
-      <title>New pod start</title>
-      <link>http://knabben.github.io/posts/kube-apply-state/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/kube-apply-state/</guid>
-      <description>bring the components of both api server Lifecycle in these components Explain Show logs from the tragetory Show logs from kubectl to scheduler, api-server Show logs on Kubelet Starting on docker </description>
-    </item>
-    
   </channel>
 </rss>
