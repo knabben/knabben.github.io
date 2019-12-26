@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>AK  | Kubectl </title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css">
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Kubectl " />
+<meta property="og:description" content="Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/posts/kube-ctl/" />
+<meta property="article:published_time" content="2019-12-26T15:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-12-26T15:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Kubectl ">
+<meta itemprop="description" content="Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.">
+
+
+<meta itemprop="datePublished" content="2019-12-26T15:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-26T15:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="844">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubectl "/>
+<meta name="twitter:description" content="Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Kubectl </h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-12-26T15:00:00Z">December 26, 2019</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
+
+<p>This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects
+via the API, so the operator can load, remove or update workloads, configurations and more.</p>
+
+<p>The main source of truth is the <a href="https://kubectl.docs.kubernetes.io/" title="Kubectl book">Kubectl book</a> but this post will try to summarize and organize the main capabilities of the tool.</p>
+
+<h2 id="kubectl-debugging-and-api-server">Kubectl debugging and API server</h2>
+
+<p>Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl run nginx8 --image<span style="color:#f92672">=</span>nginx -v<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> --generator<span style="color:#f92672">=</span>run-pod/v1
+
+I1226 <span style="color:#ae81ff">12</span>:59:46.868834   <span style="color:#ae81ff">22924</span> loader.go:375<span style="color:#f92672">]</span> Config loaded from file:  /Users/amimknabben/.kube/config
+I1226 <span style="color:#ae81ff">12</span>:59:46.878441   <span style="color:#ae81ff">22924</span> request.go:968<span style="color:#f92672">]</span> Request Body: 
+
+<span style="color:#f92672">{</span>
+  <span style="color:#e6db74">&#34;kind&#34;</span>: <span style="color:#e6db74">&#34;Pod&#34;</span>,
+  <span style="color:#e6db74">&#34;apiVersion&#34;</span>: <span style="color:#e6db74">&#34;v1&#34;</span>,
+  <span style="color:#e6db74">&#34;metadata&#34;</span>: <span style="color:#f92672">{</span>
+    <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>,
+    <span style="color:#e6db74">&#34;creationTimestamp&#34;</span>: null,
+    <span style="color:#e6db74">&#34;labels&#34;</span>: <span style="color:#f92672">{</span>
+      <span style="color:#e6db74">&#34;run&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>,
+  <span style="color:#e6db74">&#34;spec&#34;</span>: <span style="color:#f92672">{</span>
+    <span style="color:#e6db74">&#34;containers&#34;</span>: <span style="color:#f92672">[</span>
+      <span style="color:#f92672">{</span>
+        <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>,
+        <span style="color:#e6db74">&#34;image&#34;</span>: <span style="color:#e6db74">&#34;nginx&#34;</span>,
+        <span style="color:#e6db74">&#34;resources&#34;</span>: <span style="color:#f92672">{}</span>
+      <span style="color:#f92672">}</span>
+    <span style="color:#f92672">]</span>,
+    <span style="color:#e6db74">&#34;restartPolicy&#34;</span>: <span style="color:#e6db74">&#34;Always&#34;</span>,
+    <span style="color:#e6db74">&#34;dnsPolicy&#34;</span>: <span style="color:#e6db74">&#34;ClusterFirst&#34;</span>
+  <span style="color:#f92672">}</span>,
+  <span style="color:#e6db74">&#34;status&#34;</span>: <span style="color:#f92672">{}</span>
+<span style="color:#f92672">}</span>
+I1226 <span style="color:#ae81ff">12</span>:59:46.878511   <span style="color:#ae81ff">22924</span> round_trippers.go:420<span style="color:#f92672">]</span> POST https://127.0.0.1:64462/api/v1/namespaces/default/pods
+I1226 <span style="color:#ae81ff">12</span>:59:46.878519   <span style="color:#ae81ff">22924</span> round_trippers.go:427<span style="color:#f92672">]</span> Request Headers:
+I1226 <span style="color:#ae81ff">12</span>:59:46.878525   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     Content-Type: application/json
+I1226 <span style="color:#ae81ff">12</span>:59:46.878530   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     Accept: application/json, */*
+I1226 <span style="color:#ae81ff">12</span>:59:46.878535   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     User-Agent: kubectl/v1.16.2 <span style="color:#f92672">(</span>darwin/amd64<span style="color:#f92672">)</span> kubernetes/c97fe50
+I1226 <span style="color:#ae81ff">12</span>:59:47.074562   <span style="color:#ae81ff">22924</span> round_trippers.go:446<span style="color:#f92672">]</span> Response Status: <span style="color:#ae81ff">201</span> Created in <span style="color:#ae81ff">196</span> milliseconds
+I1226 <span style="color:#ae81ff">12</span>:59:47.074584   <span style="color:#ae81ff">22924</span> round_trippers.go:449<span style="color:#f92672">]</span> Response Headers:
+I1226 <span style="color:#ae81ff">12</span>:59:47.074596   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Cache-Control: no-cache, private
+I1226 <span style="color:#ae81ff">12</span>:59:47.074602   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Content-Type: application/json
+I1226 <span style="color:#ae81ff">12</span>:59:47.074607   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Content-Length: <span style="color:#ae81ff">1209</span>
+I1226 <span style="color:#ae81ff">12</span>:59:47.074612   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Date: Thu, <span style="color:#ae81ff">26</span> Dec <span style="color:#ae81ff">2019</span> <span style="color:#ae81ff">17</span>:59:47 GMT
+I1226 <span style="color:#ae81ff">12</span>:59:47.077981   <span style="color:#ae81ff">22924</span> request.go:968<span style="color:#f92672">]</span> Response Body: <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;Pod&#34;</span>,<span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;v1&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;nginx8&#34;</span>,<span style="color:#e6db74">&#34;namespace&#34;</span>:<span style="color:#e6db74">&#34;default&#34;</span>,<span style="color:#e6db74">&#34;selfLink&#34;</span>:<span style="color:#e6db74">&#34;/api/v1/namespaces/default/pods/nginx8&#34;</span>,<span style="color:#e6db74">&#34;uid&#34;</span>:<span style="color:#e6db74">&#34;414b0331-b3e2-41ee-8b65-ca8edf10cbbd&#34;</span>...</code></pre></div>
+
+<p>Resources are Kubernetes objects, and their configuration is applied (declarative Create/Update/Delette) to a Kubernetes
+cluster using tools such as kubectl, stored in an ETCd and then actuated by a controller. The <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#pod-v1-core" title="documetation">documetation</a> is available.</p>
+
+<p>These basic types systems are defined by <strong>API machinery</strong> by Kinds (they are divided into API groups and versions). 
+They are know as GVK (GroupVersionKind), these Kind objects are mapped to real golang types.</p>
+
+<p>In the other side we have resources, they identify a set of HTTTP endpoints exposing the CRUD semantics of a certain
+object type, the GVRs. Long story short, GVKs are served under HTTP paths identified by GVRs, and this
+process of mapping GVKs to GVRs is called REST mapping.</p>
+
+<p>The resources are identified by the following fields:</p>
+
+<ol>
+<li>apiVersion</li>
+<li>kind</li>
+<li>metadata</li>
+<li>namespace (instance namespace)</li>
+<li>name (instance name)</li>
+</ol>
+
+<p>Resources also have <strong>TypeMeta</strong>, <strong>ObjectMeta</strong>, <strong>Spec</strong> (the desired state) and <strong>Status</strong> (the observed state)</p>
+
+<p>For more information on the inner working: <a href="https://www.youtube.com/watch?v=ryeINNfVOi8" title="Life of a Kubernetes API Request by Daniel Smith, Google
+">Life of a Kubernetes API Request by Daniel Smith, Google
+</a></p>
+
+<h2 id="kubectl-command-operations">Kubectl command operations</h2>
+
+<p>We can see the grouping of commands here:</p>
+
+<p>Settings, cluster and deploy commands are going to be checked further.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#a6e22e">groups</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">templates</span>.<span style="color:#a6e22e">CommandGroups</span>{
+		{
+			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Basic Commands (Beginner):&#34;</span>,
+			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+				<span style="color:#a6e22e">create</span>.<span style="color:#a6e22e">NewCmdCreate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">expose</span>.<span style="color:#a6e22e">NewCmdExposeService</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">run</span>.<span style="color:#a6e22e">NewCmdRun</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">set</span>.<span style="color:#a6e22e">NewCmdSet</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+			},
+		},
+		{
+			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Basic Commands (Intermediate):&#34;</span>,
+			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+				<span style="color:#a6e22e">explain</span>.<span style="color:#a6e22e">NewCmdExplain</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">get</span>.<span style="color:#a6e22e">NewCmdGet</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">edit</span>.<span style="color:#a6e22e">NewCmdEdit</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">delete</span>.<span style="color:#a6e22e">NewCmdDelete</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+			},
+		},
+		{
+			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Deploy Commands:&#34;</span>,
+			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+				<span style="color:#a6e22e">rollout</span>.<span style="color:#a6e22e">NewCmdRollout</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">rollingupdate</span>.<span style="color:#a6e22e">NewCmdRollingUpdate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">scale</span>.<span style="color:#a6e22e">NewCmdScale</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">autoscale</span>.<span style="color:#a6e22e">NewCmdAutoscale</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+			},
+		},
+		{
+			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Cluster Management Commands:&#34;</span>,
+			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+				<span style="color:#a6e22e">certificates</span>.<span style="color:#a6e22e">NewCmdCertificate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">clusterinfo</span>.<span style="color:#a6e22e">NewCmdClusterInfo</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">top</span>.<span style="color:#a6e22e">NewCmdTop</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdCordon</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdUncordon</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdDrain</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">taint</span>.<span style="color:#a6e22e">NewCmdTaint</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+			},
+		},
+		{
+			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Troubleshooting and Debugging Commands:&#34;</span>,
+			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+				<span style="color:#a6e22e">describe</span>.<span style="color:#a6e22e">NewCmdDescribe</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">logs</span>.<span style="color:#a6e22e">NewCmdLogs</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">attach</span>.<span style="color:#a6e22e">NewCmdAttach</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">cmdexec</span>.<span style="color:#a6e22e">NewCmdExec</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">portforward</span>.<span style="color:#a6e22e">NewCmdPortForward</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">proxy</span>.<span style="color:#a6e22e">NewCmdProxy</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">cp</span>.<span style="color:#a6e22e">NewCmdCp</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">NewCmdAuth</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+			},
+		},
+		{
+			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Advanced Commands:&#34;</span>,
+			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+				<span style="color:#a6e22e">diff</span>.<span style="color:#a6e22e">NewCmdDiff</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">apply</span>.<span style="color:#a6e22e">NewCmdApply</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">patch</span>.<span style="color:#a6e22e">NewCmdPatch</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">replace</span>.<span style="color:#a6e22e">NewCmdReplace</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">wait</span>.<span style="color:#a6e22e">NewCmdWait</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">convert</span>.<span style="color:#a6e22e">NewCmdConvert</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">kustomize</span>.<span style="color:#a6e22e">NewCmdKustomize</span>(<span style="color:#a6e22e">ioStreams</span>),
+			},
+		},
+		{
+			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Settings Commands:&#34;</span>,
+			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+				<span style="color:#a6e22e">label</span>.<span style="color:#a6e22e">NewCmdLabel</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">annotate</span>.<span style="color:#a6e22e">NewCmdAnnotate</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+				<span style="color:#a6e22e">completion</span>.<span style="color:#a6e22e">NewCmdCompletion</span>(<span style="color:#a6e22e">ioStreams</span>.<span style="color:#a6e22e">Out</span>, <span style="color:#e6db74">&#34;&#34;</span>),
+			},
+		},</code></pre></div>
+
+<img src="/posts/kube-ctl/kubectl.png" alt="" class="" style="width: 80%; ">
+
+
+<h2 id="tips">Tips</h2>
+
+<h3 id="jsonpath-vs-jq">JSONPath vs jq</h3>
+
+<p>Besides Jq (a sed like tools but for JSON data) being a very useful one, Kubectl comes with JSONPath cababilities (Like XPath but for JSON).</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show the kind of all namespace deployments</span>
+kubectl get deployment -o<span style="color:#f92672">=</span>jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].kind}{&#34;\n&#34;}&#39;</span>
+Deplyoment
+Deplyoment
+
+<span style="color:#75715e"># Iterate then name of all deployments and pipe to a delete command</span>
+kubectl get deployment.v1.apps -o<span style="color:#f92672">=</span>jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{range .items[*]}{.metadata.name}{&#34;\n&#34;}{end}&#39;</span> | xargs kubectl delete deployment
+deployment.apps <span style="color:#e6db74">&#34;nginx&#34;</span> deleted
+deployment.apps <span style="color:#e6db74">&#34;nginx2&#34;</span> deleted</code></pre></div>
+
+<h3 id="basic-explain-and-resources">Basic Explain and resources</h3>
+
+<p>You can list the available resources with api-resources and get the documentation with explain:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl api-resources
+
+NAME                              SHORTNAMES   APIGROUP                       NAMESPACED   KIND
+...
+customresourcedefinitions         crd,crds     apiextensions.k8s.io           false        CustomResourceDefinition
+...
+
+---
+
+$ kubectl explain crd
+KIND:     CustomResourceDefinition
+VERSION:  apiextensions.k8s.io/v1
+
+DESCRIPTION:
+     CustomResourceDefinition represents a resource that should be exposed on
+     the API server. Its name MUST be in the format &lt;.spec.name&gt;.&lt;.spec.group&gt;.
+
+FIELDS:
+   apiVersion   &lt;string&gt;
+     APIVersion defines the versioned schema of this representation of an
+     object. Servers should convert recognized schemas to the latest internal
+     value, and may reject unrecognized values. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+
+   kind &lt;string&gt;
+     Kind is a string value representing the REST resource this object
+     represents. Servers may infer this from the endpoint the client submits
+     requests to. Cannot be updated. In CamelCase. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+
+   metadata     &lt;Object&gt;
+
+   spec &lt;Object&gt; -required-
+     spec describes how the user wants the resources to appear
+
+   status       &lt;Object&gt;
+     status indicates the actual state of the CustomResourceDefinition</code></pre></div>
+
+<h3 id="bash-autocomplete">Bash autocomplete</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">source &lt;<span style="color:#f92672">(</span>kubectl completion zsh|bash<span style="color:#f92672">)</span></code></pre></div>
+
+<h3 id="documentation">Documentation</h3>
+
+<p>The autogenerated documentation can be found <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands" title="here">here</a>.</p>
+
+<h2 id="tasks">Tasks</h2>
+
+<p>Here are the summary of the tasks related with kubectl from official documentation.</p>
+
+<p>https://kubernetes.io/docs/tasks/tools/install-kubectl/
+https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-api/
+https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-services/
+https://kubernetes.io/docs/tasks/administer-cluster/extended-resource-node/
+https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/
+https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
+https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/
+https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-command/
+https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-config/
+https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/</p>
+
+<h2 id="books">Books</h2>
+
+<p><a href="https://www.amazon.com/Programming-Kubernetes-Developing-Cloud-Native-Applications-ebook/dp/B07VCPM5VQ" title="Programming Kubernetes">Programming Kubernetes</a>
+<a href="https://www.amazon.com/Cloud-Native-DevOps-Kubernetes-Applications/dp/1492040762" title="Cloud Native DevOps with Kubernetes">Cloud Native DevOps with Kubernetes</a>
+<a href="https://www.amazon.com/Kubernetes-Running-Dive-Future-Infrastructure/dp/1492046531" title="Kubernetes Up &amp; Running">Kubernetes Up & Running</a></p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-46699622-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2019 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

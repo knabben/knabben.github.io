@@ -6,10 +6,21 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Dec 2019 22:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Dec 2019 15:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubectl </title>
+      <link>http://knabben.github.io/posts/kube-ctl/</link>
+      <pubDate>Thu, 26 Dec 2019 15:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-ctl/</guid>
+      <description>Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.</description>
+    </item>
     
     <item>
       <title>Kubernetes in Docker</title>
@@ -22,7 +33,7 @@ The initial topics are a summary from Kind quickstart
 Installing To install Kind you should use:
 $ brew install kind Or from source:
 $ GO111MODULE=&amp;#34;on&amp;#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create a new cluster you must run:
-$ kind create cluster # the default cluster name is kind Creating cluster &amp;#34;kind&amp;#34; $ kind create cluster --name 2k8s ## a new cluster Creating cluster &amp;#34;2k8s&amp;#34; Check the docker containers with &#34;</description>
+# Default cluster name is kind $ kind create cluster Creating cluster &amp;#34;kind&amp;#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &amp;#34;2k8s&amp;#34; Check the docker containers with &#34;</description>
     </item>
     
     <item>

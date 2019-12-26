@@ -36,7 +36,7 @@ The initial topics are a summary from Kind quickstart
 Installing To install Kind you should use:
 $ brew install kind Or from source:
 $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create a new cluster you must run:
-$ kind create cluster # the default cluster name is kind Creating cluster &#34;kind&#34; $ kind create cluster --name 2k8s ## a new cluster Creating cluster &#34;2k8s&#34; Check the docker containers with &#34;" />
+# Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34; Check the docker containers with &#34;" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://knabben.github.io/posts/kind/" />
 <meta property="article:published_time" content="2019-12-25T22:00:00&#43;00:00"/>
@@ -48,12 +48,12 @@ The initial topics are a summary from Kind quickstart
 Installing To install Kind you should use:
 $ brew install kind Or from source:
 $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create a new cluster you must run:
-$ kind create cluster # the default cluster name is kind Creating cluster &#34;kind&#34; $ kind create cluster --name 2k8s ## a new cluster Creating cluster &#34;2k8s&#34; Check the docker containers with &#34;">
+# Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34; Check the docker containers with &#34;">
 
 
 <meta itemprop="datePublished" content="2019-12-25T22:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-25T22:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="637">
+<meta itemprop="wordCount" content="640">
 
 
 
@@ -65,7 +65,7 @@ The initial topics are a summary from Kind quickstart
 Installing To install Kind you should use:
 $ brew install kind Or from source:
 $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create a new cluster you must run:
-$ kind create cluster # the default cluster name is kind Creating cluster &#34;kind&#34; $ kind create cluster --name 2k8s ## a new cluster Creating cluster &#34;2k8s&#34; Check the docker containers with &#34;"/>
+# Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34; Check the docker containers with &#34;"/>
 
   </head>
 
@@ -138,10 +138,12 @@ some particular customizations, and exlain what components it brings up.</p>
 
 <p>To create a new cluster you must run:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kind create cluster <span style="color:#75715e"># the default cluster name is kind</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Default cluster name is kind</span>
+$ kind create cluster 
 Creating cluster <span style="color:#e6db74">&#34;kind&#34;</span>
 
-$ kind create cluster --name 2k8s <span style="color:#75715e">## a new cluster</span>
+<span style="color:#75715e"># A new cluster with context named 2k8s</span>
+$ kind create cluster --name 2k8s 
 Creating cluster <span style="color:#e6db74">&#34;2k8s&#34;</span></code></pre></div>
 
 <p>Check the docker containers with "docker ps":</p>
