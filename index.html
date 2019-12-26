@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
 
-<meta property="og:updated_time" content="2019-12-15T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-12-25T22:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -124,6 +124,35 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/kind/" class="color-inherit dim link">
+            Kubernetes in Docker
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Introduction This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
+The initial topics are a summary from Kind quickstart
+Installing To install Kind you should use:
+$ brew install kind Or from source:
+$ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create a new cluster you must run:
+$ kind create cluster # the default cluster name is kind Creating cluster &#34;kind&#34; $ kind create cluster --name 2k8s ## a new cluster Creating cluster &#34;2k8s&#34; Check the docker containers with "
+        </div>
+          <a href="/posts/kind/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/sawtooth-cheatsheet/" class="color-inherit dim link">
             Sawtooth Cheatsheet
             </a>
@@ -169,38 +198,18 @@ version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 c
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/kube-audit/" class="color-inherit dim link">
-            Kubernetes Audit Sink
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Introduction The idea of this post is to test the Audit dynamic backend with a KIND cluster.
-Kubernetes has 4 stages:
-RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain. ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.g. watch).
-        </div>
-          <a href="/posts/kube-audit/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/kube-audit/" class="link black dim">
+              Kubernetes Audit Sink
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/kube-api/" class="link black dim">
@@ -217,12 +226,6 @@ RequestReceived - The stage for events generated as soon as the audit handler re
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/sawtooth-grafana/" class="link black dim">
               Sawtooth Network Monitoring
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/gossip/" class="link black dim">
-              Gossip networks
             </a>
           </h2>
         

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://knabben.github.io/posts/kind/</loc>
+    <lastmod>2019-12-25T22:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://knabben.github.io/posts/sawtooth-cheatsheet/</loc>
     <lastmod>2019-12-15T00:00:00+00:00</lastmod>
   </url>
@@ -134,7 +139,7 @@
   
   <url>
     <loc>http://knabben.github.io/</loc>
-    <lastmod>2019-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-25T22:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -144,8 +149,16 @@
   </url>
   
   <url>
+    <loc>http://knabben.github.io/posts/kubectl/</loc>
+  </url>
+  
+  <url>
+    <loc>http://knabben.github.io/posts/kube-apply-state/</loc>
+  </url>
+  
+  <url>
     <loc>http://knabben.github.io/posts/</loc>
-    <lastmod>2019-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-25T22:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

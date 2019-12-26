@@ -6,10 +6,24 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 22:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes in Docker</title>
+      <link>http://knabben.github.io/posts/kind/</link>
+      <pubDate>Wed, 25 Dec 2019 22:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kind/</guid>
+      <description>Introduction This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
+The initial topics are a summary from Kind quickstart
+Installing To install Kind you should use:
+$ brew install kind Or from source:
+$ GO111MODULE=&amp;#34;on&amp;#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create a new cluster you must run:
+$ kind create cluster # the default cluster name is kind Creating cluster &amp;#34;kind&amp;#34; $ kind create cluster --name 2k8s ## a new cluster Creating cluster &amp;#34;2k8s&amp;#34; Check the docker containers with &#34;</description>
+    </item>
     
     <item>
       <title>Sawtooth Cheatsheet</title>
@@ -289,6 +303,25 @@ def fv(pv, n, i): print(&amp;#39;{0:.2f}&amp;#39;.format(np.fv(i/100, n, 0, -pv)
       <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
 NOTE If you are interested on real traffic replication, consider this project [2].
 Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
+    </item>
+    
+    <item>
+      <title>Kubectl</title>
+      <link>http://knabben.github.io/posts/kubectl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kubectl/</guid>
+      <description>Introduction Kubectl book Kubectl introduction https://kubectl.docs.kubernetes.io/
+Kubectl debugging and API server Authentication Primitive API types Conversion Kubectl internals Kubectl command groupping Shortcuts and tricks </description>
+    </item>
+    
+    <item>
+      <title>New pod start</title>
+      <link>http://knabben.github.io/posts/kube-apply-state/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-apply-state/</guid>
+      <description>bring the components of both api server Lifecycle in these components Explain Show logs from the tragetory Show logs from kubectl to scheduler, api-server Show logs on Kubelet Starting on docker </description>
     </item>
     
   </channel>
