@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
 
-<meta property="og:updated_time" content="2019-12-26T15:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-12-27T15:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -124,6 +124,32 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/kube-pod/" class="color-inherit dim link">
+            Pod Spec
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
+POD diagram https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go#L3513
+PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
+        </div>
+          <a href="/posts/kube-pod/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/kube-ctl/" class="color-inherit dim link">
             Kubectl 
             </a>
@@ -171,39 +197,18 @@ $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create 
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/sawtooth-cheatsheet/" class="color-inherit dim link">
-            Sawtooth Cheatsheet
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
-$ vagrant init ubuntu/xenial64 $ vagrant up After the box is up we need to add the correct repository:
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update Install the package:
-$ sudo apt install -y sawtooth Docker Install Docker adding key and repo:
-        </div>
-          <a href="/posts/sawtooth-cheatsheet/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/sawtooth-cheatsheet/" class="link black dim">
+              Sawtooth Cheatsheet
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/sawtooth-permission/" class="link black dim">
@@ -220,12 +225,6 @@ $ sudo apt install -y sawtooth Docker Install Docker adding key and repo:
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/kube-api/" class="link black dim">
               Kubernetes API client
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/dev-poet/" class="link black dim">
-              From Dev to PoET
             </a>
           </h2>
         

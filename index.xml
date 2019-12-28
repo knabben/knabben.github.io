@@ -6,10 +6,21 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Dec 2019 15:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Dec 2019 15:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pod Spec</title>
+      <link>http://knabben.github.io/posts/kube-pod/</link>
+      <pubDate>Fri, 27 Dec 2019 15:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-pod/</guid>
+      <description>Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
+POD diagram https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go#L3513
+PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.</description>
+    </item>
     
     <item>
       <title>Kubectl </title>

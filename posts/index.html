@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
 
-<meta property="og:updated_time" content="2019-12-26T15:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-12-27T15:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="">
@@ -93,6 +93,23 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
   <main class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></main>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/kube-pod/" class="link black dim">
+        Pod Spec
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
+POD diagram https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go#L3513
+PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -246,23 +263,6 @@ Saying that, in this post we will analyze how to monitor a Sawtooth Validator No
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
 %load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/gop2/" class="link black dim">
-        Golang essays (part II)
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
-The type *T is a pointer to a T. The operator that generates the pointer is the &.
-x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.Println(x) Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:
     </div>
   </div>
 </div>
