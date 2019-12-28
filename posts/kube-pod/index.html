@@ -47,7 +47,7 @@ PS: The detailing and lab section above extracts text, insights and possible exa
 
 <meta itemprop="datePublished" content="2019-12-27T15:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-27T15:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1321">
+<meta itemprop="wordCount" content="1614">
 
 
 
@@ -430,6 +430,68 @@ $ kubectl auth can-i <span style="color:#e6db74">&#39;*&#39;</span> <span style=
 no
 
 <span style="color:#75715e"># You need to set the correct RBAC permissions for this serviceaccount.</span></code></pre></div>
+
+<h2 id="nodeselector-affinity">NodeSelector & Affinity</h2>
+
+<p>https://kubernetes.io/docs/concepts/configuration/assign-pod-node/</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl label nodes kind-worker2 app<span style="color:#f92672">=</span>lab1
+
+<span style="color:#75715e"># pod.yaml</span>
+<span style="color:#75715e"># nodeSelector:</span>
+<span style="color:#75715e">#  app: lab1</span>
+
+$ kubectl get pods -o wide
+NAME      READY   STATUS    RESTARTS   AGE   IP           NODE           NOMINATED NODE   READINESS GATES
+busybox   <span style="color:#ae81ff">1</span>/1     Running   <span style="color:#ae81ff">0</span>          5s    <span style="color:#ae81ff">10</span>.244.1.2   kind-worker2   &lt;none&gt;           &lt;none&gt;</code></pre></div>
+
+<p>nodeSelector provides a very simple way to constrain pods to nodes with particular labels. The <strong>affinity/anti-affinity</strong> feature, greatly expands the types of constraints you can express.</p>
+
+<p>In the example we set a worker node with app=lab3 but do a required affinity of app=lab2, as result the Pod will stay Pending until a node has the new label.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl label nodes kind-worker app<span style="color:#f92672">=</span>lab3 --overwrite
+
+<span style="color:#75715e"># pod.yaml</span>
+<span style="color:#75715e">#  affinity:</span>
+<span style="color:#75715e">#    nodeAffinity:</span>
+<span style="color:#75715e">#      requiredDuringSchedulingIgnoredDuringExecution:</span>
+<span style="color:#75715e">#        nodeSelectorTerms:</span>
+<span style="color:#75715e">#        - matchExpressions:</span>
+<span style="color:#75715e">#          - key: app</span>
+<span style="color:#75715e">#            operator: In</span>
+<span style="color:#75715e">#            values:</span>
+<span style="color:#75715e">#            - lab2</span>
+
+Pod stays on Pending status
+
+Events:
+  Type     Reason            Age               From               Message
+  ----     ------            ----              ----               -------
+  Warning  FailedScheduling  3s <span style="color:#f92672">(</span>x2 over 76s<span style="color:#f92672">)</span>  default-scheduler  <span style="color:#ae81ff">0</span>/3 nodes are available: <span style="color:#ae81ff">3</span> node<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> didn<span style="color:#960050;background-color:#1e0010">&#39;</span>t match node selector.</code></pre></div>
+
+<h2 id="toleration">Toleration</h2>
+
+<p>Node affinity, described here, is a property of pods that attracts them to a set of nodes (either as a preference or a hard requirement).</p>
+
+<p>Taints are the opposite – they allow a node to repel a set of pods.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl taint node kind-worker app<span style="color:#f92672">=</span>lab2:NoSchedule
+
+$ kubectl create -f pod.yaml <span style="color:#75715e"># no taint</span>
+NAME      READY   STATUS              RESTARTS   AGE   IP       NODE           NOMINATED NODE   READINESS GATES
+busybox   <span style="color:#ae81ff">0</span>/1     ContainerCreating   <span style="color:#ae81ff">0</span>          2s    &lt;none&gt;   kind-worker2   &lt;none&gt;           &lt;none&gt;
+
+<span style="color:#75715e"># pod.yaml</span>
+<span style="color:#75715e">#  tolerations:</span>
+<span style="color:#75715e">#  - key: &#34;app&#34;</span>
+<span style="color:#75715e">#    operator: &#34;Equal&#34;</span>
+<span style="color:#75715e">#    value: &#34;lab2&#34;</span>
+<span style="color:#75715e">#    effect: &#34;NoSchedule&#34;</span>
+
+<span style="color:#75715e"># Create with correct taint</span>
+$ kubectl create -f pod.yaml ; kubectl get pods -o wide
+NAME      READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+busybox   <span style="color:#ae81ff">1</span>/1     Running   <span style="color:#ae81ff">0</span>          5s    <span style="color:#ae81ff">10</span>.244.2.6   kind-worker   &lt;none&gt;           &lt;none&gt;</code></pre></div>
 
 <h2 id="tasks">Tasks</h2>
 
