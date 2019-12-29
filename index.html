@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
 
-<meta property="og:updated_time" content="2019-12-29T10:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-12-29T11:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -124,8 +124,33 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/kube-depl/" class="color-inherit dim link">
+            Deployment
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          ReplicaSets A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
+// ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
+        </div>
+          <a href="/posts/kube-depl/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/kube-container/" class="color-inherit dim link">
-            Container 
+            Container
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
@@ -167,38 +192,18 @@ PS: The detailing and lab section above extracts text, insights and possible exa
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/kube-ctl/" class="color-inherit dim link">
-            Kubectl 
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
-The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
-Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.
-        </div>
-          <a href="/posts/kube-ctl/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/kube-ctl/" class="link black dim">
+              Kubectl 
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/kind/" class="link black dim">
@@ -215,12 +220,6 @@ Kubectl debugging and API server Kubectl is a client for the master API server, 
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/sawtooth-permission/" class="link black dim">
               Sawtooth Permissioning
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/kube-audit/" class="link black dim">
-              Kubernetes Audit Sink
             </a>
           </h2>
         
