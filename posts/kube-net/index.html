@@ -49,7 +49,7 @@ a Service is an abstraction which defines a logical set of Pods and a policy by 
 
 <meta itemprop="datePublished" content="2019-12-28T23:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-28T23:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="821">
+<meta itemprop="wordCount" content="817">
 
 
 
@@ -259,20 +259,20 @@ NetworkPolicy resources use labels to select pods and define rules which specify
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NetworkPolicyIngressRule</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#75715e">// List of ports which should be made accessible on the pods selected for this
 </span><span style="color:#75715e"></span>	<span style="color:#75715e">// rule.
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">NetworkPolicyPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34; protobuf:&#34;bytes,1,rep,name=ports&#34;`</span>
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">NetworkPolicyPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34;`</span>
 
 	<span style="color:#75715e">// List of sources which should be able to access the pods selected for this rule.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">From</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;from,omitempty&#34; protobuf:&#34;bytes,2,rep,name=from&#34;`</span>
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">From</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;from,omitempty&#34;`</span>
 }
 
 <span style="color:#75715e">// NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods
 </span><span style="color:#75715e">// matched by a NetworkPolicySpec&#39;s podSelector. The traffic must match both ports and to.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NetworkPolicyEgressRule</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#75715e">// List of destination ports for outgoing traffic.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">NetworkPolicyPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34; protobuf:&#34;bytes,1,rep,name=ports&#34;`</span>
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">NetworkPolicyPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34;`</span>
 
 	<span style="color:#75715e">// List of destinations for outgoing traffic of pods selected for this rule.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">To</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;to,omitempty&#34; protobuf:&#34;bytes,2,rep,name=to&#34;`</span>
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">To</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;to,omitempty&#34;`</span>
 }</code></pre></div>
 
 <p>An example of the usage of this NetworkPolicy capability, DENY all egress traffic from pod to source.</p>
