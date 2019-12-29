@@ -6,10 +6,20 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Dec 2019 15:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Dec 2019 10:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Container </title>
+      <link>http://knabben.github.io/posts/kube-container/</link>
+      <pubDate>Sun, 29 Dec 2019 10:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-container/</guid>
+      <description>Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
+// A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&amp;#34;name&amp;#34;` // Docker image name. 	// More info: https://kubernetes.io/docs/concepts/containers/images 	Image string `json:&amp;#34;image,omitempty&amp;#34;` // Entrypoint array.</description>
+    </item>
     
     <item>
       <title>Pod Spec</title>
@@ -18,7 +28,7 @@
       
       <guid>http://knabben.github.io/posts/kube-pod/</guid>
       <description>Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
-POD diagram https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go#L3513
+POD diagram Pod struct
 PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.</description>
     </item>
     
