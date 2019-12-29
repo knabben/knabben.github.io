@@ -49,7 +49,7 @@ a Service is an abstraction which defines a logical set of Pods and a policy by 
 
 <meta itemprop="datePublished" content="2019-12-28T23:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-28T23:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="523">
+<meta itemprop="wordCount" content="821">
 
 
 
@@ -227,6 +227,66 @@ spec:
 NetworkPolicy resources use labels to select pods and define rules which specify what traffic is allowed to the selected pods.</p>
 
 <p>They can be Ingress or Egress in a Pod point of view.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// Policy Type string describes the NetworkPolicy type
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PolicyType</span> <span style="color:#66d9ef">string</span>
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#75715e">// PolicyTypeIngress is a NetworkPolicy that affects ingress traffic on selected pods
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">PolicyTypeIngress</span> <span style="color:#a6e22e">PolicyType</span> = <span style="color:#e6db74">&#34;Ingress&#34;</span>
+	<span style="color:#75715e">// PolicyTypeEgress is a NetworkPolicy that affects egress traffic on selected pods
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">PolicyTypeEgress</span> <span style="color:#a6e22e">PolicyType</span> = <span style="color:#e6db74">&#34;Egress&#34;</span>
+)
+
+<span style="color:#75715e">// NetworkPolicySpec provides the specification of a NetworkPolicy
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NetworkPolicySpec</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#75715e">// Selects the pods to which this NetworkPolicy object applies. 
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">PodSelector</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">LabelSelector</span> <span style="color:#e6db74">`json:&#34;podSelector&#34;`</span>
+
+	<span style="color:#75715e">// List of ingress rules to be applied to the selected pods.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Ingress</span> []<span style="color:#a6e22e">NetworkPolicyIngressRule</span> <span style="color:#e6db74">`json:&#34;ingress,omitempty&#34;`</span>
+
+	<span style="color:#75715e">// List of egress rules to be applied to the selected pods.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Egress</span> []<span style="color:#a6e22e">NetworkPolicyEgressRule</span> <span style="color:#e6db74">`json:&#34;egress,omitempty&#34;`</span>
+
+	<span style="color:#75715e">// List of rule types that the NetworkPolicy relates to.
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Valid options are &#34;Ingress&#34;, &#34;Egress&#34;, or &#34;Ingress,Egress&#34;.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">PolicyTypes</span> []<span style="color:#a6e22e">PolicyType</span> <span style="color:#e6db74">`json:&#34;policyTypes,omitempty&#34;`</span>
+}
+
+<span style="color:#75715e">// NetworkPolicyIngressRule describes a particular set of traffic that is allowed to the pods
+</span><span style="color:#75715e">// matched by a NetworkPolicySpec&#39;s podSelector. The traffic must match both ports and from.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NetworkPolicyIngressRule</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#75715e">// List of ports which should be made accessible on the pods selected for this
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// rule.
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">NetworkPolicyPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34; protobuf:&#34;bytes,1,rep,name=ports&#34;`</span>
+
+	<span style="color:#75715e">// List of sources which should be able to access the pods selected for this rule.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">From</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;from,omitempty&#34; protobuf:&#34;bytes,2,rep,name=from&#34;`</span>
+}
+
+<span style="color:#75715e">// NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods
+</span><span style="color:#75715e">// matched by a NetworkPolicySpec&#39;s podSelector. The traffic must match both ports and to.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NetworkPolicyEgressRule</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#75715e">// List of destination ports for outgoing traffic.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">NetworkPolicyPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34; protobuf:&#34;bytes,1,rep,name=ports&#34;`</span>
+
+	<span style="color:#75715e">// List of destinations for outgoing traffic of pods selected for this rule.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">To</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;to,omitempty&#34; protobuf:&#34;bytes,2,rep,name=to&#34;`</span>
+}</code></pre></div>
+
+<p>An example of the usage of this NetworkPolicy capability, DENY all egress traffic from pod to source.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress</code></pre></div>
+
+<p>PS: Not all CNIs have support for this feature.</p>
 
 <h2 id="tasks">Tasks</h2>
 
