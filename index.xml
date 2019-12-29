@@ -6,15 +6,27 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Dec 2019 11:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Dec 2019 23:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Networking</title>
+      <link>http://knabben.github.io/posts/kube-net/</link>
+      <pubDate>Sat, 28 Dec 2019 23:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-net/</guid>
+      <description>Networking The first and easiest way to access the Pod container port is via port-forward command:
+$ kubectl port-forward &amp;lt;pod_name&amp;gt; &amp;lt;local_port&amp;gt;:&amp;lt;remote_port&amp;gt; Take a look on the dynamic port-forwarder.
+Service An abstract way to expose an application running on a set of Pods as a network service.
+a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector.</description>
+    </item>
+    
+    <item>
       <title>Deployment</title>
       <link>http://knabben.github.io/posts/kube-depl/</link>
-      <pubDate>Sun, 29 Dec 2019 11:00:00 +0000</pubDate>
+      <pubDate>Sat, 28 Dec 2019 11:00:00 +0000</pubDate>
       
       <guid>http://knabben.github.io/posts/kube-depl/</guid>
       <description>ReplicaSets A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
@@ -24,7 +36,7 @@
     <item>
       <title>Container</title>
       <link>http://knabben.github.io/posts/kube-container/</link>
-      <pubDate>Sun, 29 Dec 2019 10:00:00 +0000</pubDate>
+      <pubDate>Sat, 28 Dec 2019 10:00:00 +0000</pubDate>
       
       <guid>http://knabben.github.io/posts/kube-container/</guid>
       <description>Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.

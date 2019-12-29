@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
 
-<meta property="og:updated_time" content="2019-12-29T11:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-12-28T23:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="">
@@ -124,6 +124,33 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/kube-net/" class="color-inherit dim link">
+            Networking
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Networking The first and easiest way to access the Pod container port is via port-forward command:
+$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt; Take a look on the dynamic port-forwarder.
+Service An abstract way to expose an application running on a set of Pods as a network service.
+a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector.
+        </div>
+          <a href="/posts/kube-net/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/kube-depl/" class="color-inherit dim link">
             Deployment
             </a>
@@ -166,38 +193,18 @@
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/kube-pod/" class="color-inherit dim link">
-            Pod Spec
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
-POD diagram Pod struct
-PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
-        </div>
-          <a href="/posts/kube-pod/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/kube-pod/" class="link black dim">
+              Pod Spec
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/kube-ctl/" class="link black dim">
@@ -214,12 +221,6 @@ PS: The detailing and lab section above extracts text, insights and possible exa
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/sawtooth-cheatsheet/" class="link black dim">
               Sawtooth Cheatsheet
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/sawtooth-permission/" class="link black dim">
-              Sawtooth Permissioning
             </a>
           </h2>
         

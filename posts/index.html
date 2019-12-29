@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
 
-<meta property="og:updated_time" content="2019-12-29T11:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-12-28T23:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="">
@@ -93,6 +93,24 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
   <main class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></main>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/kube-net/" class="link black dim">
+        Networking
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Networking The first and easiest way to access the Pod container port is via port-forward command:
+$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt; Take a look on the dynamic port-forwarder.
+Service An abstract way to expose an application running on a set of Pods as a network service.
+a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -245,23 +263,6 @@ RequestReceived - The stage for events generated as soon as the audit handler re
 Kubernetes API resources Accessing via API The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).
 You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with
 $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;&amp; kubectl api-version Accessing via client-go Its possible to access a Pod via a clientset and fetch attributes from it, in the example bellow, it must fetch the Image from a CoreDNS container in the Kube-system namespace.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/dev-poet/" class="link black dim">
-        From Dev to PoET
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction DevMode is very cool for development of transaction processors, but when you go to production it don't grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
-Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
-But without it this algorithm becomes Crash Fault Tolerant only, for our proposes it's enough.
     </div>
   </div>
 </div>
