@@ -4,12 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>AK  | More statistics and Python</title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-
+    <title>More statistics and Python | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -17,7 +14,7 @@
 
     
     
-      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
     
 
     
@@ -29,31 +26,24 @@
     
 
     
-
+    
     <meta property="og:title" content="More statistics and Python" />
-<meta property="og:description" content="Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
-Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib." />
+<meta property="og:description" content="Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3. Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://knabben.github.io/posts/statsmore/" />
-<meta property="article:published_time" content="2017-10-12T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2017-10-12T00:00:00&#43;00:00"/>
-
+<meta property="article:published_time" content="2017-10-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-10-12T00:00:00+00:00" />
 <meta itemprop="name" content="More statistics and Python">
-<meta itemprop="description" content="Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
-Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.">
-
-
+<meta itemprop="description" content="Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3. Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.">
 <meta itemprop="datePublished" content="2017-10-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-10-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1131">
+<meta itemprop="wordCount" content="1171">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="More statistics and Python"/>
-<meta name="twitter:description" content="Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
-Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib."/>
+<meta name="twitter:description" content="Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3. Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib."/>
 
   </head>
 
@@ -72,7 +62,14 @@ Getting financial data import pandas as pd import numpy as np import pandas_data
     </a>
     <div class="flex-l items-center">
       
+
       
+      
+
+
+
+
+
 
 
 
@@ -93,26 +90,64 @@ Getting financial data import pandas as pd import numpy as np import pandas_data
 
     <main class="pb7" role="main">
       
-  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
-
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
     <header class="mt4 w-100">
-      <p class="f6 b helvetica tracked">
+      <aside class="instapaper_ignoref b helvetica tracked">
           
         POSTS
-      </p>
-      <h1 class="f1 athelas mb1">More statistics and Python</h1>
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://knabben.github.io/posts/statsmore/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://knabben.github.io/posts/statsmore/&amp;text=More%20statistics%20and%20Python" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://knabben.github.io/posts/statsmore/&amp;title=More%20statistics%20and%20Python" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">More statistics and Python</h1>
+      
       
       <time class="f6 mv4 dib tracked" datetime="2017-10-12T00:00:00Z">October 12, 2017</time>
+
+      
+      
     </header>
-
-    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="simple-linear-regression">Simple linear regression</h1>
-
-<h2 id="introduction">Introduction</h2>
-
-<p>This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let's get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.</p>
-
-<h3 id="getting-financial-data">Getting financial data</h3>
-
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<h2 id="headline-1">
+Simple linear regression
+</h2>
+<h3 id="headline-2">
+Introduction
+</h3>
+<p>
+This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+</p>
+<h4 id="headline-3">
+Getting financial data
+</h4>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
 <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
@@ -137,9 +172,11 @@ sec_returns <span style="color:#f92672">=</span> sec_data<span style="color:#f92
 
 <span style="color:#75715e"># Plot the cumulative sum of return</span>
 sec_returns<span style="color:#f92672">.</span>cumsum()<span style="color:#f92672">.</span>plot()</code></pre></div>
-
-<p><img src="cumsum.png" alt="cumsum.png" title="cumsum.png" /></p>
-
+</p>
+<p>
+<img src="cumsum.png" alt="cumsum.png" title="cumsum.png" />
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#75715e"># Some numbers about the anual return</span>
 <span style="color:#66d9ef">print</span>(sec_returns<span style="color:#f92672">.</span>mean() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>)
@@ -156,15 +193,20 @@ sec_returns<span style="color:#f92672">.</span>cumsum()<span style="color:#f9267
 
 <span style="color:#75715e"># Returns of the histogram</span>
 sec_returns<span style="color:#f92672">.</span>hist(bins<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>);</code></pre></div>
-
-<p><img src="histogram-50.png" alt="histogram-50.png" title="histogram-50.png" /></p>
-
-<h3 id="covariance">Covariance</h3>
-
-<p>Study the relationship between values, this evaluates how the variables X and Y moves at the same time in relation it's mean values.</p>
-
-<p>$$COV(a,b) = \frac{\sum_{k=1}(Ra - \overline{R}a) * (Rb - \overline{R}b)}{n}$$</p>
-
+</p>
+<p>
+<img src="histogram-50.png" alt="histogram-50.png" title="histogram-50.png" />
+</p>
+<h4 id="headline-4">
+Covariance
+</h4>
+<p>
+Study the relationship between values, this evaluates how the variables X and Y moves at the same time in relation it&#39;s mean values.
+</p>
+<p>
+$$COV(a,b) = \frac{\sum_{k=1}(Ra - \overline{R}a) * (Rb - \overline{R}b)}{n}$$
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 sec_returns<span style="color:#f92672">.</span>var() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>
 
@@ -185,15 +227,20 @@ IBOV   <span style="color:#ae81ff">0.054705</span>  <span style="color:#ae81ff">
 
 <span style="color:#75715e"># Scatter matrix between stocks</span>
 scatter_matrix(sec_returns, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">8</span>), alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>, hist_kwds<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;bins&#39;</span>:<span style="color:#ae81ff">50</span>});</code></pre></div>
-
-<p><img src="scatter-stock.png" alt="scatter-stock.png" title="scatter-stock.png" /></p>
-
-<h3 id="correlation">Correlation</h3>
-
-<p>Is simply a normalized form of covariance.</p>
-
-<p>$$ CORRx,y = \frac{COVx,y}{\sigma{x}*\sigma{y}} $$</p>
-
+</p>
+<p>
+<img src="scatter-stock.png" alt="scatter-stock.png" title="scatter-stock.png" />
+</p>
+<h4 id="headline-5">
+Correlation
+</h4>
+<p>
+Is simply a normalized form of covariance.
+</p>
+<p>
+$$ CORRx,y = \frac{COVx,y}{\sigma{x}*\sigma{y}} $$
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 sec_returns<span style="color:#f92672">.</span>corr()
 
@@ -203,11 +250,14 @@ BTOW3  <span style="color:#ae81ff">0.230411</span>  <span style="color:#ae81ff">
 LAME3  <span style="color:#ae81ff">0.348039</span>  <span style="color:#ae81ff">0.571298</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.560470</span>  <span style="color:#ae81ff">0.642699</span>
 LREN3  <span style="color:#ae81ff">0.177572</span>  <span style="color:#ae81ff">0.330259</span>  <span style="color:#ae81ff">0.560470</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.682574</span>
 IBOV   <span style="color:#ae81ff">0.355224</span>  <span style="color:#ae81ff">0.440611</span>  <span style="color:#ae81ff">0.642699</span>  <span style="color:#ae81ff">0.682574</span>  <span style="color:#ae81ff">1.000000</span></code></pre></div>
-
-<h3 id="linear-regression">Linear Regression</h3>
-
-<p>$$ Y = \beta + \alpha * X $$</p>
-
+</p>
+<h4 id="headline-6">
+Linear Regression
+</h4>
+<p>
+$$ Y = \beta + \alpha * X $$
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#f92672">import</span> statsmodels.api <span style="color:#f92672">as</span> sm
 
@@ -217,46 +267,50 @@ sec_returns[<span style="color:#e6db74">&#39;IBOV&#39;</span>] <span style="colo
 )[<span style="color:#e6db74">&#39;Close&#39;</span>]<span style="color:#f92672">.</span>pct_change(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">1</span>:]
 
 <span style="color:#66d9ef">print</span>(sec_returns<span style="color:#f92672">.</span>head())</code></pre></div>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> <span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>                   MGLU3     BTOW3     LAME3     LREN3      IBOV<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    Date                                                        <span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    2016-10-14  0.028029  0.004507  0.027834  0.012278  0.010613<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    2016-10-17 -0.010554  0.038462  0.009247  0.011292  0.015039<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    2016-10-18  0.011556  0.039506  0.024869  0.015302  0.017323<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    2016-10-19  0.010545  0.010689  0.001916 -0.001629 -0.004337<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    2016-10-20  0.000000  0.013514 -0.001912  0.001632  0.005232</code></pre></div>
-
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> 
+                   MGLU3     BTOW3     LAME3     LREN3      IBOV
+    Date                                                        
+    2016-10-14  0.028029  0.004507  0.027834  0.012278  0.010613
+    2016-10-17 -0.010554  0.038462  0.009247  0.011292  0.015039
+    2016-10-18  0.011556  0.039506  0.024869  0.015302  0.017323
+    2016-10-19  0.010545  0.010689  0.001916 -0.001629 -0.004337
+    2016-10-20  0.000000  0.013514 -0.001912  0.001632  0.005232</code></pre></div> 
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#75715e"># Calculate the alfa and beta for LAME3</span>
 X <span style="color:#f92672">=</span> sec_returns[<span style="color:#e6db74">&#39;IBOV&#39;</span>]
 Y <span style="color:#f92672">=</span> sec_returns[<span style="color:#e6db74">&#39;LAME3&#39;</span>]
 result <span style="color:#f92672">=</span> sm<span style="color:#f92672">.</span>regression<span style="color:#f92672">.</span>linear_model<span style="color:#f92672">.</span>OLS(Y, sm<span style="color:#f92672">.</span>add_constant(X))<span style="color:#f92672">.</span>fit()
 result<span style="color:#f92672">.</span>summary()</code></pre></div>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">                          OLS Regression Results                            <span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>==============================================================================<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Dep. Variable:                  LAME3   R-squared:                       0.413<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Model:                            OLS   Adj. R-squared:                  0.411<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Method:                 Least Squares   F-statistic:                     173.1<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Date:                Thu, 12 Oct 2017   Prob (F-statistic):           2.71e-30<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Time:                        21:31:42   Log-Likelihood:                 732.24<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>No. Observations:                 248   AIC:                            -1460.<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Df Residuals:                     246   BIC:                            -1453.<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Df Model:                           1                                         <span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Covariance Type:            nonrobust                                         <span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>==============================================================================<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>                 coef    std err          t      P&gt;|t|      [0.025      0.975]<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>------------------------------------------------------------------------------<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>const         -0.0001      0.001     -0.144      0.885      -0.002       0.001<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>IBOV           0.8118      0.062     13.158      0.000       0.690       0.933<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>==============================================================================<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Omnibus:                       14.069   Durbin-Watson:                   2.021<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Prob(Omnibus):                  0.001   Jarque-Bera (JB):               30.752<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Skew:                          -0.205   Prob(JB):                     2.10e-07<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>Kurtosis:                       4.675   Cond. No.                         76.6<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>==============================================================================</code></pre></div>
-
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">                          OLS Regression Results                            
+==============================================================================
+Dep. Variable:                  LAME3   R-squared:                       0.413
+Model:                            OLS   Adj. R-squared:                  0.411
+Method:                 Least Squares   F-statistic:                     173.1
+Date:                Thu, 12 Oct 2017   Prob (F-statistic):           2.71e-30
+Time:                        21:31:42   Log-Likelihood:                 732.24
+No. Observations:                 248   AIC:                            -1460.
+Df Residuals:                     246   BIC:                            -1453.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0001      0.001     -0.144      0.885      -0.002       0.001
+IBOV           0.8118      0.062     13.158      0.000       0.690       0.933
+==============================================================================
+Omnibus:                       14.069   Durbin-Watson:                   2.021
+Prob(Omnibus):                  0.001   Jarque-Bera (JB):               30.752
+Skew:                          -0.205   Prob(JB):                     2.10e-07
+Kurtosis:                       4.675   Cond. No.                         76.6
+==============================================================================</code></pre></div>
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 a <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>params[<span style="color:#ae81ff">0</span>]
 b <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>params[<span style="color:#ae81ff">1</span>]
@@ -266,15 +320,18 @@ plt<span style="color:#f92672">.</span>scatter(X, Y, alpha<span style="color:#f9
 plt<span style="color:#f92672">.</span>plot(X2, Y_hat, <span style="color:#e6db74">&#39;r&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>);
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Ibov Value&#39;</span>);
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;LAME3 Value&#39;</span>);</code></pre></div>
-
-<p><img src="linear-reg-lame3.png" alt="linear-reg-lame3.png" title="linear-reg-lame3.png" /></p>
-
+</p>
+<p>
+<img src="linear-reg-lame3.png" alt="linear-reg-lame3.png" title="linear-reg-lame3.png" />
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#f92672">***</span> Exercises: Suppose those are the grades of some students, answer the following: 
 <span style="color:#75715e"># a) what is the correlation coeficient of these variables and the type of relation</span>
 <span style="color:#75715e"># b) construct the equation finding alfa and beta</span>
 <span style="color:#75715e"># c) If the student takes a 6.5 on math what is his note in biology?</span></code></pre></div>
-
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> stats
 
@@ -287,9 +344,11 @@ df[<span style="color:#e6db74">&#39;x.y&#39;</span>] <span style="color:#f92672"
 df[<span style="color:#e6db74">&#39;x2&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;math&#39;</span>] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
 df[<span style="color:#e6db74">&#39;y2&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;bio&#39;</span>] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
 plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])</code></pre></div>
-
-<p><img src="exercise-linear.png" alt="exercise-linear.png" title="exercise-linear.png" /></p>
-
+</p>
+<p>
+<img src="exercise-linear.png" alt="exercise-linear.png" title="exercise-linear.png" />
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 Answer:
 a)
@@ -303,11 +362,14 @@ intercept <span style="color:#f92672">=</span> <span style="color:#ae81ff">11.67
 
 c) stat<span style="color:#f92672">.</span>intercept <span style="color:#f92672">+</span> (stat<span style="color:#f92672">.</span>slope <span style="color:#f92672">*</span> <span style="color:#ae81ff">6.5</span>)
 <span style="color:#ae81ff">7.0934163701067607</span></code></pre></div>
-
-<h1 id="anova">ANOVA</h1>
-
-<p>Variance analysis is a way to test the validity of a null hypothesis and check if the arithmetic means of two or populations are equal. For this case, it is being analyzed three different methods of teaching, and the student's grade for each method, having a significance level of 1%.</p>
-
+</p>
+<h2 id="headline-7">
+ANOVA
+</h2>
+<p>
+Variance analysis is a way to test the validity of a null hypothesis and check if the arithmetic means of two or populations are equal. For this case, it is being analyzed three different methods of teaching, and the student&#39;s grade for each method, having a significance level of 1%.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
 <span style="color:#f92672">%</span>matplotlib inline
@@ -319,44 +381,76 @@ data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>
 })
 
 data<span style="color:#f92672">.</span>boxplot()</code></pre></div>
-
-<p><img src="boxplot-anova.png" alt="boxplot-anova.png" title="boxplot-anova.png" /></p>
-
-<h3 id="testing-in-4-steps">Testing in 4 steps</h3>
-
-<p>1) The first step is declare the null hypothesis and the alternative hypothese</p>
-
-<h5 id="h0-u1-u2-u3">H0: u1 = u2 = u3</h5>
-
-<h5 id="h1-the-means-aren-t-equal">H1: The means aren't equal.</h5>
-
-<p>2) Defining the critical region</p>
-
-<p>For setting the degree of freedom we have, being k the number of methods and n the total number of observations:</p>
-
-<h5 id="df1-k-1-3-1-2">df1: k - 1 = 3 - 1 = 2</h5>
-
-<h5 id="df2-n-k-15-3-12">df2: n - k = 15 - 3 = 12</h5>
-
-<p>Following the df(2,12) we can find the critical value = 6.93 in the F distribution table with an alpha of 0.01</p>
-
-<p>http://www.socr.ucla.edu/applets.dir/f_table.html#FTable0.01</p>
-
-<p>3) We can use scipy stats to fetch the F-value between the three methods</p>
-
+</p>
+<p>
+<img src="boxplot-anova.png" alt="boxplot-anova.png" title="boxplot-anova.png" />
+</p>
+<h4 id="headline-8">
+Testing in 4 steps
+</h4>
+<ol>
+<li>
+<p>
+The first step is declare the null hypothesis and the alternative hypothese
+</p>
+<h6 id="headline-9">
+H0: u1 = u2 = u3
+</h6>
+<h6 id="headline-10">
+H1: The means aren&#39;t equal.
+</h6>
+</li>
+<li>
+<p>
+Defining the critical region
+</p>
+</li>
+</ol>
+<p>
+For setting the degree of freedom we have, being k the number of methods and n the total number of observations:
+</p>
+<h6 id="headline-11">
+df1: k - 1 = 3 - 1 = 2
+</h6>
+<h6 id="headline-12">
+df2: n - k = 15 - 3 = 12
+</h6>
+<p>
+Following the df(2,12) we can find the critical value = 6.93 in the F distribution table with an alpha of 0.01
+</p>
+<p>
+http://www.socr.ucla.edu/applets.dir/f_table.html#FTable0.01
+</p>
+<ol>
+<li>
+<p>
+We can use scipy stats to fetch the F-value between the three methods
+</p>
+</li>
+</ol>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#f92672">import</span> scipy.stats <span style="color:#f92672">as</span> stats
 f_value, _ <span style="color:#f92672">=</span> stats<span style="color:#f92672">.</span>f_oneway(data[<span style="color:#e6db74">&#39;I&#39;</span>], data[<span style="color:#e6db74">&#39;II&#39;</span>], data[<span style="color:#e6db74">&#39;III&#39;</span>])
 <span style="color:#ae81ff">1.092717464598786</span></code></pre></div>
-
-<p>4) Take a decision</p>
-
-<p>We have the F_value = 1.09 < critical_value = 6.93, and cannot reject the null hypothesis what finishes the conclusion: the arithmetic mean are equal for the three population</p>
-
-<h3 id="exercises">Exercises</h3>
-
-<p>A director of a company wants to buy a new screw machine, you must learn about the brands from a determined period each one independently makes the following number of screws, our null hypothesis here is to confirm there's no difference between the mean volume of pieces each machine can build. The significance level is 5%.</p>
-
+</p>
+<ol>
+<li>
+<p>
+Take a decision
+</p>
+</li>
+</ol>
+<p>
+We have the F_value = 1.09 &lt; critical_value = 6.93, and cannot reject the null hypothesis what finishes the conclusion: the arithmetic mean are equal for the three population
+</p>
+<h4 id="headline-13">
+Exercises
+</h4>
+<p>
+A director of a company wants to buy a new screw machine, you must learn about the brands from a determined period each one independently makes the following number of screws, our null hypothesis here is to confirm there&#39;s no difference between the mean volume of pieces each machine can build. The significance level is 5%.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
 <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 
@@ -407,19 +501,22 @@ F_value <span style="color:#f92672">=</span> MSE <span style="color:#f92672">/</
 
 <span style="color:#75715e"># for alpha = 0.5 - http://www.socr.ucla.edu/applets.dir/f_table.html#FTable0.05</span>
 null_hypothesis_true <span style="color:#f92672">=</span> f_value <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3.68</span></code></pre></div>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">| source | SS     | DF | MS     | F     |<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>| ------ | ------ | -- | ------ | ----- |<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>| factor | 44.60  | 2  | 22.30  | 11.06 |<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>| error  | 30.24  | 15 | 2.01   |       |<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>| total  | 74.84  | 17 |        |       |</code></pre></div>
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">| source | SS     | DF | MS     | F     |
+| ------ | ------ | -- | ------ | ----- |
+| factor | 44.60  | 2  | 22.30  | 11.06 |
+| error  | 30.24  | 15 | 2.01   |       |
+| total  | 74.84  | 17 |        |       |</code></pre></div>
+</p>
 <ul class="pa0">
   
 </ul>
-<div class="mt6">
-        
+<div class="mt6 instapaper_ignoref">
+      
+      
       </div>
-    </main>
+    </div>
 
     <aside class="w-30-l mt6-l">
 
@@ -476,9 +573,14 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2019 AK
+    &copy; 2020 AK
   </a>
     <div>
+
+
+
+
+
 
 
 

@@ -4,12 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>AK </title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-
+    <title>AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -17,7 +14,7 @@
 
     
     
-      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
     
 
     
@@ -29,21 +26,19 @@
     
 
     
-      <link href="http://knabben.github.io/posts/index.xml" rel="alternate" type="application/rss+xml" title="AK" />
-      <link href="http://knabben.github.io/posts/index.xml" rel="feed" type="application/rss+xml" title="AK" />
     
-
+      <link href="/posts/index.xml" rel="alternate" type="application/rss+xml" title="AK" />
+      <link href="/posts/index.xml" rel="feed" type="application/rss+xml" title="AK" />
+      
+    
+    
     <meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
-
-<meta property="og:updated_time" content="2019-12-28T23:00:00&#43;00:00"/>
-
+<meta property="og:updated_time" content="2019-12-28T23:00:00+00:00" />
 <meta itemprop="name" content="Posts">
-<meta itemprop="description" content="">
-
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content=""/>
 
@@ -53,10 +48,8 @@
 
     
 
-  
-  
-  <header class="cover bg-top" style="background-image: url('http://knabben.github.io/images/gohugo-default-sample-hero-image.jpg');">
-    <div class="bg-black-60">
+  <header>
+    <div class="pb3-m pb6-l bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -64,7 +57,14 @@
     </a>
     <div class="flex-l items-center">
       
+
       
+      
+
+
+
+
+
 
 
 
@@ -78,8 +78,8 @@
   </div>
 </nav>
 
-      <div class="tc-l pv4 pv6-l ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
+      <div class="tc-l pv3 ph3 ph4-ns">
+        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
           Posts
         </h1>
         
@@ -91,22 +91,19 @@
     <main class="pb7" role="main">
       
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
-  <main class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></main>
+    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube-net/" class="link black dim">
-        Networking
+      <a href="http://knabben.github.io/posts/kube-net/" class="link black dim">
+        Kubernetes networking
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Networking The first and easiest way to access the Pod container port is via port-forward command:
-$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt; Take a look on the dynamic port-forwarder.
-Service An abstract way to expose an application running on a set of Pods as a network service.
-a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector.
+      Networking   The first and easiest way to access the Pod container port is via port-forward command:  $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;  Take a look on the dynamic port-forwarder. Service   An abstract way to expose an application running on a set of Pods as a network service.  a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
     </div>
   </div>
 </div>
@@ -116,13 +113,12 @@ a Service is an abstraction which defines a logical set of Pods and a policy by 
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube-depl/" class="link black dim">
-        Deployment
+      <a href="http://knabben.github.io/posts/kube-depl/" class="link black dim">
+        Kubernetes deployment
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      ReplicaSets A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
-// ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
+      ReplicaSets   A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.  // ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
     </div>
   </div>
 </div>
@@ -132,13 +128,12 @@ a Service is an abstraction which defines a logical set of Pods and a policy by 
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube-container/" class="link black dim">
-        Container
+      <a href="http://knabben.github.io/posts/kube-container/" class="link black dim">
+        Kubernetes container
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
-// A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes.io/docs/concepts/containers/images 	Image string `json:&#34;image,omitempty&#34;` // Entrypoint array.
+      Container from PodSpec   The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.  // A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes.
     </div>
   </div>
 </div>
@@ -148,14 +143,12 @@ a Service is an abstraction which defines a logical set of Pods and a policy by 
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube-pod/" class="link black dim">
-        Pod Spec
+      <a href="http://knabben.github.io/posts/kube-pod/" class="link black dim">
+        Pod specification
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
-POD diagram Pod struct
-PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
+      Introduction   Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it. POD diagram    Pod struct  PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
     </div>
   </div>
 </div>
@@ -165,14 +158,12 @@ PS: The detailing and lab section above extracts text, insights and possible exa
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube-ctl/" class="link black dim">
-        Kubectl 
+      <a href="http://knabben.github.io/posts/kube-ctl/" class="link black dim">
+        Kubectl
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
-The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
-Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.
+      Introduction   This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.  The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool. Kubectl debugging and API server   Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.
     </div>
   </div>
 </div>
@@ -182,17 +173,12 @@ Kubectl debugging and API server Kubectl is a client for the master API server, 
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kind/" class="link black dim">
+      <a href="http://knabben.github.io/posts/kind/" class="link black dim">
         Kubernetes in Docker
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
-The initial topics are a summary from Kind quickstart
-Installing To install Kind you should use:
-$ brew install kind Or from source:
-$ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create a new cluster you must run:
-# Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34; Check the docker containers with "
+      Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.  The initial topics are a summary from Kind quickstart Installing   To install Kind you should use:  $ brew install kind  Or from source:  $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps   To create a new cluster you must run:  # Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34;  Check the docker containers with &#34;docker ps&#34;:  CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3864ed104f05 kindest/node:v1.
     </div>
   </div>
 </div>
@@ -202,15 +188,12 @@ $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps To create 
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/sawtooth-cheatsheet/" class="link black dim">
+      <a href="http://knabben.github.io/posts/sawtooth-cheatsheet/" class="link black dim">
         Sawtooth Cheatsheet
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
-$ vagrant init ubuntu/xenial64 $ vagrant up After the box is up we need to add the correct repository:
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update Install the package:
-$ sudo apt install -y sawtooth Docker Install Docker adding key and repo:
+      Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant  $ vagrant init ubuntu/xenial64 $ vagrant up  After the box is up we need to add the correct repository:  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update  Install the package:  $ sudo apt install -y sawtooth Docker   Install Docker adding key and repo:  $ curl -fsSL https://download.
     </div>
   </div>
 </div>
@@ -220,14 +203,12 @@ $ sudo apt install -y sawtooth Docker Install Docker adding key and repo:
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/sawtooth-permission/" class="link black dim">
+      <a href="http://knabben.github.io/posts/sawtooth-permission/" class="link black dim">
         Sawtooth Permissioning
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
-For this debugging and testing scenario we will have 2 nodes:
-version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.
+      Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.  For this debugging and testing scenario we will have 2 nodes:  version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.
     </div>
   </div>
 </div>
@@ -237,14 +218,12 @@ version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 c
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube-audit/" class="link black dim">
+      <a href="http://knabben.github.io/posts/kube-audit/" class="link black dim">
         Kubernetes Audit Sink
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction The idea of this post is to test the Audit dynamic backend with a KIND cluster.
-Kubernetes has 4 stages:
-RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain. ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.g. watch).
+      Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.  Kubernetes has 4 stages: RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.  ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.
     </div>
   </div>
 </div>
@@ -254,15 +233,12 @@ RequestReceived - The stage for events generated as soon as the audit handler re
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/kube-api/" class="link black dim">
+      <a href="http://knabben.github.io/posts/kube-api/" class="link black dim">
         Kubernetes API client
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction This is an overview and notes on how to use the client-go Kubernetes API.
-Kubernetes API resources Accessing via API The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).
-You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with
-$ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;&amp; kubectl api-version Accessing via client-go Its possible to access a Pod via a clientset and fetch attributes from it, in the example bellow, it must fetch the Image from a CoreDNS container in the Kube-system namespace.
+      Introduction   This is an overview and notes on how to use the client-go Kubernetes API. Kubernetes API resources  Accessing via API   The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).  You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with  $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;&amp; kubectl api-version Accessing via client-go   Its possible to access a Pod via a clientset and fetch attributes from it, in the example bellow, it must fetch the Image from a CoreDNS container in the Kube-system namespace.
     </div>
   </div>
 </div>
@@ -277,8 +253,9 @@ $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper i
     </li>
     
     <li class="page-item disabled">
-    <a href="" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    <a  class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
     </li>
+    
     
     
     
@@ -334,6 +311,7 @@ $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper i
     </li>
     
 </ul>
+
 </article>
 
     </main>
@@ -382,9 +360,14 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2019 AK
+    &copy; 2020 AK
   </a>
     <div>
+
+
+
+
+
 
 
 

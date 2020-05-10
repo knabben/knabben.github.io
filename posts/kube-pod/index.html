@@ -4,12 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>AK  | Pod Spec</title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-
+    <title>Pod specification | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -17,7 +14,7 @@
 
     
     
-      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
     
 
     
@@ -29,34 +26,24 @@
     
 
     
-
-    <meta property="og:title" content="Pod Spec" />
-<meta property="og:description" content="Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
-POD diagram Pod struct
-PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct." />
+    
+    <meta property="og:title" content="Pod specification" />
+<meta property="og:description" content="Introduction   Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it. POD diagram    Pod struct  PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://knabben.github.io/posts/kube-pod/" />
-<meta property="article:published_time" content="2019-12-27T15:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-12-27T15:00:00&#43;00:00"/>
-
-<meta itemprop="name" content="Pod Spec">
-<meta itemprop="description" content="Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
-POD diagram Pod struct
-PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.">
-
-
+<meta property="article:published_time" content="2019-12-27T15:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-27T15:00:00+00:00" />
+<meta itemprop="name" content="Pod specification">
+<meta itemprop="description" content="Introduction   Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it. POD diagram    Pod struct  PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.">
 <meta itemprop="datePublished" content="2019-12-27T15:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-27T15:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="1615">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Pod Spec"/>
-<meta name="twitter:description" content="Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
-POD diagram Pod struct
-PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct."/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Pod specification"/>
+<meta name="twitter:description" content="Introduction   Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it. POD diagram    Pod struct  PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct."/>
 
   </head>
 
@@ -75,7 +62,14 @@ PS: The detailing and lab section above extracts text, insights and possible exa
     </a>
     <div class="flex-l items-center">
       
+
       
+      
+
+
+
+
+
 
 
 
@@ -96,33 +90,73 @@ PS: The detailing and lab section above extracts text, insights and possible exa
 
     <main class="pb7" role="main">
       
-  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
-
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
     <header class="mt4 w-100">
-      <p class="f6 b helvetica tracked">
+      <aside class="instapaper_ignoref b helvetica tracked">
           
         POSTS
-      </p>
-      <h1 class="f1 athelas mb1">Pod Spec</h1>
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://knabben.github.io/posts/kube-pod/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://knabben.github.io/posts/kube-pod/&amp;text=Pod%20specification" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://knabben.github.io/posts/kube-pod/&amp;title=Pod%20specification" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Pod specification</h1>
+      
       
       <time class="f6 mv4 dib tracked" datetime="2019-12-27T15:00:00Z">December 27, 2019</time>
+
+      
+      
     </header>
-
-    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
-
-<p>Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<h3 id="headline-1">
+Introduction
+</h3>
+<p>
+Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the
 Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration
-for other posts. Get after it.</p>
-
-<h2 id="pod-diagram">POD diagram</h2>
-
+for other posts. Get after it.
+</p>
+<h3 id="headline-2">
+POD diagram
+</h3>
+<p>
 <img src="/posts/kube-pod/pod.png" alt="" class="" style="width: 50%; ">
 
-
-<p><a href="https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go#L3513" title="Pod struct">Pod struct</a></p>
-
-<p>PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.</p>
-
+</p>
+<p>
+<a href="https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go#L3513">Pod struct</a>
+</p>
+<p>
+PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// PodSpec is a description of a pod.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PodSpec</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#75715e">// List of volumes that can be mounted by containers belonging to the pod.
@@ -161,17 +195,22 @@ for other posts. Get after it.</p>
 	<span style="color:#75715e">// If specified, the pod&#39;s tolerations.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Tolerations</span> []<span style="color:#a6e22e">Toleration</span>
 }</code></pre></div>
-
-<h2 id="volumes">Volumes</h2>
-
-<p>On-disk files in a container are ephemeral, which presents some problems for non-trivial apps when running in Containers.
+</p>
+<h3 id="headline-3">
+Volumes
+</h3>
+<p>
+On-disk files in a container are ephemeral, which presents some problems for non-trivial apps when running in Containers.
 If the file is created inside the container and it dies, the file is deleted with it. Volumes are an abstraction of this
-filesystem layer that allows to not only save files but share data between Pods.</p>
-
-<p>To use a volume, a Pod specifies what volumes to provide for the Pod (the .spec.volumes field) and where to mount those into Containers (the .spec.containers[*].volumeMounts field).</p>
-
-<p>Lets focus in the definition of a volume for now.</p>
-
+filesystem layer that allows to not only save files but share data between Pods.
+</p>
+<p>
+To use a volume, a Pod specifies what volumes to provide for the Pod (the .spec.volumes field) and where to mount those into Containers (the .spec.containers[*].volumeMounts field).
+</p>
+<p>
+Lets focus in the definition of a volume for now.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// Volume represents a named volume in a pod that may be accessed by any container in the pod.
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Volume</span> <span style="color:#66d9ef">struct</span> {
@@ -212,37 +251,41 @@ filesystem layer that allows to not only save files but share data between Pods.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">AzureFile</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">AzureFileVolumeSource</span> <span style="color:#e6db74">`json:&#34;azureFile,omitempty&#34; protobuf:&#34;bytes,18,opt,name=azureFile&#34;`</span>
     <span style="color:#f92672">...</span>
 }</code></pre></div>
-
-<p>Starting the topic with a Volume of Secret type. Use the VolumeMounts inside the container to bring the volume inside the container.</p>
-
+</p>
+<p>
+Starting the topic with a Volume of Secret type. Use the VolumeMounts inside the container to bring the volume inside the container.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">pod.yaml
 --
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    app: lab1
-  name: busybox
-spec:
-  containers:
-  - command:
+<span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: Pod
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">app</span>: lab1
+  <span style="color:#66d9ef">name</span>: busybox
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">containers</span>:
+  - <span style="color:#66d9ef">command</span>:
     - sleep
     - 9999d
-    image: busybox
-    name: busybox
-    volumeMounts:
-    - name: secret
-      mountPath: <span style="color:#e6db74">&#34;/etc/pass&#34;</span>
-      readOnly: <span style="color:#66d9ef">true</span>
-  restartPolicy: Always
-  volumes:
-  - name: secret
-    secret:
-      secretName: one-pass</code></pre></div>
-
-<p>After defining the Volumes using secrets and mounting it inside the container, check the content
-of the /etc/pass folder.</p>
-
+    <span style="color:#66d9ef">image</span>: busybox
+    <span style="color:#66d9ef">name</span>: busybox
+    <span style="color:#66d9ef">volumeMounts</span>:
+    - <span style="color:#66d9ef">name</span>: secret
+      <span style="color:#66d9ef">mountPath</span>: <span style="color:#e6db74">&#34;/etc/pass&#34;</span>
+      <span style="color:#66d9ef">readOnly</span>: <span style="color:#66d9ef">true</span>
+  <span style="color:#66d9ef">restartPolicy</span>: Always
+  <span style="color:#66d9ef">volumes</span>:
+  - <span style="color:#66d9ef">name</span>: secret
+    <span style="color:#66d9ef">secret</span>:
+      <span style="color:#66d9ef">secretName</span>: one-pass</code></pre></div>
+</p>
+<p>
+After defining the Volumes using secrets and mounting it inside the container, check the content
+of the /etc/pass folder.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># kubectl create secret generic one-pass --from-literal=password=1234 --from-literal=password1=5678</span>
 secret/one-pass created
 
@@ -250,65 +293,71 @@ secret/one-pass created
 
 <span style="color:#75715e"># kubectl exec -it busybox cat /etc/pass/password /etc/pass/password1</span>
 <span style="color:#ae81ff">12345678</span></code></pre></div>
-
-<p>The PersistentVolume subsystem provides an API for users and administrators that abstracts details of how storage is provided from how it is consumed.</p>
-
-<p><strong>PersistentVolumes</strong> are a way for users to “claim” durable storage (such as a GCE PersistentDisk or an iSCSI volume) without knowing the details of the particular cloud environment.
-The way we claim for a PV is using a persistentVolumeClaim.</p>
-
-<p>The first step is to create a PersistentVolume,</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pv-volume
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
-  accessModes:
+</p>
+<p>
+The PersistentVolume subsystem provides an API for users and administrators that abstracts details of how storage is provided from how it is consumed.
+</p>
+<p>
+<strong>PersistentVolumes</strong> are a way for users to “claim” durable storage (such as a GCE PersistentDisk or an iSCSI volume) without knowing the details of the particular cloud environment.
+The way we claim for a PV is using a persistentVolumeClaim.
+</p>
+<p>
+The first step is to create a PersistentVolume, 
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: PersistentVolume
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: pv-volume
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">type</span>: local
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">storageClassName</span>: manual
+  <span style="color:#66d9ef">capacity</span>:
+    <span style="color:#66d9ef">storage</span>: 10Gi
+  <span style="color:#66d9ef">accessModes</span>:
     - ReadWriteOnce
-  hostPath:
-    path: <span style="color:#e6db74">&#34;/opt/data&#34;</span>
+  <span style="color:#66d9ef">hostPath</span>:
+    <span style="color:#66d9ef">path</span>: <span style="color:#e6db74">&#34;/opt/data&#34;</span>
 --
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pv-claim
-spec:
-  storageClassName: manual
-  accessModes:
+<span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: PersistentVolumeClaim
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: pv-claim
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">storageClassName</span>: manual
+  <span style="color:#66d9ef">accessModes</span>:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 3Gi
+  <span style="color:#66d9ef">resources</span>:
+    <span style="color:#66d9ef">requests</span>:
+      <span style="color:#66d9ef">storage</span>: 3Gi
 --
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    app: lab1
+<span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: Pod
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">app</span>: lab1
 
-  name: busybox
-spec:
-  containers:
-  - command:
+  <span style="color:#66d9ef">name</span>: busybox
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">containers</span>:
+  - <span style="color:#66d9ef">command</span>:
     - sleep
     - 9999d
-    image: busybox
-    name: busybox
-    volumeMounts:
-    - name: vc
-      mountPath: <span style="color:#e6db74">&#34;/opt/&#34;</span>
-  volumes:
-  - name: vc
-    persistentVolumeClaim:
-      claimName: pv-claim</code></pre></div>
-
-<p>We can check the PV, PVC and the mount inside the container, to double test it, create a new directory and check inside the host machine.</p>
-
+    <span style="color:#66d9ef">image</span>: busybox
+    <span style="color:#66d9ef">name</span>: busybox
+    <span style="color:#66d9ef">volumeMounts</span>:
+    - <span style="color:#66d9ef">name</span>: vc
+      <span style="color:#66d9ef">mountPath</span>: <span style="color:#e6db74">&#34;/opt/&#34;</span>
+  <span style="color:#66d9ef">volumes</span>:
+  - <span style="color:#66d9ef">name</span>: vc
+    <span style="color:#66d9ef">persistentVolumeClaim</span>:
+      <span style="color:#66d9ef">claimName</span>: pv-claim</code></pre></div>
+</p>
+<p>
+We can check the PV, PVC and the mount inside the container, to double test it, create a new directory and check inside the host machine.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># kubectl get pv</span>
 NAME        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
 pv-volume   10Gi       RWO            Retain           Available           manual                  4s
@@ -322,17 +371,23 @@ $ mkdir /opt/test
 
 <span style="color:#75715e"># docker exec -it kind-control-plane ls /opt/data/</span>
 test</code></pre></div>
-
-<h2 id="initcontainers-and-containers">InitContainers and Containers</h2>
-
-<p>Next post.</p>
-
-<h2 id="restartpolicy">RestartPolicy</h2>
-
-<p>RestartPolicy describes how the container should be restarted. Only one of the following restart policies may be specified.</p>
-
-<p>Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always.</p>
-
+</p>
+<h3 id="headline-4">
+InitContainers and Containers
+</h3>
+<p>
+Next post.
+</p>
+<h3 id="headline-5">
+RestartPolicy
+</h3>
+<p>
+RestartPolicy describes how the container should be restarted. Only one of the following restart policies may be specified.
+</p>
+<p>
+Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RestartPolicy</span> <span style="color:#66d9ef">string</span>
 
 <span style="color:#66d9ef">const</span> (
@@ -340,9 +395,11 @@ test</code></pre></div>
 	<span style="color:#a6e22e">RestartPolicyOnFailure</span> <span style="color:#a6e22e">RestartPolicy</span> = <span style="color:#e6db74">&#34;OnFailure&#34;</span>
 	<span style="color:#a6e22e">RestartPolicyNever</span>     <span style="color:#a6e22e">RestartPolicy</span> = <span style="color:#e6db74">&#34;Never&#34;</span>
 )</code></pre></div>
-
-<p>Getting an example, for a busybox with Always (default) restart and exit 1 command (failure):</p>
-
+</p>
+<p>
+Getting an example, for a busybox with Always (default) restart and exit 1 command (failure):
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl run --generator<span style="color:#f92672">=</span>run-pod/v1 busybox --image<span style="color:#f92672">=</span>busybox --command -- exit <span style="color:#ae81ff">1</span>
 
 $ kubectl get pods -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.items[].spec.restartPolicy}&#34;</span>
@@ -353,13 +410,16 @@ $ kubectl get pods -o jsonpath<span style="color:#f92672">=</span><span style="c
 
 $ kubectl get pods
 NAME      READY   STATUS              RESTARTS   AGE
-busybox   <span style="color:#ae81ff">0</span>/1     RunContainerError   <span style="color:#ae81ff">4</span>          108s</code></pre></div>
-
-<p>After 108 seconds we saw 4 restarts so, exited Containers that are restarted by the kubelet are restarted with an exponential back-off delay (10s, 20s, 40s …) 
-capped at five minutes, and is reset after ten minutes of successful execution.</p>
-
-<p>Looking for one with restart Never:</p>
-
+busybox   0/1     RunContainerError   <span style="color:#ae81ff">4</span>          108s</code></pre></div>
+</p>
+<p>
+After 108 seconds we saw 4 restarts so, exited Containers that are restarted by the kubelet are restarted with an exponential back-off delay (10s, 20s, 40s …) 
+capped at five minutes, and is reset after ten minutes of successful execution.
+</p>
+<p>
+Looking for one with restart Never:
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl run --generator<span style="color:#f92672">=</span>run-pod/v1 busybox --image<span style="color:#f92672">=</span>busybox --restart<span style="color:#f92672">=</span>Never --command -- exit <span style="color:#ae81ff">1</span>
 
 $ kubectl get pods -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.items[].spec.restartPolicy}&#34;</span>
@@ -370,54 +430,75 @@ $ kubectl get pods -o jsonpath<span style="color:#f92672">=</span><span style="c
 
 $ kubectl get pods
 NAME      READY   STATUS       RESTARTS   AGE
-busybox   <span style="color:#ae81ff">0</span>/1     StartError   <span style="color:#ae81ff">0</span>          104s</code></pre></div>
+busybox   0/1     StartError   <span style="color:#ae81ff">0</span>          104s</code></pre></div>
+</p>
+<h3 id="headline-6">
+SecurityContext
+</h3>
+<p>
+There&#39;s one curious constraint within this key, that should be used as <a href="https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/">best practice</a>
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: Pod
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">app</span>: lab1
 
-<h2 id="securitycontext">SecurityContext</h2>
-
-<p>There's one curious constraint within this key, that should be used as <a href="https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/" title="best practice">best practice</a></p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    app: lab1
-
-  name: busybox
-spec:
-  containers:
-  - command:
+  <span style="color:#66d9ef">name</span>: busybox
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">containers</span>:
+  - <span style="color:#66d9ef">command</span>:
     - sleep
     - 9999d
-    image: busybox
-    name: busybox
-  securityContext:
-    runAsNonRoot: <span style="color:#66d9ef">true</span></code></pre></div>
-
-<p>This box runs as root, since we have set the constraint lets take a look in the result:</p>
-
+    <span style="color:#66d9ef">image</span>: busybox
+    <span style="color:#66d9ef">name</span>: busybox
+  <span style="color:#66d9ef">securityContext</span>:
+    <span style="color:#66d9ef">runAsNonRoot</span>: <span style="color:#66d9ef">true</span></code></pre></div>
+</p>
+<p>
+This box runs as root, since we have set the constraint lets take a look in the result:
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># kubectl get pods</span>
 NAME      READY   STATUS                       RESTARTS   AGE
-busybox   <span style="color:#ae81ff">0</span>/1     CreateContainerConfigError   <span style="color:#ae81ff">0</span>          39m
+busybox   0/1     CreateContainerConfigError   <span style="color:#ae81ff">0</span>          39m
 
 <span style="color:#75715e"># Kubelet logs</span>
 
 kind-control-plane pod_workers.go:191<span style="color:#f92672">]</span> Error syncing pod xxx <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;busybox_default(xxx)&#34;</span><span style="color:#f92672">)</span>, skipping: failed to <span style="color:#e6db74">&#34;StartContainer&#34;</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>  <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#34;busybox&#34;</span> with CreateContainerConfigError: <span style="color:#e6db74">&#34;container has runAsNonRoot and image will run as root&#34;</span></code></pre></div>
-
-<p>Inside the Kubelet we find the <a href="https://github.com/kubernetes/kubernetes/blob/d24fe8a801748953a5c34fd34faa8005c6ad1770/pkg/kubelet/kuberuntime/security_context.go#L80" title="verifyRunAsNonRoot">verifyRunAsNonRoot</a>, and it returns this message in case of error, the flow for this call is (1.16):</p>
-
+</p>
+<p>
+Inside the Kubelet we find the <a href="https://github.com/kubernetes/kubernetes/blob/d24fe8a801748953a5c34fd34faa8005c6ad1770/pkg/kubelet/kuberuntime/security_context.go#L80">verifyRunAsNonRoot</a>, and it returns this message in case of error, the flow for this call is (1.16):
+</p>
 <ul>
-<li>kubeGenericRuntimeManager.startContainer</li>
-<li>kuberuntime_manager.go:SyncPod </li>
-<li>pod_workers.go:managePodLoop - kl *Kubelet syncPod callback.</li>
+<li>
+<p>
+kubeGenericRuntimeManager.startContainer
+</p>
+</li>
+<li>
+<p>
+kuberuntime_manager.go:SyncPod 
+</p>
+</li>
+<li>
+<p>
+pod_workers.go:managePodLoop - kl *Kubelet syncPod callback.
+</p>
+</li>
 </ul>
-
-<h2 id="serviceaccountname">ServiceAccountName</h2>
-
-<p>Processes in containers inside pods can also contact the apiserver. When they do, they are authenticated as a particular Service Account (for example, default).</p>
-
-<p>You can change the service account of the pod like:</p>
-
+<h3 id="headline-7">
+ServiceAccountName
+</h3>
+<p>
+Processes in containers inside pods can also contact the apiserver. When they do, they are authenticated as a particular Service Account (for example, default).
+</p>
+<p>
+You can change the service account of the pod like:
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl create sa new-service
 
 <span style="color:#75715e"># pod.yaml</span>
@@ -430,11 +511,14 @@ $ kubectl auth can-i <span style="color:#e6db74">&#39;*&#39;</span> <span style=
 no
 
 <span style="color:#75715e"># You need to set the correct RBAC permissions for this serviceaccount.</span></code></pre></div>
-
-<h2 id="nodeselector-affinity">NodeSelector & Affinity</h2>
-
-<p>https://kubernetes.io/docs/concepts/configuration/assign-pod-node/</p>
-
+</p>
+<h3 id="headline-8">
+NodeSelector &amp; Affinity
+</h3>
+<p>
+https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl label nodes kind-worker2 app<span style="color:#f92672">=</span>lab1
 
 <span style="color:#75715e"># pod.yaml</span>
@@ -443,12 +527,15 @@ no
 
 $ kubectl get pods -o wide
 NAME      READY   STATUS    RESTARTS   AGE   IP           NODE           NOMINATED NODE   READINESS GATES
-busybox   <span style="color:#ae81ff">1</span>/1     Running   <span style="color:#ae81ff">0</span>          5s    <span style="color:#ae81ff">10</span>.244.1.2   kind-worker2   &lt;none&gt;           &lt;none&gt;</code></pre></div>
-
-<p>nodeSelector provides a very simple way to constrain pods to nodes with particular labels. The <strong>affinity/anti-affinity</strong> feature, greatly expands the types of constraints you can express.</p>
-
-<p>In the example we set a worker node with app=lab3 but do a required affinity of app=lab2, as result the Pod will stay Pending until a node has the new label.</p>
-
+busybox   1/1     Running   <span style="color:#ae81ff">0</span>          5s    10.244.1.2   kind-worker2   &lt;none&gt;           &lt;none&gt;</code></pre></div>
+</p>
+<p>
+nodeSelector provides a very simple way to constrain pods to nodes with particular labels. The <strong>affinity/anti-affinity</strong> feature, greatly expands the types of constraints you can express. 
+</p>
+<p>
+In the example we set a worker node with app=lab3 but do a required affinity of app=lab2, as result the Pod will stay Pending until a node has the new label.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl label nodes kind-worker app<span style="color:#f92672">=</span>lab3 --overwrite
 
 <span style="color:#75715e"># pod.yaml</span>
@@ -467,19 +554,23 @@ Pod stays on Pending status
 Events:
   Type     Reason            Age               From               Message
   ----     ------            ----              ----               -------
-  Warning  FailedScheduling  3s <span style="color:#f92672">(</span>x2 over 76s<span style="color:#f92672">)</span>  default-scheduler  <span style="color:#ae81ff">0</span>/3 nodes are available: <span style="color:#ae81ff">3</span> node<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> didn<span style="color:#960050;background-color:#1e0010">&#39;</span>t match node selector.</code></pre></div>
-
-<h2 id="toleration">Toleration</h2>
-
-<p>Node affinity, described here, is a property of pods that attracts them to a set of nodes (either as a preference or a hard requirement).</p>
-
-<p>Taints are the opposite – they allow a node to repel a set of pods.</p>
-
+  Warning  FailedScheduling  3s <span style="color:#f92672">(</span>x2 over 76s<span style="color:#f92672">)</span>  default-scheduler  0/3 nodes are available: <span style="color:#ae81ff">3</span> node<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> didn<span style="color:#960050;background-color:#1e0010">&#39;</span>t match node selector.</code></pre></div>
+</p>
+<h3 id="headline-9">
+Toleration
+</h3>
+<p>
+Node affinity, described here, is a property of pods that attracts them to a set of nodes (either as a preference or a hard requirement). 
+</p>
+<p>
+Taints are the opposite – they allow a node to repel a set of pods.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl taint node kind-worker app<span style="color:#f92672">=</span>lab2:NoSchedule
 
 $ kubectl create -f pod.yaml <span style="color:#75715e"># no taint</span>
 NAME      READY   STATUS              RESTARTS   AGE   IP       NODE           NOMINATED NODE   READINESS GATES
-busybox   <span style="color:#ae81ff">0</span>/1     ContainerCreating   <span style="color:#ae81ff">0</span>          2s    &lt;none&gt;   kind-worker2   &lt;none&gt;           &lt;none&gt;
+busybox   0/1     ContainerCreating   <span style="color:#ae81ff">0</span>          2s    &lt;none&gt;   kind-worker2   &lt;none&gt;           &lt;none&gt;
 
 <span style="color:#75715e"># pod.yaml</span>
 <span style="color:#75715e">#  tolerations:</span>
@@ -491,29 +582,33 @@ busybox   <span style="color:#ae81ff">0</span>/1     ContainerCreating   <span s
 <span style="color:#75715e"># Create with correct taint</span>
 $ kubectl create -f pod.yaml ; kubectl get pods -o wide
 NAME      READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
-busybox   <span style="color:#ae81ff">1</span>/1     Running   <span style="color:#ae81ff">0</span>          5s    <span style="color:#ae81ff">10</span>.244.2.6   kind-worker   &lt;none&gt;           &lt;none&gt;</code></pre></div>
-
-<h2 id="tasks">Tasks</h2>
-
-<p>https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/
-https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/
-https://kubernetes.io/docs/tasks/inject-data-application/podpreset/
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-runasusername/
-https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-projected-volume-storage/
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/
-https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/</p>
+busybox   1/1     Running   <span style="color:#ae81ff">0</span>          5s    10.244.2.6   kind-worker   &lt;none&gt;           &lt;none&gt;</code></pre></div>
+</p>
+<h3 id="headline-10">
+Tasks
+</h3>
+<p>
+https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/
+<a href="https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/">https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/</a>
+<a href="https://kubernetes.io/docs/tasks/inject-data-application/podpreset/">https://kubernetes.io/docs/tasks/inject-data-application/podpreset/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-runasusername/">https://kubernetes.io/docs/tasks/configure-pod-container/configure-runasusername/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/">https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/">https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-projected-volume-storage/">https://kubernetes.io/docs/tasks/configure-pod-container/configure-projected-volume-storage/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/">https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/">https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">https://kubernetes.io/docs/tasks/configure-pod-container/security-context/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/">https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/</a>
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/">https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/</a>
+</p>
 <ul class="pa0">
   
 </ul>
-<div class="mt6">
-        
+<div class="mt6 instapaper_ignoref">
+      
+      
       </div>
-    </main>
+    </div>
 
     <aside class="w-30-l mt6-l">
 
@@ -570,9 +665,14 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2019 AK
+    &copy; 2020 AK
   </a>
     <div>
+
+
+
+
+
 
 
 

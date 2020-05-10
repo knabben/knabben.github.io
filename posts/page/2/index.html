@@ -4,12 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>AK </title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-
+    <title>AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -17,7 +14,7 @@
 
     
     
-      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
     
 
     
@@ -29,21 +26,19 @@
     
 
     
-      <link href="http://knabben.github.io/posts/index.xml" rel="alternate" type="application/rss+xml" title="AK" />
-      <link href="http://knabben.github.io/posts/index.xml" rel="feed" type="application/rss+xml" title="AK" />
     
-
+      <link href="/posts/index.xml" rel="alternate" type="application/rss+xml" title="AK" />
+      <link href="/posts/index.xml" rel="feed" type="application/rss+xml" title="AK" />
+      
+    
+    
     <meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
-
-<meta property="og:updated_time" content="2019-11-16T01:00:00&#43;00:00"/>
-
+<meta property="og:updated_time" content="2019-12-28T23:00:00+00:00" />
 <meta itemprop="name" content="Posts">
-<meta itemprop="description" content="">
-
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content=""/>
 
@@ -53,10 +48,8 @@
 
     
 
-  
-  
-  <header class="cover bg-top" style="background-image: url('http://knabben.github.io/images/gohugo-default-sample-hero-image.jpg');">
-    <div class="bg-black-60">
+  <header>
+    <div class="pb3-m pb6-l bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -64,7 +57,14 @@
     </a>
     <div class="flex-l items-center">
       
+
       
+      
+
+
+
+
+
 
 
 
@@ -78,8 +78,8 @@
   </div>
 </nav>
 
-      <div class="tc-l pv4 pv6-l ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
+      <div class="tc-l pv3 ph3 ph4-ns">
+        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
           Posts
         </h1>
         
@@ -91,21 +91,19 @@
     <main class="pb7" role="main">
       
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
-  <main class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></main>
+    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/dev-poet/" class="link black dim">
+      <a href="http://knabben.github.io/posts/dev-poet/" class="link black dim">
         From Dev to PoET
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction DevMode is very cool for development of transaction processors, but when you go to production it don't grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
-Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
-But without it this algorithm becomes Crash Fault Tolerant only, for our proposes it's enough.
+      Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.  Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
     </div>
   </div>
 </div>
@@ -115,14 +113,12 @@ But without it this algorithm becomes Crash Fault Tolerant only, for our propose
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/sawtooth-grafana/" class="link black dim">
+      <a href="http://knabben.github.io/posts/sawtooth-grafana/" class="link black dim">
         Sawtooth Network Monitoring
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
-It's easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
-Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana.
+      Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.  It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
     </div>
   </div>
 </div>
@@ -132,13 +128,12 @@ Saying that, in this post we will analyze how to monitor a Sawtooth Validator No
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/gossip/" class="link black dim">
+      <a href="http://knabben.github.io/posts/gossip/" class="link black dim">
         Gossip networks
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
-%load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.
+      Introduction   This is based on Sawtooth 1.0.5 source code for Gossip and static peering.   %load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.
     </div>
   </div>
 </div>
@@ -148,14 +143,12 @@ Saying that, in this post we will analyze how to monitor a Sawtooth Validator No
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/gop2/" class="link black dim">
+      <a href="http://knabben.github.io/posts/gop2/" class="link black dim">
         Golang essays (part II)
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
-The type *T is a pointer to a T. The operator that generates the pointer is the &.
-x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.Println(x) Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:
+      Pointers   A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.  The type *T is a pointer to a T. The operator that generates the pointer is the &amp;.  x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.
     </div>
   </div>
 </div>
@@ -165,14 +158,12 @@ x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#3
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/gop1/" class="link black dim">
+      <a href="http://knabben.github.io/posts/gop1/" class="link black dim">
         Golang essays (part I)
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction Starting with the printed Hello World, create a main.go file with the following content:
-package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) } On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.e. math/rand, use rand.*
-Open a terminal on VSCode and run your program:
+      Introduction   Starting with the printed Hello World, create a main.go file with the following content:  package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }  On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.
     </div>
   </div>
 </div>
@@ -182,14 +173,12 @@ Open a terminal on VSCode and run your program:
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/langs2/" class="link black dim">
+      <a href="http://knabben.github.io/posts/langs2/" class="link black dim">
         Rust 101
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it:
-https://github.com/knabben/spec-lang/tree/master/go https://github.com/knabben/spec-lang/tree/master/rust Guess Tag 0.0.1 println! is used to send the value to stdout.
-let mut guess = String::new();  For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.
+      Introduction   To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it: https://github.com/knabben/spec-lang/tree/master/go  https://github.com/knabben/spec-lang/tree/master/rust  Guess  Tag 0.0.1   println! is used to send the value to stdout.  let mut guess = String::new();   For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.
     </div>
   </div>
 </div>
@@ -199,15 +188,12 @@ let mut guess = String::new();  For rust you can create an immutable and a mutab
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/sawtooth/" class="link black dim">
+      <a href="http://knabben.github.io/posts/sawtooth/" class="link black dim">
         Hyperledger Sawtooth
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sawtooth A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella.
-From the characteristics of the sawtooth we can have: distributed, immutable, secure.
-There's a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.
-An application can be a native business logic or a smart contract virtual machine.
+      Sawtooth   A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella.  From the characteristics of the sawtooth we can have: distributed, immutable, secure.  There&#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.  An application can be a native business logic or a smart contract virtual machine.
     </div>
   </div>
 </div>
@@ -217,16 +203,12 @@ An application can be a native business logic or a smart contract virtual machin
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/langs1/" class="link black dim">
+      <a href="http://knabben.github.io/posts/langs1/" class="link black dim">
         Bootstraping languages
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Long time I don't write here.
-And, as a matter to learn other languages I'm going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey.
-As a good start let's grab two modern interesting languages,
-The summary bellow came from wikipedia an works as a good introduction about both:
-Summary Golang A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
+      Long time I don&#39;t write here.  And, as a matter to learn other languages I&#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey.  As a good start let&#39;s grab two modern interesting languages,  The summary bellow came from wikipedia an works as a good introduction about both: Summary  Golang   A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
     </div>
   </div>
 </div>
@@ -236,12 +218,12 @@ Summary Golang A statically typed, compiled programming language designed at Goo
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/sm/" class="link black dim">
+      <a href="http://knabben.github.io/posts/sm/" class="link black dim">
         Service Mesh
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
+      Introducing Kubernetes   November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
     </div>
   </div>
 </div>
@@ -251,13 +233,12 @@ Summary Golang A statically typed, compiled programming language designed at Goo
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/technical/" class="link black dim">
+      <a href="http://knabben.github.io/posts/technical/" class="link black dim">
         Technical indicators
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
-The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
+      Introduction   According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.  The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
     </div>
   </div>
 </div>
@@ -274,6 +255,7 @@ The idea of this post is to show up how to calculate the most common one using t
     <li class="page-item">
     <a href="/posts/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
     </li>
+    
     
     
     
@@ -329,6 +311,7 @@ The idea of this post is to show up how to calculate the most common one using t
     </li>
     
 </ul>
+
 </article>
 
     </main>
@@ -377,9 +360,14 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2019 AK
+    &copy; 2020 AK
   </a>
     <div>
+
+
+
+
+
 
 
 

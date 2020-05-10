@@ -4,12 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>AK  | Networking</title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-
+    <title>Kubernetes networking | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -17,7 +14,7 @@
 
     
     
-      <link href="/dist/css/app.e08a958ae3e530145318b6373195c765.css" rel="stylesheet">
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
     
 
     
@@ -29,37 +26,24 @@
     
 
     
-
-    <meta property="og:title" content="Networking" />
-<meta property="og:description" content="Networking The first and easiest way to access the Pod container port is via port-forward command:
-$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt; Take a look on the dynamic port-forwarder.
-Service An abstract way to expose an application running on a set of Pods as a network service.
-a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector." />
+    
+    <meta property="og:title" content="Kubernetes networking" />
+<meta property="og:description" content="Networking   The first and easiest way to access the Pod container port is via port-forward command:  $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;  Take a look on the dynamic port-forwarder. Service   An abstract way to expose an application running on a set of Pods as a network service.  a Service is an abstraction which defines a logical set of Pods and a policy by which to access them ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://knabben.github.io/posts/kube-net/" />
-<meta property="article:published_time" content="2019-12-28T23:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-12-28T23:00:00&#43;00:00"/>
-
-<meta itemprop="name" content="Networking">
-<meta itemprop="description" content="Networking The first and easiest way to access the Pod container port is via port-forward command:
-$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt; Take a look on the dynamic port-forwarder.
-Service An abstract way to expose an application running on a set of Pods as a network service.
-a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector.">
-
-
+<meta property="article:published_time" content="2019-12-28T23:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-28T23:00:00+00:00" />
+<meta itemprop="name" content="Kubernetes networking">
+<meta itemprop="description" content="Networking   The first and easiest way to access the Pod container port is via port-forward command:  $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;  Take a look on the dynamic port-forwarder. Service   An abstract way to expose an application running on a set of Pods as a network service.  a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .">
 <meta itemprop="datePublished" content="2019-12-28T23:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-28T23:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="817">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Networking"/>
-<meta name="twitter:description" content="Networking The first and easiest way to access the Pod container port is via port-forward command:
-$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt; Take a look on the dynamic port-forwarder.
-Service An abstract way to expose an application running on a set of Pods as a network service.
-a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector."/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes networking"/>
+<meta name="twitter:description" content="Networking   The first and easiest way to access the Pod container port is via port-forward command:  $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;  Take a look on the dynamic port-forwarder. Service   An abstract way to expose an application running on a set of Pods as a network service.  a Service is an abstraction which defines a logical set of Pods and a policy by which to access them ."/>
 
   </head>
 
@@ -78,7 +62,14 @@ a Service is an abstraction which defines a logical set of Pods and a policy by 
     </a>
     <div class="flex-l items-center">
       
+
       
+      
+
+
+
+
+
 
 
 
@@ -99,49 +90,93 @@ a Service is an abstraction which defines a logical set of Pods and a policy by 
 
     <main class="pb7" role="main">
       
-  <article class="flex-l flex-wrap justify-between mw8 center ph3 ph0-l">
-
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
     <header class="mt4 w-100">
-      <p class="f6 b helvetica tracked">
+      <aside class="instapaper_ignoref b helvetica tracked">
           
         POSTS
-      </p>
-      <h1 class="f1 athelas mb1">Networking</h1>
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://knabben.github.io/posts/kube-net/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://knabben.github.io/posts/kube-net/&amp;text=Kubernetes%20networking" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://knabben.github.io/posts/kube-net/&amp;title=Kubernetes%20networking" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Kubernetes networking</h1>
+      
       
       <time class="f6 mv4 dib tracked" datetime="2019-12-28T23:00:00Z">December 28, 2019</time>
+
+      
+      
     </header>
-
-    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="networking">Networking</h2>
-
-<p>The first and easiest way to access the Pod container port is via port-forward command:</p>
-
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<h3 id="headline-1">
+Networking
+</h3>
+<p>
+The first and easiest way to access the Pod container port is via port-forward command:
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;</code></pre></div>
-
-<p>Take a look on the dynamic <a href="https://github.com/knabben/forwarder" title="port-forwarder.">port-forwarder.</a></p>
-
-<h2 id="service">Service</h2>
-
-<p>An abstract way to expose an application running on a set of Pods as a network service.</p>
-
-<p>a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
-The set of Pods targeted by a Service is usually determined by a selector.</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-svc
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: <span style="color:#ae81ff">80</span>
-      targetPort: <span style="color:#ae81ff">80</span></code></pre></div>
-
-<p>The service spec again, use the selector and when a Pod with this label matches the service will be used for that particular pod.</p>
-
-<p>A new Service called nginx-deployment (which a DNS register is created - nginx-deployment.default.svc)</p>
-
+</p>
+<p>
+Take a look on the dynamic <a href="https://github.com/knabben/forwarder">port-forwarder.</a>
+</p>
+<h3 id="headline-2">
+Service
+</h3>
+<p>
+An abstract way to expose an application running on a set of Pods as a network service.
+</p>
+<p>
+a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
+The set of Pods targeted by a Service is usually determined by a selector.
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: Service
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: nginx-svc
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">selector</span>:
+    <span style="color:#66d9ef">app</span>: nginx
+  <span style="color:#66d9ef">ports</span>:
+    - <span style="color:#66d9ef">protocol</span>: TCP
+      <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">80</span>
+      <span style="color:#66d9ef">targetPort</span>: <span style="color:#ae81ff">80</span></code></pre></div>
+</p>
+<p>
+The service spec again, use the selector and when a Pod with this label matches the service will be used for that particular pod.
+</p>
+<p>
+A new Service called nginx-deployment (which a DNS register is created - nginx-deployment.default.svc)
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl expose deployment nginx--port <span style="color:#ae81ff">80</span> --target-port <span style="color:#ae81ff">80</span>
 Name:              nginx
 Namespace:         default
@@ -149,26 +184,47 @@ Labels:            app<span style="color:#f92672">=</span>nginx
 Annotations:       &lt;none&gt;
 Selector:          app<span style="color:#f92672">=</span>nginx
 Type:              ClusterIP
-IP:                <span style="color:#ae81ff">10</span>.99.142.233
-Port:              &lt;unset&gt;  <span style="color:#ae81ff">80</span>/TCP
-TargetPort:        <span style="color:#ae81ff">80</span>/TCP
-Endpoints:         <span style="color:#ae81ff">10</span>.244.0.18:80,10.244.0.19:80,10.244.0.20:80
+IP:                10.99.142.233
+Port:              &lt;unset&gt;  80/TCP
+TargetPort:        80/TCP
+Endpoints:         10.244.0.18:80,10.244.0.19:80,10.244.0.20:80
 Session Affinity:  None
 Events:            &lt;none&gt;
 
 $ curl http://nginx
 <span style="color:#ae81ff">200</span></code></pre></div>
-
-<p>We have some types of services:</p>
-
+</p>
+<p>
+We have some types of services:
+</p>
 <ul>
-<li>"ExternalName" maps to the specified externalName</li>
-<li>"ClusterIP" allocates a cluster-internal IP address for load-balancing to endpoints</li>
-<li>"None", no virtual IP is allocated and the endpoints are published as a set of endpoints rather than a stable IP</li>
-<li>"NodePort" builds on ClusterIP and allocates a port on every node which routes to the clusterIP</li>
-<li>"LoadBalancer" builds on NodePort and creates an external load-balancer (if supported in the current cloud)</li>
+<li>
+<p>
+&#34;ExternalName&#34; maps to the specified externalName
+</p>
+</li>
+<li>
+<p>
+&#34;ClusterIP&#34; allocates a cluster-internal IP address for load-balancing to endpoints
+</p>
+</li>
+<li>
+<p>
+&#34;None&#34;, no virtual IP is allocated and the endpoints are published as a set of endpoints rather than a stable IP
+</p>
+</li>
+<li>
+<p>
+&#34;NodePort&#34; builds on ClusterIP and allocates a port on every node which routes to the clusterIP
+</p>
+</li>
+<li>
+<p>
+&#34;LoadBalancer&#34; builds on NodePort and creates an external load-balancer (if supported in the current cloud)
+</p>
+</li>
 </ul>
-
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// ServiceSpec describes the attributes that a user creates on a service.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ServiceSpec</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#75715e">// The list of ports that are exposed by this service.
@@ -197,37 +253,45 @@ $ curl http://nginx
 </span><span style="color:#75715e"></span>	<span style="color:#75715e">// return as a CNAME record for this service. No proxying will be involved.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ExternalName</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;externalName,omitempty&#34;`</span>
 }</code></pre></div>
-
-<p>kube-proxy is responsible for implementing a form of virtual IP for Services of type other than ExternalName.</p>
-
-<h2 id="ingress">Ingress</h2>
-
-<p>An API object that manages external access to the services in a cluster, typically HTTP.
-Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster.</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: test-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-  - host: hello.info
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nginx-svc
-          servicePort: <span style="color:#ae81ff">80</span></code></pre></div>
-
-<h2 id="network-policies">Network policies</h2>
-
-<p>A network policy is a specification of how groups of pods are allowed to communicate with each other and other network endpoints.
-NetworkPolicy resources use labels to select pods and define rules which specify what traffic is allowed to the selected pods.</p>
-
-<p>They can be Ingress or Egress in a Pod point of view.</p>
-
+</p>
+<p>
+kube-proxy is responsible for implementing a form of virtual IP for Services of type other than ExternalName.
+</p>
+<h3 id="headline-3">
+Ingress
+</h3>
+<p>
+An API object that manages external access to the services in a cluster, typically HTTP.
+Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster.
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.k8s.io/v1beta1
+<span style="color:#66d9ef">kind</span>: Ingress
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: test-ingress
+  <span style="color:#66d9ef">annotations</span>:
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/rewrite-target</span>: /
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">rules</span>:
+  - <span style="color:#66d9ef">host</span>: hello.info
+    <span style="color:#66d9ef">http</span>:
+      <span style="color:#66d9ef">paths</span>:
+      - <span style="color:#66d9ef">path</span>: /
+        <span style="color:#66d9ef">backend</span>:
+          <span style="color:#66d9ef">serviceName</span>: nginx-svc
+          <span style="color:#66d9ef">servicePort</span>: <span style="color:#ae81ff">80</span></code></pre></div>
+</p>
+<h3 id="headline-4">
+Network policies
+</h3>
+<p>
+A network policy is a specification of how groups of pods are allowed to communicate with each other and other network endpoints.
+NetworkPolicy resources use labels to select pods and define rules which specify what traffic is allowed to the selected pods.
+</p>
+<p>
+They can be Ingress or Egress in a Pod point of view.
+</p>
+<p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// Policy Type string describes the NetworkPolicy type
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PolicyType</span> <span style="color:#66d9ef">string</span>
 
@@ -274,37 +338,45 @@ NetworkPolicy resources use labels to select pods and define rules which specify
 	<span style="color:#75715e">// List of destinations for outgoing traffic of pods selected for this rule.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">To</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;to,omitempty&#34;`</span>
 }</code></pre></div>
-
-<p>An example of the usage of this NetworkPolicy capability, DENY all egress traffic from pod to source.</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: default-deny
-spec:
-  podSelector: {}
-  policyTypes:
+</p>
+<p>
+An example of the usage of this NetworkPolicy capability, DENY all egress traffic from pod to source.
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.k8s.io/v1
+<span style="color:#66d9ef">kind</span>: NetworkPolicy
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: default-deny
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">podSelector</span>: {}
+  <span style="color:#66d9ef">policyTypes</span>:
   - Ingress</code></pre></div>
-
-<p>PS: Not all CNIs have support for this feature.</p>
-
-<h2 id="tasks">Tasks</h2>
-
-<p>https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/
-https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/
-https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
-https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
-https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/
-https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/</p>
-
-<p>https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/</p>
+</p>
+<p>
+PS: Not all CNIs have support for this feature.
+</p>
+<h3 id="headline-5">
+Tasks
+</h3>
+<p>
+https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/
+<a href="https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/">https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/</a>
+<a href="https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/">https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/</a>
+<a href="https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/">https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/</a>
+<a href="https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/">https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/</a>
+<a href="https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/">https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/</a>
+</p>
+<p>
+https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/
+</p>
 <ul class="pa0">
   
 </ul>
-<div class="mt6">
-        
+<div class="mt6 instapaper_ignoref">
+      
+      
       </div>
-    </main>
+    </div>
 
     <aside class="w-30-l mt6-l">
 
@@ -361,9 +433,14 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
-    &copy; 2019 AK
+    &copy; 2020 AK
   </a>
     <div>
+
+
+
+
+
 
 
 
