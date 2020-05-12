@@ -28,17 +28,17 @@
     
     
     <meta property="og:title" content="Kubernetes node debugging" />
-<meta property="og:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Bustar image is going to be used, the Virtualbox is 6." />
+<meta property="og:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://knabben.github.io/posts/kube-debug/" />
 <meta property="og:image" content="http://knabben.github.io/posts/kube-debug/coverage.png"/>
 <meta property="article:published_time" content="2020-05-10T16:00:00+00:00" />
 <meta property="article:modified_time" content="2020-05-10T16:00:00+00:00" />
 <meta itemprop="name" content="Kubernetes node debugging">
-<meta itemprop="description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Bustar image is going to be used, the Virtualbox is 6.">
+<meta itemprop="description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.">
 <meta itemprop="datePublished" content="2020-05-10T16:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-10T16:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="484">
+<meta itemprop="wordCount" content="702">
 <meta itemprop="image" content="http://knabben.github.io/posts/kube-debug/coverage.png">
 
 
@@ -46,7 +46,7 @@
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://knabben.github.io/posts/kube-debug/coverage.png"/>
 <meta name="twitter:title" content="Kubernetes node debugging"/>
-<meta name="twitter:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Bustar image is going to be used, the Virtualbox is 6."/>
+<meta name="twitter:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6."/>
 
   </head>
 
@@ -154,7 +154,7 @@ VirtualBox
 </h4>
 <p>
 Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary
-for this step a Debian Bustar image is going to be used, the Virtualbox is 6.1.6 with additions.
+for this step a Debian Buster image is going to be used, the Virtualbox is 6.1.6 with additions.
 </p>
 <h4 id="headline-4">
 Vagrantfile
@@ -255,14 +255,60 @@ No resources found in default namespace.</code></pre></div>
 <p>
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 </p>
-<h3 id="headline-10">
+<h4 id="headline-10">
+Kind
+</h4>
+<p>
+As a second options it&#39;s possible to use Kind instead of running it directly from Kubeadm, and let Kubelet to 
+join an already existent cluster, after creating a cluster you can fetch all the data to externally access it:
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kind create cluster
+Creating cluster <span style="color:#e6db74">&#34;kind&#34;</span> ...
+ ✓ Ensuring node image <span style="color:#f92672">(</span>kindest/node:v1.18.2<span style="color:#f92672">)</span> 🖼
+ ✓ Preparing nodes 📦
+...
+
+$ docker exec -it kind-control-plane sh
+root@kind-control-plane:/# kubeadm token create
+97ihyk.ytx08cps3hbn1c6e
+
+$ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform 2&gt;/dev/null |openssl dgst -sha256 -hex | cut -d<span style="color:#e6db74">&#34; &#34;</span> -f2
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+$ kubectl -n kube-system get cm kubeadm-config -o json | jq <span style="color:#e6db74">&#34;.data.ClusterStatus&#34;</span>
+<span style="color:#e6db74">&#34;apiEndpoints:\n  kind-control-plane:\n    advertiseAddress: 172.18.0.2\n    bindPort: 6443\napiVersion: kubeadm.k8s.io/v1beta2\nkind: ClusterStatus\n&#34;</span>
+
+$ echo <span style="color:#e6db74">&#34;172.18.0.2     kind-control-plane&#34;</span> &gt;&gt; /etc/hosts</code></pre></div>
+</p>
+<p>
+Instead of initing the Kubeadm direclty, you should use join like:
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@buster:/home/vagrant# kubeadm join --token 97ihyk.ytx08cps3hbn1c6e kind-control-plane:6443 --discovery-token-ca-cert-hash sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+W0512 18:00:22.629925   <span style="color:#ae81ff">11660</span> join.go:346<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> WARNING: JoinControlPane.controlPlane settings will be ignored when control-plane flag is not set.
+...
+<span style="color:#f92672">[</span>kubelet-start<span style="color:#f92672">]</span> Downloading configuration <span style="color:#66d9ef">for</span> the kubelet from the <span style="color:#e6db74">&#34;kubelet-config-1.18&#34;</span> ConfigMap in the kube-syst</code></pre></div>
+</p>
+<p>
+Check the external node has connectivity with your cluster.
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@buster:/home/vagrant# kubeadm join --token 97ihyk.ytx08cps3hbn1c6e kind-control-plane:6443 --discovery-token-ca-cert-hash sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+root@buster:/home/vagrant# kubectl get nodes
+NAME                 STATUS   ROLES    AGE   VERSION
+buster               Ready    &lt;none&gt;   80s   v1.18.2
+kind-control-plane   Ready    master   20m   v1.18.2</code></pre></div>
+</p>
+<h3 id="headline-11">
 Goland environment
 </h3>
-<h4 id="headline-11">
+<h4 id="headline-12">
 Stopping Kubelet
 </h4>
 <p>
-The kubelet should be running via systemd you can follow with journalctl -flu kubelet.
+The kubelet should be running via systemd you can follow with journalctl -flu kubelet. 
+Copy the flags used to setup it, this is going to be used later.
 </p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/usr/bin/kubelet --bootstrap-kubeconfig<span style="color:#f92672">=</span>/etc/kubernetes/bootstrap-kubelet.conf <span style="color:#ae81ff">\
@@ -272,7 +318,7 @@ The kubelet should be running via systemd you can follow with journalctl -flu ku
 <p>
 We should stop it with <strong>systemctl stop kubelet</strong>.
 </p>
-<h4 id="headline-12">
+<h4 id="headline-13">
 Running compiled Kubelet with Delve
 </h4>
 <p>
@@ -285,7 +331,7 @@ vagrant@buster:~/go/src/k8s.io/kubernetes$ dlv debug ./cmd/kubelet --headless --
 <p>
 Finally you should be able to connect in the listening port.
 </p>
-<h4 id="headline-13">
+<h4 id="headline-14">
 Opening on Goland
 </h4>
 <p>
@@ -303,7 +349,7 @@ actual source code.
 <img src="/posts/kube-debug/debug.png" alt="" class="" style="width: 100%; ">
 
 </p>
-<h3 id="headline-14">
+<h3 id="headline-15">
 Final words
 </h3>
 <p>
