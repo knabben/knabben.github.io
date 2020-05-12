@@ -6,10 +6,19 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Dec 2019 23:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2020 16:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes node debugging</title>
+      <link>http://knabben.github.io/posts/kube-debug/</link>
+      <pubDate>Sun, 10 May 2020 16:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/kube-debug/</guid>
+      <description>Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&amp;#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Bustar image is going to be used, the Virtualbox is 6.</description>
+    </item>
     
     <item>
       <title>Kubernetes networking</title>
