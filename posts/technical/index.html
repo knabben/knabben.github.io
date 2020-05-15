@@ -37,7 +37,7 @@
 <meta itemprop="description" content="Introduction   According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.  The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.">
 <meta itemprop="datePublished" content="2018-03-25T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-03-25T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="778">
+<meta itemprop="wordCount" content="779">
 
 
 
@@ -162,7 +162,8 @@ data[<span style="color:#e6db74">&#39;Close&#39;</span>]<span style="color:#f926
 data[<span style="color:#e6db74">&#39;Close&#39;</span>]<span style="color:#f92672">.</span>plot()</code></pre></div>
 </p>
 <p>
-<img src="price.png" alt="price.png" title="price.png" />
+<img src="/posts/technical/price.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <h3 id="headline-2">
 Moving average
@@ -244,7 +245,8 @@ test_data[<span style="color:#e6db74">&#39;AAPL_SMA5&#39;</span>] <span style="c
 test_data<span style="color:#f92672">.</span>plot(color<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#F00000&#39;</span>, <span style="color:#e6db74">&#39;#0000FF&#39;</span>, <span style="color:#e6db74">&#39;#0000FF&#39;</span>, <span style="color:#e6db74">&#39;#0000FF&#39;</span>])</code></pre></div>
 </p>
 <p>
-<img src="moving.png" alt="moving.png" title="moving.png" />
+<img src="/posts/technical/moving.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <h3 id="headline-4">
 Exponentially Weighted Moving Average
@@ -271,7 +273,8 @@ This moving average has the advantage of giving the most weight to the most curr
 test_data[[<span style="color:#e6db74">&#39;AAPL&#39;</span>,<span style="color:#e6db74">&#39;AAPL_EWM1&#39;</span>]]<span style="color:#f92672">.</span>plot()</code></pre></div>
 </p>
 <p>
-<img src="ewma.png" alt="ewma.png" title="ewma.png" />
+<img src="/posts/technical/ewma.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <h3 id="headline-5">
 Bollinger Bands 
@@ -292,7 +295,8 @@ data_2017[ [<span style="color:#e6db74">&#39;Close&#39;</span>, <span style="col
     color<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#000000&#39;</span>, <span style="color:#e6db74">&#39;#0000FF&#39;</span>, <span style="color:#e6db74">&#39;#FF0000&#39;</span>, <span style="color:#e6db74">&#39;#FF0000&#39;</span>])</code></pre></div>
 </p>
 <p>
-<img src="bollinger.png" alt="bollinger.png" title="bollinger.png" />
+<img src="/posts/technical/bollinger.png" alt="" class="" style="width: 90%; ">
+
 </p>
 <h3 id="headline-6">
 Basic strategy
@@ -311,7 +315,8 @@ data_2017[<span style="color:#e6db74">&#39;SIGNAL&#39;</span>] <span style="colo
 data_2017[[<span style="color:#e6db74">&#39;Close&#39;</span>, <span style="color:#e6db74">&#39;SMA1&#39;</span>, <span style="color:#e6db74">&#39;SMA2&#39;</span>, <span style="color:#e6db74">&#39;SIGNAL&#39;</span>]]<span style="color:#f92672">.</span>plot(secondary_y<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SIGNAL&#39;</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">8</span>))</code></pre></div>
 </p>
 <p>
-<img src="strategy.png" alt="strategy.png" title="strategy.png" />
+<img src="/posts/technical/strategy.png" alt="" class="" style="width: 90%; ">
+
 </p>
 <h3 id="headline-7">
 Keltner channels and EWM
@@ -335,15 +340,26 @@ data_2017[[<span style="color:#e6db74">&#39;Close&#39;</span>, <span style="colo
     color<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#000000&#39;</span>, <span style="color:#e6db74">&#39;#0000FF&#39;</span>, <span style="color:#e6db74">&#39;#FF0000&#39;</span>, <span style="color:#e6db74">&#39;#FF0000&#39;</span>])</code></pre></div>
 </p>
 <p>
-<img src="keltner.png" alt="keltner.png" title="keltner.png" />
+<img src="/posts/technical/keltner.png" alt="" class="" style="width: 90%; ">
+
 </p>
 <h3 id="headline-8">
-Bibliography
+Listening 
 </h3>
-<h6 id="headline-9">
+<p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/3L4YrGaR8E4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+</p>
+<h3 id="headline-9">
+Reference
+</h3>
+<h6 id="headline-10">
 [1] Clif Droke, Moving Averages Simplified
 </h6>
-<h6 id="headline-10">
+<h6 id="headline-11">
 [2] Lemos, Flavio. Análise Técnica dos Mercados Financeiros
 </h6>
 <ul class="pa0">

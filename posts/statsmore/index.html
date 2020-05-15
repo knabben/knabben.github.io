@@ -37,7 +37,7 @@
 <meta itemprop="description" content="Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3. Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.">
 <meta itemprop="datePublished" content="2017-10-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-10-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1171">
+<meta itemprop="wordCount" content="1172">
 
 
 
@@ -174,7 +174,8 @@ sec_returns <span style="color:#f92672">=</span> sec_data<span style="color:#f92
 sec_returns<span style="color:#f92672">.</span>cumsum()<span style="color:#f92672">.</span>plot()</code></pre></div>
 </p>
 <p>
-<img src="cumsum.png" alt="cumsum.png" title="cumsum.png" />
+<img src="/posts/statsmore/cumsum.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
@@ -195,7 +196,8 @@ sec_returns<span style="color:#f92672">.</span>cumsum()<span style="color:#f9267
 sec_returns<span style="color:#f92672">.</span>hist(bins<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>);</code></pre></div>
 </p>
 <p>
-<img src="histogram-50.png" alt="histogram-50.png" title="histogram-50.png" />
+<img src="/posts/statsmore/histogram-50.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <h4 id="headline-4">
 Covariance
@@ -229,7 +231,8 @@ IBOV   <span style="color:#ae81ff">0.054705</span>  <span style="color:#ae81ff">
 scatter_matrix(sec_returns, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">8</span>), alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>, hist_kwds<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;bins&#39;</span>:<span style="color:#ae81ff">50</span>});</code></pre></div>
 </p>
 <p>
-<img src="scatter-stock.png" alt="scatter-stock.png" title="scatter-stock.png" />
+<img src="/posts/statsmore/scatter-stock.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <h4 id="headline-5">
 Correlation
@@ -322,7 +325,8 @@ plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;I
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;LAME3 Value&#39;</span>);</code></pre></div>
 </p>
 <p>
-<img src="linear-reg-lame3.png" alt="linear-reg-lame3.png" title="linear-reg-lame3.png" />
+<img src="/posts/statsmore/linear-reg-lame3.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
@@ -346,7 +350,8 @@ df[<span style="color:#e6db74">&#39;y2&#39;</span>] <span style="color:#f92672">
 plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])</code></pre></div>
 </p>
 <p>
-<img src="exercise-linear.png" alt="exercise-linear.png" title="exercise-linear.png" />
+<img src="/posts/statsmore/exercise-linear.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
@@ -383,7 +388,8 @@ data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>
 data<span style="color:#f92672">.</span>boxplot()</code></pre></div>
 </p>
 <p>
-<img src="boxplot-anova.png" alt="boxplot-anova.png" title="boxplot-anova.png" />
+<img src="/posts/statsmore/bloxplot-anova.png" alt="" class="" style="width: 50%; ">
+
 </p>
 <h4 id="headline-8">
 Testing in 4 steps
@@ -444,9 +450,9 @@ Take a decision
 <p>
 We have the F_value = 1.09 &lt; critical_value = 6.93, and cannot reject the null hypothesis what finishes the conclusion: the arithmetic mean are equal for the three population
 </p>
-<h4 id="headline-13">
+<h3 id="headline-13">
 Exercises
-</h4>
+</h3>
 <p>
 A director of a company wants to buy a new screw machine, you must learn about the brands from a determined period each one independently makes the following number of screws, our null hypothesis here is to confirm there&#39;s no difference between the mean volume of pieces each machine can build. The significance level is 5%.
 </p>
@@ -508,6 +514,16 @@ null_hypothesis_true <span style="color:#f92672">=</span> f_value <span style="c
 | factor | 44.60  | 2  | 22.30  | 11.06 |
 | error  | 30.24  | 15 | 2.01   |       |
 | total  | 74.84  | 17 |        |       |</code></pre></div>
+</p>
+<h3 id="headline-14">
+Listening 
+</h3>
+<p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/7PmUtmfTmbg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 </p>
 <ul class="pa0">
   
