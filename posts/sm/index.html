@@ -37,7 +37,7 @@
 <meta itemprop="description" content="Introducing Kubernetes   November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.">
 <meta itemprop="datePublished" content="2018-10-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-10-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2103">
+<meta itemprop="wordCount" content="2104">
 
 
 
@@ -564,20 +564,24 @@ Start the loop curl request and checkout the servicegraph, based on prometheus d
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> curl -d <span style="color:#e6db74">&#39;{&#34;value&#34;:  &#34;myvalue&#34; }&#39;</span> http://<span style="color:#e6db74">${</span>INGRESS_ADDRESS<span style="color:#e6db74">}</span>/v1/damage; <span style="color:#66d9ef">done</span></code></pre></div>
 </p>
 <p>
-<img src="istio-1.png" alt="istio-1.png" title="istio-1.png" />
+<img src="/posts/sm/istio-1.png" alt="" class="" style="width: 60%; ">
+
 </p>
 <p>
 This is a good example of your services flow, after you can track your request via opentracing and Zipkin:
 </p>
 <p>
-<img src="istio-2.png" alt="istio-2.png" title="istio-2.png" />
+<img src="/posts/sm/istio-2.png" alt="" class="" style="width: 60%; ">
+
 </p>
 <p>
 Or you can check out both services usage on Grafana, the metrics are grabbed automatically.
 </p>
 <p>
-<img src="istio-5.png" alt="istio-5.png" title="istio-5.png" />
-<img src="istio-3.png" alt="istio-3.png" title="istio-3.png" />
+<img src="/posts/sm/istio-5.png" alt="" class="" style="width: 60%; ">
+
+<img src="/posts/sm/istio-3.png" alt="" class="" style="width: 60%; ">
+
 </p>
 <h4 id="headline-23">
 Custom HTTP metric
@@ -610,7 +614,8 @@ The rule will be applied after the match filter and the prometheus adapter being
 You can create new Grafana visualizations in the dashboard from Prometheus metrics.
 </p>
 <p>
-<img src="istio-4.png" alt="istio-4.png" title="istio-4.png" />
+<img src="/posts/sm/istio-4.png" alt="" class="" style="width: 60%; ">
+
 </p>
 <h4 id="headline-24">
 Playing around with Mixer adapter
@@ -621,22 +626,32 @@ Playing around with Mixer adapter
 <p>
  <a href="https://github.com/knabben/librato-adapter">https://github.com/knabben/librato-adapter</a>
 </p>
-<h4 id="headline-25">
-Bibliography
-</h4>
-<h6 id="headline-26">
+<h3 id="headline-25">
+Listening 
+</h3>
+<p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/1SiZiXPa3_k" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+</p>
+<h3 id="headline-26">
+Reference
+</h3>
+<h6 id="headline-27">
 [1] <a href="https://github.com/kelseyhightower/kubernetes-the-hard-way">https://github.com/kelseyhightower/kubernetes-the-hard-way</a>
 </h6>
-<h6 id="headline-27">
+<h6 id="headline-28">
 [2] <a href="http://blog.christianposta.com/istio-workshop/slides/#/title">http://blog.christianposta.com/istio-workshop/slides/#/title</a>
 </h6>
-<h6 id="headline-28">
+<h6 id="headline-29">
 [3] <a href="https://github.com/knabben/grpc-ex">https://github.com/knabben/grpc-ex</a>
 </h6>
-<h6 id="headline-29">
+<h6 id="headline-30">
 [4] <a href="https://istio.io/docs/setup/kubernetes/quick-start-gke-dm.html">https://istio.io/docs/setup/kubernetes/quick-start-gke-dm.html</a>
 </h6>
-<h6 id="headline-30">
+<h6 id="headline-31">
 [5] <a href="https://istio.io/docs/setup/kubernetes/sidecar-injection.html#automatic-sidecar-injection">https://istio.io/docs/setup/kubernetes/sidecar-injection.html#automatic-sidecar-injection</a>
 </h6>
 <ul class="pa0">

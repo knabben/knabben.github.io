@@ -37,7 +37,7 @@
 <meta itemprop="description" content="Introduction   This is based on Sawtooth 1.0.5 source code for Gossip and static peering.   %load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.">
 <meta itemprop="datePublished" content="2019-11-11T02:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-11T02:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="296">
+<meta itemprop="wordCount" content="297">
 
 
 
@@ -292,6 +292,16 @@ validator_factory(<span style="color:#e6db74">&#34;tcp://127.0.0.1:8800&#34;</sp
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Gossip Peer 2 - DEALER &#34;client&#34; - 8801</span>
 validator_factory(<span style="color:#e6db74">&#34;tcp://127.0.0.1:8801&#34;</span>,initial_peer_endpoints<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;tcp://127.0.0.1:8800&#34;</span>])</code></pre></div>
+</p>
+<h3 id="headline-3">
+Listening 
+</h3>
+<p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/v4xZUr0BEfE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 </p>
 <ul class="pa0">
   
