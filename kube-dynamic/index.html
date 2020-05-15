@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Kubelet Dynamic Configuration | AK</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.70.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css">
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Kubelet Dynamic Configuration" />
+<meta property="og:description" content=" Introduction   why? Testing Kubelet flags migration on the fly. Preparing Kubelet with Dynamic Flags  Monitoring with Prometheus  Kube-proxy on host machine  Hooking up on Prometheus / Grafana  Changing the flag with autoreload  What happens?  Conclusion  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://knabben.github.io/kube-dynamic/" />
+<meta property="article:published_time" content="2020-05-11T16:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-11T16:00:00+00:00" />
+<meta itemprop="name" content="Kubelet Dynamic Configuration">
+<meta itemprop="description" content=" Introduction   why? Testing Kubelet flags migration on the fly. Preparing Kubelet with Dynamic Flags  Monitoring with Prometheus  Kube-proxy on host machine  Hooking up on Prometheus / Grafana  Changing the flag with autoreload  What happens?  Conclusion  ">
+<meta itemprop="datePublished" content="2020-05-11T16:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-11T16:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="35">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubelet Dynamic Configuration"/>
+<meta name="twitter:description" content=" Introduction   why? Testing Kubelet flags migration on the fly. Preparing Kubelet with Dynamic Flags  Monitoring with Prometheus  Kube-proxy on host machine  Hooking up on Prometheus / Grafana  Changing the flag with autoreload  What happens?  Conclusion  "/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://knabben.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      AK
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+        <p class="f6 b helvetica tracked">
+          
+        </p>
+        <h1 class="f1">
+          Kubelet Dynamic Configuration
+        </h1>
+      </header>
+      <div class="nested-copy-line-height lh-copy f4 nested-links nested-img mid-gray">
+        
+<h3 id="headline-1">
+Introduction
+</h3>
+<p>
+   why? Testing Kubelet flags migration on the fly.
+</p>
+<h3 id="headline-2">
+Preparing Kubelet with Dynamic Flags
+</h3>
+<h3 id="headline-3">
+Monitoring with Prometheus
+</h3>
+<h4 id="headline-4">
+Kube-proxy on host machine
+</h4>
+<h4 id="headline-5">
+Hooking up on Prometheus / Grafana
+</h4>
+<h3 id="headline-6">
+Changing the flag with autoreload
+</h3>
+<h3 id="headline-7">
+What happens?
+</h3>
+<h3 id="headline-8">
+Conclusion
+</h3>
+
+      </div>
+    </article>
+  </div>
+
+    </main>
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ MathJax.Hub.Config({
+   tex2jax: {
+     inlineMath: [['$','$'], ['\\(','\\)']],
+     displayMath: [['$$','$$']],
+     processEscapes: true,
+     processEnvironments: true,
+     skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+     TeX: { equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] }
+   }
+ });
+ MathJax.Hub.Queue(function() {
+   
+   
+   
+   var all = MathJax.Hub.getAllJax(), i;
+   for(i = 0; i < all.length; i += 1) {
+     all[i].SourceElement().parentNode.className += ' has-jax';
+   }
+ });
+
+ MathJax.Hub.Config({
+   
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+ });
+</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-46699622-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://knabben.github.io/" >
+    &copy; 2020 AK
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

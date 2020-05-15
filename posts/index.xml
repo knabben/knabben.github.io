@@ -6,19 +6,10 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2020 16:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2020 16:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Kubelet Dynamic Configuration</title>
-      <link>http://knabben.github.io/posts/kube-dynamic/</link>
-      <pubDate>Mon, 11 May 2020 16:00:00 +0000</pubDate>
-      
-      <guid>http://knabben.github.io/posts/kube-dynamic/</guid>
-      <description> Introduction   why? Testing Kubelet flags migration on the fly. Preparing Kubelet with Dynamic Flags  Monitoring with Prometheus  Kube-proxy on host machine  Hooking up on Prometheus / Grafana  Changing the flag with autoreload  What happens?  Conclusion  </description>
-    </item>
     
     <item>
       <title>Kubernetes node debugging</title>
