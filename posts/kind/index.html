@@ -37,7 +37,7 @@
 <meta itemprop="description" content="Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.  The initial topics are a summary from Kind quickstart Installing   To install Kind you should use:  $ brew install kind  Or from source:  $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps   To create a new cluster you must run:  # Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34;  Check the docker containers with &#34;docker ps&#34;:  CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3864ed104f05 kindest/node:v1.">
 <meta itemprop="datePublished" content="2019-12-25T22:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-25T22:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="640">
+<meta itemprop="wordCount" content="641">
 
 
 
@@ -351,6 +351,16 @@ Checking the logs again, the container id must change the process restarted shou
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grep <span style="color:#e6db74">&#34;v=\&#34;1\&#34;&#34;</span> /var/log/pods/kube-system_kube-apiserver-3k8s-control-plane_0797ccfaf5f7fdcb42366fbf39918d66/kube-apiserver/0.log
 2019-12-26T01:02:18.63612087Z stderr F I1226 01:02:18.635346       <span style="color:#ae81ff">1</span> flags.go:33<span style="color:#f92672">]</span> FLAG: --v<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span></code></pre></div>
+</p>
+<h3 id="headline-9">
+Listening 
+</h3>
+<p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/U4XOZeJb2ZQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 </p>
 <ul class="pa0">
   

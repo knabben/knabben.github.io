@@ -37,7 +37,7 @@
 <meta itemprop="description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.  Kubernetes has 4 stages: RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.  ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.">
 <meta itemprop="datePublished" content="2019-11-27T10:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-27T10:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="388">
+<meta itemprop="wordCount" content="389">
 
 
 
@@ -135,45 +135,45 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<h4 id="headline-1">
+<h3 id="headline-1">
 Introduction
-</h4>
+</h3>
 <p>
 The idea of this post is to test the Audit dynamic backend with a KIND cluster.
 </p>
 <p>
 Kubernetes has 4 stages:
 </p>
-<h6 id="headline-2">
+<h5 id="headline-2">
 RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.
-</h6>
-<h6 id="headline-3">
+</h5>
+<h5 id="headline-3">
 ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.g. watch).
-</h6>
-<h6 id="headline-4">
+</h5>
+<h5 id="headline-4">
 ResponseComplete - The response body has been completed and no more bytes will be sent.
-</h6>
-<h6 id="headline-5">
+</h5>
+<h5 id="headline-5">
 Panic - Events generated when a panic occurred.
-</h6>
+</h5>
 <p>
 And 4 levels:
 </p>
-<h6 id="headline-6">
+<h5 id="headline-6">
 None - don’t log events that match this rule.
-</h6>
-<h6 id="headline-7">
+</h5>
+<h5 id="headline-7">
 Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.
-</h6>
-<h6 id="headline-8">
+</h5>
+<h5 id="headline-8">
 Request - log event metadata and request body but not response body. This does not apply for non-resource requests.
-</h6>
-<h6 id="headline-9">
+</h5>
+<h5 id="headline-9">
 RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.
-</h6>
-<h4 id="headline-10">
+</h5>
+<h3 id="headline-10">
 Configuring Kind
-</h4>
+</h3>
 <p>
 It is possible to overwrite the kubeadm configuration passing multiple extra args for the REST API server,
 to enable this it is necessary to create the following flags:
@@ -195,9 +195,9 @@ to enable this it is necessary to create the following flags:
       <span style="color:#66d9ef">audit-dynamic-configuration</span>: <span style="color:#e6db74">&#34;true&#34;</span>
       <span style="color:#66d9ef">runtime-config</span>: <span style="color:#e6db74">&#34;auditregistration.k8s.io/v1alpha1=true&#34;</span></code></pre></div>
 </p>
-<h4 id="headline-11">
+<h3 id="headline-11">
 Configuring the Audit Sink
-</h4>
+</h3>
 <p>
 It&#39;s possible to set the level and stage per URL configuration setting the host these filtered events go,
 for filtering rules the parameter –audit-policy-file must be set with Policy file.
@@ -221,9 +221,9 @@ for filtering rules the parameter –audit-policy-file must be set with Policy f
     <span style="color:#66d9ef">clientConfig</span>:
       <span style="color:#66d9ef">url</span>: <span style="color:#e6db74">&#34;https://generic-web-site/hook&#34;</span></code></pre></div>
 </p>
-<h4 id="headline-12">
+<h3 id="headline-12">
 Starting kind
-</h4>
+</h3>
 <p>
 To start the KIND with the configuration file and setup the Audit Sink:
 </p>
@@ -277,6 +277,16 @@ This is an example from the KIND cluster:
     }
   ]
 }</code></pre></div>
+</p>
+<h3 id="headline-13">
+Listening 
+</h3>
+<p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/aVdR6JeEyT8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 </p>
 <ul class="pa0">
   
