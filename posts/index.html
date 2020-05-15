@@ -36,7 +36,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/posts/" />
-<meta property="og:updated_time" content="2020-05-10T16:00:00+00:00" />
+<meta property="og:updated_time" content="2020-05-11T16:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -93,6 +93,21 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://knabben.github.io/posts/kube-dynamic/" class="link black dim">
+        Kubelet Dynamic Configuration
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+       Introduction   why? Testing Kubelet flags migration on the fly. Preparing Kubelet with Dynamic Flags  Monitoring with Prometheus  Kube-proxy on host machine  Hooking up on Prometheus / Grafana  Changing the flag with autoreload  What happens?  Conclusion  
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -224,21 +239,6 @@
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.  For this debugging and testing scenario we will have 2 nodes:  version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://knabben.github.io/posts/kube-audit/" class="link black dim">
-        Kubernetes Audit Sink
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.  Kubernetes has 4 stages: RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.  ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.
     </div>
   </div>
 </div>

@@ -38,7 +38,7 @@
 <meta itemprop="description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.">
 <meta itemprop="datePublished" content="2020-05-10T16:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-10T16:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="704">
+<meta itemprop="wordCount" content="681">
 <meta itemprop="image" content="http://knabben.github.io/posts/kube-debug/coverage.png">
 
 
@@ -282,7 +282,7 @@ $ kubectl -n kube-system get cm kubeadm-config -o json | jq <span style="color:#
 $ echo <span style="color:#e6db74">&#34;172.18.0.2     kind-control-plane&#34;</span> &gt;&gt; /etc/hosts</code></pre></div>
 </p>
 <p>
-Instead of initing the Kubeadm direclty, you should use join like:
+Instead of initing the Kubeadm directly, you should use join like:
 </p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@buster:/home/vagrant# kubeadm join --token 97ihyk.ytx08cps3hbn1c6e kind-control-plane:6443 --discovery-token-ca-cert-hash sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
@@ -350,17 +350,17 @@ actual source code.
 
 </p>
 <h3 id="headline-15">
-Final words
-</h3>
-<p>
-This is one way to keep a Linux development while using a MacOSX without losing full 
-capabilities like live debugging from a good IDE.
-</p>
-<h3 id="headline-16">
 References
 </h3>
 <p>
-https://github.com/vmware-tanzu/tgik/blob/master/episodes/109/README.md
+<a href="https://twitter.com/mauilion/">@maulion</a> @ TGIK 109
+</p>
+<p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/Rce70OkfRhI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 </p>
 <ul class="pa0">
   
