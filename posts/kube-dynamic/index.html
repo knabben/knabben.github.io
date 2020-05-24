@@ -31,12 +31,12 @@
 <meta property="og:description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.  The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://knabben.github.io/posts/kube-dynamic/" />
-<meta property="article:published_time" content="2020-05-11T16:00:00+00:00" />
-<meta property="article:modified_time" content="2020-05-11T16:00:00+00:00" />
+<meta property="article:published_time" content="2020-05-24T16:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-24T16:00:00+00:00" />
 <meta itemprop="name" content="Kubelet Dynamic Configuration">
 <meta itemprop="description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.  The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.">
-<meta itemprop="datePublished" content="2020-05-11T16:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-11T16:00:00&#43;00:00" />
+<meta itemprop="datePublished" content="2020-05-24T16:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-24T16:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="901">
 
 
@@ -129,7 +129,7 @@
       <h1 class="f1 athelas mt3 mb1">Kubelet Dynamic Configuration</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2020-05-11T16:00:00Z">May 11, 2020</time>
+      <time class="f6 mv4 dib tracked" datetime="2020-05-24T16:00:00Z">May 24, 2020</time>
 
       
       

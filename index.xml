@@ -6,7 +6,7 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2020 16:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 16:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Kubelet Dynamic Configuration</title>
       <link>http://knabben.github.io/posts/kube-dynamic/</link>
-      <pubDate>Mon, 11 May 2020 16:00:00 +0000</pubDate>
+      <pubDate>Sun, 24 May 2020 16:00:00 +0000</pubDate>
       
       <guid>http://knabben.github.io/posts/kube-dynamic/</guid>
       <description>Introduction   On Kubernetes 1.10+ a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.  The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.</description>
