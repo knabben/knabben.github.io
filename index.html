@@ -36,7 +36,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
-<meta property="og:updated_time" content="2020-05-10T16:00:00+00:00" />
+<meta property="og:updated_time" content="2020-05-11T16:00:00+00:00" />
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AK"/>
@@ -124,8 +124,32 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://knabben.github.io/posts/kube-dynamic/" class="color-inherit dim link">
+            Kubelet Dynamic Configuration
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Introduction   On Kubernetes 1.10+ a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.  The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.
+        </div>
+          <a href="http://knabben.github.io/posts/kube-dynamic/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="http://knabben.github.io/posts/kube-debug/" class="color-inherit dim link">
-            Kubernetes node debugging
+            Kubernetes Node Debugging
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
@@ -164,36 +188,18 @@
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="http://knabben.github.io/posts/kube-depl/" class="color-inherit dim link">
-            Kubernetes deployment
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          ReplicaSets   A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.  // ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
-        </div>
-          <a href="http://knabben.github.io/posts/kube-depl/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://knabben.github.io/posts/kube-depl/" class="link black dim">
+              Kubernetes deployment
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://knabben.github.io/posts/kube-container/" class="link black dim">
@@ -210,12 +216,6 @@
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://knabben.github.io/posts/kube-ctl/" class="link black dim">
               Kubectl
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://knabben.github.io/posts/kind/" class="link black dim">
-              Kubernetes in Docker
             </a>
           </h2>
         
