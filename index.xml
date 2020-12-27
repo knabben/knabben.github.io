@@ -6,10 +6,22 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 May 2020 16:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Dec 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Network Policy E2E</title>
+      <link>http://knabben.github.io/posts/netpol/readme/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://knabben.github.io/posts/netpol/readme/</guid>
+      <description>Network policy This post documents a few steps to test the E2E framework using the Kind cluster with different CNIs, giving the developer some good tooling for debugging and quick test replication.
+Use this script to bring a Kind cluster with a specific CNI setup.
+Finding the config parameters In the ~/.kube/config you can find the Cluster sections host, use the IP and Port to start the tests.
+apiVersion: v1 clusters: - cluster: certificate-authority-data: .</description>
+    </item>
     
     <item>
       <title>Kubelet Dynamic Configuration</title>

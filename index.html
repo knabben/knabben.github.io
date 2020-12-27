@@ -36,7 +36,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://knabben.github.io/" />
-<meta property="og:updated_time" content="2020-05-24T16:00:00+00:00" />
+<meta property="og:updated_time" content="2020-12-27T00:00:00+00:00" />
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AK"/>
@@ -124,6 +124,33 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://knabben.github.io/posts/netpol/readme/" class="color-inherit dim link">
+            Network Policy E2E
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Network policy This post documents a few steps to test the E2E framework using the Kind cluster with different CNIs, giving the developer some good tooling for debugging and quick test replication.
+Use this script to bring a Kind cluster with a specific CNI setup.
+Finding the config parameters In the ~/.kube/config you can find the Cluster sections host, use the IP and Port to start the tests.
+apiVersion: v1 clusters: - cluster: certificate-authority-data: .
+        </div>
+          <a href="http://knabben.github.io/posts/netpol/readme/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="http://knabben.github.io/posts/kube-dynamic/" class="color-inherit dim link">
             Kubelet Dynamic Configuration
             </a>
@@ -164,36 +191,18 @@
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="http://knabben.github.io/posts/kube-net/" class="color-inherit dim link">
-            Kubernetes networking
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Networking   The first and easiest way to access the Pod container port is via port-forward command:  $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;  Take a look on the dynamic port-forwarder. Service   An abstract way to expose an application running on a set of Pods as a network service.  a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
-        </div>
-          <a href="http://knabben.github.io/posts/kube-net/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://knabben.github.io/posts/kube-net/" class="link black dim">
+              Kubernetes networking
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://knabben.github.io/posts/kube-depl/" class="link black dim">
@@ -210,12 +219,6 @@
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://knabben.github.io/posts/kube-pod/" class="link black dim">
               Pod specification
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://knabben.github.io/posts/kube-ctl/" class="link black dim">
-              Kubectl
             </a>
           </h2>
         
