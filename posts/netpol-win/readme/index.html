@@ -37,7 +37,7 @@
 <meta itemprop="description" content="µsoft windows kubernetes playground">
 <meta itemprop="datePublished" content="2021-02-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-02-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="448">
+<meta itemprop="wordCount" content="511">
 
 
 
@@ -251,6 +251,27 @@ windows-1.us-east1-b.c.kflow-294915.internal   Ready    &lt;none&gt;            
 <p>This Calico version CNI on v1.7.8 works fine</p>
 
 <p><a href="https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/c1658d5c5d401ad271c4fe6c8fbd96ba4a01d638/config/v1.7/calico.yaml">https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/c1658d5c5d401ad271c4fe6c8fbd96ba4a01d638/config/v1.7/calico.yaml</a></p>
+
+<p>Just make sure you have the correct architecture binary from:
+curl -LO <a href="https://dl.k8s.io/release/v1.20.0/bin/windows/amd64/kubectl.exe">https://dl.k8s.io/release/v1.20.0/bin/windows/amd64/kubectl.exe</a></p>
+
+<h3 id="initial-netpol-on-win">Initial netpol on Win</h3>
+
+<p>The nodeSelector with <code>windows</code> needs to be explicit in the pod creation:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
+  thePod :<span style="color:#f92672">=</span> pod<span style="color:#f92672">.</span>KubePod()
+  thePod<span style="color:#f92672">.</span>Spec<span style="color:#f92672">.</span>NodeSelector <span style="color:#f92672">=</span> map[string]string{
+      <span style="color:#e6db74">&#34;kubernetes.io/os&#34;</span>: <span style="color:#e6db74">&#34;windows&#34;</span>,
+  }
+{{ endhighlight }}
+
+Otherwise this the Pod will be on Pending status <span style="color:#66d9ef">with</span>:
+
+<span style="color:#e6db74">`pod does not have label vpc.amazonaws.com/PrivateIPv4Address`</span>
+
+Some other examples on Windows:
+https:<span style="color:#f92672">//</span>docs<span style="color:#f92672">.</span>projectcalico<span style="color:#f92672">.</span>org<span style="color:#f92672">/</span>getting<span style="color:#f92672">-</span>started<span style="color:#f92672">/</span>windows<span style="color:#f92672">-</span>calico<span style="color:#f92672">/</span>demo</code></pre></div>
 <ul class="pa0">
   
 </ul>
