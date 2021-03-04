@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/" />
-<meta property="og:updated_time" content="2020-12-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-02-28T00:00:00+00:00" />
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="sdaf"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AK"/>
@@ -154,6 +154,30 @@
       <section class="w-100" style="display: table;">
         <div class="w-100" style="display: table-row;">
           <div style="width: 90%; display: table-cell;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden">
+  
+  <div class="f6">
+    February 28, 2021
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="http://thefind.live/posts/netpol-win/readme/" class="link black dim">
+      Kubernetes Windows Nodes
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction This post is a walkthrough on using a Windows node to run network policies with agnhost:2.26 mappings in order to understand how suitable the netpol suite is ready for it.
+https://github.com/kubernetes/kubernetes/tree/master/test/e2e/network/netpol
+Setting up the cluster Our master needs to be on Linux, so a GCP Vm with COS is being used, following up the quickstart on this node:
+https://docs.projectcalico.org/getting-started/kubernetes/quickstart
+Start the cluster in the following subnet with Kubeadm:
+sudo kubeadm init --pod-network-cidr=192.
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden">
@@ -329,25 +353,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden">
-  
-  <div class="f6">
-    December 15, 2019
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="http://thefind.live/posts/sawtooth-cheatsheet/" class="link black dim">
-      Sawtooth Cheatsheet
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant  $ vagrant init ubuntu/xenial64 $ vagrant up  After the box is up we need to add the correct repository:  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update  Install the package:  $ sudo apt install -y sawtooth Docker   Install Docker adding key and repo:  $ curl -fsSL https://download.
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -357,6 +362,12 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://thefind.live/posts/sawtooth-cheatsheet/" class="link black dim">
+              Sawtooth Cheatsheet
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/sawtooth-permission/" class="link black dim">
@@ -373,12 +384,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-api/" class="link black dim">
               Kubernetes API client
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://thefind.live/posts/dev-poet/" class="link black dim">
-              From Dev to PoET
             </a>
           </h2>
         

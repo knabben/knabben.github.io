@@ -6,10 +6,24 @@
     <description>Recent content on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Feb 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://thefind.live/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes Windows Nodes</title>
+      <link>http://thefind.live/posts/netpol-win/readme/</link>
+      <pubDate>Sun, 28 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/netpol-win/readme/</guid>
+      <description>Introduction This post is a walkthrough on using a Windows node to run network policies with agnhost:2.26 mappings in order to understand how suitable the netpol suite is ready for it.
+https://github.com/kubernetes/kubernetes/tree/master/test/e2e/network/netpol
+Setting up the cluster Our master needs to be on Linux, so a GCP Vm with COS is being used, following up the quickstart on this node:
+https://docs.projectcalico.org/getting-started/kubernetes/quickstart
+Start the cluster in the following subnet with Kubeadm:
+sudo kubeadm init --pod-network-cidr=192.</description>
+    </item>
     
     <item>
       <title>Network Policy E2E test suite</title>
