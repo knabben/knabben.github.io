@@ -37,7 +37,7 @@
 <meta itemprop="description" content="µsoft windows kubernetes playground">
 <meta itemprop="datePublished" content="2021-02-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-02-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="509">
+<meta itemprop="wordCount" content="528">
 
 
 
@@ -244,7 +244,8 @@ windows-1.us-east1-b.c.kflow-294915.internal   Ready    &lt;none&gt;            
 
 <p><a href="https://github.com/tigera-solutions/install-calico-for-windows">https://github.com/tigera-solutions/install-calico-for-windows</a></p>
 
-<p>The simpler method is to go without EKS and eksctl managed hosts:</p>
+<p>A few comments here, default Network Policy does not works as <code>amiFamily: WindowsServer2019FullContainer</code>, check the correct
+AMI set below. The simpler method is to go without EKS and eksctl managed hosts:</p>
 
 <p><a href="https://aws.amazon.com/blogs/containers/open-source-calico-for-windows-containers-on-amazon-eks/">https://aws.amazon.com/blogs/containers/open-source-calico-for-windows-containers-on-amazon-eks/</a></p>
 
