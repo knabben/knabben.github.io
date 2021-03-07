@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/" />
-<meta property="og:updated_time" content="2021-02-28T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-03-06T00:00:00+00:00" />
 <meta itemprop="name" content="AK">
 <meta itemprop="description" content="sdaf"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AK"/>
@@ -154,6 +154,26 @@
       <section class="w-100" style="display: table;">
         <div class="w-100" style="display: table-row;">
           <div style="width: 90%; display: table-cell;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden">
+  
+  <div class="f6">
+    March 6, 2021
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="http://thefind.live/posts/istio/readme/" class="link black dim">
+      Istio drill down - Part I
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction This post is a review and notes of some Istio tutorials around with the latest version, again the base cluster is created by kind and is being used as a CNI.
+NAMESPACE NAME READY STATUS RESTARTS AGE kube-system calico-kube-controllers-5c6f6b67db-8rx2s 1/1 Running 0 4h26m kube-system calico-node-9fccq 1/1 Running 0 4h26m kube-system calico-node-b77sb 1/1 Running 0 4h26m kube-system calico-node-jf4z2 1/1 Running 0 4h26m kube-system calico-node-sl9qd 1/1 Running 0 4h26m kube-system coredns-74ff55c5b-dbwpl 1/1 Running 0 4h27m kube-system coredns-74ff55c5b-gpvz7 1/1 Running 0 4h27m kube-system etcd-calico-control-plane 1/1 Running 0 4h27m kube-system kube-apiserver-calico-control-plane 1/1 Running 0 4h27m kube-system kube-controller-manager-calico-control-plane 1/1 Running 0 4h27m kube-system kube-proxy-cc8sr 1/1 Running 0 4h27m kube-system kube-proxy-gbkl6 1/1 Running 0 4h27m kube-system kube-proxy-j2blv 1/1 Running 0 4h27m kube-system kube-proxy-jp9xm 1/1 Running 0 4h27m kube-system kube-scheduler-calico-control-plane 1/1 Running 0 4h27m local-path-storage local-path-provisioner-78776bfc44-m7kpq 1/1 Running 0 4h27m Installation This workshop one is made for GCP, but we are using a local cluster with Kind, Bypass old installation methods, and use the latest installation on v1.
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden">
@@ -334,25 +354,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden">
-  
-  <div class="f6">
-    December 25, 2019
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="http://thefind.live/posts/kind/" class="link black dim">
-      Kubernetes in Docker
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.  The initial topics are a summary from Kind quickstart Installing   To install Kind you should use:  $ brew install kind  Or from source:  $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps   To create a new cluster you must run:  # Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34;  Check the docker containers with &#34;docker ps&#34;:  CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3864ed104f05 kindest/node:v1.
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -362,6 +363,12 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://thefind.live/posts/kind/" class="link black dim">
+              Kubernetes in Docker
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/sawtooth-cheatsheet/" class="link black dim">
@@ -378,12 +385,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-audit/" class="link black dim">
               Kubernetes Audit Sink
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://thefind.live/posts/kube-api/" class="link black dim">
-              Kubernetes API client
             </a>
           </h2>
         

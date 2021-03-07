@@ -6,10 +6,20 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Mar 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://thefind.live/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Istio drill down - Part I</title>
+      <link>http://thefind.live/posts/istio/readme/</link>
+      <pubDate>Sat, 06 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/istio/readme/</guid>
+      <description>Introduction This post is a review and notes of some Istio tutorials around with the latest version, again the base cluster is created by kind and is being used as a CNI.
+NAMESPACE NAME READY STATUS RESTARTS AGE kube-system calico-kube-controllers-5c6f6b67db-8rx2s 1/1 Running 0 4h26m kube-system calico-node-9fccq 1/1 Running 0 4h26m kube-system calico-node-b77sb 1/1 Running 0 4h26m kube-system calico-node-jf4z2 1/1 Running 0 4h26m kube-system calico-node-sl9qd 1/1 Running 0 4h26m kube-system coredns-74ff55c5b-dbwpl 1/1 Running 0 4h27m kube-system coredns-74ff55c5b-gpvz7 1/1 Running 0 4h27m kube-system etcd-calico-control-plane 1/1 Running 0 4h27m kube-system kube-apiserver-calico-control-plane 1/1 Running 0 4h27m kube-system kube-controller-manager-calico-control-plane 1/1 Running 0 4h27m kube-system kube-proxy-cc8sr 1/1 Running 0 4h27m kube-system kube-proxy-gbkl6 1/1 Running 0 4h27m kube-system kube-proxy-j2blv 1/1 Running 0 4h27m kube-system kube-proxy-jp9xm 1/1 Running 0 4h27m kube-system kube-scheduler-calico-control-plane 1/1 Running 0 4h27m local-path-storage local-path-provisioner-78776bfc44-m7kpq 1/1 Running 0 4h27m Installation This workshop one is made for GCP, but we are using a local cluster with Kind, Bypass old installation methods, and use the latest installation on v1.</description>
+    </item>
     
     <item>
       <title>Kubernetes Windows Nodes</title>
@@ -341,6 +351,15 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .</description>
       
       <guid>http://thefind.live/posts/capacity/</guid>
       <description>Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.  NOTE If you are interested on real traffic replication, consider this project [2]. Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://thefind.live/posts/cni/readme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/cni/readme/</guid>
+      <description></description>
     </item>
     
   </channel>

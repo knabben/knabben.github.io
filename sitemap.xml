@@ -4,16 +4,21 @@
   
   <url>
     <loc>http://thefind.live/</loc>
-    <lastmod>2021-02-28T00:00:00+00:00</lastmod>
+    <lastmod>2021-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://thefind.live/posts/netpol-win/readme/</loc>
-    <lastmod>2021-02-28T00:00:00+00:00</lastmod>
+    <loc>http://thefind.live/posts/istio/readme/</loc>
+    <lastmod>2021-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://thefind.live/posts/</loc>
+    <lastmod>2021-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://thefind.live/posts/netpol-win/readme/</loc>
     <lastmod>2021-02-28T00:00:00+00:00</lastmod>
   </url>
   
@@ -190,6 +195,10 @@
   <url>
     <loc>http://thefind.live/posts/capacity/</loc>
     <lastmod>2015-07-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://thefind.live/posts/cni/readme/</loc>
   </url>
   
   <url>
