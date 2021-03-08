@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>AK</title>
+    <title>Data Mining from Tracing | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.70.0" />
     
@@ -27,29 +27,34 @@
 
     
     
-      <link href="/posts/index.xml" rel="alternate" type="application/rss+xml" title="AK" />
-      <link href="/posts/index.xml" rel="feed" type="application/rss+xml" title="AK" />
-      
-    
-    
-    <meta property="og:title" content="Posts" />
-<meta property="og:description" content="sdaf" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://thefind.live/posts/" />
-<meta property="og:updated_time" content="2021-03-07T00:00:00+00:00" />
-<meta itemprop="name" content="Posts">
-<meta itemprop="description" content="sdaf"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Posts"/>
-<meta name="twitter:description" content="sdaf"/>
+    <meta property="og:title" content="Data Mining from Tracing" />
+<meta property="og:description" content="moar notes on istio tracing and data mining with jaeger" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://thefind.live/posts/dd/readme/" />
+<meta property="article:published_time" content="2021-03-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-07T00:00:00+00:00" />
+<meta itemprop="name" content="Data Mining from Tracing">
+<meta itemprop="description" content="moar notes on istio tracing and data mining with jaeger">
+<meta itemprop="datePublished" content="2021-03-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="41">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Data Mining from Tracing"/>
+<meta name="twitter:description" content="moar notes on istio tracing and data mining with jaeger"/>
 
   </head>
 
   <body class="ma0 avenir bg-near-white">
 
     
+   
+  
 
   <header>
-    <div class="pb3-m pb6-l bg-black">
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="http://thefind.live/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -107,240 +112,86 @@
   </div>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          Posts
-        </h1>
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="pa3 pa4-ns nested-copy-line-height nested-img">
-    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
-    <section class="flex-ns flex-wrap justify-around mt5">
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/gop1/" class="link black dim">
-        Golang essays (part I)
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   Starting with the printed Hello World, create a main.go file with the following content:  package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }  On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/langs2/" class="link black dim">
-        Rust 101
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it: https://github.com/knabben/spec-lang/tree/master/go  https://github.com/knabben/spec-lang/tree/master/rust  Guess  Tag 0.0.1   println! is used to send the value to stdout.  let mut guess = String::new();   For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/sawtooth/" class="link black dim">
-        Hyperledger Sawtooth
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sawtooth   A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella.  From the characteristics of the sawtooth we can have: distributed, immutable, secure.  There&#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.  An application can be a native business logic or a smart contract virtual machine.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/langs1/" class="link black dim">
-        Bootstraping languages
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Long time I don&#39;t write here.  And, as a matter to learn other languages I&#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey.  As a good start let&#39;s grab two modern interesting languages,  The summary bellow came from wikipedia an works as a good introduction about both: Summary  Golang   A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/sm/" class="link black dim">
-        Service Mesh
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introducing Kubernetes   November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/technical/" class="link black dim">
-        Technical indicators
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.  The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/statsmore/" class="link black dim">
-        More statistics and Python
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3. Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/prob/" class="link black dim">
-        Probability
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample space   An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.  | Experiment | Outcomes | Sample Space | |------------------|-------------|-------------------| | Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} | | Tooss a coin once| Head, Tail | S = {Head, Tail} | Events   An event, usually signified by E or any capital letter other than S, is the specification of the outcome of a trial and can consist of a single outcome or a set of outcomes.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/stats/" class="link black dim">
-        Statistics and Python
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Descriptive Measures  Measures of Central tendency for Ungrouped data  Mean   Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.  import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0 Median   Is the value of the middle term in a dataset that has been ranked in increasing order.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/apk/" class="link black dim">
-        Android APK hacking
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   The post today is about fun, Kali Linux and Android apps hacking. Check it out!  Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want. Host enumeration   The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary.
-    </div>
-  </div>
-</div>
-</div>
-      
-    </section>
 
-<ul class="pagination">
+
+
+
+  <div id="sharing" class="mt3">
+
     
-    <li class="page-item">
-        <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-    <a href="/posts/page/2/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-    </li>
-    
-    
-    
-    
+    <a href="https://www.facebook.com/sharer.php?u=http://thefind.live/posts/dd/readme/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
     
     
+    <a href="https://twitter.com/share?url=http://thefind.live/posts/dd/readme/&amp;text=Data%20Mining%20from%20Tracing" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
     
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/">1</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item active"><a class="page-link" href="/posts/page/3/">3</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/4/">4</a></li>
-    
-    
-    <li class="page-item">
-    <a href="/posts/page/4/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-        <a href="/posts/page/4/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-    </li>
-    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://thefind.live/posts/dd/readme/&amp;title=Data%20Mining%20from%20Tracing" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Data Mining from Tracing</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2021-03-07T00:00:00Z">March 7, 2021</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="introduction">Introduction</h1>
+
+<p>Continuing in the chapter 12 . Gathering Inishgts with Data Mining from the book Mastering Distributed Tracing</p>
+
+<p><a href="https://www.amazon.com/Mastering-Distributed-Tracing-performance-microservices/dp/1788628462">https://www.amazon.com/Mastering-Distributed-Tracing-performance-microservices/dp/1788628462</a></p>
+
+<h2 id="istio-setup">Istio setup</h2>
+
+<p>Bring the Jaeger on top of the sample cluster and enable the tracing on it.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+$<span style="color:#f92672">[</span>istio-1.9.1<span style="color:#f92672">]</span>&gt; kubectl apply -f samples/addons/jaeger.yaml</code></pre></div>
+<ul class="pa0">
+  
 </ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
 
-</article>
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <script type="text/javascript" async
