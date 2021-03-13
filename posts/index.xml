@@ -6,22 +6,10 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Mar 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://thefind.live/posts/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Data Mining from Tracing</title>
-      <link>http://thefind.live/posts/dd/readme/</link>
-      <pubDate>Sun, 07 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://thefind.live/posts/dd/readme/</guid>
-      <description>Introduction Continuing in the chapter 12 . Gathering Inishgts with Data Mining from the book Mastering Distributed Tracing
-https://www.amazon.com/Mastering-Distributed-Tracing-performance-microservices/dp/1788628462
-Istio setup Bring the Jaeger on top of the sample cluster and enable the tracing on it.
-$[istio-1.9.1]&amp;gt; kubectl apply -f samples/addons/jaeger.yaml </description>
-    </item>
     
     <item>
       <title>Istio drill down - Part I</title>
