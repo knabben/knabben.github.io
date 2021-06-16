@@ -37,7 +37,7 @@
 <meta itemprop="description" content="ClusterIP iptables configurations">
 <meta itemprop="datePublished" content="2021-06-14T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-06-14T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1430">
+<meta itemprop="wordCount" content="1432">
 
 
 
@@ -213,7 +213,7 @@ Connecting to nginx (10.96.34.82:80)
 10.244.2.2.80 &gt; 10.244.1.3.37328: Flags [S.], cksum 0x191b (incorrect -&gt; 0x8a59), seq 1687129480, ack 1038765637, win 65160, options [mss 1460,sackOK,TS val 3660625428 ecr 3348512221,nop,wscale 7], length 0
 10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [.], cksum 0x1913 (incorrect -&gt; 0xb5b8), seq 1, ack 1, win 502, options [nop,nop,TS val 3348512221 ecr 3660625428], length 0
 10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [P.], cksum 0x1957 (incorrect -&gt; 0x59ab), seq 1:69, ack 1, win 502, options [nop,nop,TS val 3348512221 ecr 3660625428], length 68: HTTP, length: 68</code></pre>
-<h3 id="kubeproxy-rules">Kube-Proxy rules</h3>
+<h2 id="kubeproxy-rules-and-chains">Kube-Proxy rules and chains</h2>
 
 <p>The mode is iptables, accordingly to the documentation:</p>
 <pre><code>In this mode, kube-proxy watches the Kubernetes control plane for the addition and removal of Service and Endpoint 
