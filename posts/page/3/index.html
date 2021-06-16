@@ -6,7 +6,7 @@
     
     <title>AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.70.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -36,9 +36,10 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/posts/" />
-<meta property="og:updated_time" content="2021-03-06T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-06-14T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
-<meta itemprop="description" content="sdaf"><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="sdaf">
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="sdaf"/>
 
@@ -126,12 +127,31 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="http://thefind.live/posts/gop1/" class="link black dim">
+        Golang essays (part I)
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction   Starting with the printed Hello World, create a main.go file with the following content:
+ package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }
+ On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="http://thefind.live/posts/langs2/" class="link black dim">
         Rust 101
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it: https://github.com/knabben/spec-lang/tree/master/go  https://github.com/knabben/spec-lang/tree/master/rust  Guess  Tag 0.0.1   println! is used to send the value to stdout.  let mut guess = String::new();   For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.
+      Introduction   To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it:
+https://github.com/knabben/spec-lang/tree/master/go   https://github.com/knabben/spec-lang/tree/master/rust     Guess  Tag 0.0.1   println! is used to send the value to stdout.
+ let mut guess = String::new();
     </div>
   </div>
 </div>
@@ -146,7 +166,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sawtooth   A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella.  From the characteristics of the sawtooth we can have: distributed, immutable, secure.  There&#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.  An application can be a native business logic or a smart contract virtual machine.
+      Sawtooth   A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella.  From the characteristics of the sawtooth we can have: distributed, immutable, secure.
+ There&#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.
+ An application can be a native business logic or a smart contract virtual machine.
     </div>
   </div>
 </div>
@@ -161,7 +183,10 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Long time I don&#39;t write here.  And, as a matter to learn other languages I&#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey.  As a good start let&#39;s grab two modern interesting languages,  The summary bellow came from wikipedia an works as a good introduction about both: Summary  Golang   A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
+      Long time I don&#39;t write here.
+ And, as a matter to learn other languages I&#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey.  As a good start let&#39;s grab two modern interesting languages,
+ The summary bellow came from wikipedia an works as a good introduction about both:
+Summary  Golang   A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
     </div>
   </div>
 </div>
@@ -191,7 +216,8 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.  The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
+      Introduction   According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
+ The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
     </div>
   </div>
 </div>
@@ -206,7 +232,8 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3. Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.
+      Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.
     </div>
   </div>
 </div>
@@ -221,7 +248,8 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample space   An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.  | Experiment | Outcomes | Sample Space | |------------------|-------------|-------------------| | Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} | | Tooss a coin once| Head, Tail | S = {Head, Tail} | Events   An event, usually signified by E or any capital letter other than S, is the specification of the outcome of a trial and can consist of a single outcome or a set of outcomes.
+      Sample space   An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.
+ | Experiment | Outcomes | Sample Space | |------------------|-------------|-------------------| | Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} | | Tooss a coin once| Head, Tail | S = {Head, Tail} |
     </div>
   </div>
 </div>
@@ -236,7 +264,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Descriptive Measures  Measures of Central tendency for Ungrouped data  Mean   Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.  import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0 Median   Is the value of the middle term in a dataset that has been ranked in increasing order.
+      Descriptive Measures  Measures of Central tendency for Ungrouped data  Mean   Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.
+ import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0
+  Median   Is the value of the middle term in a dataset that has been ranked in increasing order.
     </div>
   </div>
 </div>
@@ -251,93 +281,40 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   The post today is about fun, Kali Linux and Android apps hacking. Check it out!  Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want. Host enumeration   The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/cddeis/" class="link black dim">
-        Continuous Deployment and DEIS
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.  &#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;  What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback.
+      Introduction   The post today is about fun, Kali Linux and Android apps hacking. Check it out!
+ Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
+  Host enumeration   The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary.
     </div>
   </div>
 </div>
 </div>
       
     </section>
-
 <ul class="pagination">
-    
-    <li class="page-item">
-        <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-    </li>
-    
-    <li class="page-item">
+  <li class="page-item">
+    <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+  </li>
+  <li class="page-item">
     <a href="/posts/page/2/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-    </li>
-    
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/">1</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item active"><a class="page-link" href="/posts/page/3/">3</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/4/">4</a></li>
-    
-    
-    <li class="page-item">
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/">1</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/2/">2</a>
+  </li>
+  <li class="page-item active">
+    <a class="page-link" href="/posts/page/3/">3</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/4/">4</a>
+  </li>
+  <li class="page-item">
     <a href="/posts/page/4/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-        <a href="/posts/page/4/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-    </li>
-    
+  </li>
+  <li class="page-item">
+    <a href="/posts/page/4/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+  </li>
 </ul>
 
 </article>

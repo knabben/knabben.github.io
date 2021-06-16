@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Kubernetes Audit Sink | AK</title>
+    <title>Kube-proxy ClusterIP | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.74.3" />
     
@@ -27,30 +27,24 @@
 
     
     
-    <meta property="og:title" content="Kubernetes Audit Sink" />
-<meta property="og:description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.
- Kubernetes has 4 stages:
-RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e." />
+    <meta property="og:title" content="Kube-proxy ClusterIP" />
+<meta property="og:description" content="ClusterIP iptables configurations" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://thefind.live/posts/kube-audit/" />
-<meta property="article:published_time" content="2019-11-27T10:00:00+00:00" />
-<meta property="article:modified_time" content="2019-11-27T10:00:00+00:00" />
-<meta itemprop="name" content="Kubernetes Audit Sink">
-<meta itemprop="description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.
- Kubernetes has 4 stages:
-RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.">
-<meta itemprop="datePublished" content="2019-11-27T10:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-11-27T10:00:00+00:00" />
-<meta itemprop="wordCount" content="389">
+<meta property="og:url" content="http://thefind.live/posts/kproxy/readme/" />
+<meta property="article:published_time" content="2021-06-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-14T00:00:00+00:00" />
+<meta itemprop="name" content="Kube-proxy ClusterIP">
+<meta itemprop="description" content="ClusterIP iptables configurations">
+<meta itemprop="datePublished" content="2021-06-14T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-06-14T00:00:00+00:00" />
+<meta itemprop="wordCount" content="889">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Kubernetes Audit Sink"/>
-<meta name="twitter:description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.
- Kubernetes has 4 stages:
-RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e."/>
+<meta name="twitter:title" content="Kube-proxy ClusterIP"/>
+<meta name="twitter:description" content="ClusterIP iptables configurations"/>
 
   </head>
 
@@ -141,20 +135,20 @@ RequestReceived - The stage for events generated as soon as the audit handler re
   <div id="sharing" class="mt3">
 
     
-    <a href="https://www.facebook.com/sharer.php?u=http://thefind.live/posts/kube-audit/" class="facebook no-underline" aria-label="share on Facebook">
+    <a href="https://www.facebook.com/sharer.php?u=http://thefind.live/posts/kproxy/readme/" class="facebook no-underline" aria-label="share on Facebook">
       <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
 
     </a>
 
     
     
-    <a href="https://twitter.com/share?url=http://thefind.live/posts/kube-audit/&amp;text=Kubernetes%20Audit%20Sink" class="twitter no-underline" aria-label="share on Twitter">
+    <a href="https://twitter.com/share?url=http://thefind.live/posts/kproxy/readme/&amp;text=Kube-proxy%20ClusterIP" class="twitter no-underline" aria-label="share on Twitter">
       <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
 
     </a>
 
     
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://thefind.live/posts/kube-audit/&amp;title=Kubernetes%20Audit%20Sink" class="linkedin no-underline" aria-label="share on LinkedIn">
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://thefind.live/posts/kproxy/readme/&amp;title=Kube-proxy%20ClusterIP" class="linkedin no-underline" aria-label="share on LinkedIn">
       <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
 </svg>
@@ -162,194 +156,117 @@ RequestReceived - The stage for events generated as soon as the audit handler re
     </a>
   </div>
 
-      <h1 class="f1 athelas mt3 mb1">Kubernetes Audit Sink</h1>
+      <h1 class="f1 athelas mt3 mb1">Kube-proxy ClusterIP</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2019-11-27T10:00:00Z">November 27, 2019</time>
+      <time class="f6 mv4 dib tracked" datetime="2021-06-14T00:00:00Z">June 14, 2021</time>
 
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-3">
-<h3 id="headline-1">
-Introduction
-</h3>
-<div id="outline-text-headline-1" class="outline-text-3">
-<p>
-The idea of this post is to test the Audit dynamic backend with a KIND cluster.</p>
-<p>
-Kubernetes has 4 stages:</p>
-<div id="outline-container-headline-2" class="outline-5">
-<h5 id="headline-2">
-RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.
-</h5>
-</div>
-<div id="outline-container-headline-3" class="outline-5">
-<h5 id="headline-3">
-ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.g. watch).
-</h5>
-</div>
-<div id="outline-container-headline-4" class="outline-5">
-<h5 id="headline-4">
-ResponseComplete - The response body has been completed and no more bytes will be sent.
-</h5>
-</div>
-<div id="outline-container-headline-5" class="outline-5">
-<h5 id="headline-5">
-Panic - Events generated when a panic occurred.
-</h5>
-<div id="outline-text-headline-5" class="outline-text-5">
-<p>
-And 4 levels:</p>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-5">
-<h5 id="headline-6">
-None - don’t log events that match this rule.
-</h5>
-</div>
-<div id="outline-container-headline-7" class="outline-5">
-<h5 id="headline-7">
-Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.
-</h5>
-</div>
-<div id="outline-container-headline-8" class="outline-5">
-<h5 id="headline-8">
-Request - log event metadata and request body but not response body. This does not apply for non-resource requests.
-</h5>
-</div>
-<div id="outline-container-headline-9" class="outline-5">
-<h5 id="headline-9">
-RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.
-</h5>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-10" class="outline-3">
-<h3 id="headline-10">
-Configuring Kind
-</h3>
-<div id="outline-text-headline-10" class="outline-text-3">
-<p>
-It is possible to overwrite the kubeadm configuration passing multiple extra args for the REST API server,
-to enable this it is necessary to create the following flags:</p>
-<p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># config.yaml</span>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="introduction">Introduction</h2>
 
-<span style="color:#66d9ef">kind</span>: Cluster
-<span style="color:#66d9ef">apiVersion</span>: kind.sigs.k8s.io/v1alpha3
-<span style="color:#66d9ef">kubeadmConfigPatches</span>:
-- <span style="color:#e6db74">|
-</span><span style="color:#e6db74">  apiVersion: kubeadm.k8s.io/v1beta2</span>
-  <span style="color:#66d9ef">kind</span>: ClusterConfiguration
-  <span style="color:#66d9ef">metadata</span>:
-    <span style="color:#66d9ef">name</span>: config
-  <span style="color:#66d9ef">apiServer</span>:
-    <span style="color:#66d9ef">extraArgs</span>:
-      <span style="color:#66d9ef">feature-gates</span>: <span style="color:#e6db74">&#34;DynamicAuditing=true&#34;</span>
-      <span style="color:#66d9ef">audit-dynamic-configuration</span>: <span style="color:#e6db74">&#34;true&#34;</span>
-      <span style="color:#66d9ef">runtime-config</span>: <span style="color:#e6db74">&#34;auditregistration.k8s.io/v1alpha1=true&#34;</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-11" class="outline-3">
-<h3 id="headline-11">
-Configuring the Audit Sink
-</h3>
-<div id="outline-text-headline-11" class="outline-text-3">
-<p>
-It&#39;s possible to set the level and stage per URL configuration setting the host these filtered events go,
-for filtering rules the parameter –audit-policy-file must be set with Policy file.</p>
-<p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># audit.yaml</span>
+<p>On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the <code>--mode=iptables</code>
+and a few debugging commands to illustrate all the packet paths and endpoints. There's a simple cluster with 3 nodes
+on v1.21.1 created with Kind and kindnet as CNI.</p>
 
-<span style="color:#66d9ef">apiVersion</span>: auditregistration.k8s.io/v1alpha1
-<span style="color:#66d9ef">kind</span>: AuditSink
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: mysink
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">policy</span>:
-    <span style="color:#66d9ef">level</span>: Metadata
-    <span style="color:#66d9ef">stages</span>:
-    - ResponseComplete
-  <span style="color:#66d9ef">webhook</span>:
-    <span style="color:#66d9ef">throttle</span>:
-      <span style="color:#66d9ef">qps</span>: <span style="color:#ae81ff">10</span>
-      <span style="color:#66d9ef">burst</span>: <span style="color:#ae81ff">15</span>
-    <span style="color:#66d9ef">clientConfig</span>:
-      <span style="color:#66d9ef">url</span>: <span style="color:#e6db74">&#34;https://generic-web-site/hook&#34;</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-12" class="outline-3">
-<h3 id="headline-12">
-Starting kind
-</h3>
-<div id="outline-text-headline-12" class="outline-text-3">
-<p>
-To start the KIND with the configuration file and setup the Audit Sink:</p>
-<p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kind create cluster --config config.yaml
-$ kubectl create -f audit.yaml</code></pre></div></p>
-<p>
-This is an example from the KIND cluster:</p>
-<p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{
-  <span style="color:#66d9ef">&#34;kind&#34;: </span><span style="color:#e6db74">&#34;EventList&#34;</span>,
-  <span style="color:#66d9ef">&#34;apiVersion&#34;: </span><span style="color:#e6db74">&#34;audit.k8s.io/v1&#34;</span>,
-  <span style="color:#66d9ef">&#34;metadata&#34;: </span>{},
-  <span style="color:#66d9ef">&#34;items&#34;: </span>[
-    {
-      <span style="color:#66d9ef">&#34;level&#34;: </span><span style="color:#e6db74">&#34;Metadata&#34;</span>,
-      <span style="color:#66d9ef">&#34;auditID&#34;: </span><span style="color:#e6db74">&#34;73e1e2e3-5a68-460e-8aa8-aece72ffacb3&#34;</span>,
-      <span style="color:#66d9ef">&#34;stage&#34;: </span><span style="color:#e6db74">&#34;ResponseComplete&#34;</span>,
-      <span style="color:#66d9ef">&#34;requestURI&#34;: </span><span style="color:#e6db74">&#34;/api/v1/namespaces/kube-system/endpoints/kube-scheduler?timeout=10s&#34;</span>,
-      <span style="color:#66d9ef">&#34;verb&#34;: </span><span style="color:#e6db74">&#34;update&#34;</span>,
-      <span style="color:#66d9ef">&#34;user&#34;: </span>{
-        <span style="color:#66d9ef">&#34;username&#34;: </span><span style="color:#e6db74">&#34;system:kube-scheduler&#34;</span>,
-        <span style="color:#66d9ef">&#34;groups&#34;: </span>[
-          <span style="color:#e6db74">&#34;system:authenticated&#34;</span>
-        ]
-      },
-      <span style="color:#66d9ef">&#34;sourceIPs&#34;: </span>[
-        <span style="color:#e6db74">&#34;172.17.0.3&#34;</span>
-      ],
-      <span style="color:#66d9ef">&#34;userAgent&#34;: </span><span style="color:#e6db74">&#34;kube-scheduler/v1.16.3 (linux/amd64) kubernetes/b3cbbae/leader-election&#34;</span>,
-      <span style="color:#66d9ef">&#34;objectRef&#34;: </span>{
-        <span style="color:#66d9ef">&#34;resource&#34;: </span><span style="color:#e6db74">&#34;endpoints&#34;</span>,
-        <span style="color:#66d9ef">&#34;namespace&#34;: </span><span style="color:#e6db74">&#34;kube-system&#34;</span>,
-        <span style="color:#66d9ef">&#34;name&#34;: </span><span style="color:#e6db74">&#34;kube-scheduler&#34;</span>,
-        <span style="color:#66d9ef">&#34;uid&#34;: </span><span style="color:#e6db74">&#34;5bfc44f4-b62f-4395-99d0-9c24e1ee1b83&#34;</span>,
-        <span style="color:#66d9ef">&#34;apiVersion&#34;: </span><span style="color:#e6db74">&#34;v1&#34;</span>,
-        <span style="color:#66d9ef">&#34;resourceVersion&#34;: </span><span style="color:#e6db74">&#34;460&#34;</span>
-      },
-      <span style="color:#66d9ef">&#34;responseStatus&#34;: </span>{
-        <span style="color:#66d9ef">&#34;metadata&#34;: </span>{},
-        <span style="color:#66d9ef">&#34;code&#34;: </span><span style="color:#ae81ff">200</span>
-      },
-      <span style="color:#66d9ef">&#34;requestReceivedTimestamp&#34;: </span><span style="color:#e6db74">&#34;2019-11-28T02:32:01.690713Z&#34;</span>,
-      <span style="color:#66d9ef">&#34;stageTimestamp&#34;: </span><span style="color:#e6db74">&#34;2019-11-28T02:32:01.693278Z&#34;</span>,
-      <span style="color:#66d9ef">&#34;annotations&#34;: </span>{
-        <span style="color:#66d9ef">&#34;authorization.k8s.io/decision&#34;: </span><span style="color:#e6db74">&#34;allow&#34;</span>,
-        <span style="color:#66d9ef">&#34;authorization.k8s.io/reason&#34;: </span><span style="color:#e6db74">&#34;RBAC: allowed by ClusterRoleBinding \&#34;system:kube-scheduler\&#34; of ClusterRole \&#34;system:kube-scheduler\&#34; to User \&#34;system:kube-scheduler\&#34;&#34;</span>
-      }
-    }
-  ]
-}</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-13" class="outline-3">
-<h3 id="headline-13">
-Listening 
-</h3>
-<div id="outline-text-headline-13" class="outline-text-3">
-<p>
+<h2 id="setup">Setup</h2>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/aVdR6JeEyT8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-</p>
-</div>
-</div>
+<p>These are the following ips:</p>
+<pre><code>$ kubectl get nodes -A -o wide                                                                                                                                                                   [21:42:09]
+
+NAME                    STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE       KERNEL-VERSION     CONTAINER-RUNTIME
+cluster-control-plane   Ready    control-plane,master   26h   v1.21.1   172.18.0.4    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2
+cluster-worker          Ready    &lt;none&gt;                 26h   v1.21.1   172.18.0.2    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2
+cluster-worker2         Ready    &lt;none&gt;                 26h   v1.21.1   172.18.0.3    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2</code></pre>
+<p>Setting up the pods, a client one and a nginx server:</p>
+<pre><code>$ kubectl run client --image=busybox --restart=Never -- sleep 1d
+$ kubectl run nginx --image=nginx
+$ kubectl expose pod/nginx --name nginx --port 80
+
+$ kubectl get pods -o wide
+NAME     READY   STATUS    RESTARTS   AGE     IP           NODE              NOMINATED NODE   READINESS GATES
+client   1/1     Running   0          7m44s   10.244.1.3   cluster-worker    &lt;none&gt;           &lt;none&gt;
+nginx    1/1     Running   0          25h     10.244.2.2   cluster-worker2   &lt;none&gt;           &lt;none&gt;
+
+$ kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+nginx        ClusterIP   10.96.34.82     &lt;none&gt;        80/TCP    26h</code></pre>
+<p>So we have Pod client on <code>10.244.1.3</code>, and nginx on <code>10.244.2.2</code> and the service running on ClusterIP <code>10.96.34.82</code>
+this is a virtual IP address, and as we can see will be used to load balance the traffic between the pods
+behind the service.</p>
+
+<p>Lets take a look in the Endpoint object, as we can see the service is:</p>
+<pre><code>$ kubectl get endpoints nginx
+NAME    ENDPOINTS       AG
+nginx   10.244.2.2:80   2d1h</code></pre>
+<h2 id="connection-tests">Connection tests</h2>
+
+<p>From the <code>10.244.1.3</code> our client gonna hit on nginx on <code>10.244.2.2</code>, via the service virtual IP (<code>10.96.34.82</code>).</p>
+<pre><code>$ host nginx
+nginx.default.svc.cluster.local has address 10.96.34.82
+$ wget -S -O index.html nginx
+Connecting to nginx (10.96.34.82:80)
+...</code></pre>
+<p>Running tcpdump in the the server, we can see the correct handshake.</p>
+<pre><code>10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [S], cksum 0x191b (incorrect -&gt; 0x1060), seq 1038765636, win 64240, options [mss 1460,sackOK,TS val 3348512221 ecr 0,nop,wscale 7], length 0
+10.244.2.2.80 &gt; 10.244.1.3.37328: Flags [S.], cksum 0x191b (incorrect -&gt; 0x8a59), seq 1687129480, ack 1038765637, win 65160, options [mss 1460,sackOK,TS val 3660625428 ecr 3348512221,nop,wscale 7], length 0
+10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [.], cksum 0x1913 (incorrect -&gt; 0xb5b8), seq 1, ack 1, win 502, options [nop,nop,TS val 3348512221 ecr 3660625428], length 0
+10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [P.], cksum 0x1957 (incorrect -&gt; 0x59ab), seq 1:69, ack 1, win 502, options [nop,nop,TS val 3348512221 ecr 3660625428], length 68: HTTP, length: 68</code></pre>
+<h3 id="kubeproxy-rules">Kube-Proxy rules</h3>
+
+<p>The mode is iptables, accordingly to the documentation:</p>
+<pre><code>In this mode, kube-proxy watches the Kubernetes control plane for the addition and removal of Service and Endpoint 
+objects. For each Service, it installs iptables rules, which capture traffic to the Service&#39;s clusterIP and port, 
+and redirect that traffic to one of the Service&#39;s backend sets. For each Endpoint object, 
+it installs iptables rules which select a backend Pod.</code></pre>
+<p>OK, lets check the rules created by <code>iptables-save</code> in the worker, there're some interesting rules created regarding
+our service and other paths, a nice diagram around from StackRox [1], shows the proper flow in the chains</p>
+
+<img src="https://res.cloudinary.com/stackrox/v1578619751/kube-networking-5_zswvwp.svg" alt="" class="" style="width: 100%; ">
+
+<pre><code>*nat
+...
+-A PREROUTING -m comment --comment &#34;kubernetes service portals&#34; -j KUBE-SERVICES
+-A OUTPUT -m comment --comment &#34;kubernetes service portals&#34; -j KUBE-SERVICES
+-A POSTROUTING -m comment --comment &#34;kubernetes postrouting rules&#34; -j KUBE-POSTROUTING
+...</code></pre>
+<p>Important things to notice here, the first chain on NAT PREROUTING move packets to the KUBE-SERVICE chain.</p>
+<pre><code>-A KUBE-MARK-DROP -j MARK --set-xmark 0x8000/0x8000
+-A KUBE-MARK-MASQ -j MARK --set-xmark 0x4000/0x4000
+-A KUBE-POSTROUTING -m mark ! --mark 0x4000/0x4000 -j RETURN
+-A KUBE-POSTROUTING -j MARK --set-xmark 0x4000/0x0
+-A KUBE-POSTROUTING -m comment --comment &#34;kubernetes service traffic requiring SNAT&#34; -j MASQUERADE --random-fully</code></pre>
+<p>This part is important the packet can be marked as MASQ or DROP, a SOURCE NAT Masquerade can happen in
+the KUBE-POSTROUTING IF the packet comes from outside the cluster (not from a Pod), meaning the IP source
+is going to be the Node ip instead.</p>
+
+<p>Checking the KUBE-SERVICE chain. There's a Target on the <code>KUBE-SVC-2CMXP7HKUVJN7L6M</code> chain when the destination is
+for IP address of the service (from any source) on TCP 80.</p>
+<pre><code>$ iptables -v --numeric --table nat --list KUBE-SERVICES
+Chain KUBE-SERVICES (2 references)
+ pkts bytes target                     prot opt in     out     source               destination         
+    0     0 KUBE-SVC-2CMXP7HKUVJN7L6M  tcp  --  *      *       0.0.0.0/0            10.96.34.82          /* default/nginx cluster IP */ tcp dpt:80</code></pre>
+<p>Checking this Chain in particular a few things to consider, 1) the KUBE-MARK-MASQ tag (External SNAT applied) when
+the traffic comes from outside the cluster, 2) another JUMP to <code>KUBE-SEP-HUXRPHBUO34UVPEF</code></p>
+<pre><code>$ iptables -v --numeric --table nat --list KUBE-SVC-2CMXP7HKUVJN7L6M 
+Chain KUBE-SVC-2CMXP7HKUVJN7L6M (1 references)
+ pkts bytes target                      prot opt in     out     source               destination         
+    0     0 KUBE-MARK-MASQ              tcp  --  *      *      !10.244.0.0/16        10.96.34.82          /* default/nginx cluster IP */ tcp dpt:80
+    0     0 KUBE-SEP-HUXRPHBUO34UVPEF   all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* default/nginx */</code></pre>
+<p>Finally, the KUBE-SEP chain finalized with 1) Ensure the SNAT happens, 2) Finally a DNAT is created, translating
+the CluserIP address to the final POD IP address, iptables will ensure a load balancing with probabilities
+if multiple pod exists under this service.</p>
+<pre><code>$ iptables -v --numeric --table nat --list KUBE-SEP-HUXRPHBUO34UVPEF
+Chain KUBE-SEP-HUXRPHBUO34UVPEF (1 references)
+pkts bytes target       prot opt in     out     source               destination
+0     0    KUBE-MARK-MASQ  all  --  *      *       10.244.2.2           0.0.0.0/0            /* default/nginx */
+0     0    DNAT            tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            /* default/nginx */ tcp to:10.244.2.2:80</code></pre>
+<h2 id="references">References</h2>
+
+<p>[1] <a href="https://www.stackrox.com/post/2020/01/kubernetes-networking-demystified/">https://www.stackrox.com/post/2020/01/kubernetes-networking-demystified/</a></p>
+
+<p>[2] <a href="https://courses.academy.tigera.io/courses/course-v1">https://courses.academy.tigera.io/courses/course-v1</a></p>
 <ul class="pa0">
   
 </ul>

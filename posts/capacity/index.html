@@ -6,7 +6,7 @@
     
     <title>Tsung Capacity Test | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.70.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,22 +28,29 @@
     
     
     <meta property="og:title" content="Tsung Capacity Test" />
-<meta property="og:description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.  NOTE If you are interested on real traffic replication, consider this project [2]. Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions." />
+<meta property="og:description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+ NOTE If you are interested on real traffic replication, consider this project [2].
+  Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/capacity/" />
 <meta property="article:published_time" content="2015-07-26T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-07-26T00:00:00+00:00" />
 <meta itemprop="name" content="Tsung Capacity Test">
-<meta itemprop="description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.  NOTE If you are interested on real traffic replication, consider this project [2]. Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.">
-<meta itemprop="datePublished" content="2015-07-26T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2015-07-26T00:00:00&#43;00:00" />
+<meta itemprop="description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+ NOTE If you are interested on real traffic replication, consider this project [2].
+  Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.">
+<meta itemprop="datePublished" content="2015-07-26T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-07-26T00:00:00+00:00" />
 <meta itemprop="wordCount" content="673">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Tsung Capacity Test"/>
-<meta name="twitter:description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.  NOTE If you are interested on real traffic replication, consider this project [2]. Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions."/>
+<meta name="twitter:description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+ NOTE If you are interested on real traffic replication, consider this project [2].
+  Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions."/>
 
   </head>
 
@@ -164,42 +171,43 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
+<div id="outline-text-headline-1" class="outline-text-3">
 <p>
  In this post we are going to analyze a very interesting Erlang distributed load testing tool, called <strong>Tsung</strong> [1]. 
- The cool things about this tool is the complete HTML report of each connection made.
-</p>
+ The cool things about this tool is the complete HTML report of each connection made.</p>
 <p>
- <strong><strong>NOTE</strong></strong> If you are interested on real traffic replication, consider this project [2].
-</p>
+ <strong><strong>NOTE</strong></strong> If you are interested on real traffic replication, consider this project [2].</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
 Configuration
 </h3>
+<div id="outline-text-headline-2" class="outline-text-3">
 <p>
- On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.
-</p>
+ On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</p>
+<div id="outline-container-headline-3" class="outline-4">
 <h4 id="headline-3">
 Master 
 </h4>
+<div id="outline-text-headline-3" class="outline-text-4">
 <p>
- We are going to start a distributed load with a base setup for clients and server. For this case we have 5 x M3.large instances, with shared VPC, SSH access and Tsung already installed.
-</p>
+ We are going to start a distributed load with a base setup for clients and server. For this case we have 5 x M3.large instances, with shared VPC, SSH access and Tsung already installed.</p>
 <p>
- Configure your /etc/hosts file:
-</p>
+ Configure your /etc/hosts file:</p>
 <p>
  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 172.31.24.176   node1
  172.31.24.173   node2
  172.31.24.174   node3
  172.31.24.172   node4
  172.31.24.175   node5
- </code></pre></div>
-</p>
+ </code></pre></div></p>
 <p>
- Enable Nginx to host logs on /etc/nginx/sites-enabled/default:
-</p>
+ Enable Nginx to host logs on /etc/nginx/sites-enabled/default:</p>
 <p>
  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"> <span style="color:#66d9ef">root</span> <span style="color:#e6db74">/home/admin/.tsung/log</span>;
 
@@ -210,11 +218,9 @@ Master
     <span style="color:#f92672">autoindex</span> <span style="color:#66d9ef">on</span>;
 	 <span style="color:#f92672">try_files</span> $uri $uri/ =<span style="color:#ae81ff">404</span>;
  }
- </code></pre></div>
-</p>
+ </code></pre></div></p>
 <p>
- Lets enable the nginx.conf to handle more concurrent connections:
-</p>
+ Lets enable the nginx.conf to handle more concurrent connections:</p>
 <p>
  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"> <span style="color:#66d9ef">worker_processes</span> <span style="color:#ae81ff">10</span>;
  <span style="color:#66d9ef">pid</span> <span style="color:#e6db74">/run/nginx.pid</span>;
@@ -223,13 +229,11 @@ Master
   <span style="color:#f92672">worker_connections</span> <span style="color:#ae81ff">20000</span>;
   <span style="color:#f92672">multi_accept</span> <span style="color:#66d9ef">on</span>;
  }
- </code></pre></div>
-</p>
+ </code></pre></div></p>
 <p>
  In the sequence, we define the Tsung configuration file with the load and arrival packets time.
   We are going to do a progressive load of 2 minutes on the first batch in a rate of 500 rps.
- On the second batch it&#39;s going to be increased to 1000 rps for more 2 minutes
-</p>
+ On the second batch it&#39;s going to be increased to 1000 rps for more 2 minutes</p>
 <p>
  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -336,138 +340,168 @@ Master
  <span style="color:#f92672">&lt;/tsung&gt;</span>
  </code></pre></td></tr></table>
 </div>
+</div></p>
 </div>
-</p>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
 Running the load test
 </h3>
+<div id="outline-text-headline-4" class="outline-text-3">
 <p>
- Initialize the test against another M3.large machine:
-</p>
+ Initialize the test against another M3.large machine:</p>
 <p>
  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ tsung -f tsung.xml start
- </code></pre></div>
-</p>
+ </code></pre></div></p>
 <p>
- For this start configuration we have:
-</p>
+ For this start configuration we have:</p>
+<div id="outline-container-headline-5" class="outline-6">
 <h6 id="headline-5">
 1000 rps * 10 for 2 minutes 
 </h6>
+</div>
+<div id="outline-container-headline-6" class="outline-6">
 <h6 id="headline-6">
 1.145.850 requests
 </h6>
+</div>
+<div id="outline-container-headline-7" class="outline-6">
 <h6 id="headline-7">
 11.18ms average response time
 </h6>
+</div>
+<div id="outline-container-headline-8" class="outline-6">
 <h6 id="headline-8">
 1.18Gb of data
 </h6>
+<div id="outline-text-headline-8" class="outline-text-6">
 <p>
- Nginx is handling 9.6k rps with 10 workers on 12% of CPU in the average.
-</p>
+ Nginx is handling 9.6k rps with 10 workers on 12% of CPU in the average.</p>
 <p>
- <img src="req-100.png" alt="req-100.png" title="req-100.png" />
-</p>
+ <img src="req-100.png" alt="req-100.png" title="req-100.png" /></p>
 <p>
- In the second test we are going to increase the number of requests to 50
-</p>
+ In the second test we are going to increase the number of requests to 50</p>
 <p>
  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">  &lt;session name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http-example&#34;</span> probability<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ts_http&#34;</span>&gt;
     &lt;<span style="color:#66d9ef">for</span> from<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> to<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;50&#34;</span> var<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i&#34;</span>&gt;
      &lt;request&gt; &lt;http url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GET&#34;</span> version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.1&#34;</span> &gt;&lt;/http&gt; &lt;/request&gt;
     &lt;/for&gt;
   &lt;/session&gt;
- </code></pre></div>
-</p>
+ </code></pre></div></p>
 <p>
- <img src="ntop.png" alt="ntop.png" title="ntop.png" />
-</p>
+ <img src="ntop.png" alt="ntop.png" title="ntop.png" /></p>
 <p>
- In the next 4 minutes we can see the increase of CPU usage to 100% distributed by the workers. 
-</p>
+ In the next 4 minutes we can see the increase of CPU usage to 100% distributed by the workers. </p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-6">
 <h6 id="headline-9">
 9.148.140 requests
 </h6>
+</div>
+<div id="outline-container-headline-10" class="outline-6">
 <h6 id="headline-10">
 27067 req with 500 status code. 
 </h6>
+</div>
+<div id="outline-container-headline-11" class="outline-6">
 <h6 id="headline-11">
 182580 connection * 50.
 </h6>
+<div id="outline-text-headline-11" class="outline-text-6">
 <p>
  <img src="req-200.png" alt="req-200.png" title="req-200.png" />
- <img src="req-201.png" alt="req-201.png" title="req-201.png" />
-</p>
+ <img src="req-201.png" alt="req-201.png" title="req-201.png" /></p>
 <p>
- On 120s our arrivalphase goes to 1000 conn/s, we can see the transaction duration increasing and the staled 25k rps.
-</p>
+ On 120s our arrivalphase goes to 1000 conn/s, we can see the transaction duration increasing and the staled 25k rps.</p>
 <p>
- We hit the limit nginx for this server setup, so for more fun lets increase the workers by 100, and rerun the tests:
-</p>
+ We hit the limit nginx for this server setup, so for more fun lets increase the workers by 100, and rerun the tests:</p>
 <p>
  <img src="error-300.png" alt="error-300.png" title="error-300.png" />
- <img src="mean-303.png" alt="mean-303.png" title="mean-303.png" />
-</p>
+ <img src="mean-303.png" alt="mean-303.png" title="mean-303.png" /></p>
 <p>
- Now we have 1000 connections * 100 = 100k rps, after 120s we have a DDoS.
-</p>
+ Now we have 1000 connections * 100 = 100k rps, after 120s we have a DDoS.</p>
 <p>
  <img src="simul-301.png" alt="simul-301.png" title="simul-301.png" />
- <img src="req-302.png" alt="req-302.png" title="req-302.png" />
-</p>
+ <img src="req-302.png" alt="req-302.png" title="req-302.png" /></p>
 <p>
- We have a huge amount of open connections in the queue and after 11 minutes it was still processing it.
-</p>
+ We have a huge amount of open connections in the queue and after 11 minutes it was still processing it.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
 <h3 id="headline-12">
 Elastic Load Balancing - 2x
 </h3>
+<div id="outline-text-headline-12" class="outline-text-3">
 <p>
-To finalize this post lets scale it horizontally using EBS [3] of AWS. Lets put 2 instances M3.large behind it.
-</p>
+To finalize this post lets scale it horizontally using EBS [3] of AWS. Lets put 2 instances M3.large behind it.</p>
 <p>
 <img src="trans-400.png" alt="trans-400.png" title="trans-400.png" />
 <img src="trans-401.png" alt="trans-401.png" title="trans-401.png" />
-<img src="trans-402.png" alt="trans-402.png" title="trans-402.png" />
-</p>
+<img src="trans-402.png" alt="trans-402.png" title="trans-402.png" /></p>
 <p>
-We can see the split between the two boxes, there&#39;s still a high response time and:
-</p>
+We can see the split between the two boxes, there&#39;s still a high response time and:</p>
+<div id="outline-container-headline-13" class="outline-5">
 <h5 id="headline-13">
 5.974.601 req with status code 200 
 </h5>
+</div>
+<div id="outline-container-headline-14" class="outline-5">
 <h5 id="headline-14">
 1.172.873 req with status code 503 (unavailable service).
 </h5>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
 <h3 id="headline-15">
 Conclusion
 </h3>
+<div id="outline-text-headline-15" class="outline-text-3">
 <p>
  This test served as an introduction on how to work with Tsung and organize a load test with our infrastructure, it shows some ideas and numbers 
- for a better insight on how to build your own.
-</p>
+ for a better insight on how to build your own.</p>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-3">
 <h3 id="headline-16">
 Listening
 </h3>
+<div id="outline-text-headline-16" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/R0IUR4gkPIE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
 </p>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-3">
 <h3 id="headline-17">
 Reference
 </h3>
+<div id="outline-text-headline-17" class="outline-text-3">
+<div id="outline-container-headline-18" class="outline-6">
 <h6 id="headline-18">
 [1] <a href="http://tsung.erlang-projects.org/">http://tsung.erlang-projects.org/</a>
 </h6>
+</div>
+<div id="outline-container-headline-19" class="outline-6">
 <h6 id="headline-19">
 [2] <a href="https://github.com/knabben/kaboom">https://github.com/knabben/kaboom</a>
 </h6>
+</div>
+<div id="outline-container-headline-20" class="outline-6">
 <h6 id="headline-20">
 [3] <a href="http://aws.amazon.com/pt/elasticloadbalancing/">http://aws.amazon.com/pt/elasticloadbalancing/</a>
 </h6>
+</div>
+</div>
+</div>
 <ul class="pa0">
   
 </ul>

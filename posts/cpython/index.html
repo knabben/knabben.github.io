@@ -6,7 +6,7 @@
     
     <title>CPython Debugging | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.70.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,22 +28,26 @@
     
     
     <meta property="og:title" content="CPython Debugging" />
-<meta property="og:description" content="Introduction   Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.  The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?" />
+<meta property="og:description" content="Introduction   Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.
+ The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/cpython/" />
 <meta property="article:published_time" content="2016-04-16T00:00:00+00:00" />
 <meta property="article:modified_time" content="2016-04-16T00:00:00+00:00" />
 <meta itemprop="name" content="CPython Debugging">
-<meta itemprop="description" content="Introduction   Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.  The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?">
-<meta itemprop="datePublished" content="2016-04-16T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2016-04-16T00:00:00&#43;00:00" />
+<meta itemprop="description" content="Introduction   Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.
+ The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?">
+<meta itemprop="datePublished" content="2016-04-16T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-04-16T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1108">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CPython Debugging"/>
-<meta name="twitter:description" content="Introduction   Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.  The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?"/>
+<meta name="twitter:description" content="Introduction   Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.
+ The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?"/>
 
   </head>
 
@@ -164,27 +168,28 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction 
 </h3>
+<div id="outline-text-headline-1" class="outline-text-3">
 <p>
-Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.
-</p>
+Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.</p>
 <p>
-The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it? Check it out!
-</p>
+The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it? Check it out!</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
 The bytecode
 </h3>
+<div id="outline-text-headline-2" class="outline-text-3">
 <p>
-From the Python glossary:
-</p>
+From the Python glossary:</p>
 <p>
-Python source code is compiled into bytecode, the internal representation of a Python program in the CPython interpreter. The bytecode is also cached in .pyc and .pyo files so that executing the same file is faster the second time (recompilation from source to bytecode can be avoided). This “intermediate language” is said to run on a virtual machine that executes the machine code corresponding to each bytecode.
-</p>
+Python source code is compiled into bytecode, the internal representation of a Python program in the CPython interpreter. The bytecode is also cached in .pyc and .pyo files so that executing the same file is faster the second time (recompilation from source to bytecode can be avoided). This “intermediate language” is said to run on a virtual machine that executes the machine code corresponding to each bytecode.</p>
 <p>
-We can get the bytecode from Python with the dis module:
-</p>
+We can get the bytecode from Python with the dis module:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> dis
 <span style="color:#f92672">import</span> random
@@ -212,44 +217,39 @@ dis<span style="color:#f92672">.</span>dis(gen_random)
 		 <span style="color:#ae81ff">40</span> LIST_APPEND              <span style="color:#ae81ff">2</span>
 		 <span style="color:#ae81ff">43</span> JUMP_ABSOLUTE           <span style="color:#ae81ff">19</span>
 		 <span style="color:#ae81ff">46</span> CALL_FUNCTION            <span style="color:#ae81ff">1</span>
-		 <span style="color:#ae81ff">49</span> RETURN_VALUE</code></pre></div>
-</p>
+		 <span style="color:#ae81ff">49</span> RETURN_VALUE</code></pre></div></p>
 <p>
-Here we have the bytecode that will be translated to our frame. LOAD_GLOBAL starts the function, BUILD_LIST creates a new list for the comprehension with 0 len, LOAD_CONST starts the args, it starts with the range function, storing the value of the iterator on i, after that random.randint is called CALL_FUNCTION, we are going to debug and focus on the call_function method.
-</p>
+Here we have the bytecode that will be translated to our frame. LOAD_GLOBAL starts the function, BUILD_LIST creates a new list for the comprehension with 0 len, LOAD_CONST starts the args, it starts with the range function, storing the value of the iterator on i, after that random.randint is called CALL_FUNCTION, we are going to debug and focus on the call_function method.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
 <h3 id="headline-3">
 Python Main
 </h3>
+<div id="outline-text-headline-3" class="outline-text-3">
 <p>
-I am using the Python 2.7.9, on Misc folder you can get the ~/.gdbinit file to give you some shortcuts on gdb, you can set a breakpoint on the main.c
-</p>
+I am using the Python 2.7.9, on Misc folder you can get the ~/.gdbinit file to give you some shortcuts on gdb, you can set a breakpoint on the main.c</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb --args python gen_random.py
 
 gdb&gt; b Py_Main
-gdb&gt; r</code></pre></div>
-</p>
+gdb&gt; r</code></pre></div></p>
 <p>
-We are running stuff from the command line so we hit the flow PyRun_AnyFileExFlags -&gt; PyRun_SimpleFileExFlags (pythonrun.c), We can see something interesting like CPython trying to open the bytecode file first:
-</p>
+We are running stuff from the command line so we hit the flow PyRun_AnyFileExFlags -&gt; PyRun_SimpleFileExFlags (pythonrun.c), We can see something interesting like CPython trying to open the bytecode file first:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pythonrun.c:<span style="color:#ae81ff">936</span>
 
  <span style="color:#66d9ef">if</span> (maybe_pyc_file(fp, filename, ext, closeit)) {
-   <span style="color:#75715e">/* Try to run a pyc file. First, re-open in binary */</span></code></pre></div>
-</p>
+   <span style="color:#75715e">/* Try to run a pyc file. First, re-open in binary */</span></code></pre></div></p>
 <p>
-We dont have the pyc yet, so the interpreter goes to PyRun_FileExFlags, do a (bt) command, and see that if you do a py-bt, you have nothing yet.
-</p>
+We dont have the pyc yet, so the interpreter goes to PyRun_FileExFlags, do a (bt) command, and see that if you do a py-bt, you have nothing yet.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ae81ff">0</span>  PyRun_FileExFlags () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">1349</span>
 <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0x081302f5</span> in PyRun_SimpleFileExFlags () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">949</span>
 <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0x080daa21</span> in Py_Main () at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>main.c:<span style="color:#ae81ff">640</span>
-<span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">0x080da48b</span> in main (argc<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, argv<span style="color:#f92672">=</span><span style="color:#ae81ff">0xbffff994</span>) at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>python.c:<span style="color:#ae81ff">23</span></code></pre></div>
-</p>
+<span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">0x080da48b</span> in main (argc<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, argv<span style="color:#f92672">=</span><span style="color:#ae81ff">0xbffff994</span>) at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>python.c:<span style="color:#ae81ff">23</span></code></pre></div></p>
 <p>
-Cool, looks like we are almost running it, on PyParser_ASTFromFile, the interpreter is parsing the tree structure on Python syntax, it is called AST (Abstract Syntax Tree). Next, we hit the run_mod function:
-</p>
+Cool, looks like we are almost running it, on PyParser_ASTFromFile, the interpreter is parsing the tree structure on Python syntax, it is called AST (Abstract Syntax Tree). Next, we hit the run_mod function:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> PyObject <span style="color:#f92672">*</span>
 <span style="color:#a6e22e">run_mod</span>(mod_ty mod, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>filename, PyObject <span style="color:#f92672">*</span>globals, PyObject <span style="color:#f92672">*</span>locals,
@@ -263,14 +263,16 @@ Cool, looks like we are almost running it, on PyParser_ASTFromFile, the interpre
     v <span style="color:#f92672">=</span> PyEval_EvalCode(co, globals, locals);
     Py_DECREF(co);
     <span style="color:#66d9ef">return</span> v;
-}</code></pre></div>
-</p>
+}</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
 Python Frame
 </h3>
+<div id="outline-text-headline-4" class="outline-text-3">
 <p>
-Besides the PyAST_Compile we have the frame execution here: PyEval_EvalCode -&gt; PyEval_EvalCodeEx -&gt; PyEval_EvalFrameEx, here the magic happens, it gets all opcodes and creates a StackFrame from it, inside the EvalFrameEx we have a for(;;) loop and a switch(opcode) that iterates on all opcodes:
-</p>
+Besides the PyAST_Compile we have the frame execution here: PyEval_EvalCode -&gt; PyEval_EvalCodeEx -&gt; PyEval_EvalFrameEx, here the magic happens, it gets all opcodes and creates a StackFrame from it, inside the EvalFrameEx we have a for(;;) loop and a switch(opcode) that iterates on all opcodes:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">(gdb) bt
 <span style="color:#ae81ff">0</span>  PyEval_EvalFrameEx () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">1100</span>
@@ -282,14 +284,11 @@ Besides the PyAST_Compile we have the frame execution here: PyEval_EvalCode -&gt
 <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">0x08131148</span> in PyRun_FileExFlags () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">1357</span>
 <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">0x081302f5</span> in PyRun_SimpleFileExFlags () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">949</span>
 <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">0x080daa21</span> in Py_Main () at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>main.c:<span style="color:#ae81ff">640</span>
-<span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">0x080da48b</span> in main (argc<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, argv<span style="color:#f92672">=</span><span style="color:#ae81ff">0xbffff994</span>) at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>python.c:<span style="color:#ae81ff">23</span></code></pre></div>
-</p>
+<span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">0x080da48b</span> in main (argc<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, argv<span style="color:#f92672">=</span><span style="color:#ae81ff">0xbffff994</span>) at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>python.c:<span style="color:#ae81ff">23</span></code></pre></div></p>
 <p>
-On a CALL_FUNCTION opcode we have the call_function method, it have two branches a &#34;PyCFunction_Check&#34; for C functions and for Python methods &#34;PyMethod_GET_FUNCTION&#34;.
-</p>
+On a CALL_FUNCTION opcode we have the call_function method, it have two branches a &#34;PyCFunction_Check&#34; for C functions and for Python methods &#34;PyMethod_GET_FUNCTION&#34;.</p>
 <p>
-You can put a breakpoint on call_function after PyCFunction_Check. the first thing to be loaded on our code is the import random, and all the submodules like openssl, nothing very interesting here.
-</p>
+You can put a breakpoint on call_function after PyCFunction_Check. the first thing to be loaded on our code is the import random, and all the submodules like openssl, nothing very interesting here.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">breakpoint <span style="color:#ae81ff">2</span>, call_function (oparg<span style="color:#f92672">=</span>, pp_stack<span style="color:#f92672">=</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4010</span>
 <span style="color:#ae81ff">4010</span>            PyThreadState <span style="color:#f92672">*</span>tstate <span style="color:#f92672">=</span> PyThreadState_GET();
@@ -313,14 +312,16 @@ You can put a breakpoint on call_function after PyCFunction_Check. the first thi
 <span style="color:#ae81ff">3</span>  call_function (oparg<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>, ...
 <span style="color:#ae81ff">4</span>  PyEval_EvalFrameEx () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">2679</span>
 <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">0x08105f95</span> in PyEval_EvalCodeEx () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">3265</span>
-<span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">0x08105952</span> in PyEval_EvalCode (co<span style="color:#f92672">=</span><span style="color:#ae81ff">0xb7ca4410</span>,</code></pre></div>
-</p>
+<span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">0x08105952</span> in PyEval_EvalCode (co<span style="color:#f92672">=</span><span style="color:#ae81ff">0xb7ca4410</span>,</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
 <h3 id="headline-5">
 Modules and built-in
 </h3>
+<div id="outline-text-headline-5" class="outline-text-3">
 <p>
-Hit some continue gdb commands, you can see the <span style="text-decoration: underline;"><span style="text-decoration: underline;">init</span></span> seeding the random module.
-</p>
+Hit some continue gdb commands, you can see the <span style="text-decoration: underline;"><span style="text-decoration: underline;">init</span></span> seeding the random module.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">(gdb) py<span style="color:#f92672">-</span>bt
 <span style="color:#ae81ff">1</span> Frame <span style="color:#ae81ff">0xb7c93194</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>random.py, line <span style="color:#ae81ff">118</span>, in seed
@@ -328,14 +329,11 @@ Hit some continue gdb commands, you can see the <span style="text-decoration: un
 <span style="color:#ae81ff">5</span> Frame <span style="color:#ae81ff">0xb7cf258c</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>random.py, line <span style="color:#ae81ff">97</span>, in __init__
     self.seed(x)
 <span style="color:#ae81ff">16</span> Frame <span style="color:#ae81ff">0xb7cd253c</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>random.py, line <span style="color:#ae81ff">885</span>, in <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span> ()
-    _inst <span style="color:#f92672">=</span> Random()</code></pre></div>
-</p>
+    _inst <span style="color:#f92672">=</span> Random()</code></pre></div></p>
 <p>
-Keep digging! We are going to get some built-in functions, lets say: sorted.
-</p>
+Keep digging! We are going to get some built-in functions, lets say: sorted.</p>
 <p>
-It is a built-in method so the bt-py keeps on the oneline frame, but C backtrace hits the bltinmodule.c via a call_function.
-</p>
+It is a built-in method so the bt-py keeps on the oneline frame, but C backtrace hits the bltinmodule.c via a call_function.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">(gdb) py<span style="color:#f92672">-</span>bt
 <span style="color:#ae81ff">2</span> Frame <span style="color:#ae81ff">0xb7c93464</span>, <span style="color:#66d9ef">for</span> file teste.py, line <span style="color:#ae81ff">4</span>, in gen_random (i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
@@ -346,11 +344,9 @@ It is a built-in method so the bt-py keeps on the oneline frame, but C backtrace
 (gdb) bt
 <span style="color:#ae81ff">0</span>  builtin_sorted.lto_priv () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>bltinmodule.c:<span style="color:#ae81ff">2217</span>
 <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0x0810739d</span> in call_function (oparg<span style="color:#f92672">=&lt;&gt;</span>, pp_stack<span style="color:#f92672">=&lt;&gt;</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4033</span>
-<span style="color:#ae81ff">2</span>  PyEval_EvalFrameEx () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">2679</span></code></pre></div>
-</p>
+<span style="color:#ae81ff">2</span>  PyEval_EvalFrameEx () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">2679</span></code></pre></div></p>
 <p>
-Thats very interesting, this buildin_sorted comes from:
-</p>
+Thats very interesting, this buildin_sorted comes from:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Python<span style="color:#f92672">/</span>ceval.c <span style="color:#f92672">-</span> call_function
 
@@ -360,14 +356,11 @@ On Objects<span style="color:#f92672">/</span>methodobject.c <span style="color:
 
 PyCFunction meth <span style="color:#f92672">=</span> PyCFunction_GET_FUNCTION(func);
 <span style="color:#66d9ef">case</span> METH_OLDARGS <span style="color:#f92672">|</span> METH_KEYWORDS:
-	<span style="color:#66d9ef">return</span> (<span style="color:#f92672">*</span>(PyCFunctionWithKeywords)meth)(self, arg, kw);</code></pre></div>
-</p>
+	<span style="color:#66d9ef">return</span> (<span style="color:#f92672">*</span>(PyCFunctionWithKeywords)meth)(self, arg, kw);</code></pre></div></p>
 <p>
-The bltinmodule.c:buildin_sorted:2245 function now calls a PyObject_Call with our list as a parameter for the method listsort.
-</p>
+The bltinmodule.c:buildin_sorted:2245 function now calls a PyObject_Call with our list as a parameter for the method listsort.</p>
 <p>
-After more walkthrough, we can get the algorithm that Python uses to order lists: Objects/listobject.c (listsort)
-</p>
+After more walkthrough, we can get the algorithm that Python uses to order lists: Objects/listobject.c (listsort)</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* An adaptive, stable, natural mergesort.  See listsort.txt.
 </span><span style="color:#75715e"> * Returns Py_None on success, NULL on error.  Even in case of error, the
@@ -378,30 +371,44 @@ After more walkthrough, we can get the algorithm that Python uses to order lists
 <span style="color:#ae81ff">0</span>  listsort.lto_priv () at ..<span style="color:#f92672">/</span>Objects<span style="color:#f92672">/</span>listobject.c:<span style="color:#ae81ff">2069</span>
 <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0x0816f4d1</span> in PyObject_Call (kw<span style="color:#f92672">=</span><span style="color:#ae81ff">0x0</span>, arg<span style="color:#f92672">=</span>(), func<span style="color:#f92672">=&lt;&gt;</span>) at ..<span style="color:#f92672">/</span>Objects<span style="color:#f92672">/</span>abstract.c:<span style="color:#ae81ff">2529</span>
 <span style="color:#ae81ff">2</span>  builtin_sorted.lto_priv () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>bltinmodule.c:<span style="color:#ae81ff">2245</span>
-<span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">0x0810739d</span> in call_function (oparg<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>, pp_stack<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4033</span></code></pre></div>
-</p>
+<span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">0x0810739d</span> in call_function (oparg<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>, pp_stack<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4033</span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
 <h3 id="headline-6">
 Listening
 </h3>
+<div id="outline-text-headline-6" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/XsB0HDBsNbI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
 </p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
 <h3 id="headline-7">
 Reference
 </h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<div id="outline-container-headline-8" class="outline-6">
 <h6 id="headline-8">
 [1] <a href="http://podoliaka.org/2016/04/10/debugging-cpython-gdb/">http://podoliaka.org/2016/04/10/debugging-cpython-gdb/</a>
 </h6>
+</div>
+<div id="outline-container-headline-9" class="outline-6">
 <h6 id="headline-9">
 [2] <a href="https://wiki.python.org/moin/DebuggingWithGdb">https://wiki.python.org/moin/DebuggingWithGdb</a>
 </h6>
+</div>
+<div id="outline-container-headline-10" class="outline-6">
 <h6 id="headline-10">
 [3] <a href="http://fedoraproject.org/wiki/Features/EasierPythonDebugging">http://fedoraproject.org/wiki/Features/EasierPythonDebugging</a>
 </h6>
+</div>
+</div>
+</div>
 <ul class="pa0">
   
 </ul>
