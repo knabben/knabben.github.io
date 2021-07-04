@@ -6,7 +6,7 @@
     
     <title>Golang essays (part I) | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,29 +28,22 @@
     
     
     <meta property="og:title" content="Golang essays (part I)" />
-<meta property="og:description" content="Introduction   Starting with the printed Hello World, create a main.go file with the following content:
- package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }
- On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i." />
+<meta property="og:description" content="Introduction   Starting with the printed Hello World, create a main.go file with the following content:  package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }  On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/gop1/" />
 <meta property="article:published_time" content="2019-08-07T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-08-07T00:00:00+00:00" />
 <meta itemprop="name" content="Golang essays (part I)">
-<meta itemprop="description" content="Introduction   Starting with the printed Hello World, create a main.go file with the following content:
- package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }
- On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.">
-<meta itemprop="datePublished" content="2019-08-07T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-08-07T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction   Starting with the printed Hello World, create a main.go file with the following content:  package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }  On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.">
+<meta itemprop="datePublished" content="2019-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-08-07T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="1028">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang essays (part I)"/>
-<meta name="twitter:description" content="Introduction   Starting with the printed Hello World, create a main.go file with the following content:
- package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }
- On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i."/>
+<meta name="twitter:description" content="Introduction   Starting with the printed Hello World, create a main.go file with the following content:  package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }  On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i."/>
 
   </head>
 
@@ -171,13 +164,12 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
-<div id="outline-text-headline-1" class="outline-text-3">
 <p>
-Starting with the printed Hello World, create a main.go file with the following content:</p>
+Starting with the printed Hello World, create a main.go file with the following content:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 <span style="color:#f92672">import</span> (
@@ -186,12 +178,15 @@ Starting with the printed Hello World, create a main.go file with the following 
 )
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
     <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello, world\n&#34;</span>, <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">10</span>))
-}</code></pre></div></p>
+}</code></pre></div>
+</p>
 <p>
 On line 1 we have the package our programming is running.
-We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.e. math/rand, use rand.*</p>
+We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.e. math/rand, use rand.*
+</p>
 <p>
-Open a terminal on VSCode and run your program:</p>
+Open a terminal on VSCode and run your program:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ go run main.go
 Hello, world:  <span style="color:#ae81ff">1</span>
@@ -205,23 +200,23 @@ main: Mach-O 64-bit executable x86_64
 Build <span style="color:#66d9ef">for</span> other OS/Arch with cross-compilation:
 $ GOOS<span style="color:#f92672">=</span>linux GOARCH<span style="color:#f92672">=</span>arm go build main.go 
 $ file main
-main: ELF 32-bit LSB executable, ARM, EABI5 version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, statically linked, not stripped</code></pre></div></p>
-<div id="outline-container-headline-2" class="outline-5">
+main: ELF 32-bit LSB executable, ARM, EABI5 version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, statically linked, not stripped</code></pre></div>
+</p>
 <h5 id="headline-2">
 Ex. 1 - How to install the binary in the default path?
 </h5>
-</div>
-<div id="outline-container-headline-3" class="outline-4">
 <h4 id="headline-3">
 Packages and import 
 </h4>
-<div id="outline-text-headline-3" class="outline-text-4">
 <p>
-Go comes with a very handful default library: <a href="https://golang.org/pkg/">https://golang.org/pkg/</a></p>
+Go comes with a very handful default library: <a href="https://golang.org/pkg/">https://golang.org/pkg/</a>
+</p>
 <p>
-Treats JSON (encoding/json), Sockets (net/http), file management (os), testing, datetime (time), archiving (archive). But how to install external libraries, where they come from?</p>
+Treats JSON (encoding/json), Sockets (net/http), file management (os), testing, datetime (time), archiving (archive). But how to install external libraries, where they come from?
+</p>
 <p>
-Your Workspace is defined with GOPATH (<a href="https://github.com/golang/go/wiki/SettingGOPATH),">https://github.com/golang/go/wiki/SettingGOPATH),</a> all external libraries by default are being installed at ~/go/src/*. Lets test with an external dependency in our project:</p>
+Your Workspace is defined with GOPATH (<a href="https://github.com/golang/go/wiki/SettingGOPATH),">https://github.com/golang/go/wiki/SettingGOPATH),</a> all external libraries by default are being installed at ~/go/src/*. Lets test with an external dependency in our project:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"> <span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">get</span> <span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">bndr</span><span style="color:#f92672">/</span><span style="color:#a6e22e">gotabulate</span>
 
@@ -252,81 +247,93 @@ Your Workspace is defined with GOPATH (<a href="https://github.com/golang/go/wik
 </span><span style="color:#75715e"></span>
  <span style="color:#a6e22e">BAD</span>:
  <span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
- <span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;io/utils&#34;</span></code></pre></div></p>
+ <span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;io/utils&#34;</span></code></pre></div>
+</p>
 <p>
- Rules about packages: The source code for a package resides in one or more .go files, usually in a directory whose name ends with the import path, Exported identifiers starts with an upper-case letter.</p>
+ Rules about packages: The source code for a package resides in one or more .go files, usually in a directory whose name ends with the import path, Exported identifiers starts with an upper-case letter.
+</p>
 <p>
- One way to initialize default things in our package is to create a init function like:</p>
+ One way to initialize default things in our package is to create a init function like:
+</p>
 <p>
- func init() { <em>* … *</em> } </p>
-<div id="outline-container-headline-4" class="outline-5">
+ func init() { <em>* … *</em> } 
+</p>
 <h5 id="headline-4">
 Ex 2. - Can we create a table package and use it in our main function?
 </h5>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-4">
 <h4 id="headline-5">
 Functions
 </h4>
-<div id="outline-text-headline-5" class="outline-text-4">
 <p>
-A function lets up wrap up a sequence of statements as a unit that can be called from elsewhere in a program, perhaps multiple times. Functions make it possible to break a big job into smaller pieces that might well be written by different people separated by both time and space.</p>
+A function lets up wrap up a sequence of statements as a unit that can be called from elsewhere in a program, perhaps multiple times. Functions make it possible to break a big job into smaller pieces that might well be written by different people separated by both time and space.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">name</span>(<span style="color:#a6e22e">parameter</span><span style="color:#f92672">-</span><span style="color:#a6e22e">list</span>) (<span style="color:#a6e22e">result</span><span style="color:#f92672">-</span><span style="color:#a6e22e">list</span>) {
      <span style="color:#75715e">// body
-</span><span style="color:#75715e"></span>  }</code></pre></div></p>
+</span><span style="color:#75715e"></span>  }</code></pre></div>
+</p>
 <p>
-  The parameter list specifies the names and types of the function&#39;s parameters, which are the local variables whose values or arguments are supplied by the caller. The result list specifies the types of the values that the function returns.</p>
+  The parameter list specifies the names and types of the function&#39;s parameters, which are the local variables whose values or arguments are supplied by the caller. The result list specifies the types of the values that the function returns.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hypot</span>(<span style="color:#a6e22e">c1</span>, <span style="color:#a6e22e">c2</span> <span style="color:#66d9ef">float64</span>) <span style="color:#66d9ef">float64</span> {
      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Sqrt</span>(<span style="color:#a6e22e">c1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c1</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">c2</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c2</span>)
-  }</code></pre></div></p>
+  }</code></pre></div>
+</p>
 <p>
-  A function can return multiple results, just use the type on return list: for two floats return (float64, float64).</p>
+  A function can return multiple results, just use the type on return list: for two floats return (float64, float64).
+</p>
 <p>
-  A return without argument returns the named return value, this is known as &#34;naked&#34; return:</p>
+  A return without argument returns the named return value, this is known as &#34;naked&#34; return:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">split</span>(<span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">int</span>) {
 	  <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">sum</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">9</span>
 	  <span style="color:#a6e22e">y</span> = <span style="color:#a6e22e">sum</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">x</span>
 	  <span style="color:#66d9ef">return</span>
   }
-  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">split</span>(<span style="color:#ae81ff">17</span>)) <span style="color:#f92672">//</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">10</span></code></pre></div></p>
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">split</span>(<span style="color:#ae81ff">17</span>)) <span style="color:#f92672">//</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">10</span></code></pre></div>
+</p>
 <p>
-  Some different ways to define a function signature:</p>
+  Some different ways to define a function signature:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span>		{ <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">y</span> }
   <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sub</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">z</span> <span style="color:#66d9ef">int</span>)		{ <span style="color:#a6e22e">z</span> = <span style="color:#a6e22e">x</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">y</span>; <span style="color:#66d9ef">return</span> }
   <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">first</span>(<span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">_</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> 		{ <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> }
-  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">zero</span>(<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> 		{ <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span> }</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-4">
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">zero</span>(<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> 		{ <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span> }</code></pre></div>
+</p>
 <h4 id="headline-6">
 Variables and Constants
 </h4>
-<div id="outline-text-headline-6" class="outline-text-4">
 <p>
-  The var statement declares a list of variables the type if last. A var statement can be at package or function level:</p>
+  The var statement declares a list of variables the type if last. A var statement can be at package or function level:
+</p>
 <p>
-  var name type = expression</p>
+  var name type = expression
+</p>
 <p>
-  Initializers may be literal values or arbitraries expressions, package-level variables are initialized before main begin, and local variable are initialized as their declarations are encountered during function execution.</p>
+  Initializers may be literal values or arbitraries expressions, package-level variables are initialized before main begin, and local variable are initialized as their declarations are encountered during function execution.
+</p>
 <p>
-  Variables with initializers:</p>
+  Variables with initializers:
+</p>
 <p>
   var i, j, k int
-  var b, f, s = true, 2.3, &#34;four&#34;</p>
+  var b, f, s = true, 2.3, &#34;four&#34;
+</p>
 <p>
-  Short variable declarations, </p>
+  Short variable declarations, 
+</p>
 <p>
-  I, j := 0, 1</p>
+  I, j := 0, 1
+</p>
 <p>
-  NOTE: but don&#39;t confuse multi-variable declaration with tuple assignment</p>
+  NOTE: but don&#39;t confuse multi-variable declaration with tuple assignment
+</p>
 <p>
-  i, j = j, i // don&#39;t use := for variables already declared.</p>
+  i, j = j, i // don&#39;t use := for variables already declared.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
@@ -352,16 +359,14 @@ Variables and Constants
       <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">SetHeaders</span>(<span style="color:#a6e22e">headers</span>)
 
       <span style="color:#a6e22e">PrintTable</span>(<span style="color:#a6e22e">t</span>)
-  }</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-7" class="outline-4">
+  }</code></pre></div>
+</p>
 <h4 id="headline-7">
 Basic Types
 </h4>
-<div id="outline-text-headline-7" class="outline-text-4">
 <p>
-  Golang has some basics types:</p>
+  Golang has some basics types:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">string</span>
   <span style="color:#66d9ef">int</span>  <span style="color:#66d9ef">int8</span>  <span style="color:#66d9ef">int16</span>  <span style="color:#66d9ef">int32</span>  <span style="color:#66d9ef">int64</span>
@@ -384,31 +389,28 @@ Basic Types
 
   <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">42</span>
   <span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> float64(<span style="color:#a6e22e">i</span>)
-  <span style="color:#a6e22e">u</span> <span style="color:#f92672">:=</span> uint(<span style="color:#a6e22e">f</span>)</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-8" class="outline-3">
+  <span style="color:#a6e22e">u</span> <span style="color:#f92672">:=</span> uint(<span style="color:#a6e22e">f</span>)</code></pre></div>
+</p>
 <h3 id="headline-8">
 Flow control statements
 </h3>
-<div id="outline-text-headline-8" class="outline-text-3">
 <p>
-https://tour.golang.org/flowcontrol/1</p>
-<div id="outline-container-headline-9" class="outline-4">
+https://tour.golang.org/flowcontrol/1
+</p>
 <h4 id="headline-9">
 For
 </h4>
-<div id="outline-text-headline-9" class="outline-text-4">
 <p>
-The for loop is the only loop statement in Go. It has a number of forms, one of which is illustrated here:</p>
+The for loop is the only loop statement in Go. It has a number of forms, one of which is illustrated here:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">initialization</span>; <span style="color:#a6e22e">condition</span>; <span style="color:#a6e22e">post</span> {
 	<span style="color:#75715e">// zero or more statements
-</span><span style="color:#75715e"></span>}</code></pre></div></p>
+</span><span style="color:#75715e"></span>}</code></pre></div>
+</p>
 <p>
-Parentheses are never used around the three components. If there&#39;s not initialization and no post, the semicolons may also be omitted:</p>
+Parentheses are never used around the three components. If there&#39;s not initialization and no post, the semicolons may also be omitted:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// a traditional &#34;while&#34; loop
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">condition</span> {
@@ -417,14 +419,11 @@ Parentheses are never used around the three components. If there&#39;s not initi
 
 <span style="color:#75715e">// forever loop 
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span> { 
-}</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-10" class="outline-4">
+}</code></pre></div>
+</p>
 <h4 id="headline-10">
 If and else
 </h4>
-<div id="outline-text-headline-10" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">condition</span> {
    <span style="color:#75715e">// something
@@ -435,14 +434,11 @@ If and else
 <span style="color:#75715e">// You can start with a short statement
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Sqrt</span>(<span style="color:#a6e22e">n</span>); <span style="color:#a6e22e">v</span> &lt; <span style="color:#a6e22e">n</span> {
 	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">v</span>
-}</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-11" class="outline-4">
+}</code></pre></div>
+</p>
 <h4 id="headline-11">
 Switch as if else replacement
 </h4>
-<div id="outline-text-headline-11" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">os</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GOOS</span>; <span style="color:#a6e22e">os</span> {
 <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;darwin&#34;</span>:
@@ -451,17 +447,15 @@ Switch as if else replacement
 	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Linux&#34;</span>)
 <span style="color:#66d9ef">default</span>:
 	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;%s \n&#34;</span>, <span style="color:#a6e22e">os</span>)
-}</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-12" class="outline-4">
+}</code></pre></div>
+</p>
 <h4 id="headline-12">
 Defer
 </h4>
-<div id="outline-text-headline-12" class="outline-text-4">
 <p>
 A defer statement defers the execution of a function until the surrounding function returns.
-defer statement</p>
+defer statement
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 <span style="color:#f92672">import</span> (
@@ -486,24 +480,18 @@ defer statement</p>
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">Sqrt</span>(<span style="color:#ae81ff">100</span>))
-}</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-13" class="outline-3">
+}</code></pre></div>
+</p>
 <h3 id="headline-13">
 Listening 
 </h3>
-<div id="outline-text-headline-13" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/tyEFAjT9HrY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 </p>
-</div>
-</div>
 <ul class="pa0">
   
 </ul>

@@ -6,7 +6,7 @@
     
     <title>Istio drill down - Part I | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -35,14 +35,13 @@
 <meta property="article:modified_time" content="2021-03-06T00:00:00+00:00" />
 <meta itemprop="name" content="Istio drill down - Part I">
 <meta itemprop="description" content="a few notes of Istio tutorials on a boring snowy evening">
-<meta itemprop="datePublished" content="2021-03-06T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2021-03-06T00:00:00+00:00" />
-<meta itemprop="wordCount" content="955">
+<meta itemprop="datePublished" content="2021-03-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1100">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Istio drill down - Part I"/>
 <meta name="twitter:description" content="a few notes of Istio tutorials on a boring snowy evening"/>
 
@@ -191,18 +190,18 @@ local-path-storage   local-path-provisioner-78776bfc44-m7kpq        1/1     Runn
 <h3 id="installation">Installation</h3>
 
 <p>This workshop one is made for GCP, but we are using a local cluster with Kind, Bypass old installation methods,
-and use the latest installation on v1.20.1. lets go with the fancy edges ones:</p>
+and use the latest installation on v1.21.1. lets use the edges ones:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
 $ curl -L https://istio.io/downloadIstio | sh -
-$ cd istio-1.9.1
+$ cd istio-1.10.2
 
 <span style="color:#75715e"># export PATH=${PWD}/bin:$PATH</span>
 
-$ istioctl version
-client version: 1.9.1
-control plane version: 1.9.1
-data plane version: 1.9.1 <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> proxies<span style="color:#f92672">)</span>
+❯ istioctl version                                                                                                                                                                               <span style="color:#f92672">[</span>12:27:02<span style="color:#f92672">]</span>
+client version: 1.10.2
+control plane version: 1.10.2
+data plane version: 1.10.2 <span style="color:#f92672">(</span><span style="color:#ae81ff">8</span> proxies<span style="color:#f92672">)</span>
 
 istioctl install --set profile<span style="color:#f92672">=</span>demo -y
 ✔ Istio core installed
@@ -211,10 +210,15 @@ istioctl install --set profile<span style="color:#f92672">=</span>demo -y
 ✔ Ingress gateways installed
 ✔ Installation complete</code></pre></div>
 
-<p>The interesting part is that istio now became a daemon instead of having the components split as
-microservices, so the pods looks cleaner:</p>
+<p>The interesting part is that istiod now became a daemon instead of having the components split as
+microservices, so the pods looks cleaner.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
+<p>More details here:</p>
+
+<p><a href="https://blog.christianposta.com/microservices/istio-as-an-example-of-when-not-to-do-microservices/">https://blog.christianposta.com/microservices/istio-as-an-example-of-when-not-to-do-microservices/</a></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; kubectl -n istio-system get pods
+
 istio-system         istio-egressgateway-bd477794-thpxf             1/1     Running   <span style="color:#ae81ff">1</span>          16h
 istio-system         istio-ingressgateway-79df7c789f-5pp4v          1/1     Running   <span style="color:#ae81ff">1</span>          16h
 istio-system         istiod-6dc55bbdd-52gjt                         1/1     Running   <span style="color:#ae81ff">1</span>          16h</code></pre></div>
@@ -277,11 +281,8 @@ Checked <span style="color:#ae81ff">3</span> Istio Deployments
 
 <h2 id="components">Components</h2>
 
-<p>Istiod is a pod on istio-system is your control plane, this will bring all the components</p>
-
-<p><a href="https://blog.christianposta.com/microservices/istio-as-an-example-of-when-not-to-do-microservices/">https://blog.christianposta.com/microservices/istio-as-an-example-of-when-not-to-do-microservices/</a></p>
-
-<p>Some interesting points about the Evoy xDS API, they will make the data plane very customizable</p>
+<p>The istiod pod in the <code>istio-system</code> is the control plane. Some interesting points about the Envoy xDS API,
+it will make the data plane very customizable:</p>
 
 <ul>
 <li>Listener Discovery Service - LDS</li>
@@ -289,9 +290,10 @@ Checked <span style="color:#ae81ff">3</span> Istio Deployments
 <li>Route Discovery Service - RDS</li>
 </ul>
 
-<p>The Identity Management is made using SPIFFE (spiffe.org).</p>
+<p>The Identity Management is made using the SPIFFE specification (spiffe.org).</p>
 
-<p>Using <code>istioctl kube-inject</code> to inject a sidecar on your Pods, (or use a label istio-injection=enabled in your namespace), this will bring an Envoy on your pod and it will make your data plane.</p>
+<p>Using <code>istioctl kube-inject</code> to inject a sidecar on your Pods this will bring an Envoy on your
+pod and it will make your data plane, you can check the sidecar inspecting the element:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
  containers:
@@ -310,19 +312,47 @@ Checked <span style="color:#ae81ff">3</span> Istio Deployments
     env:
     ...</code></pre></div>
 
+<p>It's possible to use a label istio-injection=enabled in your namespace, and all pods will
+be automatically injected.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; kubectl label namespace default istio-injection<span style="color:#f92672">=</span>enabled</code></pre></div>
+
 <h2 id="exposing-the-ingress">Exposing the Ingress</h2>
 
-<p>Testing the Ingress gateway with a simple port-forward on this lab cluster:</p>
+<p>Testing the Ingress gateway can be made via the LoadBalancer port or even the NodePort
+used by the host, an example of the usage in the local host:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
-$ kubectl -n istio-system port-forward --address 0.0.0.0 svc/istio-ingressgateway 31310:80
-Forwarding from 0.0.0.0:31310 -&gt; <span style="color:#ae81ff">8080</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">❯ kubectl get nodes -o wide
+NAME                 STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE       KERNEL-VERSION     CONTAINER-RUNTIME
+kind-control-plane   Ready    control-plane,master   19m   v1.21.1   172.18.0.2    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2
+
+kubectl get svc istio-ingressgateway -n istio-system
+
+NAME                   TYPE           CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>                                                                      AGE
+istio-ingressgateway   LoadBalancer   10.96.163.153   &lt;pending&gt;     15021:31061/TCP,80:30261/TCP,443:31958/TCP,31400:30417/TCP,15443:32533/TCP   15m
+
+❯ curl http://172.18.0.2:30261 -v                                                                                                                                                                <span style="color:#f92672">[</span>12:35:00<span style="color:#f92672">]</span>
+*   Trying 172.18.0.2:30261...
+* TCP_NODELAY set
+* Connected to 172.18.0.2 <span style="color:#f92672">(</span>172.18.0.2<span style="color:#f92672">)</span> port <span style="color:#ae81ff">30261</span> <span style="color:#f92672">(</span><span style="color:#75715e">#0)</span>
+&gt; GET / HTTP/1.1
+&gt; Host: 172.18.0.2:30261
+&gt; User-Agent: curl/7.68.0
+&gt; Accept: */*
+&gt;
+* Mark bundle as not supporting multiuse
+  &lt; HTTP/1.1 <span style="color:#ae81ff">404</span> Not Found
+  &lt; date: Sun, <span style="color:#ae81ff">04</span> Jul <span style="color:#ae81ff">2021</span> 15:35:03 GMT
+  &lt; server: istio-envoy
+  &lt; content-length: <span style="color:#ae81ff">0</span>
+  &lt;
+* Connection <span style="color:#75715e">#0 to host 172.18.0.2 left intact</span></code></pre></div>
 
 <h2 id="example-workload">Example workload</h2>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
-$ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
-$ kubectl get services
+&gt; kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+&gt; kubectl get services
 NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>    AGE
 apigateway    ClusterIP   10.96.232.173   &lt;none&gt;        80/TCP     81m
 catalog       ClusterIP   10.96.5.33      &lt;none&gt;        80/TCP     86m
@@ -335,7 +365,7 @@ reviews       ClusterIP   10.96.174.147   &lt;none&gt;        9080/TCP   3m52s <
 <p>Add a gateway and the virtualservice</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 
-$ kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+&gt; kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
 gateway.networking.istio.io/bookinfo-gateway created
 virtualservice.networking.istio.io/bookinfo created</code></pre></div>
 
@@ -413,7 +443,7 @@ reviews       ClusterIP   10.96.174.147   &lt;none&gt;        9080/TCP   11m</co
 <p>Other explorations on istio on next posts:</p>
 
 <ul>
-<li>Networking - client side load balance, service discovery, circuit breaking, bulk heading, timeout, retry, mirroring</li>
+<li>Networking and traffic management - client side load balance, service discovery, circuit breaking, bulk heading, timeout, retry, mirroring..</li>
 <li>Security - SPIFFE, mTLS</li>
 </ul>
 <ul class="pa0">

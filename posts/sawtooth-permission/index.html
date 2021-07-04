@@ -6,7 +6,7 @@
     
     <title>Sawtooth Permissioning | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,29 +28,22 @@
     
     
     <meta property="og:title" content="Sawtooth Permissioning" />
-<meta property="og:description" content="Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
- For this debugging and testing scenario we will have 2 nodes:
- version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1." />
+<meta property="og:description" content="Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.  For this debugging and testing scenario we will have 2 nodes:  version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/sawtooth-permission/" />
 <meta property="article:published_time" content="2019-12-08T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-12-08T00:00:00+00:00" />
 <meta itemprop="name" content="Sawtooth Permissioning">
-<meta itemprop="description" content="Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
- For this debugging and testing scenario we will have 2 nodes:
- version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.">
-<meta itemprop="datePublished" content="2019-12-08T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-12-08T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.  For this debugging and testing scenario we will have 2 nodes:  version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.">
+<meta itemprop="datePublished" content="2019-12-08T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-08T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="512">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Sawtooth Permissioning"/>
-<meta name="twitter:description" content="Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
- For this debugging and testing scenario we will have 2 nodes:
- version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1."/>
+<meta name="twitter:description" content="Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.  For this debugging and testing scenario we will have 2 nodes:  version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1."/>
 
   </head>
 
@@ -171,17 +164,17 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
-<div id="outline-text-headline-1" class="outline-text-3">
 <p>
 Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients)
 can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can
-connect to the Sawtooth network, only available with on-chain settings.</p>
+connect to the Sawtooth network, only available with on-chain settings.
+</p>
 <p>
-For this debugging and testing scenario we will have 2 nodes:</p>
+For this debugging and testing scenario we will have 2 nodes:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#34;2.1&#34;</span>
 <span style="color:#66d9ef">services</span>:
@@ -195,9 +188,11 @@ For this debugging and testing scenario we will have 2 nodes:</p>
   <span style="color:#66d9ef">v2</span>:
     <span style="color:#66d9ef">image</span>: hyperledger/sawtooth-validator:<span style="color:#ae81ff">1.1</span>
     <span style="color:#66d9ef">container_name</span>: v2
-    <span style="color:#66d9ef">command</span>: bash</code></pre></div></p>
+    <span style="color:#66d9ef">command</span>: bash</code></pre></div>
+</p>
 <p>
-To start the nodes one by one, use docker-compose, for this we can use the DEV-engine mode, don&#39;t forget to bring up the settings-tp for each node as well:</p>
+To start the nodes one by one, use docker-compose, for this we can use the DEV-engine mode, don&#39;t forget to bring up the settings-tp for each node as well:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ docker-compose -f new-one.yaml run v1
 $ sawadm keygen
@@ -206,115 +201,105 @@ writing file: /etc/sawtooth/keys/validator.pub
 
 $ docker-compose -f new-one.yaml run v2
 $ sawadm keygen
-...</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-3">
+...</code></pre></div>
+</p>
 <h3 id="headline-2">
 Initial configuration
 </h3>
-<div id="outline-text-headline-2" class="outline-text-3">
 <p>
 When you bootstrap your cluster you need to make sure your admin user pub key is able to change the settings, this operation
-is made by defining the sawtooth.settings.vote.authorized_keys in your Genesis block.</p>
+is made by defining the sawtooth.settings.vote.authorized_keys in your Genesis block.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset genesis -k /etc/sawtooth/keys/validator.priv -A /etc/sawtooth/keys/validator.pub
 Generated config-genesis.batch
 
 $ sawadm genesis config-genesis.batch
-gensis.batch</code></pre></div></p>
+gensis.batch</code></pre></div>
+</p>
 <p>
 Only the genesis.batch must exists on your data_dir, it will be removed after the first node run. To confirm the genesis block holds
-your pub key check the state or use sawtooth settings list.</p>
+your pub key check the state or use sawtooth settings list.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth state list
 ADDRESS                                                                 SIZE  DATA
-000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7  <span style="color:#ae81ff">145</span>   b<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#ae81ff">\n\x</span>8e<span style="color:#ae81ff">\x</span>01<span style="color:#ae81ff">\n</span>&amp;sawtooth.settings.vote.authorized_keys<span style="color:#ae81ff">\x</span>12d/etc/sawtooth/keys/validator.pub,02049b8d437b55f06b3280ffdb3285e..</code></pre></div></p>
+000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7  <span style="color:#ae81ff">145</span>   b<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#ae81ff">\n\x</span>8e<span style="color:#ae81ff">\x</span>01<span style="color:#ae81ff">\n</span>&amp;sawtooth.settings.vote.authorized_keys<span style="color:#ae81ff">\x</span>12d/etc/sawtooth/keys/validator.pub,02049b8d437b55f06b3280ffdb3285e..</code></pre></div>
+</p>
 <p>
-The validator key is the only able to change the settings until now. You can append more keys in a proposal later.</p>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-3">
+The validator key is the only able to change the settings until now. You can append more keys in a proposal later.
+</p>
 <h3 id="headline-3">
 Off-chain transaction permissioning 
 </h3>
-<div id="outline-text-headline-3" class="outline-text-3">
 <p>
 Off-chain, this is configured by default when starting up the validator node, to configure this permissioning
-the user must check the validator.toml and choose a ROLE = policy_name, the policy is stored in policy_dir configuration on path.yoml</p>
+the user must check the validator.toml and choose a ROLE = policy_name, the policy is stored in policy_dir configuration on path.yoml
+</p>
 <p>
-Since the most interesting feature is being able to use this live and propagate through the network lets take a look on on-chain.</p>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-3">
+Since the most interesting feature is being able to use this live and propagate through the network lets take a look on on-chain.
+</p>
 <h3 id="headline-4">
 On-chain transaction permissioning 
 </h3>
-<div id="outline-text-headline-4" class="outline-text-3">
 <p>
-This mode is available using the Identity namespace, so this requires an external daemon running the Identity TP.</p>
+This mode is available using the Identity namespace, so this requires an external daemon running the Identity TP.
+</p>
 <p>
 Now lets suppose an Operator exists, and this is an external user with REST API access, we need to enable his public key to change the configurations
-of the identity using the Admin private key.</p>
+of the identity using the Admin private key.
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>03b6ffbc52e0c8b72a1141f85e016509f46d0cbe597828779cf75823398423654 -k /etc/sawtooth/keys/validator.priv</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>03b6ffbc52e0c8b72a1141f85e016509f46d0cbe597828779cf75823398423654 -k /etc/sawtooth/keys/validator.priv</code></pre></div>
+</p>
 <p>
 Start creating a new policy and bind it with the &#34;network&#34; role, it means we are going to deny the second node to join the network and allow other nodes
-to join, you can put multiple rules with space separation.</p>
+to join, you can put multiple rules with space separation.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth identity policy create policy_1 <span style="color:#e6db74">&#34;DENY_KEY 02ab649cd5579e87abc630314ef12b7aff1f2404308645046b8b0e23019eb94b16 PERMIT_KEY *&#34;</span>
-$ sawtooth identity role create network policy_1</code></pre></div></p>
+$ sawtooth identity role create network policy_1</code></pre></div>
+</p>
 <p>
-If you start the second node (v2) and set –peers tcp://v1:8800. You can see the node is not allowed to join the Gossip network.</p>
+If you start the second node (v2) and set –peers tcp://v1:8800. You can see the node is not allowed to join the Gossip network.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>2019-12-08 22:48:22.351 DEBUG    permission_verifier<span style="color:#f92672">]</span> Node is not permitted: 02ab649cd5579e87abc630314ef12b7aff1f2404308645046b8b0e23019eb94b16.
-<span style="color:#f92672">[</span>2019-12-08 22:48:22.352 WARNING  dispatch<span style="color:#f92672">]</span> Sending hang-up in reply to AUTHORIZATION_TRUST_REQUEST to connection 7269240ba0805959144ff5ba12432ec0c87cdabfcf5ca1b441d3ff3e3264b88df124856de32e8a92e55b545263fa578bd2246452158ce1f82524244e362dc6cbk</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-3">
+<span style="color:#f92672">[</span>2019-12-08 22:48:22.352 WARNING  dispatch<span style="color:#f92672">]</span> Sending hang-up in reply to AUTHORIZATION_TRUST_REQUEST to connection 7269240ba0805959144ff5ba12432ec0c87cdabfcf5ca1b441d3ff3e3264b88df124856de32e8a92e55b545263fa578bd2246452158ce1f82524244e362dc6cbk</code></pre></div>
+</p>
 <h3 id="headline-5">
 Otel and TP
 </h3>
-<div id="outline-text-headline-5" class="outline-text-3">
 <p>
-I have added opentelemetry capabilities in the Identity for testing propose, you can see the Jaeger results in the screenshots below:</p>
-<div id="outline-container-headline-6" class="outline-5">
+I have added opentelemetry capabilities in the Identity for testing propose, you can see the Jaeger results in the screenshots below:
+</p>
 <h5 id="headline-6">
 Policy create
 </h5>
-<div id="outline-text-headline-6" class="outline-text-5">
 <p>
 <img src="/posts/sawtooth-permission/policy.png" alt="" class="" style="width: 100%; ">
+
 </p>
-</div>
-</div>
-<div id="outline-container-headline-7" class="outline-5">
 <h5 id="headline-7">
 Role with policy_1
 </h5>
-<div id="outline-text-headline-7" class="outline-text-5">
 <p>
 <img src="/posts/sawtooth-permission/role.png" alt="" class="" style="width: 100%; ">
+
 </p>
 <p>
-More details in the fork: <a href="https://github.com/knabben/sawtooth-core/tree/master/families/identity/sawtooth_identity">https://github.com/knabben/sawtooth-core/tree/master/families/identity/sawtooth_identity</a></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-8" class="outline-3">
+More details in the fork: <a href="https://github.com/knabben/sawtooth-core/tree/master/families/identity/sawtooth_identity">https://github.com/knabben/sawtooth-core/tree/master/families/identity/sawtooth_identity</a>
+</p>
 <h3 id="headline-8">
 Listening 
 </h3>
-<div id="outline-text-headline-8" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/V3ADK6gsDGg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 </p>
-</div>
-</div>
 <ul class="pa0">
   
 </ul>

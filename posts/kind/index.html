@@ -6,7 +6,7 @@
     
     <title>Kubernetes in Docker | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,41 +28,22 @@
     
     
     <meta property="og:title" content="Kubernetes in Docker" />
-<meta property="og:description" content="Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
- The initial topics are a summary from Kind quickstart
-  Installing   To install Kind you should use:
- $ brew install kind
- Or from source:
- $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1
-  First steps   To create a new cluster you must run:" />
+<meta property="og:description" content="Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.  The initial topics are a summary from Kind quickstart Installing   To install Kind you should use:  $ brew install kind  Or from source:  $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps   To create a new cluster you must run:  # Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34;  Check the docker containers with &#34;docker ps&#34;:  CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3864ed104f05 kindest/node:v1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/kind/" />
 <meta property="article:published_time" content="2019-12-25T22:00:00+00:00" />
 <meta property="article:modified_time" content="2019-12-25T22:00:00+00:00" />
 <meta itemprop="name" content="Kubernetes in Docker">
-<meta itemprop="description" content="Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
- The initial topics are a summary from Kind quickstart
-  Installing   To install Kind you should use:
- $ brew install kind
- Or from source:
- $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1
-  First steps   To create a new cluster you must run:">
-<meta itemprop="datePublished" content="2019-12-25T22:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-12-25T22:00:00+00:00" />
+<meta itemprop="description" content="Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.  The initial topics are a summary from Kind quickstart Installing   To install Kind you should use:  $ brew install kind  Or from source:  $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps   To create a new cluster you must run:  # Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34;  Check the docker containers with &#34;docker ps&#34;:  CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3864ed104f05 kindest/node:v1.">
+<meta itemprop="datePublished" content="2019-12-25T22:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-25T22:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="641">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubernetes in Docker"/>
-<meta name="twitter:description" content="Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
- The initial topics are a summary from Kind quickstart
-  Installing   To install Kind you should use:
- $ brew install kind
- Or from source:
- $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1
-  First steps   To create a new cluster you must run:"/>
+<meta name="twitter:description" content="Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.  The initial topics are a summary from Kind quickstart Installing   To install Kind you should use:  $ brew install kind  Or from source:  $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1 First steps   To create a new cluster you must run:  # Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34;  Check the docker containers with &#34;docker ps&#34;:  CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3864ed104f05 kindest/node:v1."/>
 
   </head>
 
@@ -183,40 +164,37 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
-<div id="outline-text-headline-1" class="outline-text-3">
 <p>
 This post is for discussing more about Kind, setup some cluster examples with
-some particular customizations, and exlain what components it brings up.</p>
+some particular customizations, and exlain what components it brings up.
+</p>
 <p>
-The initial topics are a summary from <a href="https://kind.sigs.k8s.io/docs/user/quick-start/">Kind quickstart</a></p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-3">
+The initial topics are a summary from <a href="https://kind.sigs.k8s.io/docs/user/quick-start/">Kind quickstart</a>
+</p>
 <h3 id="headline-2">
 Installing
 </h3>
-<div id="outline-text-headline-2" class="outline-text-3">
 <p>
-To install Kind you should use:</p>
+To install Kind you should use:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ brew install kind</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ brew install kind</code></pre></div>
+</p>
 <p>
-Or from source:</p>
+Or from source:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ GO111MODULE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;on&#34;</span> go get sigs.k8s.io/kind@v0.6.1</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-3">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ GO111MODULE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;on&#34;</span> go get sigs.k8s.io/kind@v0.6.1</code></pre></div>
+</p>
 <h3 id="headline-3">
 First steps
 </h3>
-<div id="outline-text-headline-3" class="outline-text-3">
 <p>
-To create a new cluster you must run:</p>
+To create a new cluster you must run:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Default cluster name is kind</span>
 $ kind create cluster 
@@ -224,15 +202,19 @@ Creating cluster <span style="color:#e6db74">&#34;kind&#34;</span>
 
 <span style="color:#75715e"># A new cluster with context named 2k8s</span>
 $ kind create cluster --name 2k8s 
-Creating cluster <span style="color:#e6db74">&#34;2k8s&#34;</span></code></pre></div></p>
+Creating cluster <span style="color:#e6db74">&#34;2k8s&#34;</span></code></pre></div>
+</p>
 <p>
-Check the docker containers with &#34;docker ps&#34;:</p>
+Check the docker containers with &#34;docker ps&#34;:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS              PORTS                       NAMES
 3864ed104f05        kindest/node:v1.16.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   About a minute ago   Up About a minute   127.0.0.1:64140-&gt;6443/tcp   2k8s-control-plane
-55f43e6e63e1        kindest/node:v1.16.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">2</span> minutes ago        Up <span style="color:#ae81ff">2</span> minutes        127.0.0.1:64058-&gt;6443/tcp   kind-control-plane</code></pre></div></p>
+55f43e6e63e1        kindest/node:v1.16.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">2</span> minutes ago        Up <span style="color:#ae81ff">2</span> minutes        127.0.0.1:64058-&gt;6443/tcp   kind-control-plane</code></pre></div>
+</p>
 <p>
-You can check these context on ~/.kube/config:</p>
+You can check these context on ~/.kube/config:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">contexts</span>:
 - <span style="color:#66d9ef">context</span>:
@@ -243,22 +225,22 @@ You can check these context on ~/.kube/config:</p>
     <span style="color:#66d9ef">cluster</span>: kind-kind
     <span style="color:#66d9ef">user</span>: kind-kind
   <span style="color:#66d9ef">name</span>: kind-kind
-<span style="color:#66d9ef">current-context</span>: kind-2k8s</code></pre></div></p>
+<span style="color:#66d9ef">current-context</span>: kind-2k8s</code></pre></div>
+</p>
 <p>
-Some interesting tools like <a href="https://kubectx.dev">Kubectx</a> can make your life easier to change between contexts and namespaces.</p>
+Some interesting tools like <a href="https://kubectx.dev">Kubectx</a> can make your life easier to change between contexts and namespaces.
+</p>
 <p>
 <img src="/posts/kind/kubectx.png" alt="" class="" style="width: 80%; ">
+
 </p>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
 Kind architecture
 </h3>
-<div id="outline-text-headline-4" class="outline-text-3">
 <p>
 The flow is to start the nodes in docker, start the actions through the kubeadm with init, start the CNI and join
-the worker nodes in the cluster.</p>
+the worker nodes in the cluster.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#75715e">// Create node containers implementing defined config Nodes
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Provider</span>().<span style="color:#a6e22e">Provision</span>(<span style="color:#a6e22e">status</span>, <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Name</span>(), <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">Config</span>)
@@ -282,21 +264,20 @@ the worker nodes in the cluster.</p>
   <span style="color:#75715e">// Execute the actions in a new context.
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">action</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">actionsToRun</span> {
     <span style="color:#a6e22e">action</span>.<span style="color:#a6e22e">Execute</span>(<span style="color:#a6e22e">actionsContext</span>)
-  }</code></pre></div></p>
+  }</code></pre></div>
+</p>
 <p>
 The interesting part here is how customizable and adaptable is the project since the idea is to get an ephemeral cheap cluster 
 for testing. This is a quicker alternative for Minikube, and can be used inside or outside a CI, for cases you don&#39;t need
-to keep or persist data and configuration for long time.</p>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-3">
+to keep or persist data and configuration for long time.
+</p>
 <h3 id="headline-5">
 <a href="https://kind.sigs.k8s.io/docs/user/configuration/">Customization</a> before start
 </h3>
-<div id="outline-text-headline-5" class="outline-text-3">
 <p>
 If you want to create other roles like workers you can use the following configuration. In this example we have 2 worker nodes and a control plane.
-Some other configurations from kubeadm can be passed via patches configuration:</p>
+Some other configurations from kubeadm can be passed via patches configuration:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">config.yaml
 -<span style="color:#e6db74">-
@@ -315,9 +296,11 @@ Some other configurations from kubeadm can be passed via patches configuration:<
     <span style="color:#66d9ef">name</span>: config
   <span style="color:#66d9ef">apiServer</span>:
     <span style="color:#66d9ef">extraArgs</span>:
-      <span style="color:#66d9ef">&#34;v&#34;: </span><span style="color:#e6db74">&#34;6&#34;</span></code></pre></div></p>
+      <span style="color:#66d9ef">&#34;v&#34;: </span><span style="color:#e6db74">&#34;6&#34;</span></code></pre></div>
+</p>
 <p>
-Starting </p>
+Starting 
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kind create cluster --config config.yaml
 
@@ -325,16 +308,14 @@ $ docker ps
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                       NAMES
 492fe3c51dc1        kindest/node:v1.16.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">11</span> minutes ago      Up <span style="color:#ae81ff">10</span> minutes       127.0.0.1:64462-&gt;6443/tcp   3k8s-control-plane
 f9db83f911cb        kindest/node:v1.16.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">11</span> minutes ago      Up <span style="color:#ae81ff">10</span> minutes                                   3k8s-worker2
-d089e0574d9d        kindest/node:v1.16.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">11</span> minutes ago      Up <span style="color:#ae81ff">10</span> minutes                                   3k8s-worker</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-3">
+d089e0574d9d        kindest/node:v1.16.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">11</span> minutes ago      Up <span style="color:#ae81ff">10</span> minutes                                   3k8s-worker</code></pre></div>
+</p>
 <h3 id="headline-6">
 Accessing the nodes
 </h3>
-<div id="outline-text-headline-6" class="outline-text-3">
 <p>
-Lets confirm all the processes are up inside the nodes:</p>
+Lets confirm all the processes are up inside the nodes:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl get nodes
 NAME                 STATUS   ROLES    AGE   VERSION
@@ -358,26 +339,24 @@ Workers:
 /usr/bin/kubelet --bootstrap-kubeconfig<span style="color:#f92672">=</span>/etc/kubernetes/bootstrap-k
 /usr/local/bin/kube-proxy --config<span style="color:#f92672">=</span>/var/lib/kube-proxy/config.conf
 /usr/local/bin/containerd-shim-runc-v1 -namespace k8s.io -id 7d48b2
-/bin/kindnetd</code></pre></div></p>
-<div id="outline-container-headline-7" class="outline-4">
+/bin/kindnetd</code></pre></div>
+</p>
 <h4 id="headline-7">
 Reading logs
 </h4>
-<div id="outline-text-headline-7" class="outline-text-4">
 <p>
-Take a double check in the logs of APIServer, it should be verbose with -v=6, but you can find the flag in the /var/log/pods folder.</p>
+Take a double check in the logs of APIServer, it should be verbose with -v=6, but you can find the flag in the /var/log/pods folder.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@3k8s-control-plane:~# grep <span style="color:#e6db74">&#34;v=\&#34;6\&#34;&#34;</span> /var/log/pods/kube-system_kube-apiserver-3k8s-control-plane_d07c7455999744ab92f2977ad0ce1317/kube-apiserver/0.log
-2019-12-26T00:49:00.299202297Z stderr F I1226 00:49:00.298103       <span style="color:#ae81ff">1</span> flags.go:33<span style="color:#f92672">]</span> FLAG: --v<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;6&#34;</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-8" class="outline-4">
+2019-12-26T00:49:00.299202297Z stderr F I1226 00:49:00.298103       <span style="color:#ae81ff">1</span> flags.go:33<span style="color:#f92672">]</span> FLAG: --v<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;6&#34;</span></code></pre></div>
+</p>
 <h4 id="headline-8">
 Live configuration changes
 </h4>
-<div id="outline-text-headline-8" class="outline-text-4">
 <p>
-Kubernetes manifests resides in <em>etc/kubernetes/manifests</em>, you can change the specification and the part of the system will be restarted.</p>
+Kubernetes manifests resides in <em>etc/kubernetes/manifests</em>, you can change the specification and the part of the system will be restarted.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
 <span style="color:#66d9ef">kind</span>: Pod
@@ -393,29 +372,25 @@ Kubernetes manifests resides in <em>etc/kubernetes/manifests</em>, you can chang
   - <span style="color:#66d9ef">command</span>:
     - kube-apiserver
     - ...
-    - --v=<span style="color:#ae81ff">1</span></code></pre></div></p>
+    - --v=<span style="color:#ae81ff">1</span></code></pre></div>
+</p>
 <p>
-Checking the logs again, the container id must change the process restarted should have the new value:</p>
+Checking the logs again, the container id must change the process restarted should have the new value:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grep <span style="color:#e6db74">&#34;v=\&#34;1\&#34;&#34;</span> /var/log/pods/kube-system_kube-apiserver-3k8s-control-plane_0797ccfaf5f7fdcb42366fbf39918d66/kube-apiserver/0.log
-2019-12-26T01:02:18.63612087Z stderr F I1226 01:02:18.635346       <span style="color:#ae81ff">1</span> flags.go:33<span style="color:#f92672">]</span> FLAG: --v<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span></code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-9" class="outline-3">
+2019-12-26T01:02:18.63612087Z stderr F I1226 01:02:18.635346       <span style="color:#ae81ff">1</span> flags.go:33<span style="color:#f92672">]</span> FLAG: --v<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span></code></pre></div>
+</p>
 <h3 id="headline-9">
 Listening 
 </h3>
-<div id="outline-text-headline-9" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/U4XOZeJb2ZQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 </p>
-</div>
-</div>
 <ul class="pa0">
   
 </ul>

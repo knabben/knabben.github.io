@@ -6,7 +6,7 @@
     
     <title>Sawtooth Cheatsheet | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,38 +28,22 @@
     
     
     <meta property="og:title" content="Sawtooth Cheatsheet" />
-<meta property="og:description" content="Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
- $ vagrant init ubuntu/xenial64 $ vagrant up
- After the box is up we need to add the correct repository:
- $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update
- Install the package:
- $ sudo apt install -y sawtooth" />
+<meta property="og:description" content="Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant  $ vagrant init ubuntu/xenial64 $ vagrant up  After the box is up we need to add the correct repository:  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update  Install the package:  $ sudo apt install -y sawtooth Docker   Install Docker adding key and repo:  $ curl -fsSL https://download." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/sawtooth-cheatsheet/" />
 <meta property="article:published_time" content="2019-12-15T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-12-15T00:00:00+00:00" />
 <meta itemprop="name" content="Sawtooth Cheatsheet">
-<meta itemprop="description" content="Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
- $ vagrant init ubuntu/xenial64 $ vagrant up
- After the box is up we need to add the correct repository:
- $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update
- Install the package:
- $ sudo apt install -y sawtooth">
-<meta itemprop="datePublished" content="2019-12-15T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-12-15T00:00:00+00:00" />
+<meta itemprop="description" content="Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant  $ vagrant init ubuntu/xenial64 $ vagrant up  After the box is up we need to add the correct repository:  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update  Install the package:  $ sudo apt install -y sawtooth Docker   Install Docker adding key and repo:  $ curl -fsSL https://download.">
+<meta itemprop="datePublished" content="2019-12-15T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-15T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="814">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Sawtooth Cheatsheet"/>
-<meta name="twitter:description" content="Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
- $ vagrant init ubuntu/xenial64 $ vagrant up
- After the box is up we need to add the correct repository:
- $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update
- Install the package:
- $ sudo apt install -y sawtooth"/>
+<meta name="twitter:description" content="Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant  $ vagrant init ubuntu/xenial64 $ vagrant up  After the box is up we need to add the correct repository:  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update  Install the package:  $ sudo apt install -y sawtooth Docker   Install Docker adding key and repo:  $ curl -fsSL https://download."/>
 
   </head>
 
@@ -180,98 +164,101 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-4">
 <h4 id="headline-1">
 Installation
 </h4>
-<div id="outline-text-headline-1" class="outline-text-4">
-<div id="outline-container-headline-2" class="outline-5">
 <h5 id="headline-2">
 Ubuntu
 </h5>
-<div id="outline-text-headline-2" class="outline-text-5">
 <p>
- For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant</p>
+ For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ vagrant init ubuntu/xenial64
-$ vagrant up</code></pre></div></p>
+$ vagrant up</code></pre></div>
+</p>
 <p>
- After the box is up we need to add the correct repository:</p>
+ After the box is up we need to add the correct repository:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
 $ sudo add-apt-repository <span style="color:#e6db74">&#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39;</span>
-$ sudo apt update</code></pre></div></p>
+$ sudo apt update</code></pre></div>
+</p>
 <p>
- Install the package:</p>
+ Install the package:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo apt install -y sawtooth</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-5">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo apt install -y sawtooth</code></pre></div>
+</p>
 <h5 id="headline-3">
 Docker
 </h5>
-<div id="outline-text-headline-3" class="outline-text-5">
 <p>
- Install Docker adding key and repo:</p>
+ Install Docker adding key and repo:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 $ sudo add-apt-repository <span style="color:#e6db74">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span style="color:#66d9ef">$(</span>lsb_release -cs<span style="color:#66d9ef">)</span><span style="color:#e6db74"> stable&#34;</span>
 $ sudo apt update
-$ sudo apt install -y docker-ce docker-compose</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-4">
+$ sudo apt install -y docker-ce docker-compose</code></pre></div>
+</p>
 <h4 id="headline-4">
 Starting components services
 </h4>
-<div id="outline-text-headline-4" class="outline-text-4">
-<div id="outline-container-headline-5" class="outline-5">
 <h5 id="headline-5">
 Ubuntu
 </h5>
-<div id="outline-text-headline-5" class="outline-text-5">
 <p>
  Systemd is the default init system for many Linux distributions, init system is also used to manage serviecs and daemons 
- for the server at any point while the system is running.</p>
+ for the server at any point while the system is running.
+</p>
 <p>
  Targets on systemd are called units, resourcers that systemd knows how to manage. Units are categorized by the type of 
- resource they represent and they are defined with files know as unit files. To list all Units files inside the system use:</p>
+ resource they represent and they are defined with files know as unit files. To list all Units files inside the system use:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl list-unit-files | grep sawtooth</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl list-unit-files | grep sawtooth</code></pre></div>
+</p>
 <p>
- To fetch the ones running</p>
+ To fetch the ones running
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl list-unit</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl list-unit</code></pre></div>
+</p>
 <p>
- By default they are not enabled or started by default, to start a the <strong>Sawtooth validator</strong> service:</p>
+ By default they are not enabled or started by default, to start a the <strong>Sawtooth validator</strong> service:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl start sawtooth-validator.service</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl start sawtooth-validator.service</code></pre></div>
+</p>
 <p>
- To stop the Sawtooth Validator use:</p>
+ To stop the Sawtooth Validator use:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemtl stop sawtooth-validator.service</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemtl stop sawtooth-validator.service</code></pre></div>
+</p>
 <p>
- To start the service use enable/disable, same works for reload/restart</p>
+ To start the service use enable/disable, same works for reload/restart
+</p>
 <p>
- Finally to check the status:</p>
+ Finally to check the status:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status sawtooth-validator.service</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-5">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status sawtooth-validator.service</code></pre></div>
+</p>
 <h5 id="headline-6">
 Docker
 </h5>
-<div id="outline-text-headline-6" class="outline-text-5">
 <p>
- Pieces can be found in docker-compose file.</p>
+ Pieces can be found in docker-compose file.
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://sawtooth.hyperledger.org/docs/core/releases/1.0/app_developers_guide/sawtooth-default.yaml</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://sawtooth.hyperledger.org/docs/core/releases/1.0/app_developers_guide/sawtooth-default.yaml</code></pre></div>
+</p>
 <p>
- The images that follows are:</p>
+ The images that follows are:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hyperledger/sawtooth-settings-tp:1.0
 hyperledger/sawtooth-intkey-tp-python:1.0
@@ -290,70 +277,51 @@ with the command:
 </span><span style="color:#ae81ff"></span>          --bind network:tcp://eth0:8800 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>
 hyperledger/sawtooth-rest-api:1.0
-hyperledger/sawtooth-all:1.0</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-7" class="outline-4">
+hyperledger/sawtooth-all:1.0</code></pre></div>
+</p>
 <h4 id="headline-7">
 Generate keys
 </h4>
-<div id="outline-text-headline-7" class="outline-text-4">
-<div id="outline-container-headline-8" class="outline-5">
 <h5 id="headline-8">
 Validator keys
 </h5>
-<div id="outline-text-headline-8" class="outline-text-5">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawadm keygen 
 /etc/validator/keys/validator.pub
-/etc/validator/keys/validator.priv</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-9" class="outline-5">
+/etc/validator/keys/validator.priv</code></pre></div>
+</p>
 <h5 id="headline-9">
 User keys
 </h5>
-<div id="outline-text-headline-9" class="outline-text-5">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth keygen
-~/.sawtooth/keys/</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-10" class="outline-4">
+~/.sawtooth/keys/</code></pre></div>
+</p>
 <h4 id="headline-10">
 Create a genesis block
 </h4>
-<div id="outline-text-headline-10" class="outline-text-4">
 <p>
- Create the genesis blocks</p>
+ Create the genesis blocks
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset genesis -k /root/.sawtooth/my_priv.key
 config-genesis.batch
 
 $ sawadm genesis config-gensis.batch
-/var/lib/sawtooth/genesis.batch</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-11" class="outline-4">
+/var/lib/sawtooth/genesis.batch</code></pre></div>
+</p>
 <h4 id="headline-11">
 Register a validator
 </h4>
-<div id="outline-text-headline-11" class="outline-text-4">
 <p>
- After creating the genesis.batch:</p>
+ After creating the genesis.batch:
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl start sawtooth-validator.services</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-12" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl start sawtooth-validator.services</code></pre></div>
+</p>
 <h4 id="headline-12">
 Verify installation and fix problems
 </h4>
-<div id="outline-text-headline-12" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/default/sawtooth-validator
 
@@ -368,48 +336,34 @@ genesis<span style="color:#f92672">]</span> Adding <span style="color:#ae81ff">1
 executor<span style="color:#f92672">]</span> no transaction processors registered <span style="color:#66d9ef">for</span> processor type sawtooth_settings: 1.0
 executor<span style="color:#f92672">]</span> Waiting <span style="color:#66d9ef">for</span> transaction processor <span style="color:#f92672">(</span>sawtooth_settings, 1.0<span style="color:#f92672">)</span>
 
-/etc/default/sawtooth-validator</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-13" class="outline-4">
+/etc/default/sawtooth-validator</code></pre></div>
+</p>
 <h4 id="headline-13">
 Connect TP to a validator
 </h4>
-<div id="outline-text-headline-13" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl start sawtooth-settings-tp.services
-processor_handlers<span style="color:#f92672">]</span> registered transaction processor: connection_id<span style="color:#f92672">=</span>1, family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span>1.0, namespaces<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;000000&#39;</span><span style="color:#f92672">]</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-14" class="outline-4">
+processor_handlers<span style="color:#f92672">]</span> registered transaction processor: connection_id<span style="color:#f92672">=</span>1, family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span>1.0, namespaces<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;000000&#39;</span><span style="color:#f92672">]</span></code></pre></div>
+</p>
 <h4 id="headline-14">
 Verify system meets hardware, requirements
 </h4>
-<div id="outline-text-headline-14" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ps
-top</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-15" class="outline-3">
+top</code></pre></div>
+</p>
 <h3 id="headline-15">
 Configuration
 </h3>
-<div id="outline-text-headline-15" class="outline-text-3">
-<div id="outline-container-headline-16" class="outline-4">
 <h4 id="headline-16">
 Configure validator peering and network
 </h4>
-<div id="outline-text-headline-16" class="outline-text-4">
 <p>
- –peers tcp://127.0.0.1:8800 for static and –seeds for dynamic</p>
-</div>
-</div>
-<div id="outline-container-headline-17" class="outline-4">
+ –peers tcp://127.0.0.1:8800 for static and –seeds for dynamic
+</p>
 <h4 id="headline-17">
 Configure consensus (?)
 </h4>
-<div id="outline-text-headline-17" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">For PoET 
 
@@ -419,347 +373,239 @@ sawset proposal create -k /etc/sawtooth/keys/validator.priv <span style="color:#
 </span><span style="color:#ae81ff"></span>sawtooth.poet.valid_enclave_measurements<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>poet enclave --enclave-module sgx measurement<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>sawtooth.poet.valid_enclave_basenames<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>poet enclave --enclave-module sgx basename<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>sawtooth.poet.enclave_module_name<span style="color:#f92672">=</span>sawtooth_poet_sgx.poet_enclave_sgx.poet_enclave <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>-o config.batch</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-18" class="outline-4">
+</span><span style="color:#ae81ff"></span>-o config.batch</code></pre></div>
+</p>
 <h4 id="headline-18">
 Configure logging
 </h4>
-<div id="outline-text-headline-18" class="outline-text-4">
 <p>
- Can be found in: /etc/sawtooth/log_config</p>
-</div>
-</div>
-<div id="outline-container-headline-19" class="outline-4">
+ Can be found in: /etc/sawtooth/log_config
+</p>
 <h4 id="headline-19">
 Configure REST API
 </h4>
-<div id="outline-text-headline-19" class="outline-text-4">
 <p>
- Starting the REST API can be made via Ubuntu systemd scripts or by hand</p>
+ Starting the REST API can be made via Ubuntu systemd scripts or by hand
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl start sawtooth-rest-api.service</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl start sawtooth-rest-api.service</code></pre></div>
+</p>
 <p>
  Configuration for the service is made at /etc/default/sawtooth-rest-api
- To set another port of validator node set –conect tcp://localhost:4004</p>
-</div>
-</div>
-<div id="outline-container-headline-20" class="outline-4">
+ To set another port of validator node set –conect tcp://localhost:4004
+</p>
 <h4 id="headline-20">
 Configure L3 network ports/firewall
 </h4>
-<div id="outline-text-headline-20" class="outline-text-4">
 <p>
- iptables </p>
-</div>
-</div>
-<div id="outline-container-headline-21" class="outline-4">
+ iptables 
+</p>
 <h4 id="headline-21">
 Configure metrics
 </h4>
-<div id="outline-text-headline-21" class="outline-text-4">
 <p>
- Setup InfluxDb - <a href="https://knabben.github.io/posts/sawtooth-grafana/">https://knabben.github.io/posts/sawtooth-grafana/</a></p>
-</div>
-</div>
-<div id="outline-container-headline-22" class="outline-4">
+ Setup InfluxDb - <a href="https://knabben.github.io/posts/sawtooth-grafana/">https://knabben.github.io/posts/sawtooth-grafana/</a>
+</p>
 <h4 id="headline-22">
 Configure transaction processor endpoint
 </h4>
-<div id="outline-text-headline-22" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">In the TP to connect use: -C tcp://localhost:4004
-In the validator-process set: --bind component:tcp://127.0.0.1:4004</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-23" class="outline-4">
+In the validator-process set: --bind component:tcp://127.0.0.1:4004</code></pre></div>
+</p>
 <h4 id="headline-23">
 Configure systemd services
 </h4>
-<div id="outline-text-headline-23" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Systemd services setup</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-24" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Systemd services setup</code></pre></div>
+</p>
 <h4 id="headline-24">
 Choose parallel/sync scheduler
 </h4>
-<div id="outline-text-headline-24" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo -u sawtooth sawtooth-validator -vv --scheduler parallel <span style="color:#f92672">||</span> serial</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-25" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo -u sawtooth sawtooth-validator -vv --scheduler parallel <span style="color:#f92672">||</span> serial</code></pre></div>
+</p>
 <h4 id="headline-25">
 Configure storage paths
 </h4>
-<div id="outline-text-headline-25" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/sawtooth/path.toml
 
   key_dir
   data_dir
   log_dir
-  policy_dir</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-26" class="outline-4">
+  policy_dir</code></pre></div>
+</p>
 <h4 id="headline-26">
 Configure sawtooth cli
 </h4>
-<div id="outline-text-headline-26" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/sawtooth/cli.toml</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-27" class="outline-3">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/sawtooth/cli.toml</code></pre></div>
+</p>
 <h3 id="headline-27">
 Lifecycle
 </h3>
-<div id="outline-text-headline-27" class="outline-text-3">
-<div id="outline-container-headline-28" class="outline-4">
 <h4 id="headline-28">
 Create new network
 </h4>
-<div id="outline-text-headline-28" class="outline-text-4">
 <p>
-start the validators using Peering static or dynamic, with the first node with genesis block.</p>
-</div>
-</div>
-<div id="outline-container-headline-29" class="outline-4">
+start the validators using Peering static or dynamic, with the first node with genesis block.
+</p>
 <h4 id="headline-29">
 Joining an existing network
 </h4>
-<div id="outline-text-headline-29" class="outline-text-4">
 <p>
-set –peers on all nodes</p>
-</div>
-</div>
-<div id="outline-container-headline-30" class="outline-4">
+set –peers on all nodes
+</p>
 <h4 id="headline-30">
 Remove validator node from the network
 </h4>
-<div id="outline-text-headline-30" class="outline-text-4">
 <p>
-remove –peers value from the nodes, and turn the daemon off</p>
-</div>
-</div>
-<div id="outline-container-headline-31" class="outline-4">
+remove –peers value from the nodes, and turn the daemon off
+</p>
 <h4 id="headline-31">
 Rejoin network after network failure
 </h4>
-<div id="outline-text-headline-31" class="outline-text-4">
 <p>
-restart the sawtooth-validator</p>
-</div>
-</div>
-<div id="outline-container-headline-32" class="outline-4">
+restart the sawtooth-validator
+</p>
 <h4 id="headline-32">
 Changing consensus mode
 </h4>
-<div id="outline-text-headline-32" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawset proposal create -k /etc/sawtooth/keys/validator.priv sawtooth.consensus.algorithm<span style="color:#f92672">=</span>dev</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-33" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawset proposal create -k /etc/sawtooth/keys/validator.priv sawtooth.consensus.algorithm<span style="color:#f92672">=</span>dev</code></pre></div>
+</p>
 <h4 id="headline-33">
 Restart validator after crash or maintenance
 </h4>
-<div id="outline-text-headline-33" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl restart sawtooth-validator</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-34" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl restart sawtooth-validator</code></pre></div>
+</p>
 <h4 id="headline-34">
 Restart component after crash or maintenance
 </h4>
-<div id="outline-text-headline-34" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl restart sawtooth-rest-api
-sudo systemctl restart sawtooth-settings-tp</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-35" class="outline-4">
+sudo systemctl restart sawtooth-settings-tp</code></pre></div>
+</p>
 <h4 id="headline-35">
 Add new transaction processor
 </h4>
-<div id="outline-text-headline-35" class="outline-text-4">
 <p>
- Set transaction processor connection to validator 4004 connect</p>
-</div>
-</div>
-<div id="outline-container-headline-36" class="outline-4">
+ Set transaction processor connection to validator 4004 connect
+</p>
 <h4 id="headline-36">
 Change network configuration
 </h4>
-<div id="outline-text-headline-36" class="outline-text-4">
 <p>
- Edit configuration on /etc/sawtooth/validators.toml</p>
-</div>
-</div>
-<div id="outline-container-headline-37" class="outline-4">
+ Edit configuration on /etc/sawtooth/validators.toml
+</p>
 <h4 id="headline-37">
 Update sawtooth software
 </h4>
-<div id="outline-text-headline-37" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get upgrade</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-38" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get upgrade</code></pre></div>
+</p>
 <h4 id="headline-38">
 Update transaction processor version
 </h4>
-<div id="outline-text-headline-38" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get install sawtooth*</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-39" class="outline-3">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get install sawtooth*</code></pre></div>
+</p>
 <h3 id="headline-39">
 Permissioning, Identity Management and Security
 </h3>
-<div id="outline-text-headline-39" class="outline-text-3">
-<div id="outline-container-headline-40" class="outline-4">
 <h4 id="headline-40">
 Identify network ID / system / peer ID
 </h4>
-<div id="outline-text-headline-40" class="outline-text-4">
 <p>
- cat /etc/sawtooth/keys/validator.pub</p>
-</div>
-</div>
-<div id="outline-container-headline-41" class="outline-4">
+ cat /etc/sawtooth/keys/validator.pub
+</p>
 <h4 id="headline-41">
 Permission a transaction processor
 </h4>
-<div id="outline-text-headline-41" class="outline-text-4">
 <p>
-https://knabben.github.io/posts/sawtooth-permission/</p>
+https://knabben.github.io/posts/sawtooth-permission/
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth-identity</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-42" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth-identity</code></pre></div>
+</p>
 <h4 id="headline-42">
 Policy management
 </h4>
-<div id="outline-text-headline-42" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth identity policy create policy <span style="color:#e6db74">&#34;DENY_KEY *&#34;</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-43" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawtooth identity policy create policy <span style="color:#e6db74">&#34;DENY_KEY *&#34;</span></code></pre></div>
+</p>
 <h4 id="headline-43">
 Validator registration
 </h4>
-<div id="outline-text-headline-43" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-44" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys</code></pre></div>
+</p>
 <h4 id="headline-44">
 System permissions
 </h4>
-<div id="outline-text-headline-44" class="outline-text-4">
 <p>
-Network identity </p>
-</div>
-</div>
-<div id="outline-container-headline-45" class="outline-4">
+Network identity 
+</p>
 <h4 id="headline-45">
 Configure validator local policy file
 </h4>
-<div id="outline-text-headline-45" class="outline-text-4">
 <p>
-On policy_dir must create the correct policy_name file.</p>
-</div>
-</div>
-<div id="outline-container-headline-46" class="outline-4">
+On policy_dir must create the correct policy_name file.
+</p>
 <h4 id="headline-46">
 Validator key permission
 </h4>
-<div id="outline-text-headline-46" class="outline-text-4">
 <p>
-Trust and challenge authorization types.</p>
-</div>
-</div>
-<div id="outline-container-headline-47" class="outline-4">
+Trust and challenge authorization types.
+</p>
 <h4 id="headline-47">
 Role management: transactor roles
 </h4>
-<div id="outline-text-headline-47" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawtooth identity role transactor policy_name</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-48" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawtooth identity role transactor policy_name</code></pre></div>
+</p>
 <h4 id="headline-48">
 Role management: network roles
 </h4>
-<div id="outline-text-headline-48" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawtooth identity role network policy_name</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-49" class="outline-4">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawtooth identity role network policy_name</code></pre></div>
+</p>
 <h4 id="headline-49">
 Configure transactor permissions
 </h4>
-<div id="outline-text-headline-49" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/sawtooth/validator.toml - <span style="color:#66d9ef">for</span> off-chain use the configuration file:
 
 <span style="color:#f92672">[</span>permissions<span style="color:#f92672">]</span> ROLE <span style="color:#f92672">=</span> POLICY_NAME
-policy_dir - policy_name</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-50" class="outline-4">
+policy_dir - policy_name</code></pre></div>
+</p>
 <h4 id="headline-50">
 Secure connections between components/validators
 </h4>
-</div>
-<div id="outline-container-headline-51" class="outline-4">
 <h4 id="headline-51">
 Use a proxy server to authorize the REST API
 </h4>
-<div id="outline-text-headline-51" class="outline-text-4">
 <p>
- Apache and Nginx</p>
-</div>
-</div>
-<div id="outline-container-headline-52" class="outline-4">
+ Apache and Nginx
+</p>
 <h4 id="headline-52">
 Manage validator keys and secrets
 </h4>
-<div id="outline-text-headline-52" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>xxx</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-53" class="outline-3">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>xxx</code></pre></div>
+</p>
 <h3 id="headline-53">
 Listening 
 </h3>
-<div id="outline-text-headline-53" class="outline-text-3">
+<p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/TMLed7lL5CU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-</div>
-</div>
+</p>
 <ul class="pa0">
   
 </ul>

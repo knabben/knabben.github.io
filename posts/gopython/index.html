@@ -6,7 +6,7 @@
     
     <title>Golang vs. Python | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,26 +28,22 @@
     
     
     <meta property="og:title" content="Golang vs. Python" />
-<meta property="og:description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
- For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang." />
+<meta property="og:description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.  For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/gopython/" />
 <meta property="article:published_time" content="2016-01-23T00:00:00+00:00" />
 <meta property="article:modified_time" content="2016-01-23T00:00:00+00:00" />
 <meta itemprop="name" content="Golang vs. Python">
-<meta itemprop="description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
- For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang.">
-<meta itemprop="datePublished" content="2016-01-23T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2016-01-23T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.  For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang.">
+<meta itemprop="datePublished" content="2016-01-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-01-23T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="1245">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang vs. Python"/>
-<meta name="twitter:description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
- For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang."/>
+<meta name="twitter:description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.  For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang."/>
 
   </head>
 
@@ -168,27 +164,25 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
-<div id="outline-text-headline-1" class="outline-text-3">
 <p>
-Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.</p>
+Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
+</p>
 <p>
-For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang. </p>
+For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang. 
+</p>
 <p>
-It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files. While sending, the software must compute and show the latency of each request for the user. It should output the mean on milliseconds at the end.</p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-3">
+It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files. While sending, the software must compute and show the latency of each request for the user. It should output the mean on milliseconds at the end.
+</p>
 <h3 id="headline-2">
 Main and Parameters
 </h3>
-<div id="outline-text-headline-2" class="outline-text-3">
 <p>
 Python have the argparse library, the first positional parameter csv is opened in a stream and passed to the DictReader class, 
-this guy will iterate by the lines with a dict output.</p>
+this guy will iterate by the lines with a dict output.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> csv
 <span style="color:#f92672">import</span> argparse
@@ -212,9 +206,11 @@ this guy will iterate by the lines with a dict output.</p>
     args<span style="color:#f92672">.</span>csv<span style="color:#f92672">.</span>close()
 
 <span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    main()</code></pre></div></p>
+    main()</code></pre></div>
+</p>
 <p>
-Lets try the similar stuff on Go, first thing to notice is the lack of built-in complex features, looks like ppl run on DIY mode, so, theres no default &#34;dictreader&#34;. You run through the csv file populate some structs and you have a list of maps in the end.</p>
+Lets try the similar stuff on Go, first thing to notice is the lack of built-in complex features, looks like ppl run on DIY mode, so, theres no default &#34;dictreader&#34;. You run through the csv file populate some structs and you have a list of maps in the end.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
@@ -263,17 +259,17 @@ Lets try the similar stuff on Go, first thing to notice is the lack of built-in 
 
     <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">file</span>))
     <span style="color:#a6e22e">read_csv</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">r</span>)
-}</code></pre></div></p>
+}</code></pre></div>
+</p>
 <p>
-Now that we have our POST parameters lets make the request.</p>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-3">
+Now that we have our POST parameters lets make the request.
+</p>
 <h3 id="headline-3">
 HTTP Clients and stats 
 </h3>
-<div id="outline-text-headline-3" class="outline-text-3">
-<p>For this test lets create a synchronous app, so it will not use Goroutines or loop reactors for async i/o.</p>
+<p>
+For this test lets create a synchronous app, so it will not use Goroutines or loop reactors for async i/o.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_stats</span>(timing):
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Mean: {}&#34;</span><span style="color:#f92672">.</span>format(sum(timing, datetime<span style="color:#f92672">.</span>timedelta())<span style="color:#f92672">/</span>len(timing)))
@@ -290,9 +286,11 @@ HTTP Clients and stats
         end_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
         timing<span style="color:#f92672">.</span>append(start_time <span style="color:#f92672">-</span> end_time)
 
-    calculate_stats(timing)</code></pre></div></p>
+    calculate_stats(timing)</code></pre></div>
+</p>
 <p>
-In go we have the same methods</p>
+In go we have the same methods
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">duration</span> []<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
     <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">0</span>)
@@ -313,16 +311,14 @@ In go we have the same methods</p>
         <span style="color:#a6e22e">duration</span> = append(<span style="color:#a6e22e">duration</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>))
     }
     <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">duration</span>)
-}</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-3">
+}</code></pre></div>
+</p>
 <h3 id="headline-4">
 Measures
 </h3>
-<div id="outline-text-headline-4" class="outline-text-3">
 <p>
-On a local webserver 127.0.0.1</p>
+On a local webserver 127.0.0.1
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  measure  python3.5 latency.py input.csv
 <span style="color:#ae81ff">0</span> 0:00:00.008750
@@ -330,7 +326,8 @@ On a local webserver 127.0.0.1</p>
 <span style="color:#ae81ff">2</span> 0:00:00.002517
 <span style="color:#ae81ff">3</span> 0:00:00.002474
 <span style="color:#ae81ff">4</span> 0:00:00.002458
-Mean: 0:00:00.003773</code></pre></div></p>
+Mean: 0:00:00.003773</code></pre></div>
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  measure  go run latency.go --csv input.csv
 <span style="color:#ae81ff">0</span> 2.806206ms
@@ -338,48 +335,46 @@ Mean: 0:00:00.003773</code></pre></div></p>
 <span style="color:#ae81ff">2</span> 2.35518ms
 <span style="color:#ae81ff">3</span> 2.047501ms
 <span style="color:#ae81ff">4</span> 1.974195ms
-Mean:  2.378299ms</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-3">
+Mean:  2.378299ms</code></pre></div>
+</p>
 <h3 id="headline-5">
 Deployment
 </h3>
-<div id="outline-text-headline-5" class="outline-text-3">
 <p>
-Lets continue with our analysis of both language, as we can see for scripting both are great, you have Arrays and Maps in Go and Lists and Dicts in Python, you iterate through them and apply some I/O using the procedural statements.</p>
+Lets continue with our analysis of both language, as we can see for scripting both are great, you have Arrays and Maps in Go and Lists and Dicts in Python, you iterate through them and apply some I/O using the procedural statements.
+</p>
 <p>
-Now lets say we need to test it on a Windows x86 environment, you will need to install Python 3.5, all the dependencies used on the project, maybe create a virtualenv, thats a lot of work for a simple task. In Go 1.5 we have built-in cross compilation:</p>
+Now lets say we need to test it on a Windows x86 environment, you will need to install Python 3.5, all the dependencies used on the project, maybe create a virtualenv, thats a lot of work for a simple task. In Go 1.5 we have built-in cross compilation:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">GOOS</span>=<span style="color:#a6e22e">windows</span> <span style="color:#a6e22e">GOARCH</span>=<span style="color:#ae81ff">386</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">v</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span>
 <span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">file</span> <span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>
-<span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>: <span style="color:#a6e22e">PE32</span> <span style="color:#a6e22e">executable</span> (<span style="color:#a6e22e">console</span>) <span style="color:#a6e22e">Intel</span> <span style="color:#ae81ff">80386</span> (<span style="color:#a6e22e">stripped</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">external</span> <span style="color:#a6e22e">PDB</span>), <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">MS</span> <span style="color:#a6e22e">Windows</span></code></pre></div></p>
+<span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>: <span style="color:#a6e22e">PE32</span> <span style="color:#a6e22e">executable</span> (<span style="color:#a6e22e">console</span>) <span style="color:#a6e22e">Intel</span> <span style="color:#ae81ff">80386</span> (<span style="color:#a6e22e">stripped</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">external</span> <span style="color:#a6e22e">PDB</span>), <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">MS</span> <span style="color:#a6e22e">Windows</span></code></pre></div>
+</p>
 <p>
-The deployment of the code is a statically linked binary on the right folder, you can achieve something similar with Twitter PeX [1]</p>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-3">
+The deployment of the code is a statically linked binary on the right folder, you can achieve something similar with Twitter PeX [1]
+</p>
 <h3 id="headline-6">
 Debugger
 </h3>
-<div id="outline-text-headline-6" class="outline-text-3">
 <p>
-For Python I have been using pudb on the last weeks and I really like it for things I have to spend more time trying to understand. The interface is good, you have variables on the context, your python stack and a shell to interact with your live code.</p>
+For Python I have been using pudb on the last weeks and I really like it for things I have to spend more time trying to understand. The interface is good, you have variables on the context, your python stack and a shell to interact with your live code.
+</p>
 <p>
-<img src="pudb.png" alt="pudb.png" title="pudb.png" /></p>
+<img src="pudb.png" alt="pudb.png" title="pudb.png" />
+</p>
 <p>
-For Go by default ppl are using GDB[2], you have to compile your binary first.</p>
+For Go by default ppl are using GDB[2], you have to compile your binary first.
+</p>
 <p>
-<img src="gdb.png" alt="gdb.png" title="gdb.png" /></p>
-</div>
-</div>
-<div id="outline-container-headline-7" class="outline-3">
+<img src="gdb.png" alt="gdb.png" title="gdb.png" />
+</p>
 <h3 id="headline-7">
 Concurrency
 </h3>
-<div id="outline-text-headline-7" class="outline-text-3">
 <p>
-Python 3.5 provides I/O concurrency via the package asyncio [3], it uses coroutines and an event loop pattern. Asyncio have a good syntax. We just need to note that we are not blocking the calls here, lets say the response is getting 1 sec to get back, if we have 5 calls we will have 5s of wait with the old blocking code, now we need to wait just 1 second for all calls.</p>
+Python 3.5 provides I/O concurrency via the package asyncio [3], it uses coroutines and an event loop pattern. Asyncio have a good syntax. We just need to note that we are not blocking the calls here, lets say the response is getting 1 sec to get back, if we have 5 calls we will have 5s of wait with the old blocking code, now we need to wait just 1 second for all calls.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">➜</span>  measure  time python3<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span> latency<span style="color:#f92672">.</span>py input<span style="color:#f92672">.</span>csv
 <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.025869</span>
@@ -388,7 +383,8 @@ Python 3.5 provides I/O concurrency via the package asyncio [3], it uses corouti
 <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019845</span>
 <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019862</span>
 Mean: <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.021106</span>
-python3<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span> latency<span style="color:#f92672">.</span>py input<span style="color:#f92672">.</span>csv  <span style="color:#ae81ff">0.48</span>s user <span style="color:#ae81ff">0.02</span>s system <span style="color:#ae81ff">32</span><span style="color:#f92672">%</span> cpu <span style="color:#ae81ff">1.530</span> total</code></pre></div></p>
+python3<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span> latency<span style="color:#f92672">.</span>py input<span style="color:#f92672">.</span>csv  <span style="color:#ae81ff">0.48</span>s user <span style="color:#ae81ff">0.02</span>s system <span style="color:#ae81ff">32</span><span style="color:#f92672">%</span> cpu <span style="color:#ae81ff">1.530</span> total</code></pre></div>
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_connects</span>(line):
     start_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
@@ -420,11 +416,14 @@ python3<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span> 
     calculate_stats()
 
     loop<span style="color:#f92672">.</span>close()
-    args<span style="color:#f92672">.</span>csv<span style="color:#f92672">.</span>close()</code></pre></div></p>
+    args<span style="color:#f92672">.</span>csv<span style="color:#f92672">.</span>close()</code></pre></div>
+</p>
 <p>
-Here be dragons.</p>
+Here be dragons.
+</p>
 <p>
-Instead of a loop event, go have the idea of Goroutines and channels to communicate between them, it is a very interesting approach based on CSP [4].</p>
+Instead of a loop event, go have the idea of Goroutines and channels to communicate between them, it is a very interesting approach based on CSP [4].
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">lines</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
     <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">0</span>)
@@ -470,7 +469,8 @@ Instead of a loop event, go have the idea of Goroutines and channels to communic
         <span style="color:#a6e22e">first</span> = <span style="color:#66d9ef">false</span>
     }
     <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">lines</span>, <span style="color:#a6e22e">ch</span>)
-}</code></pre></div></p>
+}</code></pre></div>
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span> <span style="color:#f92672">--</span><span style="color:#a6e22e">csv</span> <span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">csv</span>
 <span style="color:#ae81ff">1.008839797</span><span style="color:#a6e22e">s</span>
@@ -478,65 +478,48 @@ Instead of a loop event, go have the idea of Goroutines and channels to communic
 <span style="color:#ae81ff">1.010747957</span><span style="color:#a6e22e">s</span>
 <span style="color:#ae81ff">1.011410825</span><span style="color:#a6e22e">s</span>
 <span style="color:#ae81ff">1.012543644</span><span style="color:#a6e22e">s</span>
-<span style="color:#a6e22e">Mean</span>:  <span style="color:#ae81ff">1.010714299</span><span style="color:#a6e22e">s</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-8" class="outline-3">
+<span style="color:#a6e22e">Mean</span>:  <span style="color:#ae81ff">1.010714299</span><span style="color:#a6e22e">s</span></code></pre></div>
+</p>
 <h3 id="headline-8">
 Conclusion
 </h3>
-<div id="outline-text-headline-8" class="outline-text-3">
 <p>
-About the default libraries, I can&#39;t conclude much with a simple example like that, but as you can see Go is more on DIY side, you have to implement more stuff that Python have builtin.</p>
+About the default libraries, I can&#39;t conclude much with a simple example like that, but as you can see Go is more on DIY side, you have to implement more stuff that Python have builtin.
+</p>
 <p>
 Go concurrency patterns are awesome with very good design decisions, it has cross compile by default and it is fast, this makes Go a language of choice for IT startups like Docker, 
 Hashicorp and Prometheus to name a few. Go is also static typed and have a GC. Python on the other side is a very mature language with a big support of the scientific community. 
 Lots of syntax sugar on 3.x and builtin modules addition made the language yet more richer, the market share of Python gets bigger every year, 
-and complete powerfull framework like Django or Flask give it more traction.</p>
+and complete powerfull framework like Django or Flask give it more traction.
+</p>
 <p>
-It is definitely a healthy &#34;Titan war&#34;, without a winner on the short term.</p>
-</div>
-</div>
-<div id="outline-container-headline-9" class="outline-3">
+It is definitely a healthy &#34;Titan war&#34;, without a winner on the short term.
+</p>
 <h3 id="headline-9">
 Listening
 </h3>
-<div id="outline-text-headline-9" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/Zx0Q5SZ4l2Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 </p>
-</div>
-</div>
-<div id="outline-container-headline-10" class="outline-3">
 <h3 id="headline-10">
 Reference
 </h3>
-<div id="outline-text-headline-10" class="outline-text-3">
-<div id="outline-container-headline-11" class="outline-6">
 <h6 id="headline-11">
 [1] <a href="https://www.youtube.com/watch?v=NmpnGhRwsu0">https://www.youtube.com/watch?v=NmpnGhRwsu0</a>
 </h6>
-</div>
-<div id="outline-container-headline-12" class="outline-6">
 <h6 id="headline-12">
 [2] <a href="https://golang.org/doc/gdb">https://golang.org/doc/gdb</a>
 </h6>
-</div>
-<div id="outline-container-headline-13" class="outline-6">
 <h6 id="headline-13">
 [3] Fluent Python, Luciano Ramalho
 </h6>
-</div>
-<div id="outline-container-headline-14" class="outline-6">
 <h6 id="headline-14">
 [4] <a href="https://golang.org/doc/faq#csp">https://golang.org/doc/faq#csp</a>
 </h6>
-</div>
-</div>
-</div>
 <ul class="pa0">
   
 </ul>

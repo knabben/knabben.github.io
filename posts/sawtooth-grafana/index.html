@@ -6,7 +6,7 @@
     
     <title>Sawtooth Network Monitoring | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,26 +28,22 @@
     
     
     <meta property="og:title" content="Sawtooth Network Monitoring" />
-<meta property="og:description" content="Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
- It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs." />
+<meta property="og:description" content="Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.  It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/sawtooth-grafana/" />
 <meta property="article:published_time" content="2019-11-16T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-11-16T00:00:00+00:00" />
 <meta itemprop="name" content="Sawtooth Network Monitoring">
-<meta itemprop="description" content="Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
- It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.">
-<meta itemprop="datePublished" content="2019-11-16T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-11-16T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.  It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.">
+<meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="716">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Sawtooth Network Monitoring"/>
-<meta name="twitter:description" content="Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
- It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs."/>
+<meta name="twitter:description" content="Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.  It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs."/>
 
   </head>
 
@@ -168,32 +164,30 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction 
 </h3>
-<div id="outline-text-headline-1" class="outline-text-3">
 <p>
 I need to agree with Prometheus vision, instrument everything. Every library, subsystem 
 and service should have at least a few metrics to give you a rough idea of
-how it is performing.</p>
+how it is performing.
+</p>
 <p>
 It&#39;s easier with instrumentation to get a snapshot of your system state
 in a particular time, the one can discovery outliers and misbehaviors
-and if you need more details you always have debugging logs.</p>
+and if you need more details you always have debugging logs.
+</p>
 <p>
 Saying that, in this post we will analyze how to monitor a Sawtooth Validator
-Node, using InfluxDB and Grafana.</p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-3">
+Node, using InfluxDB and Grafana.
+</p>
 <h3 id="headline-2">
 Installing the tools
 </h3>
-<div id="outline-text-headline-2" class="outline-text-3">
 <p>
 As usual we start with the KIND cluster, if you don&#39;t have this yet check it out, apply
-the RBAC for tiller and install it after:</p>
+the RBAC for tiller and install it after:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cat <span style="color:#e6db74">&lt;&lt;EOF | kubectl apply -f -
 </span><span style="color:#e6db74">apiVersion: v1
@@ -214,22 +208,22 @@ the RBAC for tiller and install it after:</p>
 </span><span style="color:#e6db74">  - kind: ServiceAccount
 </span><span style="color:#e6db74">    name: tiller
 </span><span style="color:#e6db74">    namespace: kube-system
-</span><span style="color:#e6db74">EOF</span></code></pre></div></p>
+</span><span style="color:#e6db74">EOF</span></code></pre></div>
+</p>
 <p>
-Installing HELM, InfluxDB and Grafana</p>
+Installing HELM, InfluxDB and Grafana
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ helm init --service-account tiller
 $ helm install stable/influxdb --name influxdb
-$ helm install stable/grafana --name grafana</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-3">
+$ helm install stable/grafana --name grafana</code></pre></div>
+</p>
 <h3 id="headline-3">
 Configuring InfluxDB and Grafana
 </h3>
-<div id="outline-text-headline-3" class="outline-text-3">
 <p>
-First we need the get the DNS address and available ports for each service, you can use:</p>
+First we need the get the DNS address and available ports for each service, you can use:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl get svc
 grafana      ClusterIP   10.102.250.186   &lt;none&gt;        80/TCP                                         9m34s
@@ -238,56 +232,54 @@ influxdb     ClusterIP   10.101.193.193   &lt;none&gt;        8086/TCP,8088/TCP 
 Host summary:
 
 grafana - grafana.default.svc
-influxdb - influxdb.default.svc</code></pre></div></p>
+influxdb - influxdb.default.svc</code></pre></div>
+</p>
 <p>
-To test locally lets expose both ports in our client machine:</p>
+To test locally lets expose both ports in our client machine:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">INFLUXDB_HOST<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pods --namespace default -l app<span style="color:#f92672">=</span>influxdb -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{ .items[0].metadata.name }&#34;</span><span style="color:#66d9ef">)</span>
 GRAFANA_HOST<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pods --namespace default -l <span style="color:#e6db74">&#34;app=grafana,release=grafana&#34;</span> -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.items[0].metadata.name}&#34;</span><span style="color:#66d9ef">)</span>
 
 kubectl port-forward --namespace default $GRAFANA_HOST <span style="color:#ae81ff">3000</span>
-kubectl port-forward --namespace default $INFLUXDB_HOST 8086:8086</code></pre></div></p>
-<div id="outline-container-headline-4" class="outline-4">
+kubectl port-forward --namespace default $INFLUXDB_HOST 8086:8086</code></pre></div>
+</p>
 <h4 id="headline-4">
 Create a new Influx database
 </h4>
-<div id="outline-text-headline-4" class="outline-text-4">
 <p>
-To create a new database in InfluxDB use:</p>
+To create a new database in InfluxDB use:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; / <span style="color:#75715e"># influx -precision rfc3339</span>
 Connected to http://localhost:8086 version 1.7.3
 InfluxDB shell version: 1.7.3
 Enter an InfluxQL query
-&gt; CREATE DATABASE db1</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-4">
+&gt; CREATE DATABASE db1</code></pre></div>
+</p>
 <h4 id="headline-5">
 Grafana setup
 </h4>
-<div id="outline-text-headline-5" class="outline-text-4">
 <p>
-Go to <a href="http://localhost:3000,">http://localhost:3000,</a> you can find your password on &#34;helm status grafana&#34; instructions. Lets add the InfluxDB database in the dashboard.</p>
-<p>
-<img src="/posts/sawtooth-grafana/setup.png" alt="" class="" style="width: 80%; ">
+Go to <a href="http://localhost:3000,">http://localhost:3000,</a> you can find your password on &#34;helm status grafana&#34; instructions. Lets add the InfluxDB database in the dashboard.
 </p>
 <p>
-Now, you need to import the dashboard from:</p>
+<img src="/posts/sawtooth-grafana/setup.png" alt="" class="" style="width: 80%; ">
+
+</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://raw.githubusercontent.com/hyperledger/sawtooth-core/master/docker/grafana/dashboards/dashboard.json</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-3">
+Now, you need to import the dashboard from:
+</p>
+<p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://raw.githubusercontent.com/hyperledger/sawtooth-core/master/docker/grafana/dashboards/dashboard.json</code></pre></div>
+</p>
 <h3 id="headline-6">
 Enabling in the validator
 </h3>
-<div id="outline-text-headline-6" class="outline-text-3">
 <p>
 Download the Sawtooth 1.1 - Kubernetes, find the ALL the validators lines in the YAML description (container name: sawtooth-validator) and 
-enable code instrumentation via arguments, the off-site configuration for configuration monitoring can be made on /etc/sawtooth/validator.toml as well.</p>
+enable code instrumentation via arguments, the off-site configuration for configuration monitoring can be made on /etc/sawtooth/validator.toml as well.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ wget https://sawtooth.hyperledger.org/docs/core/releases/1.1/app_developers_guide/sawtooth-kubernetes-default-poet.yaml
 
@@ -314,9 +306,11 @@ vi sawtooth-kubernetes-default-poet.yaml
 </span><span style="color:#ae81ff"></span>    ...
 ...
 
-$ kubectl create -f sawtooth-kubernetes-default-poet.yaml</code></pre></div></p>
+$ kubectl create -f sawtooth-kubernetes-default-poet.yaml</code></pre></div>
+</p>
 <p>
-Wait for the nodes startup and double check if all metrics are working accordingly</p>
+Wait for the nodes startup and double check if all metrics are working accordingly
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># In the sawtooth-validators you can grab from logs</span>
 kubectl logs sawtooth-0-6bf8ddf79c-lmbsh -c sawtooth-validator | grep <span style="color:#ae81ff">8086</span>
@@ -325,33 +319,30 @@ kubectl logs sawtooth-0-6bf8ddf79c-lmbsh -c sawtooth-validator | grep <span styl
 
 $ kubectl logs $INFLUXDB_HOST  <span style="color:#75715e"># check the influxdb host logs</span>
 
-<span style="color:#f92672">[</span>httpd<span style="color:#f92672">]</span> 10.32.0.4 - - <span style="color:#f92672">[</span>16/Nov/2019:14:00:46 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;POST /write?db=db1&amp;precision=s HTTP/1.1&#34;</span> <span style="color:#ae81ff">204</span> <span style="color:#ae81ff">0</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Python-urllib/3.5&#34;</span> 7ca56170-0879-11ea-819b-4a0c9068d373 <span style="color:#ae81ff">7050</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-7" class="outline-3">
+<span style="color:#f92672">[</span>httpd<span style="color:#f92672">]</span> 10.32.0.4 - - <span style="color:#f92672">[</span>16/Nov/2019:14:00:46 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;POST /write?db=db1&amp;precision=s HTTP/1.1&#34;</span> <span style="color:#ae81ff">204</span> <span style="color:#ae81ff">0</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Python-urllib/3.5&#34;</span> 7ca56170-0879-11ea-819b-4a0c9068d373 <span style="color:#ae81ff">7050</span></code></pre></div>
+</p>
 <h3 id="headline-7">
 The dashboard
 </h3>
-<div id="outline-text-headline-7" class="outline-text-3">
 <p>
-Finally with every node sending metrics we can the Intkey Family to test our network:</p>
+Finally with every node sending metrics we can the Intkey Family to test our network:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl exec -it sawtooth-0-6bf8ddf79c-z9pvq -c sawtooth-shell bash  <span style="color:#75715e"># start the shell</span>
 
 $ intkey set a <span style="color:#ae81ff">10</span>  <span style="color:#75715e"># Initialize the first key</span>
-$ <span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> intkey inc a 10; <span style="color:#66d9ef">done</span>  <span style="color:#75715e"># Increment it</span></code></pre></div></p>
+$ <span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> intkey inc a 10; <span style="color:#66d9ef">done</span>  <span style="color:#75715e"># Increment it</span></code></pre></div>
+</p>
 <p>
 <img src="/posts/sawtooth-grafana/hosts.png" alt="" class="" style="width: 100%; ">
+
 </p>
-</div>
-</div>
-<div id="outline-container-headline-8" class="outline-3">
 <h3 id="headline-8">
 About the metrics
 </h3>
-<div id="outline-text-headline-8" class="outline-text-3">
 <p>
-Lets take a look closer on some of these metrics, since they are fundamental to correct network analysis of nodes behaviour.</p>
+Lets take a look closer on some of these metrics, since they are fundamental to correct network analysis of nodes behaviour.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">https://github.com/hyperledger/sawtooth-core/blob/v1.1.0/validator/sawtooth_validator/journal/chain.py#L660
 
@@ -369,34 +360,27 @@ Lets take a look closer on some of these metrics, since they are fundamental to 
 
  * Chain Head Moved to Fork - sawtooth_validator.chain.ChainController.chain_head_moved_to_fork_count
      Count the times the HEAD of the blockchain was moved to a new forked via consensus.
-     self._moved_to_fork_count <span style="color:#f92672">=</span> CounterWrapper<span style="color:#f92672">(</span>metrics_registry.counter<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;chain_head_moved_to_fork_count&#39;</span><span style="color:#f92672">))</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-9" class="outline-3">
+     self._moved_to_fork_count <span style="color:#f92672">=</span> CounterWrapper<span style="color:#f92672">(</span>metrics_registry.counter<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;chain_head_moved_to_fork_count&#39;</span><span style="color:#f92672">))</span></code></pre></div>
+</p>
 <h3 id="headline-9">
 Conclusion
 </h3>
-<div id="outline-text-headline-9" class="outline-text-3">
 <p>
 Don&#39;t forget to add an username and password to InfluxDB and Grafana in a production environment, 
 other good practice can be move these argument configurations to the validator.toml file inside a configmap. 
 Other than that have fun checking where these metrics come from in the source code, you will be amazed how much
-you can learn from that.</p>
-</div>
-</div>
-<div id="outline-container-headline-10" class="outline-3">
+you can learn from that.
+</p>
 <h3 id="headline-10">
 Listening
 </h3>
-<div id="outline-text-headline-10" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/h7Xz1J5tmGs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 </p>
-</div>
-</div>
 <ul class="pa0">
   
 </ul>

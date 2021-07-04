@@ -6,7 +6,7 @@
     
     <title>Kubelet Debugging Session | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.70.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,29 +28,25 @@
     
     
     <meta property="og:title" content="Kubelet Debugging Session" />
-<meta property="og:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary.
-  Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6." />
+<meta property="og:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/kube-debug/" />
 <meta property="og:image" content="http://thefind.live/posts/kube-debug/coverage.png"/>
 <meta property="article:published_time" content="2020-05-10T16:00:00+00:00" />
 <meta property="article:modified_time" content="2020-05-10T16:00:00+00:00" />
 <meta itemprop="name" content="Kubelet Debugging Session">
-<meta itemprop="description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary.
-  Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.">
-<meta itemprop="datePublished" content="2020-05-10T16:00:00+00:00" />
-<meta itemprop="dateModified" content="2020-05-10T16:00:00+00:00" />
+<meta itemprop="description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.">
+<meta itemprop="datePublished" content="2020-05-10T16:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-10T16:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="682">
 <meta itemprop="image" content="http://thefind.live/posts/kube-debug/coverage.png">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://thefind.live/posts/kube-debug/coverage.png"/>
 <meta name="twitter:title" content="Kubelet Debugging Session"/>
-<meta name="twitter:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary.
-  Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6."/>
+<meta name="twitter:description" content="Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary. Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6."/>
 
   </head>
 
@@ -171,116 +167,99 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
-<div id="outline-text-headline-1" class="outline-text-3">
 <p>
 This post reflects some work on setting up a development environment for Kubernetes. 
 We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux
-probably the vm part is not necessary.</p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-3">
+probably the vm part is not necessary.
+</p>
 <h3 id="headline-2">
 Installing the tools
 </h3>
-<div id="outline-text-headline-2" class="outline-text-3">
-<div id="outline-container-headline-3" class="outline-4">
 <h4 id="headline-3">
 VirtualBox
 </h4>
-<div id="outline-text-headline-3" class="outline-text-4">
 <p>
 Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary
-for this step a Debian Buster image is going to be used, the Virtualbox is 6.1.6 with additions.</p>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-4">
+for this step a Debian Buster image is going to be used, the Virtualbox is 6.1.6 with additions.
+</p>
 <h4 id="headline-4">
 Vagrantfile
 </h4>
-<div id="outline-text-headline-4" class="outline-text-4">
 <p>
-Starting with the Vagrantfile we are going to use both forwarded ports and synced folder functionalities.</p>
+Starting with the Vagrantfile we are going to use both forwarded ports and synced folder functionalities.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> Vagrant.configure<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">do</span> |config|
    config.vm.box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
    config.vm.network <span style="color:#e6db74">&#34;forwarded_port&#34;</span>, guest: 2456, host: <span style="color:#ae81ff">2456</span>
    config.vm.synced_folder <span style="color:#e6db74">&#34;/Users/&lt;user&gt;/go/src&#34;</span>, <span style="color:#e6db74">&#34;/home/vagrant/go/src/&#34;</span>
- end</code></pre></div></p>
+ end</code></pre></div>
+</p>
 <p>
 Port 2456 will be used by Delve to make it available outside the host. First is necessary to run
-the upgrade of linux-headers, to start guest additions for this image.</p>
+the upgrade of linux-headers, to start guest additions for this image.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> apt-get upgrade
  sudo apt upgrade linux-headers-amd64
- sudo apt-get install -y linux-headers-<span style="color:#66d9ef">$(</span>uname -r<span style="color:#66d9ef">)</span> curl</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-4">
+ sudo apt-get install -y linux-headers-<span style="color:#66d9ef">$(</span>uname -r<span style="color:#66d9ef">)</span> curl</code></pre></div>
+</p>
 <h4 id="headline-5">
 Golang
 </h4>
-<div id="outline-text-headline-5" class="outline-text-4">
 <p>
-Gimme is a good option to move around Go versions, using 1.13.10</p>
+Gimme is a good option to move around Go versions, using 1.13.10
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme; chmod +x ~/bin/gimme
 export PATH<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>PATH<span style="color:#e6db74">}</span>:/home/vagrant/bin
-eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>GIMME_GO_VERSION<span style="color:#f92672">=</span>1.13.10 gimme<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span></code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-4">
+eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>GIMME_GO_VERSION<span style="color:#f92672">=</span>1.13.10 gimme<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span></code></pre></div>
+</p>
 <h4 id="headline-6">
 Kubernetes source code
 </h4>
-<div id="outline-text-headline-6" class="outline-text-4">
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mkdir -p $GOPATH/src/k8s.io
 cd $GOPATH/src/k8s.io
 git clone https://github.com/kubernetes/kubernetes
-cd kubernetes</code></pre></div></p>
+cd kubernetes</code></pre></div>
+</p>
 <p>
-Starting with Kubelet we should be able to build it</p>
+Starting with Kubelet we should be able to build it
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@buster:~/go/src/k8s.io/kubernetes$ make clean; make WHAT<span style="color:#f92672">=</span>cmd/kubelet
 +++ <span style="color:#f92672">[</span><span style="color:#ae81ff">0511</span> 22:15:55<span style="color:#f92672">]</span> Building go targets <span style="color:#66d9ef">for</span> linux/amd64:
-    cmd/kubelet</code></pre></div></p>
-</div>
-</div>
-<div id="outline-container-headline-7" class="outline-4">
+    cmd/kubelet</code></pre></div>
+</p>
 <h4 id="headline-7">
 Testing with coverage
 </h4>
-<div id="outline-text-headline-7" class="outline-text-4">
 <p>
-So far so good, it&#39;s even possible to generate some HTML coverage reporting here</p>
+So far so good, it&#39;s even possible to generate some HTML coverage reporting here
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@buster:~/go/src/k8s.io/kubernetes$ make test WHAT<span style="color:#f92672">=</span>./pkg/kubelet KUBE_COVER<span style="color:#f92672">=</span>y
 +++ <span style="color:#f92672">[</span><span style="color:#ae81ff">0512</span> 00:28:11<span style="color:#f92672">]</span> Saving coverage output in <span style="color:#e6db74">&#39;/tmp/k8s_coverage/20200512-002811&#39;</span>
 ok  	k8s.io/kubernetes/pkg/kubelet	9.967s	coverage: 52.8% of statements
-vagrant@buster:~/go/src/k8s.io/kubernetes$ sudo mv /tmp/k8s_coverage/20200512-002811/combined-coverage.html ~/go/src/</code></pre></div></p>
+vagrant@buster:~/go/src/k8s.io/kubernetes$ sudo mv /tmp/k8s_coverage/20200512-002811/combined-coverage.html ~/go/src/</code></pre></div>
+</p>
 <p>
 <img src="/posts/kube-debug/coverage.png" alt="" class="" style="width: 100%; ">
+
 </p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-8" class="outline-3">
 <h3 id="headline-8">
 Installing Kubernetes
 </h3>
-<div id="outline-text-headline-8" class="outline-text-3">
-<div id="outline-container-headline-9" class="outline-4">
 <h4 id="headline-9">
 Kubeadm
 </h4>
-<div id="outline-text-headline-9" class="outline-text-4">
 <p>
-Follows the Kubeadm guide for Debian installation (you need docker installed)</p>
+Follows the Kubeadm guide for Debian installation (you need docker installed)
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get update <span style="color:#f92672">&amp;&amp;</span> sudo apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -289,28 +268,29 @@ cat <span style="color:#e6db74">&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/k
 </span><span style="color:#e6db74">EOF</span>
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl</code></pre></div></p>
+sudo apt-mark hold kubelet kubeadm kubectl</code></pre></div>
+</p>
 <p>
-Initialize the Kubeadm init, untaint the node and install the CNI</p>
+Initialize the Kubeadm init, untaint the node and install the CNI
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubeadm init --apiserver-advertise-address<span style="color:#f92672">=</span>10.0.2.15
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown <span style="color:#66d9ef">$(</span>id -u<span style="color:#66d9ef">)</span>:<span style="color:#66d9ef">$(</span>id -g<span style="color:#66d9ef">)</span> $HOME/.kube/config
 vagrant@buster:~/go/src/k8s.io/kubernetes$ kubectl get pods
-No resources found in default namespace.</code></pre></div></p>
+No resources found in default namespace.</code></pre></div>
+</p>
 <p>
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/</p>
-</div>
-</div>
-<div id="outline-container-headline-10" class="outline-4">
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+</p>
 <h4 id="headline-10">
 Kind
 </h4>
-<div id="outline-text-headline-10" class="outline-text-4">
 <p>
 As a second options it&#39;s possible to use Kind instead of running it directly from Kubeadm, and let Kubelet to 
-join an already existent cluster, after creating a cluster you can fetch all the data to externally access it:</p>
+join an already existent cluster, after creating a cluster you can fetch all the data to externally access it:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kind create cluster
 Creating cluster <span style="color:#e6db74">&#34;kind&#34;</span> ...
@@ -328,103 +308,92 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 $ kubectl -n kube-system get cm kubeadm-config -o json | jq <span style="color:#e6db74">&#34;.data.ClusterStatus&#34;</span>
 <span style="color:#e6db74">&#34;apiEndpoints:\n  kind-control-plane:\n    advertiseAddress: 172.18.0.2\n    bindPort: 6443\napiVersion: kubeadm.k8s.io/v1beta2\nkind: ClusterStatus\n&#34;</span>
 
-$ echo <span style="color:#e6db74">&#34;172.18.0.2     kind-control-plane&#34;</span> &gt;&gt; /etc/hosts</code></pre></div></p>
+$ echo <span style="color:#e6db74">&#34;172.18.0.2     kind-control-plane&#34;</span> &gt;&gt; /etc/hosts</code></pre></div>
+</p>
 <p>
-Instead of initing the Kubeadm directly, you should use join like:</p>
+Instead of initing the Kubeadm directly, you should use join like:
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@buster:/home/vagrant# kubeadm join --token 97ihyk.ytx08cps3hbn1c6e kind-control-plane:6443 --discovery-token-ca-cert-hash sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 W0512 18:00:22.629925   <span style="color:#ae81ff">11660</span> join.go:346<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>preflight<span style="color:#f92672">]</span> WARNING: JoinControlPane.controlPlane settings will be ignored when control-plane flag is not set.
 ...
-<span style="color:#f92672">[</span>kubelet-start<span style="color:#f92672">]</span> Downloading configuration <span style="color:#66d9ef">for</span> the kubelet from the <span style="color:#e6db74">&#34;kubelet-config-1.18&#34;</span> ConfigMap in the kube-syst</code></pre></div></p>
+<span style="color:#f92672">[</span>kubelet-start<span style="color:#f92672">]</span> Downloading configuration <span style="color:#66d9ef">for</span> the kubelet from the <span style="color:#e6db74">&#34;kubelet-config-1.18&#34;</span> ConfigMap in the kube-syst</code></pre></div>
+</p>
 <p>
-Check the external node has connectivity with your cluster.</p>
+Check the external node has connectivity with your cluster.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@buster:/home/vagrant# kubeadm join --token 97ihyk.ytx08cps3hbn1c6e kind-control-plane:6443 --discovery-token-ca-cert-hash sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 root@buster:/home/vagrant# kubectl get nodes
 NAME                 STATUS   ROLES    AGE   VERSION
 buster               Ready    &lt;none&gt;   80s   v1.18.2
-kind-control-plane   Ready    master   20m   v1.18.2</code></pre></div></p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-11" class="outline-3">
+kind-control-plane   Ready    master   20m   v1.18.2</code></pre></div>
+</p>
 <h3 id="headline-11">
 Goland environment
 </h3>
-<div id="outline-text-headline-11" class="outline-text-3">
-<div id="outline-container-headline-12" class="outline-4">
 <h4 id="headline-12">
 Stopping Kubelet
 </h4>
-<div id="outline-text-headline-12" class="outline-text-4">
 <p>
 The kubelet should be running via systemd you can follow with journalctl -flu kubelet. 
-Copy the flags used to setup it, this is going to be used later.</p>
+Copy the flags used to setup it, this is going to be used later.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/usr/bin/kubelet --bootstrap-kubeconfig<span style="color:#f92672">=</span>/etc/kubernetes/bootstrap-kubelet.conf <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>--kubeconfig<span style="color:#f92672">=</span>/etc/kubernetes/kubelet.conf --config<span style="color:#f92672">=</span>/var/lib/kubelet/config.yaml <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>--cgroup-driver<span style="color:#f92672">=</span>cgroupfs --network-plugin<span style="color:#f92672">=</span>cni --pod-infra-container-image<span style="color:#f92672">=</span>k8s.gcr.io/pause:3.2</code></pre></div></p>
+</span><span style="color:#ae81ff"></span>--cgroup-driver<span style="color:#f92672">=</span>cgroupfs --network-plugin<span style="color:#f92672">=</span>cni --pod-infra-container-image<span style="color:#f92672">=</span>k8s.gcr.io/pause:3.2</code></pre></div>
+</p>
 <p>
-We should stop it with <strong>systemctl stop kubelet</strong>.</p>
-</div>
-</div>
-<div id="outline-container-headline-13" class="outline-4">
+We should stop it with <strong>systemctl stop kubelet</strong>.
+</p>
 <h4 id="headline-13">
 Running compiled Kubelet with Delve
 </h4>
-<div id="outline-text-headline-13" class="outline-text-4">
 <p>
-Get delve and rerun the Kubelet recompiling with delve debug.</p>
+Get delve and rerun the Kubelet recompiling with delve debug.
+</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@buster:~/go/src/k8s.io/kubernetes$ go get github.com/go-delve/delve/cmd/dlv
-vagrant@buster:~/go/src/k8s.io/kubernetes$ dlv debug ./cmd/kubelet --headless --listen<span style="color:#f92672">=</span>:2456 --api-version<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span></code></pre></div></p>
+vagrant@buster:~/go/src/k8s.io/kubernetes$ dlv debug ./cmd/kubelet --headless --listen<span style="color:#f92672">=</span>:2456 --api-version<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span></code></pre></div>
+</p>
 <p>
-Finally you should be able to connect in the listening port.</p>
-</div>
-</div>
-<div id="outline-container-headline-14" class="outline-4">
+Finally you should be able to connect in the listening port.
+</p>
 <h4 id="headline-14">
 Opening on Goland
 </h4>
-<div id="outline-text-headline-14" class="outline-text-4">
 <p>
-Configure Goland to debug the host:</p>
+Configure Goland to debug the host:
+</p>
 <p>
 <img src="/posts/kube-debug/config.png" alt="" class="" style="width: 100%; ">
+
 </p>
 <p>
 It&#39;s possible now to debug the code normally, just use the project from the mounted folder with the 
-actual source code.</p>
+actual source code.
+</p>
 <p>
 <img src="/posts/kube-debug/debug.png" alt="" class="" style="width: 100%; ">
+
 </p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-15" class="outline-3">
 <h3 id="headline-15">
 References
 </h3>
-<div id="outline-text-headline-15" class="outline-text-3">
 <p>
-<a href="https://twitter.com/mauilion/">@maulion</a> on TGIK 109</p>
-</div>
-</div>
-<div id="outline-container-headline-16" class="outline-3">
+<a href="https://twitter.com/mauilion/">@maulion</a> on TGIK 109
+</p>
 <h3 id="headline-16">
 Listening
 </h3>
-<div id="outline-text-headline-16" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/Rce70OkfRhI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 </p>
-</div>
-</div>
 <ul class="pa0">
   
 </ul>
