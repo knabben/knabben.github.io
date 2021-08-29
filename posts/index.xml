@@ -6,10 +6,35 @@
     <description>Recent content in Posts on AK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Aug 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://thefind.live/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CNI plugins and kindnet</title>
+      <link>http://thefind.live/posts/cni-plugins/readme/</link>
+      <pubDate>Sat, 28 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/cni-plugins/readme/</guid>
+      <description>Introduction With the advance of Containers, the network segmentation was required at level of the isolated applications, logically it&#39;s another copy of the network stack, with it&#39;s own routes, firewall rules and net devices. By convention these named network namespaces (ns) is an object at /var/run/netns/ as we are going to see in the sequence. A few tools to manage netns at user-space level resides on [1].
+A standard called CNI (Container Network Interface) was created, to formalize and create a baseline that consists of a specification and libraries for writing plugins to configure network interfaces in Linux containers, along with a number of supported plugins.</description>
+    </item>
+    
+    <item>
+      <title>Windows and Calico overlay networking</title>
+      <link>http://thefind.live/posts/vxlan-windows/readme/</link>
+      <pubDate>Sat, 28 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/vxlan-windows/readme/</guid>
+      <description>Introduction Windows vs linux network namespace
+Network namespace | tcpip compartments Bridge and ip routing | vswitch ip links | vnics and vswitch vfp ports ipvs and iptables | firewall and vfp rules
+Overlay networking VXLAN overlay and Flannel/Calico
+Felix setup ....
+vxlanMode field (VXLAN encapsulation)
+Vagrantfile and multiple interfaces HNS-Setnetwork - what is the point and where it makes
+How to pick the correct interface and why, what is changed why VXLAN needs to be created upon on it.</description>
+    </item>
     
     <item>
       <title>Kube-proxy ClusterIP</title>

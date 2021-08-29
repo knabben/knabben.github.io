@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/posts/" />
-<meta property="og:updated_time" content="2021-06-14T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-08-28T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="sdaf"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -121,6 +121,43 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://thefind.live/posts/cni-plugins/readme/" class="link black dim">
+        CNI plugins and kindnet
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction With the advance of Containers, the network segmentation was required at level of the isolated applications, logically it's another copy of the network stack, with it's own routes, firewall rules and net devices. By convention these named network namespaces (ns) is an object at /var/run/netns/ as we are going to see in the sequence. A few tools to manage netns at user-space level resides on [1].
+A standard called CNI (Container Network Interface) was created, to formalize and create a baseline that consists of a specification and libraries for writing plugins to configure network interfaces in Linux containers, along with a number of supported plugins.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://thefind.live/posts/vxlan-windows/readme/" class="link black dim">
+        Windows and Calico overlay networking
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction Windows vs linux network namespace
+Network namespace | tcpip compartments Bridge and ip routing | vswitch ip links | vnics and vswitch vfp ports ipvs and iptables | firewall and vfp rules
+Overlay networking VXLAN overlay and Flannel/Calico
+Felix setup ....
+vxlanMode field (VXLAN encapsulation)
+Vagrantfile and multiple interfaces HNS-Setnetwork - what is the point and where it makes
+How to pick the correct interface and why, what is changed why VXLAN needs to be created upon on it.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -248,36 +285,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       ReplicaSets   A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.  // ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/kube-container/" class="link black dim">
-        Kubernetes Container API
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Container from PodSpec   The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.  // A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/kube-pod/" class="link black dim">
-        Pod specification
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it. POD diagram    Pod struct  PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
     </div>
   </div>
 </div>
