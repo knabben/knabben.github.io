@@ -22,21 +22,6 @@ A standard called CNI (Container Network Interface) was created, to formalize an
     </item>
     
     <item>
-      <title>Windows and Calico overlay networking</title>
-      <link>http://thefind.live/posts/vxlan-windows/readme/</link>
-      <pubDate>Sat, 28 Aug 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://thefind.live/posts/vxlan-windows/readme/</guid>
-      <description>Introduction Windows vs linux network namespace
-Network namespace | tcpip compartments Bridge and ip routing | vswitch ip links | vnics and vswitch vfp ports ipvs and iptables | firewall and vfp rules
-Overlay networking VXLAN overlay and Flannel/Calico
-Felix setup ....
-vxlanMode field (VXLAN encapsulation)
-Vagrantfile and multiple interfaces HNS-Setnetwork - what is the point and where it makes
-How to pick the correct interface and why, what is changed why VXLAN needs to be created upon on it.</description>
-    </item>
-    
-    <item>
       <title>Kube-proxy ClusterIP</title>
       <link>http://thefind.live/posts/kproxy/readme/</link>
       <pubDate>Mon, 14 Jun 2021 00:00:00 +0000</pubDate>
