@@ -6,7 +6,7 @@
     
     <title>Kubelet Dynamic Configuration | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.70.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,22 +28,26 @@
     
     
     <meta property="og:title" content="Kubelet Dynamic Configuration" />
-<meta property="og:description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.  The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1." />
+<meta property="og:description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.
+ The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/kube-dynamic/" />
 <meta property="article:published_time" content="2020-05-24T16:00:00+00:00" />
 <meta property="article:modified_time" content="2020-05-24T16:00:00+00:00" />
 <meta itemprop="name" content="Kubelet Dynamic Configuration">
-<meta itemprop="description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.  The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.">
-<meta itemprop="datePublished" content="2020-05-24T16:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-24T16:00:00&#43;00:00" />
+<meta itemprop="description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.
+ The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.">
+<meta itemprop="datePublished" content="2020-05-24T16:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-05-24T16:00:00+00:00" />
 <meta itemprop="wordCount" content="901">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubelet Dynamic Configuration"/>
-<meta name="twitter:description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.  The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1."/>
+<meta name="twitter:description" content="Introduction   On Kubernetes 1.10&#43; a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.
+ The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1."/>
 
   </head>
 
@@ -164,53 +168,52 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
+<div id="outline-text-headline-1" class="outline-text-3">
 <p>
 On Kubernetes 1.10+ a new way to configure Kubelet via YAML became v1beta1, the
 struct <strong>KubeletConfiguration</strong> become available via the –config flag. So most of the
 regular ones can be configured via this file. This approach is extensively used by
-kubeadm for setting up the installation as was noted in last post.
-</p>
+kubeadm for setting up the installation as was noted in last post.</p>
 <p>
 The idea of this post now is to do a code walkthrough and take a look in some
 KEPs and designs for the subsystem that reload this configuration at flight
-giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.11.
-</p>
+giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.11.</p>
 <p>
 The combination of configuration provided via –config and any flags which override
-these values is considered the default &#34;last known good&#34; configuration by the automatic rollback mechanism.
-</p>
+these values is considered the default &#34;last known good&#34; configuration by the automatic rollback mechanism.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
 Basic workflow overview
 </h3>
+<div id="outline-text-headline-2" class="outline-text-3">
 <p>
-   According the official documentation some steps are necessary, they are:
-</p>
+   According the official documentation some steps are necessary, they are:</p>
 <ol>
 <li>
-<p>
-Write the YAML configuration file containing the Kubelet&#39;s configuration.
-</p>
+<p>Write the YAML configuration file containing the Kubelet&#39;s configuration.</p>
 </li>
 <li>
-<p>
-Wrap the file in a ConfigMap and save it.
-</p>
+<p>Wrap the file in a ConfigMap and save it.</p>
 </li>
 <li>
-<p>
-Update the kubelet&#39;s corresponding Node object to uside this ConfigMap.
-</p>
+<p>Update the kubelet&#39;s corresponding Node object to uside this ConfigMap.</p>
 </li>
 </ol>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
 <h3 id="headline-3">
 Preparing Kubelet with Dynamic Flags
 </h3>
+<div id="outline-text-headline-3" class="outline-text-3">
 <p>
-In our already running environment lets add the flags to start using this feature.
-</p>
+In our already running environment lets add the flags to start using this feature.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mkdir -p /var/lib/kubelet/dynamic
 $ ./_output/bin/kubelet 
@@ -220,36 +223,37 @@ $ ./_output/bin/kubelet
 </span><span style="color:#ae81ff"></span>  --cgroup-driver<span style="color:#f92672">=</span>cgroupfs <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>  --network-plugin<span style="color:#f92672">=</span>cni <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>  --pod-infra-container-image<span style="color:#f92672">=</span>k8s.gcr.io/pause:3.2 <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>  --dynamic-config-dir /var/lib/kubelet/dynamic</code></pre></div>
-</p>
+</span><span style="color:#ae81ff"></span>  --dynamic-config-dir /var/lib/kubelet/dynamic</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
 Bootstrapping the initial configuration
 </h3>
+<div id="outline-text-headline-4" class="outline-text-3">
 <p>
-The first initialization of this feature resides in:
-</p>
+The first initialization of this feature resides in:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cmd/kubelet/app/server.go:223
 
-dynamicKubeletConfig, kubeletConfigController, err <span style="color:#f92672">=</span> BootstrapKubeletConfigController<span style="color:#f92672">(</span>dynamicConfigDir,func<span style="color:#f92672">)</span></code></pre></div>
-</p>
+dynamicKubeletConfig, kubeletConfigController, err <span style="color:#f92672">=</span> BootstrapKubeletConfigController<span style="color:#f92672">(</span>dynamicConfigDir,func<span style="color:#f92672">)</span></code></pre></div></p>
 <p>
 This bootstrap created a new Controller, bootstrapping it. This is called before the StartSync call
-trying to get the last known configuration already existent.
-</p>
+trying to get the last known configuration already existent.</p>
 <p>
 To do this, the dynamic directory is created with meta and checkpoints subfolders, this will return nil
-for the first time, and use the local configuration.
-</p>
+for the first time, and use the local configuration.</p>
 <p>
-We are going to come back to this when it the configuration restart.
-</p>
+We are going to come back to this when it the configuration restart.</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
 <h3 id="headline-5">
 Starting the controller
 </h3>
+<div id="outline-text-headline-5" class="outline-text-3">
 <p>
-We have the activation of the controller here if the dynamic configuration dir flag is passed:
-</p>
+We have the activation of the controller here if the dynamic configuration dir flag is passed:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">  <span style="color:#75715e">// cmd/kubelet/app/server.go:771
 </span><span style="color:#75715e"></span>	<span style="color:#75715e">// If the kubelet config controller is available, and dynamic config is enabled, start the config and status sync loops
@@ -258,20 +262,18 @@ We have the activation of the controller here if the dynamic configuration dir f
 		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">kubeDeps</span>.<span style="color:#a6e22e">KubeletConfigController</span>.<span style="color:#a6e22e">StartSync</span>(<span style="color:#a6e22e">kubeDeps</span>.<span style="color:#a6e22e">KubeClient</span>, <span style="color:#a6e22e">kubeDeps</span>.<span style="color:#a6e22e">EventClient</span>, string(<span style="color:#a6e22e">nodeName</span>)); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
 		}
-	}</code></pre></div>
-</p>
+	}</code></pre></div></p>
 <p>
-The main goroutines, launched are:
-</p>
+The main goroutines, launched are:</p>
+<div id="outline-container-headline-6" class="outline-4">
 <h4 id="headline-6">
 go statusSyncLoopFunc()
 </h4>
+<div id="outline-text-headline-6" class="outline-text-4">
 <p>
-Attempts to sync the status with the Node object for the Kubelet, 
-</p>
+Attempts to sync the status with the Node object for the Kubelet, </p>
 <p>
-This metric will handle possible errors in the status.
-</p>
+This metric will handle possible errors in the status.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># HELP kubelet_node_config_active [ALPHA] The config source the node is actively using. The count is always 1.</span>
 <span style="color:#75715e"># TYPE kubelet_node_config_active gauge</span>
@@ -284,48 +286,48 @@ kubelet_node_config_assigned<span style="color:#f92672">{</span>node_config_kube
 kubelet_node_config_last_known_good<span style="color:#f92672">{</span>node_config_kubelet_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>,node_config_resource_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>,node_config_source<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;local&#34;</span>,node_config_uid<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">1</span>
 <span style="color:#75715e"># HELP kubelet_node_config_error [ALPHA] This metric is true (1) if the node is experiencing a configuration-related error, false (0) otherwise.</span>
 <span style="color:#75715e"># TYPE kubelet_node_config_error gauge</span>
-kubelet_node_config_error <span style="color:#ae81ff">0</span></code></pre></div>
-</p>
+kubelet_node_config_error <span style="color:#ae81ff">0</span></code></pre></div></p>
 <p>
-go remoteConfigSourceInformerFunc() &amp;&amp; nodeInformerFunc() are node informers
-</p>
+go remoteConfigSourceInformerFunc() &amp;&amp; nodeInformerFunc() are node informers</p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
 <h4 id="headline-7">
 go configSyncLoopFunc()
 </h4>
+<div id="outline-text-headline-7" class="outline-text-4">
 <p>
-Checks if work needs to be done to use a new configuration, and does that work if necessary
-</p>
+Checks if work needs to be done to use a new configuration, and does that work if necessary</p>
 <p>
-Again in the first run, the local source is used.
-</p>
+Again in the first run, the local source is used.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
 <h3 id="headline-8">
 New configuration on ConfigMap
 </h3>
+<div id="outline-text-headline-8" class="outline-text-3">
 <p>
-Generating the config from the configz endpoint can be made with, create the configMap with the file generated:
-</p>
+Generating the config from the configz endpoint can be made with, create the configMap with the file generated:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl get --raw /api/v1/nodes/buster/proxy/configz | jq <span style="color:#e6db74">&#39;.kubeletconfig|.kind=&#34;KubeletConfiguration&#34;|.apiVersion=&#34;kubelet.config.k8s.io/v1beta1&#34;&#39;</span> &gt; kubelet_configz_buster
-$ kubectl -n kube-system create configmap my-node-config --from-file<span style="color:#f92672">=</span>kubelet<span style="color:#f92672">=</span>kubelet_configz_buster --append-hash -o yaml</code></pre></div>
-</p>
+$ kubectl -n kube-system create configmap my-node-config --from-file<span style="color:#f92672">=</span>kubelet<span style="color:#f92672">=</span>kubelet_configz_buster --append-hash -o yaml</code></pre></div></p>
 <p>
-A new configmap should be created in the kube-system namespace, use it in the node configuration spec via patch:
-</p>
+A new configmap should be created in the kube-system namespace, use it in the node configuration spec via patch:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl patch node buster -p <span style="color:#e6db74">&#34;{\&#34;spec\&#34;:{\&#34;configSource\&#34;:{\&#34;configMap\&#34;:{\&#34;name\&#34;:\&#34;buster-b9f7fmh74m\&#34;,\&#34;namespace\&#34;:\&#34;kube-system\&#34;,\&#34;kubeletConfigKey\&#34;:\&#34;kubelet\&#34;}}}}&#34;</span>
 I0524 21:00:43.531383   <span style="color:#ae81ff">24057</span> watch.go:85<span style="color:#f92672">]</span> kubelet config controller: Node.Spec.ConfigSource was updated
 I0524 21:00:50.439947   <span style="color:#ae81ff">24057</span> configsync.go:96<span style="color:#f92672">]</span> kubelet config controller: Node.Spec.ConfigSource is non-empty, will checkpoint source and update config <span style="color:#66d9ef">if</span> necessary
 I0524 21:00:50.442722   <span style="color:#ae81ff">24057</span> download.go:194<span style="color:#f92672">]</span> kubelet config controller: attempting to download /api/v1/namespaces/kube-system/configmaps/buster-b9f7fmh74m
 I0524 21:00:50.446376   <span style="color:#ae81ff">24057</span> download.go:199<span style="color:#f92672">]</span> kubelet config controller: successfully downloaded /api/v1/namespaces/kube-system/configmaps/buster-b9f7fmh74m, UID: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e, ResourceVersion: <span style="color:#ae81ff">960605</span>
-I0524 21:00:50.458402   <span style="color:#ae81ff">24057</span> configsync.go:205<span style="color:#f92672">]</span> kubelet config controller: Kubelet restarting to use /api/v1/namespaces/kube-system/configmaps/buster-b9f7fmh74m, UID: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e, ResourceVersion: 960605, KubeletConfigKey: kubelet</code></pre></div>
-</p>
+I0524 21:00:50.458402   <span style="color:#ae81ff">24057</span> configsync.go:205<span style="color:#f92672">]</span> kubelet config controller: Kubelet restarting to use /api/v1/namespaces/kube-system/configmaps/buster-b9f7fmh74m, UID: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e, ResourceVersion: 960605, KubeletConfigKey: kubelet</code></pre></div></p>
 <p>
 The node informer notes the event from PATCH and compares the old node Node.Spec.ConfigSource with new changes, so it &#34;pokes&#34; the configSyncLoopFunc goroutine
-via channel.
-</p>
+via channel.</p>
 <p>
-Now we have the configuration persisted in the dynamic root checkpoints folder, and the restartForNewConfig function is called.
-</p>
+Now we have the configuration persisted in the dynamic root checkpoints folder, and the restartForNewConfig function is called.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@buster:~# cat /var/lib/kubelet/dynamic/store/meta/assigned
 apiVersion: kubelet.config.k8s.io/v1beta1
@@ -336,14 +338,16 @@ source:
     name: buster-b9f7fmh74m
     namespace: kube-system
     resourceVersion: <span style="color:#e6db74">&#34;960605&#34;</span>
-    uid: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e</code></pre></div>
-</p>
+    uid: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
 <h3 id="headline-9">
 Restarting Kubelet
 </h3>
+<div id="outline-text-headline-9" class="outline-text-3">
 <p>
-Bringing the process up again (since we are running outside systemd), you can notice the usage of the last 
-</p>
+Bringing the process up again (since we are running outside systemd), you can notice the usage of the last </p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">I0524 21:24:02.043624    <span style="color:#ae81ff">1969</span> fsstore.go:59<span style="color:#f92672">]</span> kubelet config controller: initializing config checkpoints directory <span style="color:#e6db74">&#34;/var/lib/kubelet/dynamic/store&#34;</span>
 I0524 21:24:50.431442    <span style="color:#ae81ff">1969</span> fsstore.go:116<span style="color:#f92672">]</span> kubelet config controller: loading Kubelet configuration checkpoint <span style="color:#66d9ef">for</span> source /api/v1/namespaces/kube-system/configmaps/buster-b9f7fmh74m, UID: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e, ResourceVersion: <span style="color:#ae81ff">960605</span>
@@ -365,49 +369,60 @@ I0524 21:24:50.431442    <span style="color:#ae81ff">1969</span> fsstore.go:116<
         name: buster-b9f7fmh74m
         namespace: kube-system
         resourceVersion: <span style="color:#e6db74">&#34;960605&#34;</span>
-        uid: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e</code></pre></div>
-</p>
+        uid: e70cb9fd-ecd3-479c-b8d0-f1ac7329296e</code></pre></div></p>
 <p>
 Try to change the ConfigMap, for example the staticPodPath: /etc/kubernetes/manifests_new, the remoteConfigSource informer will not notice
 the change in the configmap and reload Kubelet, poking again syncConfigSource, that will do the reprocessing, with the new checkpoint, and Kubelet
-restarting. Notice the resourceVersion change.
-</p>
+restarting. Notice the resourceVersion change.</p>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
 <h3 id="headline-10">
 BONUS - Monitoring with Prometheus
 </h3>
+<div id="outline-text-headline-10" class="outline-text-3">
 <p>
-You can have some really cool dashboard monitoring this process:
-</p>
+You can have some really cool dashboard monitoring this process:</p>
 <p>
 <img src="/posts/kube-dynamic/screenshot.png" alt="" class="" style="width: 100%; ">
-
 </p>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
 <h3 id="headline-11">
 Conclusion
 </h3>
+<div id="outline-text-headline-11" class="outline-text-3">
 <p>
 The standarization of the flags and configuration is important for the scalability of any project, having a secure way to restart these options
-is a very good improvement in the usability for external operators.
-</p>
+is a very good improvement in the usability for external operators.</p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
 <h3 id="headline-12">
 References 
 </h3>
+<div id="outline-text-headline-12" class="outline-text-3">
 <p>
 https://kubernetes.io/blog/2018/07/11/dynamic-kubelet-configuration/
 <a href="https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/">https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/</a>
 <a href="https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/">https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/</a>
-<a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/dynamic-kubelet-configuration.md">https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/dynamic-kubelet-configuration.md</a>
-</p>
+<a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/dynamic-kubelet-configuration.md">https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/dynamic-kubelet-configuration.md</a></p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
 <h3 id="headline-13">
 Listening
 </h3>
+<div id="outline-text-headline-13" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/TxLcZ7ro7ok" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
 </p>
+</div>
+</div>
 <ul class="pa0">
   
 </ul>

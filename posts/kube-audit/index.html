@@ -6,7 +6,7 @@
     
     <title>Kubernetes Audit Sink | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.70.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,22 +28,29 @@
     
     
     <meta property="og:title" content="Kubernetes Audit Sink" />
-<meta property="og:description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.  Kubernetes has 4 stages: RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.  ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e." />
+<meta property="og:description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.
+ Kubernetes has 4 stages:
+RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/kube-audit/" />
 <meta property="article:published_time" content="2019-11-27T10:00:00+00:00" />
 <meta property="article:modified_time" content="2019-11-27T10:00:00+00:00" />
 <meta itemprop="name" content="Kubernetes Audit Sink">
-<meta itemprop="description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.  Kubernetes has 4 stages: RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.  ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.">
-<meta itemprop="datePublished" content="2019-11-27T10:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-11-27T10:00:00&#43;00:00" />
+<meta itemprop="description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.
+ Kubernetes has 4 stages:
+RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.">
+<meta itemprop="datePublished" content="2019-11-27T10:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-27T10:00:00+00:00" />
 <meta itemprop="wordCount" content="389">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubernetes Audit Sink"/>
-<meta name="twitter:description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.  Kubernetes has 4 stages: RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.  ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e."/>
+<meta name="twitter:description" content="Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.
+ Kubernetes has 4 stages:
+RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e."/>
 
   </head>
 
@@ -164,49 +171,69 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
+<div id="outline-text-headline-1" class="outline-text-3">
 <p>
-The idea of this post is to test the Audit dynamic backend with a KIND cluster.
-</p>
+The idea of this post is to test the Audit dynamic backend with a KIND cluster.</p>
 <p>
-Kubernetes has 4 stages:
-</p>
+Kubernetes has 4 stages:</p>
+<div id="outline-container-headline-2" class="outline-5">
 <h5 id="headline-2">
 RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.
 </h5>
+</div>
+<div id="outline-container-headline-3" class="outline-5">
 <h5 id="headline-3">
 ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.g. watch).
 </h5>
+</div>
+<div id="outline-container-headline-4" class="outline-5">
 <h5 id="headline-4">
 ResponseComplete - The response body has been completed and no more bytes will be sent.
 </h5>
+</div>
+<div id="outline-container-headline-5" class="outline-5">
 <h5 id="headline-5">
 Panic - Events generated when a panic occurred.
 </h5>
+<div id="outline-text-headline-5" class="outline-text-5">
 <p>
-And 4 levels:
-</p>
+And 4 levels:</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-5">
 <h5 id="headline-6">
 None - don’t log events that match this rule.
 </h5>
+</div>
+<div id="outline-container-headline-7" class="outline-5">
 <h5 id="headline-7">
 Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.
 </h5>
+</div>
+<div id="outline-container-headline-8" class="outline-5">
 <h5 id="headline-8">
 Request - log event metadata and request body but not response body. This does not apply for non-resource requests.
 </h5>
+</div>
+<div id="outline-container-headline-9" class="outline-5">
 <h5 id="headline-9">
 RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.
 </h5>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
 <h3 id="headline-10">
 Configuring Kind
 </h3>
+<div id="outline-text-headline-10" class="outline-text-3">
 <p>
 It is possible to overwrite the kubeadm configuration passing multiple extra args for the REST API server,
-to enable this it is necessary to create the following flags:
-</p>
+to enable this it is necessary to create the following flags:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># config.yaml</span>
 
@@ -222,15 +249,17 @@ to enable this it is necessary to create the following flags:
     <span style="color:#66d9ef">extraArgs</span>:
       <span style="color:#66d9ef">feature-gates</span>: <span style="color:#e6db74">&#34;DynamicAuditing=true&#34;</span>
       <span style="color:#66d9ef">audit-dynamic-configuration</span>: <span style="color:#e6db74">&#34;true&#34;</span>
-      <span style="color:#66d9ef">runtime-config</span>: <span style="color:#e6db74">&#34;auditregistration.k8s.io/v1alpha1=true&#34;</span></code></pre></div>
-</p>
+      <span style="color:#66d9ef">runtime-config</span>: <span style="color:#e6db74">&#34;auditregistration.k8s.io/v1alpha1=true&#34;</span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
 <h3 id="headline-11">
 Configuring the Audit Sink
 </h3>
+<div id="outline-text-headline-11" class="outline-text-3">
 <p>
 It&#39;s possible to set the level and stage per URL configuration setting the host these filtered events go,
-for filtering rules the parameter –audit-policy-file must be set with Policy file.
-</p>
+for filtering rules the parameter –audit-policy-file must be set with Policy file.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># audit.yaml</span>
 
@@ -248,21 +277,21 @@ for filtering rules the parameter –audit-policy-file must be set with Policy f
       <span style="color:#66d9ef">qps</span>: <span style="color:#ae81ff">10</span>
       <span style="color:#66d9ef">burst</span>: <span style="color:#ae81ff">15</span>
     <span style="color:#66d9ef">clientConfig</span>:
-      <span style="color:#66d9ef">url</span>: <span style="color:#e6db74">&#34;https://generic-web-site/hook&#34;</span></code></pre></div>
-</p>
+      <span style="color:#66d9ef">url</span>: <span style="color:#e6db74">&#34;https://generic-web-site/hook&#34;</span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
 <h3 id="headline-12">
 Starting kind
 </h3>
+<div id="outline-text-headline-12" class="outline-text-3">
 <p>
-To start the KIND with the configuration file and setup the Audit Sink:
-</p>
+To start the KIND with the configuration file and setup the Audit Sink:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kind create cluster --config config.yaml
-$ kubectl create -f audit.yaml</code></pre></div>
-</p>
+$ kubectl create -f audit.yaml</code></pre></div></p>
 <p>
-This is an example from the KIND cluster:
-</p>
+This is an example from the KIND cluster:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{
   <span style="color:#66d9ef">&#34;kind&#34;: </span><span style="color:#e6db74">&#34;EventList&#34;</span>,
@@ -305,18 +334,22 @@ This is an example from the KIND cluster:
       }
     }
   ]
-}</code></pre></div>
-</p>
+}</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
 <h3 id="headline-13">
 Listening 
 </h3>
+<div id="outline-text-headline-13" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/aVdR6JeEyT8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
 </p>
+</div>
+</div>
 <ul class="pa0">
   
 </ul>

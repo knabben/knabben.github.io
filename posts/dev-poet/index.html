@@ -6,7 +6,7 @@
     
     <title>From Dev to PoET | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.70.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,22 +28,26 @@
     
     
     <meta property="og:title" content="From Dev to PoET" />
-<meta property="og:description" content="Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.  Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic." />
+<meta property="og:description" content="Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
+ Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/dev-poet/" />
 <meta property="article:published_time" content="2019-11-16T01:00:00+00:00" />
 <meta property="article:modified_time" content="2019-11-16T01:00:00+00:00" />
 <meta itemprop="name" content="From Dev to PoET">
-<meta itemprop="description" content="Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.  Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.">
-<meta itemprop="datePublished" content="2019-11-16T01:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-11-16T01:00:00&#43;00:00" />
+<meta itemprop="description" content="Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
+ Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.">
+<meta itemprop="datePublished" content="2019-11-16T01:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-16T01:00:00+00:00" />
 <meta itemprop="wordCount" content="798">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="From Dev to PoET"/>
-<meta name="twitter:description" content="Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.  Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic."/>
+<meta name="twitter:description" content="Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
+ Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic."/>
 
   </head>
 
@@ -164,35 +168,35 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
+<div id="outline-text-headline-1" class="outline-text-3">
 <p>
 DevMode is very cool for development of transaction processors, but when you go to production
 it don&#39;t grant a correct fork resolution of your chain, and you can end up with different 
-HEAD in the nodes.
-</p>
+HEAD in the nodes.</p>
 <p>
 Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we
-have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
-</p>
+have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.</p>
 <p>
 But without it this algorithm becomes Crash Fault Tolerant only, for our proposes
 it&#39;s enough. The idea here is to spin up a network with 3 nodes, being the first the node who
-will generate the genesis block and the other peers will sync up with it.
-</p>
+will generate the genesis block and the other peers will sync up with it.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
 A Sawtooth 1.0.5 Testnet
 </h3>
+<div id="outline-text-headline-2" class="outline-text-3">
 <p>
-Get this Gist with the Kubernetes description:
-</p>
+Get this Gist with the Kubernetes description:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">wget https://gist.githubusercontent.com/knabben/f84c0e4088868d7f9000a21d42412952/raw/10a71bdb8f0cce67234c4465360868c02174b305/poet.yaml</code></pre></div>
-</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">wget https://gist.githubusercontent.com/knabben/f84c0e4088868d7f9000a21d42412952/raw/10a71bdb8f0cce67234c4465360868c02174b305/poet.yaml</code></pre></div></p>
 <p>
-The main containers are the sawtooth-validator, sawtooth-settings-tp and the poet-validator-tp.
-</p>
+The main containers are the sawtooth-validator, sawtooth-settings-tp and the poet-validator-tp.</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sawadm keygen --force <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>    
@@ -220,25 +224,24 @@ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch 
 </span><span style="color:#ae81ff"></span>    --endpoint tcp://$SAWTOOTH_0_SERVICE_HOST:8800 <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>    --peering dynamic <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>    --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>    --bind network:tcp://eth0:8800<span style="color:#e6db74">&#34;</span></code></pre></div>
-</p>
+</span><span style="color:#ae81ff"></span>    --bind network:tcp://eth0:8800<span style="color:#e6db74">&#34;</span></code></pre></div></p>
 <p>
 The difference here is starting the genesis block with sawtooth.consensus.algorithm=poet proposal 
 in settings + the configuration attributes, pay attention in the poet registration command
-that uses –enclave-module simulator by default.
-</p>
+that uses –enclave-module simulator by default.</p>
 <p>
-Our peering is dynamic, and the other nodes are discovered in auto mode.
-</p>
+Our peering is dynamic, and the other nodes are discovered in auto mode.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
 <h3 id="headline-3">
 Other containers
 </h3>
+<div id="outline-text-headline-3" class="outline-text-3">
 <p>
-Besides the validator we need a rest-api, the intkey TP and shell to test the network.
-</p>
+Besides the validator we need a rest-api, the intkey TP and shell to test the network.</p>
 <p>
-The default way to do this is bring everything in the same Pod with multiple containers
-</p>
+The default way to do this is bring everything in the same Pod with multiple containers</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  - <span style="color:#66d9ef">name</span>: sawtooth-rest-api
     <span style="color:#66d9ef">image</span>: hyperledger/sawtooth-rest-api:<span style="color:#ae81ff">1.0.5</span>
@@ -249,12 +252,10 @@ The default way to do this is bring everything in the same Pod with multiple con
       - bash
     <span style="color:#66d9ef">args</span>:
       - -c
-      - <span style="color:#e6db74">&#34;sawtooth-rest-api -C tcp://$HOSTNAME:4004&#34;</span>}</code></pre></div>
-</p>
+      - <span style="color:#e6db74">&#34;sawtooth-rest-api -C tcp://$HOSTNAME:4004&#34;</span>}</code></pre></div></p>
 <p>
 These services connect in the same Pod validator node. So we have 1 Deployment/Pod for each node.
-To create our network just run:
-</p>
+To create our network just run:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl create -f poet.yaml
 $ kubectl get pods
@@ -262,14 +263,16 @@ $ kubectl get pods
 NAME                          READY   STATUS    RESTARTS   AGE
 sawtooth-0-647cff948-ckzkf    7/7     Running   <span style="color:#ae81ff">0</span>          56m
 sawtooth-1-8598d7f975-jjv86   6/6     Running   <span style="color:#ae81ff">0</span>          56m
-sawtooth-2-cb4966b64-429zg    6/6     Running   <span style="color:#ae81ff">0</span>          56m</code></pre></div>
-</p>
+sawtooth-2-cb4966b64-429zg    6/6     Running   <span style="color:#ae81ff">0</span>          56m</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
 Some important highlights
 </h3>
+<div id="outline-text-headline-4" class="outline-text-3">
 <p>
-Lets create some alias to facilitate our life:
-</p>
+Lets create some alias to facilitate our life:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">func kex<span style="color:#f92672">()</span> <span style="color:#f92672">{</span> 
    kubectl exec -it <span style="color:#66d9ef">$(</span>kubectl get pods --namespace default -l <span style="color:#e6db74">&#34;name=sawtooth-</span>$1<span style="color:#e6db74">&#34;</span> -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.items[0].metadata.name}&#34;</span><span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
@@ -279,11 +282,9 @@ Lets create some alias to facilitate our life:
 func klg<span style="color:#f92672">()</span> <span style="color:#f92672">{</span> 
    kubectl logs <span style="color:#66d9ef">$(</span>kubectl get pods --namespace default -l <span style="color:#e6db74">&#34;name=sawtooth-</span>$1<span style="color:#e6db74">&#34;</span> -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.items[0].metadata.name}&#34;</span><span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>        -c sawtooth-validator 
-<span style="color:#f92672">}</span></code></pre></div>
-</p>
+<span style="color:#f92672">}</span></code></pre></div></p>
 <p>
-In the validator-0 or the host who have the Genesis block we can see:
-</p>
+In the validator-0 or the host who have the Genesis block we can see:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Started the genesis block</span>
 genesis<span style="color:#f92672">]</span> Producing genesis block from /var/lib/sawtooth/genesis.batch
@@ -298,11 +299,9 @@ publisher<span style="color:#f92672">]</span> Now building on top of block: 05fd
 consensus_state_store<span style="color:#f92672">]</span> Create consensus store: /var/lib/sawtooth/poet_consensus_state-02ae8605.lmdb
 poet_key_state_store<span style="color:#f92672">]</span> Create PoET key state store: /var/lib/sawtooth/poet-key-state-02ae8605.lmdb
 poet_enclave_factory<span style="color:#f92672">]</span> Load PoET enclave module: sawtooth_poet_simulator.poet_enclave_simulator.poet_enclave_simulator; Target wait time: 5.000000; Initial wait time: 25.0
-00000; Population estimate sample size: 50;</code></pre></div>
-</p>
+00000; Population estimate sample size: 50;</code></pre></div></p>
 <p>
-For the validator-1 and validator-2 you can see similar initialization:
-</p>
+For the validator-1 and validator-2 you can see similar initialization:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">publisher<span style="color:#f92672">]</span> Now building on top of block: 05fd696ccb58faba4f7c5760b9ca57fb824b09c39450ca97679fc037723bd680601c6ca42635c6edac7cf66249405f8b4ea1ab4188e4d932d639f918b438c343
 consensus_state_store<span style="color:#f92672">]</span> Create consensus store: /var/lib/sawtooth/poet_consensus_state-03829c84.lmdb
@@ -311,18 +310,19 @@ poet_enclave_factory<span style="color:#f92672">]</span> Load PoET enclave modul
 poet_enclave_simulator<span style="color:#f92672">]</span> PoET enclave simulator creating anti-Sybil ID from: 2019-11-17T01:05:43.820014                                                                   
 poet_block_publisher<span style="color:#f92672">]</span> No public key found, so going to register new signup information
 poet_block_publisher<span style="color:#f92672">]</span> Register Validator Name<span style="color:#f92672">=</span>validator-03829c84, ID<span style="color:#f92672">=</span>03829c84...e6e897ef, PoET public key<span style="color:#f92672">=</span>0264eb69...6eb3df13, Nonce<span style="color:#f92672">=</span>4ea1ab4188e4d932d639f918b438c343    
-poet_block_publisher<span style="color:#f92672">]</span> Save key state PPK<span style="color:#f92672">=</span>0264eb69...6eb3df13 <span style="color:#f92672">=</span>&gt; SSD<span style="color:#f92672">=</span>eyJjb3Vu...ZjEzIn0<span style="color:#f92672">=</span></code></pre></div>
-</p>
+poet_block_publisher<span style="color:#f92672">]</span> Save key state PPK<span style="color:#f92672">=</span>0264eb69...6eb3df13 <span style="color:#f92672">=</span>&gt; SSD<span style="color:#f92672">=</span>eyJjb3Vu...ZjEzIn0<span style="color:#f92672">=</span></code></pre></div></p>
 <p>
-This gensis block from validator-0 was sync on other nodes via peering mode. The chain arrives after GOSSIP_BLOCK_REQUEST HEAD is made.
-</p>
+This gensis block from validator-0 was sync on other nodes via peering mode. The chain arrives after GOSSIP_BLOCK_REQUEST HEAD is made.</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
 <h3 id="headline-5">
 Testing our network with Intkey
 </h3>
+<div id="outline-text-headline-5" class="outline-text-3">
 <p>
 Find a box with a intkey installed, you can use one of the rest-apis to insert
-a new key on it:
-</p>
+a new key on it:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kex <span style="color:#ae81ff">0</span>
 root@ac7b765563e0:/# intkey set abc <span style="color:#ae81ff">100</span>
@@ -343,26 +343,33 @@ NUM  BLOCK_ID                                                                   
 $ kex <span style="color:#ae81ff">2</span>
 root@sawtooth-2-cb4966b64-9wfxs:/# sawtooth block list
 NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER
-<span style="color:#ae81ff">10</span>   3a1fbae4391d1fd2109751b241cc836188ee8dc262c4c9be53fc68c181650f474f950967d0cc6a4f587635aaf1d9d3ab1cc8179c47da6690e946d592049bb8e8  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     028c7b9084dbe585f0bff105711487489a8fb5feda406a33cf5e24</code></pre></div>
-</p>
+<span style="color:#ae81ff">10</span>   3a1fbae4391d1fd2109751b241cc836188ee8dc262c4c9be53fc68c181650f474f950967d0cc6a4f587635aaf1d9d3ab1cc8179c47da6690e946d592049bb8e8  <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">1</span>     028c7b9084dbe585f0bff105711487489a8fb5feda406a33cf5e24</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
 <h3 id="headline-6">
 Conclusion 
 </h3>
+<div id="outline-text-headline-6" class="outline-text-3">
 <p>
 The version 1.0.5 still have the consensus mechanism coupled in sawtooth-core, this only changed after 1.1, but for sure the recommended version is latest 1.2.3. 
 The other trick part here (if you get the Kubernetes/Docker from newer versions) is the change from sawtooth.consensus.algorithm=poet to sawtooth.consensus.algorithm.name=poet
-settings in newer version, since the system gives you no hints from this problem, and only rolls back to DevMode.
-</p>
+settings in newer version, since the system gives you no hints from this problem, and only rolls back to DevMode.</p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
 <h3 id="headline-7">
 Listening 
 </h3>
+<div id="outline-text-headline-7" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/ibQq1FZITMc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
 </p>
+</div>
+</div>
 <ul class="pa0">
   
 </ul>

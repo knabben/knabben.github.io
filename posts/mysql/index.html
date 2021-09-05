@@ -6,7 +6,7 @@
     
     <title>Monitoring MySQL w/ Prometheus | AK</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.70.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,22 +28,26 @@
     
     
     <meta property="og:title" content="Monitoring MySQL w/ Prometheus" />
-<meta property="og:description" content="Introduction   On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.  So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured." />
+<meta property="og:description" content="Introduction   On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+ So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/mysql/" />
 <meta property="article:published_time" content="2016-01-16T00:00:00+00:00" />
 <meta property="article:modified_time" content="2016-01-16T00:00:00+00:00" />
 <meta itemprop="name" content="Monitoring MySQL w/ Prometheus">
-<meta itemprop="description" content="Introduction   On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.  So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.">
-<meta itemprop="datePublished" content="2016-01-16T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2016-01-16T00:00:00&#43;00:00" />
+<meta itemprop="description" content="Introduction   On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+ So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.">
+<meta itemprop="datePublished" content="2016-01-16T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-01-16T00:00:00+00:00" />
 <meta itemprop="wordCount" content="418">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Monitoring MySQL w/ Prometheus"/>
-<meta name="twitter:description" content="Introduction   On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.  So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured."/>
+<meta name="twitter:description" content="Introduction   On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+ So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured."/>
 
   </head>
 
@@ -164,39 +168,41 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Introduction
 </h3>
+<div id="outline-text-headline-1" class="outline-text-3">
 <p>
-On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
-</p>
+On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.</p>
 <p>
-So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.
-</p>
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
 Performance Analysis
 </h3>
+<div id="outline-text-headline-2" class="outline-text-3">
 <p>
-Prometheus have two pieces of software that we will use for metrics gathering, the first one is an AWS metrics <a href="https://github.com/prometheus/cloudwatch_exporter">exporter</a>, the other one is the mysqld_exporter.
-</p>
+Prometheus have two pieces of software that we will use for metrics gathering, the first one is an AWS metrics <a href="https://github.com/prometheus/cloudwatch_exporter">exporter</a>, the other one is the mysqld_exporter.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
 <h3 id="headline-3">
 Initialization
 </h3>
+<div id="outline-text-headline-3" class="outline-text-3">
 <p>
-Start MySQL Prometheus metrics as Docker container:
-</p>
+Start MySQL Prometheus metrics as Docker container:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker run -d -p 9104:9104 -e DATA_SOURCE_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;monitoring:password@db-aws:3306)/database&#34;</span> prom/mysqld-exporter</code></pre></div>
-</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker run -d -p 9104:9104 -e DATA_SOURCE_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;monitoring:password@db-aws:3306)/database&#34;</span> prom/mysqld-exporter</code></pre></div></p>
 <p>
-If everything is ok, you can check with docker logs docker_id. Access your CoreOS host on port :9401/metrics, now we have some cool metrics like:
-</p>
+If everything is ok, you can check with docker logs docker_id. Access your CoreOS host on port :9401/metrics, now we have some cool metrics like:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mysql_info_schema_table_rows<span style="color:#f92672">{</span>schema<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;database&#34;</span>,table<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table1&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">2030</span></code></pre></div>
-</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mysql_info_schema_table_rows<span style="color:#f92672">{</span>schema<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;database&#34;</span>,table<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table1&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">2030</span></code></pre></div></p>
 <p>
-The seconds part is to configure the Prometheus container, first we discovery on the lamest way, mysqld_exporter IP:
-</p>
+The seconds part is to configure the Prometheus container, first we discovery on the lamest way, mysqld_exporter IP:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">core@coreos-512mb-nyc3-01 ~ $ docker network inspect bridge
 <span style="color:#f92672">[</span>
@@ -225,11 +231,9 @@ The seconds part is to configure the Prometheus container, first we discovery on
                 <span style="color:#e6db74">&#34;MacAddress&#34;</span>: <span style="color:#e6db74">&#34;02:42:ac:11:00:03&#34;</span>,
                 <span style="color:#e6db74">&#34;IPv4Address&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.3/16&#34;</span>,
                 <span style="color:#e6db74">&#34;IPv6Address&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
-...</code></pre></div>
-</p>
+...</code></pre></div></p>
 <p>
-Now we configure the prometheus.yml, and start the container
-</p>
+Now we configure the prometheus.yml, and start the container</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">/home/core/prometheus.yml -<span style="color:#e6db74">-
 </span><span style="color:#e6db74">
@@ -242,92 +246,85 @@ Now we configure the prometheus.yml, and start the container
 	<span style="color:#66d9ef">target_groups</span>:
 		- <span style="color:#66d9ef">targets</span>: [<span style="color:#e6db74">&#39;172.17.0.2:9104&#39;</span>]
 
-docker run -d -p <span style="color:#ae81ff">9090</span>:<span style="color:#ae81ff">9090</span> -v /home/core/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</code></pre></div>
-</p>
+docker run -d -p <span style="color:#ae81ff">9090</span>:<span style="color:#ae81ff">9090</span> -v /home/core/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
 Grafana
 </h3>
+<div id="outline-text-headline-4" class="outline-text-3">
 <p>
-Finally run Grafana:
-</p>
+Finally run Grafana:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">docker run -d --name=grafana -p <span style="color:#ae81ff">3000</span>:<span style="color:#ae81ff">3000</span> grafana/grafana</code></pre></div>
-</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">docker run -d --name=grafana -p <span style="color:#ae81ff">3000</span>:<span style="color:#ae81ff">3000</span> grafana/grafana</code></pre></div></p>
 <p>
 Basic status
-<code class="verbatim">==========</code>
-</p>
+<code class="verbatim">==========</code></p>
 <p>
-First lets see the commands executed ( SELECT, INSERT, UPDATE, DELETE ) in one graph
-</p>
+First lets see the commands executed ( SELECT, INSERT, UPDATE, DELETE ) in one graph</p>
 <p>
-<img src="d1.png" alt="d1.png" title="d1.png" />
-</p>
+<img src="d1.png" alt="d1.png" title="d1.png" /></p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Metrics come from</span>:
 SHOW GLOBAL STATUS
 
-mysql_global_status_commands_total{command~=<span style="color:#e6db74">&#34;select|update|insert|delete&#34;</span>}</code></pre></div>
-</p>
+mysql_global_status_commands_total{command~=<span style="color:#e6db74">&#34;select|update|insert|delete&#34;</span>}</code></pre></div></p>
 <p>
-Other metric is the Threads running/Threads connected.
-</p>
+Other metric is the Threads running/Threads connected.</p>
 <p>
-<img src="d2.png" alt="d2.png" title="d2.png" />
-</p>
+<img src="d2.png" alt="d2.png" title="d2.png" /></p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_global_status_threads_connected
 mysql_global_status_threads_running
 
 mysql_global_status_questions
-mysql_global_status_queries</code></pre></div>
-</p>
+mysql_global_status_queries</code></pre></div></p>
 <p>
-Besides that you have Tables sizes vs. Table lines
-</p>
+Besides that you have Tables sizes vs. Table lines</p>
 <p>
-<img src="d3.png" alt="d3.png" title="d3.png" />
-</p>
+<img src="d3.png" alt="d3.png" title="d3.png" /></p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_info_schema_table_size{schema=<span style="color:#e6db74">&#34;database&#34;</span>,component=<span style="color:#e6db74">&#34;data_length&#34;</span>}
-mysql_info_schema_table_rows{schema=<span style="color:#e6db74">&#34;database&#34;</span>} </code></pre></div>
-</p>
+mysql_info_schema_table_rows{schema=<span style="color:#e6db74">&#34;database&#34;</span>} </code></pre></div></p>
 <p>
-To finish the basic dashboard lets configure some more 3 metrics:
-</p>
+To finish the basic dashboard lets configure some more 3 metrics:</p>
 <p>
-<img src="d4.png" alt="d4.png" title="d4.png" />
-</p>
+<img src="d4.png" alt="d4.png" title="d4.png" /></p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_global_status_aborted_connects
 mysql_global_status_aborted_clients
-mysql_global_status_slow_queries</code></pre></div>
-</p>
+mysql_global_status_slow_queries</code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
 <h3 id="headline-5">
 Conclusion
 </h3>
+<div id="outline-text-headline-5" class="outline-text-3">
 <p>
-I really recommend the read of High Perfomance MySQL, as well as the MySQL manual.
-</p>
+I really recommend the read of High Perfomance MySQL, as well as the MySQL manual.</p>
 <p>
-For this post is fair enough to show some very basic metrics, we can correlate other information like machine CPU, memory, Disk I/O.
-</p>
+For this post is fair enough to show some very basic metrics, we can correlate other information like machine CPU, memory, Disk I/O.</p>
 <p>
-We can create more dashboards with InnoDB storage details and Slave replication information.
-</p>
+We can create more dashboards with InnoDB storage details and Slave replication information.</p>
 <p>
-On the next posts I&#39;ll show how to integrate the AlertManager and integrate it with Slack for chatops.
-</p>
+On the next posts I&#39;ll show how to integrate the AlertManager and integrate it with Slack for chatops.</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
 <h3 id="headline-6">
 Listening
 </h3>
+<div id="outline-text-headline-6" class="outline-text-3">
 <p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/mOHU4co1iYo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
 </p>
+</div>
+</div>
 <ul class="pa0">
   
 </ul>
