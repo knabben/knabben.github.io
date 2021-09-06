@@ -28,23 +28,23 @@
     
     
     <meta property="og:title" content="Windows and Calico overlay networking" />
-<meta property="og:description" content="Settings and configuration required for CNI and Windows" />
+<meta property="og:description" content="Notes on Windows and Calico CNI overlay connectivity" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://thefind.live/posts/vxlan-windows/readme/" />
 <meta property="article:published_time" content="2021-09-03T00:00:00+00:00" />
 <meta property="article:modified_time" content="2021-09-03T00:00:00+00:00" />
 <meta itemprop="name" content="Windows and Calico overlay networking">
-<meta itemprop="description" content="Settings and configuration required for CNI and Windows">
+<meta itemprop="description" content="Notes on Windows and Calico CNI overlay connectivity">
 <meta itemprop="datePublished" content="2021-09-03T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-09-03T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1889">
+<meta itemprop="wordCount" content="1903">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Windows and Calico overlay networking"/>
-<meta name="twitter:description" content="Settings and configuration required for CNI and Windows"/>
+<meta name="twitter:description" content="Notes on Windows and Calico CNI overlay connectivity"/>
 
   </head>
 
@@ -208,12 +208,12 @@ maps what they are:</p>
 
 <tr>
 <td>IP links</td>
-<td>vNICs / vSwitch / VPF ports</td>
+<td>vNICs / vSwitch / VFP ports</td>
 </tr>
 
 <tr>
 <td>IPVS and iptables</td>
-<td>Firewall and VPF rules</td>
+<td>Firewall and VFP rules</td>
 </tr>
 </tbody>
 </table>
@@ -279,9 +279,6 @@ possible to inspect the packet, without a SYN/ACK from the Windows node:</p>
   ...</code></pre></div>
 <p>Still in the Linux machine, the last try was to check the routes, as we can see in the last line
 the next hop to handle it is <code>100.244.206.65</code> via <code>vxlan.calico</code>, or the overlay interface.</p>
-
-<p>The question is where is this next hop? In the last post we saw the CNI created these rules and normally the
-IP CIDR destination was pointing to the node gateway owner of this CIDR, so lets</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@controlplane:~$ ip route
 
 default via 10.0.2.2 dev eth0 proto dhcp src 10.0.2.15 metric <span style="color:#ae81ff">100</span>
@@ -294,13 +291,16 @@ default via 10.0.2.2 dev eth0 proto dhcp src 10.0.2.15 metric <span style="color
 100.244.49.68 dev calide492000d53 scope link
 100.244.49.69 dev calie348bef9edc scope link
 100.244.206.64/26 via 100.244.206.65 dev vxlan.calico onlink</code></pre></div>
+<p>The question now: where is this next hop? In the last post we saw the CNI created these routing rules and normally the
+IP CIDR destination was pointing to the node gateway owner of this CIDR, so lets take a look in the windows machine.</p>
+
 <h3 id="windows-node">Windows node</h3>
 
 <p>Starting with Calico Node logs under <code>c:\CalicoWindows\logs</code> to see if it was possible to fetch more
 information about the vxlan interface and this strange IP created, found out this piece of log:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Management IP detected on vSwitch: 10.0.2.15.</code></pre></div>
 <p>That's odd, we are not supposed to use this IP anywhere in the setup, and instead the NIC should be the
-private one under <code>10.20.30.11</code>. This is where Kubelet is listening on, so Calico should be too.
+private one under <code>10.20.30.11</code> ip address. This is where Kubelet is listening on, so Calico should be too.
 The first procedure here was to take a look in the created Overlay HNS networks with the Powershell
 function <code>Get-HNSNetwork</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">PS C:<span style="color:#ae81ff">\&gt;</span> Get-HNSNetwork
@@ -331,11 +331,12 @@ TotalEndpoints         : <span style="color:#ae81ff">1</span>
 Type                   : Overlay
 Version                : <span style="color:#ae81ff">38654705669</span></code></pre></div>
 <p>Ok, so at this point we found out the subnet on Subnets fields, and it was clear the wrong interface
-was being used. The reason is shown in the Policies in the <code>Host-Route</code> for the linux machine,
-Linux is using the <code>10.20.30.10</code> interface to setup the VXLAN tunnel.</p>
+was being used. The reason is shown in the Policies <code>Host-Route</code> item for the Linux machine,
+Linux is using the <code>10.20.30.10</code> interface to setup the VXLAN tunnel on it's side.</p>
 
-<p>To ensure the proper rounting between both hosts the question remaining was:
-<em>How to choose the VXLAN interface for this Windows node?</em></p>
+<p>To ensure the proper routing between both hosts the last question that remaining is:</p>
+
+<p><em>How to choose the VXLAN interface for this Windows node?</em></p>
 
 <h3 id="connectivity-tests-and-debugging">Connectivity tests and debugging</h3>
 
