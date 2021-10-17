@@ -21,7 +21,7 @@ img {
 
 img.logos {
   width: 90px !important;
-  padding-bottom: 4em !important;
+  padding-bottom: 2em !important;
 }
 
 .bg-near-white {
@@ -37,7 +37,7 @@ pre, pre code {
 }
 
 .f5 {
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 .f4{
   font-family: neo;
