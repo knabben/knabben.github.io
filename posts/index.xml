@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on AK</title>
+    <title>Posts on @knabben</title>
     <link>http://thefind.live/posts/</link>
-    <description>Recent content in Posts on AK</description>
+    <description>Recent content in Posts on @knabben</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 Oct 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://thefind.live/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kube-proxy Winuserspace Mode</title>
+      <link>http://thefind.live/posts/winuserspace/readme/</link>
+      <pubDate>Sun, 17 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/winuserspace/readme/</guid>
+      <description>Introduction This post will introduce and detail the windows userspace mode on kube-proxy, the code walkthrough provided here has the goal to clarify the event based architecture of kube-proxy, and bring attention to how this component watches and reacts for events happening on Services and Endpoints API objects. This component goal is to proxy and load-balance the traffic to a binded IP/PORT pair across different backend services. Read more about Kube-Proxy in the official docs [1].</description>
+    </item>
     
     <item>
       <title>Windows and Calico overlay networking</title>

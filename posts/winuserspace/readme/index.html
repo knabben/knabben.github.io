@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>@knabben</title>
+    <title>Kube-proxy Winuserspace Mode | @knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.74.3" />
     
@@ -27,27 +27,32 @@
 
     
     
-      <link href="/tags/index.xml" rel="alternate" type="application/rss+xml" title="@knabben" />
-      <link href="/tags/index.xml" rel="feed" type="application/rss+xml" title="@knabben" />
-      
-    
-    
-    <meta property="og:title" content="Tags" />
-<meta property="og:description" content="sdaf" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://thefind.live/tags/" />
+    <meta property="og:title" content="Kube-proxy Winuserspace Mode" />
+<meta property="og:description" content="Windows Userspace Mode for Services" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://thefind.live/posts/winuserspace/readme/" />
+<meta property="article:published_time" content="2021-10-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-17T00:00:00+00:00" />
+<meta itemprop="name" content="Kube-proxy Winuserspace Mode">
+<meta itemprop="description" content="Windows Userspace Mode for Services">
+<meta itemprop="datePublished" content="2021-10-17T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-10-17T00:00:00+00:00" />
+<meta itemprop="wordCount" content="407">
 
-<meta itemprop="name" content="Tags">
-<meta itemprop="description" content="sdaf">
+
+
+<meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tags"/>
-<meta name="twitter:description" content="sdaf"/>
+<meta name="twitter:title" content="Kube-proxy Winuserspace Mode"/>
+<meta name="twitter:description" content="Windows Userspace Mode for Services"/>
 
   </head>
 
   <body class="ma0 avenir bg-near-white">
 
     
+   
+  
 
   <header>
     <div class="bg-black">
@@ -112,19 +117,145 @@
   </header>
 
 
+
     <main class="pb7" role="main">
       
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
     
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      
-    </div>
-  </article>
-  <div class="mw8 center">
-    <section class="ph4">
-      
-    </section>
+    <a href="https://www.facebook.com/sharer.php?u=http://thefind.live/posts/winuserspace/readme/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://thefind.live/posts/winuserspace/readme/&amp;text=Kube-proxy%20Winuserspace%20Mode" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://thefind.live/posts/winuserspace/readme/&amp;title=Kube-proxy%20Winuserspace%20Mode" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
   </div>
+
+      <h1 class="f1 athelas mt3 mb1">Kube-proxy Winuserspace Mode</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2021-10-17T00:00:00Z">October 17, 2021</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="introduction">Introduction</h2>
+
+<p>This post will introduce and detail the windows userspace mode on kube-proxy, the code walkthrough provided here has
+the goal to clarify the event based architecture of kube-proxy, and bring attention to how this component watches and
+reacts for events happening on Services and Endpoints API objects. This component goal is to proxy and load-balance the traffic
+to a binded IP/PORT pair across different backend services. Read more about Kube-Proxy in the official docs [1].</p>
+
+<h3 id="windows-isolation-modes">Windows Isolation Modes</h3>
+
+<p>Windows offer two distinct modes of runtime isolation: processes and hyper-v. We are using <code>hyper-v</code> since Kubernetes
+currently does not support running Windows containers with Hyper-V isolation. [2]</p>
+
+<p>According [3], this is the default isolation mode provided for containers on Windows and the architecture of process isolation
+is similar to what you have when running containers on Linux os. All containers use the same shared kernel.
+The process isolation providers a lightweight runtime for containers (compared to hyper-v isolation) and offers
+a great density of deployment, better performance and lower spin-up time.</p>
+
+<p>The setup is using the <code>sig-windows-dev-tools</code> with the <code>Antrea CNI on 1.3.0</code></p>
+
+<h3 id="kubeproxy-and-networking-model">Kube-proxy and Networking model</h3>
+
+<p>In short, networking in Kubernetes has the following challenges to overcome:</p>
+
+<ul>
+<li>Intra-Pod communication between containers: Handled by standard localhost communication.</li>
+<li>Pod-to-Pod communication: Handled by underlying network implementation. </li>
+<li>Pod-to-Service and External-to-Service communication: Handled by Service API objects, communication is dependent on the underlying network implementation. We will cover this later in this section.</li>
+<li>Automation of networking setup by kubelet when a new Pod is created: Handled by Container Network Interface (CNI) plugins. We will cover this in the next section.</li>
+</ul>
+
+<p>Kube-proxy handles the pod and external to service requests part.</p>
+
+<h2 id="kubeproxy-windows-modes">Kube-Proxy Windows Modes</h2>
+
+<p>For Windows, two modes are supported, winuserspace, used by CNIs like Antrea, and deprecated, since it's
+the most simple, this will be the initial one and will give the not familiar reader a better overview
+of the kube-proxy model.</p>
+
+<p>The second mode is the Windows kernel mode, used by Project Calico, this is more complex, and uses the
+Golang SHIM for HCN (Host Compute Network) service API, and is the recommended mode for Windows.</p>
+
+<h2 id="kubernetes-and-kubeproxy">Kubernetes and Kube-proxy</h2>
+
+<p><img src="/posts/winuserspace/bootstrap.jpg" alt="" class="" style="width: 100%; ">
+
+initial hooking and workflows from the binary</p>
+
+<h3 id="endpoints-and-services-listeners">Endpoints and services listeners</h3>
+
+<h3 id="watchers-and-listeners">watchers and listeners</h3>
+<pre><code>        1. how they bootstrap and wait for new events</code></pre>
+<ol start="3">
+<li>kubeproxy endpoints</li>
+<li>internal structures and modeling of kube-proxy</li>
+</ol>
+
+<h3 id="syncrulesproxy-loop--winkernel">SyncRulesProxy loop - winkernel</h3>
+<pre><code>1. drill down
+2. HCN add/remove
+3. Loadbalancer</code></pre>
+<h2 id="listening">Listening</h2>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/TwpLzAt4UxM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<h2 id="references">References</h2>
+
+<p>[1] <a href="https://kubernetes.io/docs/concepts/overview/components/#kube-proxy">https://kubernetes.io/docs/concepts/overview/components/#kube-proxy</a></p>
+
+<p>[2] <a href="https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/hyperv-container">https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/hyperv-container</a></p>
+
+<p>[3] <a href="https://www.amazon.com/Hands-Kubernetes-Windows-Effectively-orchestrate-ebook/dp/B08576JXTW/">https://www.amazon.com/Hands-Kubernetes-Windows-Effectively-orchestrate-ebook/dp/B08576JXTW/</a></p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <script type="text/javascript" async

@@ -3,6 +3,27 @@
   src: url("../font/neo-sans.tff");
 }
 
+@font-face {
+  font-family: jet;
+  src: url("../font/jetbrains.tff");
+}
+
+
+body {
+  text-align: justify !important;
+  font-family: jet !important;
+}
+
+img {
+  width: 80% !important;
+}
+
+
+img.logos {
+  width: 90px !important;
+  padding-bottom: 4em !important;
+}
+
 .bg-near-white {
   background-color: white;
 }
@@ -15,7 +36,10 @@ pre, pre code {
   font-family: neo;
 }
 
+.f5 {
+  font-size: 0.9em;
+}
 .f4{
   font-family: neo;
-  font-size: 0.96em;
+  font-size: 1.0em;
 }
