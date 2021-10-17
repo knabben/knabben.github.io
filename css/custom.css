@@ -18,6 +18,9 @@ img {
   width: 80% !important;
 }
 
+iframe {
+  width: 70% !important;
+}
 
 img.logos {
   width: 90px !important;
