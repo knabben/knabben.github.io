@@ -37,7 +37,7 @@
 <meta itemprop="description" content="Windows Userspace Mode for Services">
 <meta itemprop="datePublished" content="2021-10-17T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-10-17T00:00:00+00:00" />
-<meta itemprop="wordCount" content="407">
+<meta itemprop="wordCount" content="1361">
 
 
 
@@ -173,7 +173,7 @@ to a binded IP/PORT pair across different backend services. Read more about Kube
 
 <h3 id="windows-isolation-modes">Windows Isolation Modes</h3>
 
-<p>Windows offer two distinct modes of runtime isolation: processes and hyper-v. We are using <code>hyper-v</code> since Kubernetes
+<p>Windows offer two distinct modes of runtime isolation: processes and hyper-v. We are using <code>process</code> since Kubernetes
 currently does not support running Windows containers with Hyper-V isolation. [2]</p>
 
 <p>According [3], this is the default isolation mode provided for containers on Windows and the architecture of process isolation
@@ -203,27 +203,147 @@ the most simple, this will be the initial one and will give the not familiar rea
 of the kube-proxy model.</p>
 
 <p>The second mode is the Windows kernel mode, used by Project Calico, this is more complex, and uses the
-Golang SHIM for HCN (Host Compute Network) service API, and is the recommended mode for Windows.</p>
+Golang SHIM for HCN (Host Compute Network) service API, and is the recommended mode for Windows. This indeed
+is the coolest part and it's coming next, stay tuned.</p>
 
 <h2 id="kubernetes-and-kubeproxy">Kubernetes and Kube-proxy</h2>
 
-<p><img src="/posts/winuserspace/bootstrap.jpg" alt="" class="" style="width: 100%; ">
+<img src="/posts/winuserspace/bootstrap.jpg" alt="" class="" style="width: 100%; ">
 
-initial hooking and workflows from the binary</p>
 
-<h3 id="endpoints-and-services-listeners">Endpoints and services listeners</h3>
+<p>This initial workflow introduces the initial path of Event handler registering and Service/Endpoint listeners and
+watchers, the black box shows the binary called. The initial <code>cli.Run</code> is the beginning of <code>spf13/cobra</code>
+command integration with Kube-proxy, the function <code>NewProxyCommand</code> returns the base <code>cobra.Command</code> and the
+<code>Options</code> object is used to:</p>
 
-<h3 id="watchers-and-listeners">watchers and listeners</h3>
-<pre><code>        1. how they bootstrap and wait for new events</code></pre>
-<ol start="3">
-<li>kubeproxy endpoints</li>
-<li>internal structures and modeling of kube-proxy</li>
+<ol>
+<li>Complete() - Load the configuration from the file if it exists and set all default parameters.</li>
+<li>Validate() - Validate the field values based on pre-defined API logic.</li>
+<li>Run() - Real deal.</li>
 </ol>
 
-<h3 id="syncrulesproxy-loop--winkernel">SyncRulesProxy loop - winkernel</h3>
-<pre><code>1. drill down
-2. HCN add/remove
-3. Loadbalancer</code></pre>
+<p>Initially the <code>NewProxyServer</code> call returns a <code>proxyServer</code> object based in the operating system and parameters
+passed via args, this will allow the user get the correct mode settings, for Linux, userspace, ipvs and iptables
+are available. For Windows as already said, it exists userspace and kernelspace.</p>
+
+<p>This is set at compilation time using the <code>_windows</code> prefix compiling our files selected for this OS. The core and central object
+here is the <code>proxyServer.proxier</code> one, it is fetch as an instance from <code>winuserspace.Proxier</code> and filtered on <code>server_windows.go:winuserspace.NewProxier(...)</code>,
+in our case.</p>
+
+<p>This main loop on <code>runLoop</code> only run the <code>ProxyServer.Run()</code> in a goroutine and listen for an errorChannel to finalize the
+infinite loop of the main goroutine.</p>
+
+<p>This bootstrap process is similar to all different services and operating systems. And the <code>ProxyServer</code> run do a few interesting things:</p>
+
+<ul>
+<li>Starts the oomAdjuster</li>
+<li>serveHealthz and serveMetrics</li>
+<li>conntracker (nil for windows)</li>
+<li>Create configs (watchers for services and endpoints/endpointslices)</li>
+</ul>
+
+<p>This is a very important part, since at this point we are going to start the register of the internal
+proxies service/endpoint handling functions to Kubernetes objects events. More details in the next section.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#a6e22e">serviceConfig</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">NewServiceConfig</span>(<span style="color:#a6e22e">informerFactory</span>.<span style="color:#a6e22e">Core</span>().<span style="color:#a6e22e">V1</span>().<span style="color:#a6e22e">Services</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">ConfigSyncPeriod</span>)
+	<span style="color:#a6e22e">serviceConfig</span>.<span style="color:#a6e22e">RegisterEventHandler</span>(<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Proxier</span>)
+	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">serviceConfig</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">wait</span>.<span style="color:#a6e22e">NeverStop</span>)
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">endpointsHandler</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Proxier</span>.(<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">EndpointsHandler</span>); <span style="color:#a6e22e">ok</span> <span style="color:#f92672">&amp;&amp;</span> !<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">UseEndpointSlices</span> {
+		<span style="color:#a6e22e">endpointsConfig</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">NewEndpointsConfig</span>(<span style="color:#a6e22e">informerFactory</span>.<span style="color:#a6e22e">Core</span>().<span style="color:#a6e22e">V1</span>().<span style="color:#a6e22e">Endpoints</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">ConfigSyncPeriod</span>)
+		<span style="color:#a6e22e">endpointsConfig</span>.<span style="color:#a6e22e">RegisterEventHandler</span>(<span style="color:#a6e22e">endpointsHandler</span>)
+		<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">endpointsConfig</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">wait</span>.<span style="color:#a6e22e">NeverStop</span>)
+	} </code></pre></div>
+<p>Finally, it starts the SyncLoop of the Proxier in the end of the function:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Proxier</span>.<span style="color:#a6e22e">SyncLoop</span>()</code></pre></div>
+<p>The <code>SyncLoop</code> method, it's normally heavily used on other modes, but winuserspace, it's
+only used to clean stale affinity sessions, the ones not used by the TTL setting.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#66d9ef">if</span> int(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">affinity</span>.<span style="color:#a6e22e">lastUsed</span>).<span style="color:#a6e22e">Seconds</span>()) <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">affinity</span>.<span style="color:#a6e22e">ttlSeconds</span> {</code></pre></div>
+<h3 id="services-and-endpoints-informers">Services and Endpoints informers</h3>
+
+<p>To understand what the functionality is being implemented here. This was extracted from the official docs [4]:</p>
+
+<p>In this (legacy) mode, kube-proxy watches the Kubernetes control plane for the addition and removal of Service and Endpoint objects.
+For each Service it opens a port (randomly chosen) on the local node. Any connections to this &quot;proxy port&quot; are proxied to one of the Service's
+backend Pods (as reported via Endpoints). kube-proxy takes the SessionAffinity setting of the Service into account when deciding which
+backend Pod to use.</p>
+
+<p>Lastly, the user-space proxy installs iptables rules which capture traffic to the Service's clusterIP (which is virtual) and port. The rules redirect that traffic to the proxy port which proxies the backend Pod. For Windows the netns tool is used instead of iptables.</p>
+
+<p>By default, kube-proxy in userspace mode chooses a backend via a round-robin algorithm.</p>
+
+<img src="/posts/winuserspace/listener.png" alt="" class="" style="width: 180%; ">
+
+
+<p>Starting the fun. From the green boxes, we can see the <code>proxier</code> is registered on both <code>serviceConfig</code> and <code>endpointsConfig</code>, providing
+an informer on <code>Add</code>, <code>Update</code>, <code>Delete</code> for both objects. The further connection starts on the pink boxes with <code>On*Add/Update/Delete</code>.</p>
+
+<h4 id="services">Services</h4>
+
+<p>The more important methods here are the <code>mergeService</code> and <code>unmergeService</code>, basically they are responsible
+to start and remove the listeners and bind/forward the connections to the backends in a round-robin fashion.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// OnServiceAdd is called whenever creation of new service object
+</span><span style="color:#75715e">// is observed.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceAdd</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">mergeService</span>(<span style="color:#a6e22e">service</span>)
+}
+
+<span style="color:#75715e">// OnServiceUpdate is called whenever modification of an existing
+</span><span style="color:#75715e">// service object is observed.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceUpdate</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+	<span style="color:#a6e22e">existingPortPortals</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">mergeService</span>(<span style="color:#a6e22e">service</span>)
+	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">unmergeService</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">existingPortPortals</span>)
+}
+
+<span style="color:#75715e">// OnServiceDelete is called whenever deletion of an existing service
+</span><span style="color:#75715e">// object is observed.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceDelete</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">unmergeService</span>(<span style="color:#a6e22e">service</span>, <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">ServicePortPortalName</span>]<span style="color:#66d9ef">bool</span>{})
+}</code></pre></div>
+<p>The concept here is the <code>ServicePortPortalName</code>, when a new service is added the <code>proxier.addServicePortPortal</code> is
+called, starting the listener for the new service using the <code>netsh</code> tools:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#a6e22e">args</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">netshIPv4AddressAddArgs</span>(<span style="color:#a6e22e">serviceIP</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">existed</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">netsh</span>.<span style="color:#a6e22e">EnsureIPAddress</span>(<span style="color:#a6e22e">args</span>, <span style="color:#a6e22e">serviceIP</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">existed</span> {
+		<span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">V</span>(<span style="color:#ae81ff">3</span>).<span style="color:#a6e22e">InfoS</span>(<span style="color:#e6db74">&#34;Added ip address to fowarder interface for service&#34;</span>, <span style="color:#e6db74">&#34;servicePortPortalName&#34;</span>, <span style="color:#a6e22e">servicePortPortalName</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#e6db74">&#34;addr&#34;</span>, <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">JoinHostPort</span>(<span style="color:#a6e22e">listenIP</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">port</span>)), <span style="color:#e6db74">&#34;protocol&#34;</span>, <span style="color:#a6e22e">protocol</span>)
+	}</code></pre></div>
+<p>A new <code>ProxySocket</code> listens the proto/port and waits in a <code>ProxyLoop</code>, the <code>tcp.Accept()</code> blocks until an incoming
+connections comes, the <code>tryConnect</code> finds the <code>loadbalancer.NextEndpoint</code> available in the round-robin and bumps
+the index for the next in the list, this method is still reponsible to handle the affinity logic if this is set.
+a <code>net.DialTimeout</code> is executed in the endpoint returning the connection object. In the final step, bytes are copied
+across both connections.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">proxyTCP</span>(<span style="color:#a6e22e">inConn</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">TCPConn</span>), <span style="color:#a6e22e">outConn</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">TCPConn</span>))</code></pre></div>
+<p><code>UnmergeServices</code> does the opposite and calls <code>closeServicePortPortal</code>, stopping the connections and cleaning up the interfaces
+ with <code>netsh</code> commands.</p>
+
+<h4 id="endpoints">Endpoints</h4>
+
+<p>There's no <code>Endpointslices</code> for this mode, so the logic is kind of simple here
+An internal list of endpoints/services are kept on Kube-proxy, they are used when a service connection is made,
+and merged on changes in the endpoint slice. A <code>balancerState</code> struct is kept internally for each service.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// LoadBalancerRR is a round-robin load balancer.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">LoadBalancerRR</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">lock</span>     <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
+	<span style="color:#a6e22e">services</span> <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">proxy</span>.<span style="color:#a6e22e">ServicePortName</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">balancerState</span>
+}
+<span style="color:#f92672">...</span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">balancerState</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">endpoints</span> []<span style="color:#66d9ef">string</span> <span style="color:#75715e">// a list of &#34;ip:port&#34; style strings
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">index</span>     <span style="color:#66d9ef">int</span>      <span style="color:#75715e">// current index into endpoints
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">affinity</span>  <span style="color:#a6e22e">affinityPolicy</span>
+}</code></pre></div>
+<p>Adding a new endpoint updates the internal affinity mapping and saves the new endpoints in the correct balancer states,
+shuffling the list of endpoints and resetting the index, for update the logic is similar and guarantee the merge.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">endpoints</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ShuffleStrings</span>(<span style="color:#a6e22e">newEndpoints</span>)
+	<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">index</span> = <span style="color:#ae81ff">0</span></code></pre></div>
+<p>To delete this list of endpoints the service balancer endpoints list is emptied.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>These two flows allow Kube-Proxy on Windows to work and thus live up to it's proxy terminology.
+More advanced, reliable and faster techniques are implemented outside the userland, so when using this
+keep in mind the userspace are deprecated and their use still happens in very specific occasions.</p>
+
 <h2 id="listening">Listening</h2>
 
 
@@ -239,6 +359,8 @@ initial hooking and workflows from the binary</p>
 <p>[2] <a href="https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/hyperv-container">https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/hyperv-container</a></p>
 
 <p>[3] <a href="https://www.amazon.com/Hands-Kubernetes-Windows-Effectively-orchestrate-ebook/dp/B08576JXTW/">https://www.amazon.com/Hands-Kubernetes-Windows-Effectively-orchestrate-ebook/dp/B08576JXTW/</a></p>
+
+<p>[4] <a href="https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-userspace">https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-userspace</a></p>
 <ul class="pa0">
   
 </ul>
