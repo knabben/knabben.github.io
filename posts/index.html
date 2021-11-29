@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/posts/" />
-<meta property="og:updated_time" content="2021-10-17T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-11-27T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="sdaf">
 <meta name="twitter:card" content="summary"/>
@@ -117,6 +117,21 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://thefind.live/posts/kproxy-modes/readme/" class="link black dim">
+        Kube-proxy Linux Userspace Mode
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction The following post continues a deep dive into kube-proxy modes, taking another approach to tackle the complexity that lies on this kind of system, loop diagrams are an interesting one, and we have used this to analyze the information flow in the Windows userspace mode. To have another holistic view of the entire mode and understand how these parts are interconnected can be a hard task in distributed systems, this is true not only for systems running on different machines, but for ones with parallel and concurrent mechanisms as well.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -263,25 +278,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary.
   Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/kube-net/" class="link black dim">
-        Kubernetes Networking 101
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Networking   The first and easiest way to access the Pod container port is via port-forward command:
- $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;
- Take a look on the dynamic port-forwarder.
-  Service   An abstract way to expose an application running on a set of Pods as a network service.
- a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
     </div>
   </div>
 </div>

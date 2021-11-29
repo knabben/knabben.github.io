@@ -6,10 +6,19 @@
     <description>Recent content in Posts on knabben</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Nov 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://thefind.live/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kube-proxy Linux Userspace Mode</title>
+      <link>http://thefind.live/posts/kproxy-modes/readme/</link>
+      <pubDate>Sat, 27 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/kproxy-modes/readme/</guid>
+      <description>Introduction The following post continues a deep dive into kube-proxy modes, taking another approach to tackle the complexity that lies on this kind of system, loop diagrams are an interesting one, and we have used this to analyze the information flow in the Windows userspace mode. To have another holistic view of the entire mode and understand how these parts are interconnected can be a hard task in distributed systems, this is true not only for systems running on different machines, but for ones with parallel and concurrent mechanisms as well.</description>
+    </item>
     
     <item>
       <title>Kube-proxy Winuserspace Mode</title>

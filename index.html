@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/" />
-<meta property="og:updated_time" content="2021-10-17T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-11-27T00:00:00+00:00" />
 <meta itemprop="name" content="knabben">
 <meta itemprop="description" content="sdaf">
 <meta name="twitter:card" content="summary"/>
@@ -142,6 +142,25 @@
       <section class="w-100" style="display: table;">
         <div class="w-100" style="display: table-row;">
           <div style="width: 90%; display: table-cell;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden">
+  
+  <div class="f6">
+    November 27, 2021
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="http://thefind.live/posts/kproxy-modes/readme/" class="link black dim">
+      Kube-proxy Linux Userspace Mode
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction The following post continues a deep dive into kube-proxy modes, taking another approach to tackle the complexity that lies on this kind of system, loop diagrams are an interesting one, and we have used this to analyze the information flow in the Windows userspace mode. To have another holistic view of the entire mode and understand how these parts are interconnected can be a hard task in distributed systems, this is true not only for systems running on different machines, but for ones with parallel and concurrent mechanisms as well.
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden">
@@ -329,29 +348,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden">
-  
-  <div class="f6">
-    December 28, 2019
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="http://thefind.live/posts/kube-net/" class="link black dim">
-      Kubernetes Networking 101
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Networking   The first and easiest way to access the Pod container port is via port-forward command:
- $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;
- Take a look on the dynamic port-forwarder.
-  Service   An abstract way to expose an application running on a set of Pods as a network service.
- a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -361,6 +357,12 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://thefind.live/posts/kube-net/" class="link black dim">
+              Kubernetes Networking 101
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-depl/" class="link black dim">
@@ -377,12 +379,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-pod/" class="link black dim">
               Pod specification
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://thefind.live/posts/kube-ctl/" class="link black dim">
-              Kubectl Walkthrough
             </a>
           </h2>
         
