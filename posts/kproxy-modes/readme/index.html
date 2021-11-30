@@ -37,7 +37,7 @@
 <meta itemprop="description" content="kube-proxy userspace mode observability">
 <meta itemprop="datePublished" content="2021-11-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-11-27T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1865">
+<meta itemprop="wordCount" content="1873">
 
 
 
@@ -384,6 +384,8 @@ local-path-storage   rancher.io-local-path   &lt;none&gt;                       
 local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h
 local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h
 local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h</code></pre></div>
+<p>UPDATE: @jayunit100 had filled an issue - <code>https://github.com/kubernetes-sigs/kind/issues/2453</code></p>
+
 <p>The big upper circle is the <code>syncProxyRules</code>, and it is what matters for this post.</p>
 
 <h3 id="starting-the-proxy">Starting the proxy</h3>
