@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/" />
-<meta property="og:updated_time" content="2021-11-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-12-18T00:00:00+00:00" />
 <meta itemprop="name" content="knabben">
 <meta itemprop="description" content="sdaf">
 <meta name="twitter:card" content="summary"/>
@@ -142,6 +142,25 @@
       <section class="w-100" style="display: table;">
         <div class="w-100" style="display: table-row;">
           <div style="width: 90%; display: table-cell;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden">
+  
+  <div class="f6">
+    December 18, 2021
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="http://thefind.live/posts/winkernel/readme/" class="link black dim">
+      Kube-proxy Windows Kernelspace Mode
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction Sorry not sorry, this is the fourth post about kube-proxy modes, don't worry the evil is in the details. This time these writings will cover Windows kernelspace mode. This proxy mode is used in Calico and Flannel CNIs and the APIs and golang binding used here (HCN) are shared on both technologies, so having a good understanding of how the public-facing interaction works and methods signatures is a good step on enabling the coding on windows container kernel networking capabilities.
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden">
@@ -328,26 +347,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden">
-  
-  <div class="f6">
-    May 10, 2020
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="http://thefind.live/posts/kube-debug/" class="link black dim">
-      Kubelet Debugging Session
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary.
-  Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -357,6 +356,12 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://thefind.live/posts/kube-debug/" class="link black dim">
+              Kubelet Debugging Session
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-net/" class="link black dim">
@@ -373,12 +378,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-container/" class="link black dim">
               Kubernetes Container API
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://thefind.live/posts/kube-pod/" class="link black dim">
-              Pod specification
             </a>
           </h2>
         

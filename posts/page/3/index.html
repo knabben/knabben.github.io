@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/posts/" />
-<meta property="og:updated_time" content="2021-11-27T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-12-18T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="sdaf">
 <meta name="twitter:card" content="summary"/>
@@ -117,6 +117,23 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://thefind.live/posts/kube-api/" class="link black dim">
+        Kubernetes API client
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction   This is an overview and notes on how to use the client-go Kubernetes API.
+  Kubernetes API resources  Accessing via API   The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).
+ You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with  $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;&amp; kubectl api-version
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -262,22 +279,6 @@ Summary  Golang   A statically typed, compiled programming language designed at 
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introducing Kubernetes   November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="http://thefind.live/posts/technical/" class="link black dim">
-        Technical indicators
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
- The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
     </div>
   </div>
 </div>
