@@ -37,7 +37,7 @@
 <meta itemprop="description" content="KPNG windows userspace backend support">
 <meta itemprop="datePublished" content="2022-01-22T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-01-22T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1010">
+<meta itemprop="wordCount" content="1001">
 
 
 
@@ -172,9 +172,9 @@ interface for the backends. Backends are specialized code that implement the req
 load balancing for the endpoints based on the data plane technology of choice (iptables, ipvs, HCN, etc.)</p>
 
 <p>In this post there will an integration walkthough on the first Windows backend (userspace) port to KPNG
-and will be provided a few ways to use it on <a href="#link-1">SIG-Windows Development Tooling</a></p>
+and will be provided a few ways to use it on <a href="#link-1">SIG-Windows Development Tooling</a>.</p>
 
-<p>Read more about the motivations and ideas behind KPNG in the <a href="#link-2">KEP</a></p>
+<p>Read more about the motivations and ideas behind KPNG in the <a href="#link-2">KEP</a>.</p>
 
 <h2 id="compiling-kpng">Compiling KPNG</h2>
 
@@ -311,11 +311,7 @@ winw1          Ready    &lt;none&gt;                 5h36m   v1.23.3-rc.0.5+eb8a
           <span style="color:#f92672">path</span>: <span style="color:#ae81ff">C:\\k\\antrea\\etc</span>
           <span style="color:#f92672">type</span>: <span style="color:#ae81ff">Directory</span>
       <span style="color:#f92672">nodeSelector</span>:
-        <span style="color:#f92672">kubernetes.io/os</span>: <span style="color:#ae81ff">windows</span>
-      <span style="color:#f92672">tolerations</span>:
-      - <span style="color:#f92672">key</span>: <span style="color:#ae81ff">CriticalAddonsOnly</span>
-        <span style="color:#f92672">operator</span>: <span style="color:#ae81ff">Exists</span>
-      - <span style="color:#f92672">operator</span>: <span style="color:#ae81ff">Exists</span></code></pre></div>
+        <span style="color:#f92672">kubernetes.io/os</span>: <span style="color:#ae81ff">windows</span></code></pre></div>
 <p>A few notes in the spec, securityContext as hostProcess and runAsUserName are required. The kpng container needs access to the kube-proxy.conf (to watch cluster objects).
 Mounting the hostPath volume from the actual kube-proxy.</p>
 

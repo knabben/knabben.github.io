@@ -475,14 +475,5 @@ Getting financial data   import pandas as pd import numpy as np import pandas_da
   Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
     </item>
     
-    <item>
-      <title></title>
-      <link>http://thefind.live/posts/capi-cc/readme/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://thefind.live/posts/capi-cc/readme/</guid>
-      <description></description>
-    </item>
-    
   </channel>
 </rss>
