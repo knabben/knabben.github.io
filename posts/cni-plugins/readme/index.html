@@ -6,7 +6,7 @@
     
     <title>CNI plugins and kindnet | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -197,7 +197,7 @@ a new device called BRIDGE, this device has an IP and work as a new gateway.</p>
 $ ip netns add ns1
 $ ip netns add ns2
 
-<span style="color:#75715e"># Create the veth pairs for namespace and for host</span> 
+<span style="color:#75715e"># Create the veth pairs for namespace and for host </span>
 $ ip link add veth10 type veth peer name veth11  <span style="color:#75715e"># host -&gt; ns1</span>
 $ ip link add veth20 type veth peer name veth21  <span style="color:#75715e"># host -&gt; ns2</span>
 
@@ -301,7 +301,8 @@ The traffic of the container interface will be routed through the interface of t
 
 <p>In the ADD command of PTP plugin we have the following sequence of events:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// run the IPAM plugin and get back the config to apply
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ipam</span>.<span style="color:#a6e22e">ExecAdd</span>(<span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">IPAM</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">args</span>.<span style="color:#a6e22e">StdinData</span>)</code></pre></div>
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ipam</span>.<span style="color:#a6e22e">ExecAdd</span>(<span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">IPAM</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">args</span>.<span style="color:#a6e22e">StdinData</span>)
+</code></pre></div>
 <p>IPAM (IP Address Management) loads the <code>host-local</code> [7]</p>
 
 <p>Host-local IPAM allocates IPv4 and IPv6 addresses out of a specified address range.
@@ -345,7 +346,8 @@ therefore ensuring uniqueness of IP addresses on a single host.</p>
       <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to add route %v: %v&#34;</span>, <span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span>)
     }
   }
-}</code></pre></div>
+}
+</code></pre></div>
 <ol start="2">
 <li>setupHostVeth - set the address to the veth pair of the host:</li>
 </ol>
@@ -363,7 +365,8 @@ therefore ensuring uniqueness of IP addresses on a single host.</p>
   <span style="color:#a6e22e">IP</span>:   <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Address</span>.<span style="color:#a6e22e">IP</span>,
   <span style="color:#a6e22e">Mask</span>: <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">CIDRMask</span>(<span style="color:#a6e22e">maskLen</span>, <span style="color:#a6e22e">maskLen</span>),
 }
-<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">ip</span>.<span style="color:#a6e22e">AddHostRoute</span>(<span style="color:#a6e22e">ipn</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">veth</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> !<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">IsExist</span>(<span style="color:#a6e22e">err</span>)<span style="color:#f92672">...</span></code></pre></div>
+<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">ip</span>.<span style="color:#a6e22e">AddHostRoute</span>(<span style="color:#a6e22e">ipn</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">veth</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> !<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">IsExist</span>(<span style="color:#a6e22e">err</span>)<span style="color:#f92672">...</span>
+</code></pre></div>
 <ol start="3">
 <li>dnsConfSet to overwrite DNS settings</li>
 </ol>
@@ -524,7 +527,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

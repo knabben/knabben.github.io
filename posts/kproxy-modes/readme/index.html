@@ -6,7 +6,7 @@
     
     <title>Kube-proxy Linux Userspace Mode | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -204,7 +204,8 @@ functions.</p>
 	)
 
 	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
-}</code></pre></div>
+}
+</code></pre></div>
 <p>This is the <code>glue</code> of Kubernetes API and the business logic implemented on each mode. Taking a look closer
 on how them react to each event.</p>
 
@@ -234,7 +235,8 @@ signature is the same. It will not be detailed right now.</p>
 
 	<span style="color:#75715e">// Sync unconditionally - this is called once per lifetime.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">syncProxyRules</span>()
-}</code></pre></div>
+}
+</code></pre></div>
 <h4 id="userspace">Userspace</h4>
 
 <p>This mode instead uses a parallel tracking struct and implements the <code>serviceChange</code> method in the proxy
@@ -258,7 +260,8 @@ to save data on them.</p>
 <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceSynced</span>() {
 	<span style="color:#f92672">...</span>
 	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">syncProxyRules</span>()
-}</code></pre></div>
+}
+</code></pre></div>
 <h4 id="winuserspace">Winuserspace</h4>
 
 <p>Curiously windows userspace is simpler than the other methods, basically it does not guarantee the sync of
@@ -277,7 +280,8 @@ changes with ServiceChangeTracker and EndpointChangeTracker.</p>
 	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">unmergeService</span>(<span style="color:#a6e22e">service</span>, <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">ServicePortPortalName</span>]<span style="color:#66d9ef">bool</span>{})
 }
 <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceSynced</span>() {
-}</code></pre></div>
+}
+</code></pre></div>
 <p>The cool thing here is to see how them got evolved during time, and the emergence of the design across the
 modes. Services running the cluster test:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">❯ kubectl get services -A                                                                                                                                                                                                           <span style="color:#f92672">[</span>21:36:29<span style="color:#f92672">]</span>
@@ -307,7 +311,8 @@ endpointslices [2] instead of endpoints.</p>
 <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointSlicesSynced</span>() {
     <span style="color:#f92672">...</span>
 	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">syncProxyRules</span>()
-}</code></pre></div>
+}
+</code></pre></div>
 <h3 id="usermode-linux-and-windows">Usermode Linux and Windows</h3>
 
 <p>As detailed before the round-robing interface gives us a Load balancer for endpoints
@@ -320,7 +325,8 @@ binded to a service on both cases this is implemented as follows:</p>
 }
 <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointsDelete</span>(<span style="color:#a6e22e">endpoints</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Endpoints</span>) {
 	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">loadBalancer</span>.<span style="color:#a6e22e">OnEndpointsDelete</span>(<span style="color:#a6e22e">endpoints</span>)
-}</code></pre></div>
+}
+</code></pre></div>
 <p>Endpoints existent in the test cluster:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">❯ kubectl get endpoints -A                                                                                                                                                                                                          <span style="color:#f92672">[</span>21:43:55<span style="color:#f92672">]</span>
 NAMESPACE            NAME                    ENDPOINTS                                               AGE
@@ -436,7 +442,8 @@ to simplify lets focus in the nginx-deployment.</p>
 	
 	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">ensurePortals</span>()
 	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">cleanupStaleStickySessions</span>()
-}</code></pre></div>
+}
+</code></pre></div>
 <p>As noted the current has the service object and previous is nil for <code>nginx-deployment</code> service:</p>
 
 <img src="/posts/kproxy-modes/screen8.png" alt="" class="" style="width: 100%; ">
@@ -457,13 +464,15 @@ to simplify lets focus in the nginx-deployment.</p>
 		
 		<span style="color:#75715e">// creates a new load balancer -&gt; service
 </span><span style="color:#75715e"></span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">loadBalancer</span>.<span style="color:#a6e22e">NewService</span>(<span style="color:#a6e22e">serviceName</span>, <span style="color:#a6e22e">info</span>.<span style="color:#a6e22e">sessionAffinityType</span>, <span style="color:#a6e22e">info</span>.<span style="color:#a6e22e">stickyMaxAgeSeconds</span>)
-	}</code></pre></div>
+	}
+</code></pre></div>
 <p>The <code>addServiceOnPortInternal</code> method starts listening on an internal port (33059 on this random example), dispatching a goroutine to handle
 the real connections in the service IP.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
 		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">HandleCrash</span>()
 		<span style="color:#a6e22e">sock</span>.<span style="color:#a6e22e">ProxyLoop</span>(<span style="color:#a6e22e">service</span>, <span style="color:#a6e22e">si</span>, <span style="color:#a6e22e">proxier</span>)
-	}()</code></pre></div>
+	}()
+</code></pre></div>
 <p>For the <code>openPortal</code> -&gt; <code>openOnePortal</code>:</p>
 
 <img src="/posts/kproxy-modes/screen9.png" alt="" class="" style="width: 100%; ">
@@ -589,7 +598,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

@@ -6,7 +6,7 @@
     
     <title>Hyperledger Sawtooth | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -321,7 +321,8 @@ The TP-XO listen for requests sent by the transaction processor and run in the h
 <span style="color:#a6e22e">processor</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">processor</span>.<span style="color:#a6e22e">NewTransactionProcessor</span>(<span style="color:#a6e22e">endpoint</span>)
 <span style="color:#a6e22e">processor</span>.<span style="color:#a6e22e">AddHandler</span>(<span style="color:#a6e22e">handler</span>)
 <span style="color:#a6e22e">processor</span>.<span style="color:#a6e22e">ShutdownOnSignal</span>(<span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGINT</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGTERM</span>)
-<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">processor</span>.<span style="color:#a6e22e">Start</span>()</code></pre></div></p>
+<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">processor</span>.<span style="color:#a6e22e">Start</span>()
+</code></pre></div></p>
 <p>
 The Apply from XoHandler is used by the processor to check the keys, is the case of create it validateCreate,
 prints it and set the global state on <a href="https://github.com/hyperledger/sawtooth-core/blob/2f559397a71e69a79f713e11fb4731da9c6ce631/protos/validator.proto#L54">sawtooth validator</a> with xoState.SetGame(payload.Name, game) via the processor context.</p>
@@ -419,7 +420,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

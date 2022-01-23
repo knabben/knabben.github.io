@@ -6,7 +6,7 @@
     
     <title>Istio drill down - Part I | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -374,47 +374,47 @@ virtualservice.networking.istio.io/bookinfo created</code></pre></div>
 the route to the created gateway</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"> 
-<span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
-<span style="color:#66d9ef">kind</span>: Gateway
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: bookinfo-gateway
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">selector</span>:
-    <span style="color:#66d9ef">istio</span>: ingressgateway <span style="color:#75715e"># use istio default controller</span>
-  <span style="color:#66d9ef">servers</span>:
-  - <span style="color:#66d9ef">port</span>:
-      <span style="color:#66d9ef">number</span>: <span style="color:#ae81ff">80</span>
-      <span style="color:#66d9ef">name</span>: http
-      <span style="color:#66d9ef">protocol</span>: HTTP
-    <span style="color:#66d9ef">hosts</span>:
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">networking.istio.io/v1alpha3</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Gateway</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">bookinfo-gateway</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">istio</span>: <span style="color:#ae81ff">ingressgateway</span> <span style="color:#75715e"># use istio default controller</span>
+  <span style="color:#f92672">servers</span>:
+  - <span style="color:#f92672">port</span>:
+      <span style="color:#f92672">number</span>: <span style="color:#ae81ff">80</span>
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http</span>
+      <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">HTTP</span>
+    <span style="color:#f92672">hosts</span>:
     - <span style="color:#e6db74">&#34;*&#34;</span>
 ---
-<span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
-<span style="color:#66d9ef">kind</span>: VirtualService
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: bookinfo
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">hosts</span>:
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">networking.istio.io/v1alpha3</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VirtualService</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">bookinfo</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">hosts</span>:
   - <span style="color:#e6db74">&#34;*&#34;</span>
-  <span style="color:#66d9ef">gateways</span>:
-  - bookinfo-gateway
-  <span style="color:#66d9ef">http</span>:
-  - <span style="color:#66d9ef">match</span>:
-    - <span style="color:#66d9ef">uri</span>:
-        <span style="color:#66d9ef">exact</span>: /productpage
-    - <span style="color:#66d9ef">uri</span>:
-        <span style="color:#66d9ef">prefix</span>: /static
-    - <span style="color:#66d9ef">uri</span>:
-        <span style="color:#66d9ef">exact</span>: /login
-    - <span style="color:#66d9ef">uri</span>:
-        <span style="color:#66d9ef">exact</span>: /logout
-    - <span style="color:#66d9ef">uri</span>:
-        <span style="color:#66d9ef">prefix</span>: /api/v1/products
-    <span style="color:#66d9ef">route</span>:
-    - <span style="color:#66d9ef">destination</span>:
-        <span style="color:#66d9ef">host</span>: productpage
-        <span style="color:#66d9ef">port</span>:
-          <span style="color:#66d9ef">number</span>: <span style="color:#ae81ff">9080</span></code></pre></div>
+  <span style="color:#f92672">gateways</span>:
+  - <span style="color:#ae81ff">bookinfo-gateway</span>
+  <span style="color:#f92672">http</span>:
+  - <span style="color:#f92672">match</span>:
+    - <span style="color:#f92672">uri</span>:
+        <span style="color:#f92672">exact</span>: <span style="color:#ae81ff">/productpage</span>
+    - <span style="color:#f92672">uri</span>:
+        <span style="color:#f92672">prefix</span>: <span style="color:#ae81ff">/static</span>
+    - <span style="color:#f92672">uri</span>:
+        <span style="color:#f92672">exact</span>: <span style="color:#ae81ff">/login</span>
+    - <span style="color:#f92672">uri</span>:
+        <span style="color:#f92672">exact</span>: <span style="color:#ae81ff">/logout</span>
+    - <span style="color:#f92672">uri</span>:
+        <span style="color:#f92672">prefix</span>: <span style="color:#ae81ff">/api/v1/products</span>
+    <span style="color:#f92672">route</span>:
+    - <span style="color:#f92672">destination</span>:
+        <span style="color:#f92672">host</span>: <span style="color:#ae81ff">productpage</span>
+        <span style="color:#f92672">port</span>:
+          <span style="color:#f92672">number</span>: <span style="color:#ae81ff">9080</span></code></pre></div>
 
 <p>Seeing the gateways and services in the system</p>
 
@@ -511,7 +511,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

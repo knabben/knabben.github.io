@@ -6,7 +6,7 @@
     
     <title>Pod specification | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -229,7 +229,8 @@ PS: The detailing and lab section above extracts text, insights and possible exa
 
 	<span style="color:#75715e">// If specified, the pod&#39;s tolerations.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Tolerations</span> []<span style="color:#a6e22e">Toleration</span>
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-3" class="outline-3">
@@ -285,34 +286,35 @@ Lets focus in the definition of a volume for now.</p>
 	<span style="color:#75715e">// AzureFile represents an Azure File Service
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">AzureFile</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">AzureFileVolumeSource</span> <span style="color:#e6db74">`json:&#34;azureFile,omitempty&#34; protobuf:&#34;bytes,18,opt,name=azureFile&#34;`</span>
     <span style="color:#f92672">...</span>
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 Starting the topic with a Volume of Secret type. Use the VolumeMounts inside the container to bring the volume inside the container.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">pod.yaml</span>
 --
-<span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: Pod
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">labels</span>:
-    <span style="color:#66d9ef">app</span>: lab1
-  <span style="color:#66d9ef">name</span>: busybox
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">containers</span>:
-  - <span style="color:#66d9ef">command</span>:
-    - sleep
-    - 9999d
-    <span style="color:#66d9ef">image</span>: busybox
-    <span style="color:#66d9ef">name</span>: busybox
-    <span style="color:#66d9ef">volumeMounts</span>:
-    - <span style="color:#66d9ef">name</span>: secret
-      <span style="color:#66d9ef">mountPath</span>: <span style="color:#e6db74">&#34;/etc/pass&#34;</span>
-      <span style="color:#66d9ef">readOnly</span>: <span style="color:#66d9ef">true</span>
-  <span style="color:#66d9ef">restartPolicy</span>: Always
-  <span style="color:#66d9ef">volumes</span>:
-  - <span style="color:#66d9ef">name</span>: secret
-    <span style="color:#66d9ef">secret</span>:
-      <span style="color:#66d9ef">secretName</span>: one-pass</code></pre></div></p>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">lab1</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">command</span>:
+    - <span style="color:#ae81ff">sleep</span>
+    - <span style="color:#ae81ff">9999d</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">secret</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/etc/pass&#34;</span>
+      <span style="color:#f92672">readOnly</span>: <span style="color:#66d9ef">true</span>
+  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Always</span>
+  <span style="color:#f92672">volumes</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">secret</span>
+    <span style="color:#f92672">secret</span>:
+      <span style="color:#f92672">secretName</span>: <span style="color:#ae81ff">one-pass</span></code></pre></div></p>
 <p>
 After defining the Volumes using secrets and mounting it inside the container, check the content
 of the /etc/pass folder.</p>
@@ -332,54 +334,54 @@ The way we claim for a PV is using a persistentVolumeClaim.</p>
 <p>
 The first step is to create a PersistentVolume, </p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: PersistentVolume
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: pv-volume
-  <span style="color:#66d9ef">labels</span>:
-    <span style="color:#66d9ef">type</span>: local
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">storageClassName</span>: manual
-  <span style="color:#66d9ef">capacity</span>:
-    <span style="color:#66d9ef">storage</span>: 10Gi
-  <span style="color:#66d9ef">accessModes</span>:
-    - ReadWriteOnce
-  <span style="color:#66d9ef">hostPath</span>:
-    <span style="color:#66d9ef">path</span>: <span style="color:#e6db74">&#34;/opt/data&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolume</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pv-volume</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">local</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">storageClassName</span>: <span style="color:#ae81ff">manual</span>
+  <span style="color:#f92672">capacity</span>:
+    <span style="color:#f92672">storage</span>: <span style="color:#ae81ff">10Gi</span>
+  <span style="color:#f92672">accessModes</span>:
+    - <span style="color:#ae81ff">ReadWriteOnce</span>
+  <span style="color:#f92672">hostPath</span>:
+    <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;/opt/data&#34;</span>
 --
-<span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: PersistentVolumeClaim
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: pv-claim
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">storageClassName</span>: manual
-  <span style="color:#66d9ef">accessModes</span>:
-    - ReadWriteOnce
-  <span style="color:#66d9ef">resources</span>:
-    <span style="color:#66d9ef">requests</span>:
-      <span style="color:#66d9ef">storage</span>: 3Gi
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolumeClaim</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pv-claim</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">storageClassName</span>: <span style="color:#ae81ff">manual</span>
+  <span style="color:#f92672">accessModes</span>:
+    - <span style="color:#ae81ff">ReadWriteOnce</span>
+  <span style="color:#f92672">resources</span>:
+    <span style="color:#f92672">requests</span>:
+      <span style="color:#f92672">storage</span>: <span style="color:#ae81ff">3Gi</span>
 --
-<span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: Pod
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">labels</span>:
-    <span style="color:#66d9ef">app</span>: lab1
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">lab1</span>
 
-  <span style="color:#66d9ef">name</span>: busybox
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">containers</span>:
-  - <span style="color:#66d9ef">command</span>:
-    - sleep
-    - 9999d
-    <span style="color:#66d9ef">image</span>: busybox
-    <span style="color:#66d9ef">name</span>: busybox
-    <span style="color:#66d9ef">volumeMounts</span>:
-    - <span style="color:#66d9ef">name</span>: vc
-      <span style="color:#66d9ef">mountPath</span>: <span style="color:#e6db74">&#34;/opt/&#34;</span>
-  <span style="color:#66d9ef">volumes</span>:
-  - <span style="color:#66d9ef">name</span>: vc
-    <span style="color:#66d9ef">persistentVolumeClaim</span>:
-      <span style="color:#66d9ef">claimName</span>: pv-claim</code></pre></div></p>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">command</span>:
+    - <span style="color:#ae81ff">sleep</span>
+    - <span style="color:#ae81ff">9999d</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">volumeMounts</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">vc</span>
+      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/opt/&#34;</span>
+  <span style="color:#f92672">volumes</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">vc</span>
+    <span style="color:#f92672">persistentVolumeClaim</span>:
+      <span style="color:#f92672">claimName</span>: <span style="color:#ae81ff">pv-claim</span></code></pre></div></p>
 <p>
 We can check the PV, PVC and the mount inside the container, to double test it, create a new directory and check inside the host machine.</p>
 <p>
@@ -423,7 +425,8 @@ Restart policy for all containers within the pod. One of Always, OnFailure, Neve
 	<span style="color:#a6e22e">RestartPolicyAlways</span>    <span style="color:#a6e22e">RestartPolicy</span> = <span style="color:#e6db74">&#34;Always&#34;</span>
 	<span style="color:#a6e22e">RestartPolicyOnFailure</span> <span style="color:#a6e22e">RestartPolicy</span> = <span style="color:#e6db74">&#34;OnFailure&#34;</span>
 	<span style="color:#a6e22e">RestartPolicyNever</span>     <span style="color:#a6e22e">RestartPolicy</span> = <span style="color:#e6db74">&#34;Never&#34;</span>
-)</code></pre></div></p>
+)
+</code></pre></div></p>
 <p>
 Getting an example, for a busybox with Always (default) restart and exit 1 command (failure):</p>
 <p>
@@ -465,22 +468,22 @@ SecurityContext
 <p>
 There&#39;s one curious constraint within this key, that should be used as <a href="https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/">best practice</a></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: Pod
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">labels</span>:
-    <span style="color:#66d9ef">app</span>: lab1
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">lab1</span>
 
-  <span style="color:#66d9ef">name</span>: busybox
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">containers</span>:
-  - <span style="color:#66d9ef">command</span>:
-    - sleep
-    - 9999d
-    <span style="color:#66d9ef">image</span>: busybox
-    <span style="color:#66d9ef">name</span>: busybox
-  <span style="color:#66d9ef">securityContext</span>:
-    <span style="color:#66d9ef">runAsNonRoot</span>: <span style="color:#66d9ef">true</span></code></pre></div></p>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">command</span>:
+    - <span style="color:#ae81ff">sleep</span>
+    - <span style="color:#ae81ff">9999d</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+  <span style="color:#f92672">securityContext</span>:
+    <span style="color:#f92672">runAsNonRoot</span>: <span style="color:#66d9ef">true</span></code></pre></div></p>
 <p>
 This box runs as root, since we have set the constraint lets take a look in the result:</p>
 <p>
@@ -700,7 +703,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

@@ -6,7 +6,7 @@
     
     <title>Kube-proxy Windows Kernelspace Mode | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -203,7 +203,8 @@ In the case of Kubernetes, you will be always using network drivers (L2Bridge, O
 <p>The second source of good information is [2], the video covers well how these mechanism works and a custom implementation using the API.</p>
 
 <p>Let's start with a simple golang to print the supported features available in the server. Using the <code>github.com/Microsoft/hcsshim/hcn</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;+%v&#34;</span>, <span style="color:#a6e22e">hcn</span>.<span style="color:#a6e22e">GetSupportedFeatures</span>())</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;+%v&#34;</span>, <span style="color:#a6e22e">hcn</span>.<span style="color:#a6e22e">GetSupportedFeatures</span>())
+</code></pre></div>
 <p>And the good ol` <a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/">dev tools</a> for these dangerous maneuvers.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ GOOS<span style="color:#f92672">=</span>windows go build scp winkernel.exe vagrant@10.20.30.11:/tmp; ssh vagrant@10.20.30.11 /tmp/winkernel.exe;
 msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;HCN feature check&#34;</span> supportedFeatures<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{
@@ -263,29 +264,29 @@ EndpointSlices group network endpoints together by unique combinations of protoc
 <p><em>Windows kernel space uses listeners for endpointslices instead of endpoints.</em> The caching processing stays under <code>pkg/proxy/endpointslicecache.go</code>.</p>
 
 <p>Getting the details of the endpointslice used on this post:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: discovery.k8s.io/v1
-<span style="color:#66d9ef">kind</span>: EndpointSlice
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: whoami-windows-n2x5d
-  <span style="color:#66d9ef">namespace</span>: default
-<span style="color:#66d9ef">addressType</span>: IPv4
-<span style="color:#66d9ef">endpoints</span>:
-- <span style="color:#66d9ef">addresses</span>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">discovery.k8s.io/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">EndpointSlice</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">whoami-windows-n2x5d</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+<span style="color:#f92672">addressType</span>: <span style="color:#ae81ff">IPv4</span>
+<span style="color:#f92672">endpoints</span>:
+- <span style="color:#f92672">addresses</span>:
   - <span style="color:#ae81ff">100.244.206.69</span>
-  <span style="color:#66d9ef">targetRef</span>:
-    <span style="color:#66d9ef">name</span>: whoami-windows-59cd7b4974-pjbq4
-- <span style="color:#66d9ef">addresses</span>:
+  <span style="color:#f92672">targetRef</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">whoami-windows-59cd7b4974-pjbq4</span>
+- <span style="color:#f92672">addresses</span>:
   - <span style="color:#ae81ff">100.244.206.68</span>
-  <span style="color:#66d9ef">targetRef</span>:
-    <span style="color:#66d9ef">name</span>: whoami-windows-59cd7b4974-6hwph
-- <span style="color:#66d9ef">addresses</span>:
+  <span style="color:#f92672">targetRef</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">whoami-windows-59cd7b4974-6hwph</span>
+- <span style="color:#f92672">addresses</span>:
   - <span style="color:#ae81ff">100.244.206.70</span>
-  <span style="color:#66d9ef">targetRef</span>:
-    <span style="color:#66d9ef">name</span>: whoami-windows-59cd7b4974-gr6qg
-<span style="color:#66d9ef">ports</span>:
-- <span style="color:#66d9ef">name</span>: <span style="color:#e6db74">&#34;&#34;</span>
-  <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">8080</span>
-  <span style="color:#66d9ef">protocol</span>: TCP</code></pre></div>
+  <span style="color:#f92672">targetRef</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">whoami-windows-59cd7b4974-gr6qg</span>
+<span style="color:#f92672">ports</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;&#34;</span>
+  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8080</span>
+  <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span></code></pre></div>
 <h3 id="calico-vxlan-and-source-vip">Calico VXLAN and Source VIP</h3>
 
 <p>Since Calico is being used and VXLAN overlay is required for Windows on this version, <strong>kube-proxy needs to know the source IP to use for SNAT operations.</strong>
@@ -335,7 +336,8 @@ list of <code>serviceInfo</code> cached objects:</p>
 	<span style="color:#a6e22e">hns</span>                    <span style="color:#a6e22e">HostNetworkService</span>
 	<span style="color:#a6e22e">preserveDIP</span>            <span style="color:#66d9ef">bool</span>
 	<span style="color:#a6e22e">localTrafficDSR</span>        <span style="color:#66d9ef">bool</span>
-}</code></pre></div>
+}
+</code></pre></div>
 <p>The first step is to check if the policy is already applied for this service in the <code>policyApplied</code> boolean.
 If the network is overlay a new REMOTE endpoint is created for the ClusterIP. HNS creates network namespaces
 per container endpoints. <strong>A remote endpoint is created for services virtualIP as well on the sync function.</strong></p>
@@ -343,7 +345,8 @@ per container endpoints. <strong>A remote endpoint is created for services virtu
 <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">serviceVipEndpoint</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
     <span style="color:#a6e22e">newHnsEndpoint</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hns</span>.<span style="color:#a6e22e">createEndpoint</span>(<span style="color:#a6e22e">hnsEndpoint</span>, <span style="color:#a6e22e">hnsNetworkName</span>)
     <span style="color:#a6e22e">svcInfo</span>.<span style="color:#a6e22e">remoteEndpoint</span> = <span style="color:#a6e22e">newHNSEndpoint</span>
-}</code></pre></div>
+}
+</code></pre></div>
 <p>You can check the existence of this endpoint via powershell utils.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl get svc -o wide
 NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>   AGE     SELECTOR
@@ -526,7 +529,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

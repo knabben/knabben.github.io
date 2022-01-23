@@ -6,7 +6,7 @@
     
     <title>knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/" />
-<meta property="og:updated_time" content="2021-12-18T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-01-22T00:00:00+00:00" />
 <meta itemprop="name" content="knabben">
 <meta itemprop="description" content="sdaf">
 <meta name="twitter:card" content="summary"/>
@@ -142,6 +142,25 @@
       <section class="w-100" style="display: table;">
         <div class="w-100" style="display: table-row;">
           <div style="width: 90%; display: table-cell;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden">
+  
+  <div class="f6">
+    January 22, 2022
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="http://thefind.live/posts/kpng-proxy/readme/" class="link black dim">
+      KPNG Windows Userspace
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction KPNG (KubeProxy Next Generation, kproxy v2) has as a goal provide a more scalable version of service proxies on Kubernetes, the idea is provide a core system that comunicates with the API server and provides an SHIM interface for the backends. Backends are specialized code that implement the required steps to provide the load balancing for the endpoints based on the data plane technology of choice (iptables, ipvs, HCN, etc.
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden">
@@ -327,26 +346,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden">
-  
-  <div class="f6">
-    May 24, 2020
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="http://thefind.live/posts/kube-dynamic/" class="link black dim">
-      Kubelet Dynamic Configuration
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Introduction   On Kubernetes 1.10+ a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.
- The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -356,6 +355,12 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://thefind.live/posts/kube-dynamic/" class="link black dim">
+              Kubelet Dynamic Configuration
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-debug/" class="link black dim">
@@ -372,12 +377,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-depl/" class="link black dim">
               Kubernetes Deployment Workloads
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://thefind.live/posts/kube-container/" class="link black dim">
-              Kubernetes Container API
             </a>
           </h2>
         
@@ -438,7 +437,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

@@ -6,7 +6,7 @@
     
     <title>Kubernetes Networking 101 | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -201,17 +201,17 @@ An abstract way to expose an application running on a set of Pods as a network s
 a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
 The set of Pods targeted by a Service is usually determined by a selector.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: Service
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: nginx-svc
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">selector</span>:
-    <span style="color:#66d9ef">app</span>: nginx
-  <span style="color:#66d9ef">ports</span>:
-    - <span style="color:#66d9ef">protocol</span>: TCP
-      <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">80</span>
-      <span style="color:#66d9ef">targetPort</span>: <span style="color:#ae81ff">80</span></code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-svc</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+  <span style="color:#f92672">ports</span>:
+    - <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
+      <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span></code></pre></div></p>
 <p>
 The service spec again, use the selector and when a Pod with this label matches the service will be used for that particular pod.</p>
 <p>
@@ -279,7 +279,8 @@ We have some types of services:</p>
 	<span style="color:#75715e">// externalName is the external reference that kubedns or equivalent will
 </span><span style="color:#75715e"></span>	<span style="color:#75715e">// return as a CNAME record for this service. No proxying will be involved.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ExternalName</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;externalName,omitempty&#34;`</span>
-}</code></pre></div>
+}
+</code></pre></div>
 <p>
 kube-proxy is responsible for implementing a form of virtual IP for Services of type other than ExternalName.</p>
 </div>
@@ -293,21 +294,21 @@ Ingress
 An API object that manages external access to the services in a cluster, typically HTTP.
 Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.k8s.io/v1beta1
-<span style="color:#66d9ef">kind</span>: Ingress
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: test-ingress
-  <span style="color:#66d9ef">annotations</span>:
-    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/rewrite-target</span>: /
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">rules</span>:
-  - <span style="color:#66d9ef">host</span>: hello.info
-    <span style="color:#66d9ef">http</span>:
-      <span style="color:#66d9ef">paths</span>:
-      - <span style="color:#66d9ef">path</span>: /
-        <span style="color:#66d9ef">backend</span>:
-          <span style="color:#66d9ef">serviceName</span>: nginx-svc
-          <span style="color:#66d9ef">servicePort</span>: <span style="color:#ae81ff">80</span></code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">networking.k8s.io/v1beta1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Ingress</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">test-ingress</span>
+  <span style="color:#f92672">annotations</span>:
+    <span style="color:#f92672">nginx.ingress.kubernetes.io/rewrite-target</span>: <span style="color:#ae81ff">/</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">rules</span>:
+  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">hello.info</span>
+    <span style="color:#f92672">http</span>:
+      <span style="color:#f92672">paths</span>:
+      - <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/</span>
+        <span style="color:#f92672">backend</span>:
+          <span style="color:#f92672">serviceName</span>: <span style="color:#ae81ff">nginx-svc</span>
+          <span style="color:#f92672">servicePort</span>: <span style="color:#ae81ff">80</span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-4" class="outline-3">
@@ -366,18 +367,19 @@ They can be Ingress or Egress in a Pod point of view.</p>
 
 	<span style="color:#75715e">// List of destinations for outgoing traffic of pods selected for this rule.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">To</span> []<span style="color:#a6e22e">NetworkPolicyPeer</span> <span style="color:#e6db74">`json:&#34;to,omitempty&#34;`</span>
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 An example of the usage of this NetworkPolicy capability, DENY all egress traffic from pod to source.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.k8s.io/v1
-<span style="color:#66d9ef">kind</span>: NetworkPolicy
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: default-deny
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">podSelector</span>: {}
-  <span style="color:#66d9ef">policyTypes</span>:
-  - Ingress</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">networking.k8s.io/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">NetworkPolicy</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">default-deny</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">podSelector</span>: {}
+  <span style="color:#f92672">policyTypes</span>:
+  - <span style="color:#ae81ff">Ingress</span></code></pre></div></p>
 <p>
 PS: Not all CNIs have support for this feature.</p>
 </div>
@@ -475,7 +477,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

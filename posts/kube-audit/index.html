@@ -6,7 +6,7 @@
     
     <title>Kubernetes Audit Sink | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -41,7 +41,7 @@ RequestReceived - The stage for events generated as soon as the audit handler re
 RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.">
 <meta itemprop="datePublished" content="2019-11-27T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2019-11-27T10:00:00+00:00" />
-<meta itemprop="wordCount" content="389">
+<meta itemprop="wordCount" content="388">
 
 
 
@@ -237,19 +237,19 @@ to enable this it is necessary to create the following flags:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># config.yaml</span>
 
-<span style="color:#66d9ef">kind</span>: Cluster
-<span style="color:#66d9ef">apiVersion</span>: kind.sigs.k8s.io/v1alpha3
-<span style="color:#66d9ef">kubeadmConfigPatches</span>:
-- <span style="color:#e6db74">|
-</span><span style="color:#e6db74">  apiVersion: kubeadm.k8s.io/v1beta2</span>
-  <span style="color:#66d9ef">kind</span>: ClusterConfiguration
-  <span style="color:#66d9ef">metadata</span>:
-    <span style="color:#66d9ef">name</span>: config
-  <span style="color:#66d9ef">apiServer</span>:
-    <span style="color:#66d9ef">extraArgs</span>:
-      <span style="color:#66d9ef">feature-gates</span>: <span style="color:#e6db74">&#34;DynamicAuditing=true&#34;</span>
-      <span style="color:#66d9ef">audit-dynamic-configuration</span>: <span style="color:#e6db74">&#34;true&#34;</span>
-      <span style="color:#66d9ef">runtime-config</span>: <span style="color:#e6db74">&#34;auditregistration.k8s.io/v1alpha1=true&#34;</span></code></pre></div></p>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">kind.sigs.k8s.io/v1alpha3</span>
+<span style="color:#f92672">kubeadmConfigPatches</span>:
+- |<span style="color:#e6db74">
+</span><span style="color:#e6db74">  apiVersion: kubeadm.k8s.io/v1beta2
+</span><span style="color:#e6db74">  kind: ClusterConfiguration
+</span><span style="color:#e6db74">  metadata:
+</span><span style="color:#e6db74">    name: config
+</span><span style="color:#e6db74">  apiServer:
+</span><span style="color:#e6db74">    extraArgs:
+</span><span style="color:#e6db74">      feature-gates: &#34;DynamicAuditing=true&#34;
+</span><span style="color:#e6db74">      audit-dynamic-configuration: &#34;true&#34;
+</span><span style="color:#e6db74">      runtime-config: &#34;auditregistration.k8s.io/v1alpha1=true&#34;</span>  </code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-11" class="outline-3">
@@ -263,21 +263,21 @@ for filtering rules the parameter –audit-policy-file must be set with Policy f
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># audit.yaml</span>
 
-<span style="color:#66d9ef">apiVersion</span>: auditregistration.k8s.io/v1alpha1
-<span style="color:#66d9ef">kind</span>: AuditSink
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: mysink
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">policy</span>:
-    <span style="color:#66d9ef">level</span>: Metadata
-    <span style="color:#66d9ef">stages</span>:
-    - ResponseComplete
-  <span style="color:#66d9ef">webhook</span>:
-    <span style="color:#66d9ef">throttle</span>:
-      <span style="color:#66d9ef">qps</span>: <span style="color:#ae81ff">10</span>
-      <span style="color:#66d9ef">burst</span>: <span style="color:#ae81ff">15</span>
-    <span style="color:#66d9ef">clientConfig</span>:
-      <span style="color:#66d9ef">url</span>: <span style="color:#e6db74">&#34;https://generic-web-site/hook&#34;</span></code></pre></div></p>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">auditregistration.k8s.io/v1alpha1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AuditSink</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mysink</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">policy</span>:
+    <span style="color:#f92672">level</span>: <span style="color:#ae81ff">Metadata</span>
+    <span style="color:#f92672">stages</span>:
+    - <span style="color:#ae81ff">ResponseComplete</span>
+  <span style="color:#f92672">webhook</span>:
+    <span style="color:#f92672">throttle</span>:
+      <span style="color:#f92672">qps</span>: <span style="color:#ae81ff">10</span>
+      <span style="color:#f92672">burst</span>: <span style="color:#ae81ff">15</span>
+    <span style="color:#f92672">clientConfig</span>:
+      <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;https://generic-web-site/hook&#34;</span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-12" class="outline-3">
@@ -294,43 +294,43 @@ $ kubectl create -f audit.yaml</code></pre></div></p>
 This is an example from the KIND cluster:</p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{
-  <span style="color:#66d9ef">&#34;kind&#34;: </span><span style="color:#e6db74">&#34;EventList&#34;</span>,
-  <span style="color:#66d9ef">&#34;apiVersion&#34;: </span><span style="color:#e6db74">&#34;audit.k8s.io/v1&#34;</span>,
-  <span style="color:#66d9ef">&#34;metadata&#34;: </span>{},
-  <span style="color:#66d9ef">&#34;items&#34;: </span>[
+  <span style="color:#f92672">&#34;kind&#34;: </span><span style="color:#e6db74">&#34;EventList&#34;</span>,
+  <span style="color:#f92672">&#34;apiVersion&#34;: </span><span style="color:#e6db74">&#34;audit.k8s.io/v1&#34;</span>,
+  <span style="color:#f92672">&#34;metadata&#34;: </span>{},
+  <span style="color:#f92672">&#34;items&#34;: </span>[
     {
-      <span style="color:#66d9ef">&#34;level&#34;: </span><span style="color:#e6db74">&#34;Metadata&#34;</span>,
-      <span style="color:#66d9ef">&#34;auditID&#34;: </span><span style="color:#e6db74">&#34;73e1e2e3-5a68-460e-8aa8-aece72ffacb3&#34;</span>,
-      <span style="color:#66d9ef">&#34;stage&#34;: </span><span style="color:#e6db74">&#34;ResponseComplete&#34;</span>,
-      <span style="color:#66d9ef">&#34;requestURI&#34;: </span><span style="color:#e6db74">&#34;/api/v1/namespaces/kube-system/endpoints/kube-scheduler?timeout=10s&#34;</span>,
-      <span style="color:#66d9ef">&#34;verb&#34;: </span><span style="color:#e6db74">&#34;update&#34;</span>,
-      <span style="color:#66d9ef">&#34;user&#34;: </span>{
-        <span style="color:#66d9ef">&#34;username&#34;: </span><span style="color:#e6db74">&#34;system:kube-scheduler&#34;</span>,
-        <span style="color:#66d9ef">&#34;groups&#34;: </span>[
+      <span style="color:#f92672">&#34;level&#34;: </span><span style="color:#e6db74">&#34;Metadata&#34;</span>,
+      <span style="color:#f92672">&#34;auditID&#34;: </span><span style="color:#e6db74">&#34;73e1e2e3-5a68-460e-8aa8-aece72ffacb3&#34;</span>,
+      <span style="color:#f92672">&#34;stage&#34;: </span><span style="color:#e6db74">&#34;ResponseComplete&#34;</span>,
+      <span style="color:#f92672">&#34;requestURI&#34;: </span><span style="color:#e6db74">&#34;/api/v1/namespaces/kube-system/endpoints/kube-scheduler?timeout=10s&#34;</span>,
+      <span style="color:#f92672">&#34;verb&#34;: </span><span style="color:#e6db74">&#34;update&#34;</span>,
+      <span style="color:#f92672">&#34;user&#34;: </span>{
+        <span style="color:#f92672">&#34;username&#34;: </span><span style="color:#e6db74">&#34;system:kube-scheduler&#34;</span>,
+        <span style="color:#f92672">&#34;groups&#34;: </span>[
           <span style="color:#e6db74">&#34;system:authenticated&#34;</span>
         ]
       },
-      <span style="color:#66d9ef">&#34;sourceIPs&#34;: </span>[
+      <span style="color:#f92672">&#34;sourceIPs&#34;: </span>[
         <span style="color:#e6db74">&#34;172.17.0.3&#34;</span>
       ],
-      <span style="color:#66d9ef">&#34;userAgent&#34;: </span><span style="color:#e6db74">&#34;kube-scheduler/v1.16.3 (linux/amd64) kubernetes/b3cbbae/leader-election&#34;</span>,
-      <span style="color:#66d9ef">&#34;objectRef&#34;: </span>{
-        <span style="color:#66d9ef">&#34;resource&#34;: </span><span style="color:#e6db74">&#34;endpoints&#34;</span>,
-        <span style="color:#66d9ef">&#34;namespace&#34;: </span><span style="color:#e6db74">&#34;kube-system&#34;</span>,
-        <span style="color:#66d9ef">&#34;name&#34;: </span><span style="color:#e6db74">&#34;kube-scheduler&#34;</span>,
-        <span style="color:#66d9ef">&#34;uid&#34;: </span><span style="color:#e6db74">&#34;5bfc44f4-b62f-4395-99d0-9c24e1ee1b83&#34;</span>,
-        <span style="color:#66d9ef">&#34;apiVersion&#34;: </span><span style="color:#e6db74">&#34;v1&#34;</span>,
-        <span style="color:#66d9ef">&#34;resourceVersion&#34;: </span><span style="color:#e6db74">&#34;460&#34;</span>
+      <span style="color:#f92672">&#34;userAgent&#34;: </span><span style="color:#e6db74">&#34;kube-scheduler/v1.16.3 (linux/amd64) kubernetes/b3cbbae/leader-election&#34;</span>,
+      <span style="color:#f92672">&#34;objectRef&#34;: </span>{
+        <span style="color:#f92672">&#34;resource&#34;: </span><span style="color:#e6db74">&#34;endpoints&#34;</span>,
+        <span style="color:#f92672">&#34;namespace&#34;: </span><span style="color:#e6db74">&#34;kube-system&#34;</span>,
+        <span style="color:#f92672">&#34;name&#34;: </span><span style="color:#e6db74">&#34;kube-scheduler&#34;</span>,
+        <span style="color:#f92672">&#34;uid&#34;: </span><span style="color:#e6db74">&#34;5bfc44f4-b62f-4395-99d0-9c24e1ee1b83&#34;</span>,
+        <span style="color:#f92672">&#34;apiVersion&#34;: </span><span style="color:#e6db74">&#34;v1&#34;</span>,
+        <span style="color:#f92672">&#34;resourceVersion&#34;: </span><span style="color:#e6db74">&#34;460&#34;</span>
       },
-      <span style="color:#66d9ef">&#34;responseStatus&#34;: </span>{
-        <span style="color:#66d9ef">&#34;metadata&#34;: </span>{},
-        <span style="color:#66d9ef">&#34;code&#34;: </span><span style="color:#ae81ff">200</span>
+      <span style="color:#f92672">&#34;responseStatus&#34;: </span>{
+        <span style="color:#f92672">&#34;metadata&#34;: </span>{},
+        <span style="color:#f92672">&#34;code&#34;: </span><span style="color:#ae81ff">200</span>
       },
-      <span style="color:#66d9ef">&#34;requestReceivedTimestamp&#34;: </span><span style="color:#e6db74">&#34;2019-11-28T02:32:01.690713Z&#34;</span>,
-      <span style="color:#66d9ef">&#34;stageTimestamp&#34;: </span><span style="color:#e6db74">&#34;2019-11-28T02:32:01.693278Z&#34;</span>,
-      <span style="color:#66d9ef">&#34;annotations&#34;: </span>{
-        <span style="color:#66d9ef">&#34;authorization.k8s.io/decision&#34;: </span><span style="color:#e6db74">&#34;allow&#34;</span>,
-        <span style="color:#66d9ef">&#34;authorization.k8s.io/reason&#34;: </span><span style="color:#e6db74">&#34;RBAC: allowed by ClusterRoleBinding \&#34;system:kube-scheduler\&#34; of ClusterRole \&#34;system:kube-scheduler\&#34; to User \&#34;system:kube-scheduler\&#34;&#34;</span>
+      <span style="color:#f92672">&#34;requestReceivedTimestamp&#34;: </span><span style="color:#e6db74">&#34;2019-11-28T02:32:01.690713Z&#34;</span>,
+      <span style="color:#f92672">&#34;stageTimestamp&#34;: </span><span style="color:#e6db74">&#34;2019-11-28T02:32:01.693278Z&#34;</span>,
+      <span style="color:#f92672">&#34;annotations&#34;: </span>{
+        <span style="color:#f92672">&#34;authorization.k8s.io/decision&#34;: </span><span style="color:#e6db74">&#34;allow&#34;</span>,
+        <span style="color:#f92672">&#34;authorization.k8s.io/reason&#34;: </span><span style="color:#e6db74">&#34;RBAC: allowed by ClusterRoleBinding \&#34;system:kube-scheduler\&#34; of ClusterRole \&#34;system:kube-scheduler\&#34; to User \&#34;system:kube-scheduler\&#34;&#34;</span>
       }
     }
   ]
@@ -414,7 +414,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

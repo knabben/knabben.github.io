@@ -6,7 +6,7 @@
     
     <title>Monitoring MySQL w/ Prometheus | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -235,18 +235,18 @@ The seconds part is to configure the Prometheus container, first we discovery on
 <p>
 Now we configure the prometheus.yml, and start the container</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">/home/core/prometheus.yml -<span style="color:#e6db74">-
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">scrape_configs:</span>
-	<span style="color:#75715e"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
-	- <span style="color:#66d9ef">job_name</span>: <span style="color:#e6db74">&#39;mysqld_explorer&#39;</span>
-	<span style="color:#75715e"># Override the global default and scrape targets from this job every 5 seconds.</span>
-	<span style="color:#66d9ef">scrape_interval</span>: 60s
-	<span style="color:#66d9ef">scrape_timeout</span>: 10s
-	<span style="color:#66d9ef">target_groups</span>:
-		- <span style="color:#66d9ef">targets</span>: [<span style="color:#e6db74">&#39;172.17.0.2:9104&#39;</span>]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">/home/core/prometheus.yml --</span>
 
-docker run -d -p <span style="color:#ae81ff">9090</span>:<span style="color:#ae81ff">9090</span> -v /home/core/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</code></pre></div></p>
+<span style="color:#f92672">scrape_configs</span>:
+	<span style="color:#75715e"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
+	- <span style="color:#f92672">job_name</span>: <span style="color:#e6db74">&#39;mysqld_explorer&#39;</span>
+	<span style="color:#75715e"># Override the global default and scrape targets from this job every 5 seconds.</span>
+	<span style="color:#f92672">scrape_interval</span>: <span style="color:#ae81ff">60s</span>
+	<span style="color:#f92672">scrape_timeout</span>: <span style="color:#ae81ff">10s</span>
+	<span style="color:#f92672">target_groups</span>:
+		- <span style="color:#f92672">targets</span>: [<span style="color:#e6db74">&#39;172.17.0.2:9104&#39;</span>]
+
+<span style="color:#ae81ff">docker run -d -p 9090:9090 -v /home/core/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-4" class="outline-3">
@@ -257,7 +257,7 @@ Grafana
 <p>
 Finally run Grafana:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">docker run -d --name=grafana -p <span style="color:#ae81ff">3000</span>:<span style="color:#ae81ff">3000</span> grafana/grafana</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">docker run -d --name=grafana -p 3000:3000 grafana/grafana</span></code></pre></div></p>
 <p>
 Basic status
 <code class="verbatim">==========</code></p>
@@ -266,35 +266,35 @@ First lets see the commands executed ( SELECT, INSERT, UPDATE, DELETE ) in one g
 <p>
 <img src="d1.png" alt="d1.png" title="d1.png" /></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Metrics come from</span>:
-SHOW GLOBAL STATUS
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">Metrics come from</span>:
+<span style="color:#ae81ff">SHOW GLOBAL STATUS</span>
 
-mysql_global_status_commands_total{command~=<span style="color:#e6db74">&#34;select|update|insert|delete&#34;</span>}</code></pre></div></p>
+<span style="color:#ae81ff">mysql_global_status_commands_total{command~=&#34;select|update|insert|delete&#34;}</span></code></pre></div></p>
 <p>
 Other metric is the Threads running/Threads connected.</p>
 <p>
 <img src="d2.png" alt="d2.png" title="d2.png" /></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_global_status_threads_connected
-mysql_global_status_threads_running
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">mysql_global_status_threads_connected</span>
+<span style="color:#ae81ff">mysql_global_status_threads_running</span>
 
-mysql_global_status_questions
-mysql_global_status_queries</code></pre></div></p>
+<span style="color:#ae81ff">mysql_global_status_questions</span>
+<span style="color:#ae81ff">mysql_global_status_queries</span></code></pre></div></p>
 <p>
 Besides that you have Tables sizes vs. Table lines</p>
 <p>
 <img src="d3.png" alt="d3.png" title="d3.png" /></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_info_schema_table_size{schema=<span style="color:#e6db74">&#34;database&#34;</span>,component=<span style="color:#e6db74">&#34;data_length&#34;</span>}
-mysql_info_schema_table_rows{schema=<span style="color:#e6db74">&#34;database&#34;</span>} </code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">mysql_info_schema_table_size{schema=&#34;database&#34;,component=&#34;data_length&#34;}</span>
+<span style="color:#ae81ff">mysql_info_schema_table_rows{schema=&#34;database&#34;} </span></code></pre></div></p>
 <p>
 To finish the basic dashboard lets configure some more 3 metrics:</p>
 <p>
 <img src="d4.png" alt="d4.png" title="d4.png" /></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">mysql_global_status_aborted_connects
-mysql_global_status_aborted_clients
-mysql_global_status_slow_queries</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">mysql_global_status_aborted_connects</span>
+<span style="color:#ae81ff">mysql_global_status_aborted_clients</span>
+<span style="color:#ae81ff">mysql_global_status_slow_queries</span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-5" class="outline-3">
@@ -389,7 +389,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

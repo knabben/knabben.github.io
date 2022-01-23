@@ -6,7 +6,7 @@
     
     <title>From Dev to PoET | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -243,15 +243,15 @@ Besides the validator we need a rest-api, the intkey TP and shell to test the ne
 <p>
 The default way to do this is bring everything in the same Pod with multiple containers</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  - <span style="color:#66d9ef">name</span>: sawtooth-rest-api
-    <span style="color:#66d9ef">image</span>: hyperledger/sawtooth-rest-api:<span style="color:#ae81ff">1.0.5</span>
-    <span style="color:#66d9ef">ports</span>:
-      - <span style="color:#66d9ef">name</span>: api
-        <span style="color:#66d9ef">containerPort</span>: <span style="color:#ae81ff">8008</span>
-    <span style="color:#66d9ef">command</span>:
-      - bash
-    <span style="color:#66d9ef">args</span>:
-      - -c
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">sawtooth-rest-api</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">hyperledger/sawtooth-rest-api:1.0.5</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">api</span>
+        <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">8008</span>
+    <span style="color:#f92672">command</span>:
+      - <span style="color:#ae81ff">bash</span>
+    <span style="color:#f92672">args</span>:
+      - -<span style="color:#ae81ff">c</span>
       - <span style="color:#e6db74">&#34;sawtooth-rest-api -C tcp://$HOSTNAME:4004&#34;</span>}</code></pre></div></p>
 <p>
 These services connect in the same Pod validator node. So we have 1 Deployment/Pod for each node.
@@ -434,7 +434,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

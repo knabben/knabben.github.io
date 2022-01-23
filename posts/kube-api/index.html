@@ -6,7 +6,7 @@
     
     <title>Kubernetes API client | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -241,11 +241,13 @@ fetch the Image from a CoreDNS container in the Kube-system namespace.</p>
 	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">container</span> <span style="color:#f92672">:=</span>  <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pod</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">Containers</span> {
 		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">Image</span>)
 	}
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 To have a better visualization of the resource type check the API definition on kubernetes/api</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">https</span>:<span style="color:#f92672">//</span><span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">kubernetes</span><span style="color:#f92672">/</span><span style="color:#a6e22e">api</span><span style="color:#f92672">/</span><span style="color:#a6e22e">blob</span><span style="color:#f92672">/</span><span style="color:#a6e22e">master</span><span style="color:#f92672">/</span><span style="color:#a6e22e">core</span><span style="color:#f92672">/</span><span style="color:#a6e22e">v1</span><span style="color:#f92672">/</span><span style="color:#a6e22e">types</span>.<span style="color:#66d9ef">go</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">L3513</span></code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">https</span>:<span style="color:#75715e">//github.com/kubernetes/api/blob/master/core/v1/types.go#L3513
+</span></code></pre></div></p>
 <p>
 A generated documentation is available at:</p>
 <p>
@@ -279,7 +281,8 @@ If the following example we have a callback happening for delete a Pod.</p>
 	<span style="color:#66d9ef">select</span> {
 		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">pod</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">pods</span>:
 			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">pod</span>.<span style="color:#a6e22e">Namespace</span>, <span style="color:#a6e22e">pod</span>.<span style="color:#a6e22e">Name</span>)
-	}</code></pre></div></p>
+	}
+</code></pre></div></p>
 </div>
 </div>
 </div>
@@ -302,14 +305,14 @@ registration.</p>
 <p>
 On this example this CRD sawtooth.hyperledger.org/example-sawtooth has the following characteristics:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: sawtooth.hyperledger.org/v1alpha1
-<span style="color:#66d9ef">kind</span>: Sawtooth
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">generation</span>: <span style="color:#ae81ff">1</span>
-  <span style="color:#66d9ef">name</span>: example-sawtooth
-  <span style="color:#66d9ef">namespace</span>: default
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">size</span>: <span style="color:#ae81ff">3</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">sawtooth.hyperledger.org/v1alpha1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Sawtooth</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">generation</span>: <span style="color:#ae81ff">1</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">example-sawtooth</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">size</span>: <span style="color:#ae81ff">3</span></code></pre></div>
  There&#39;s two ways of accessing it, they are:</p>
 <div id="outline-container-headline-7" class="outline-4">
 <h4 id="headline-7">
@@ -335,7 +338,8 @@ created, so it&#39;s possible to access the spec on this way.</p>
 		<span style="color:#a6e22e">errPanic</span>(<span style="color:#a6e22e">err</span>)
 
 		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">size</span>)
-	}</code></pre></div></p>
+	}
+</code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-8" class="outline-4">
@@ -381,7 +385,8 @@ these are being used to generate our custom spec.</p>
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SawtoothSpec</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#a6e22e">Size</span> <span style="color:#66d9ef">int64</span>  <span style="color:#e6db74">`json:&#34;size&#34;`</span>
 
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 Now, you can generate the clients and accessors automatically with:</p>
 <p>
@@ -402,7 +407,8 @@ Now, you can generate the clients and accessors automatically with:</p>
 <span style="color:#a6e22e">sawtooth</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">list</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;example-sawtooth&#34;</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">GetOptions</span>{})
 <span style="color:#a6e22e">errPanic</span>(<span style="color:#a6e22e">err</span>)
 
-<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sawtooth</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">Nodes</span>)</code></pre></div></p>
+<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sawtooth</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">Nodes</span>)
+</code></pre></div></p>
 <p>
 For more information:</p>
 <p>
@@ -488,7 +494,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

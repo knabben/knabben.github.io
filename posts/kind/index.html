@@ -6,7 +6,7 @@
     
     <title>Kubernetes in Docker | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -49,7 +49,7 @@
   First steps   To create a new cluster you must run:">
 <meta itemprop="datePublished" content="2019-12-25T22:00:00+00:00" />
 <meta itemprop="dateModified" content="2019-12-25T22:00:00+00:00" />
-<meta itemprop="wordCount" content="641">
+<meta itemprop="wordCount" content="640">
 
 
 
@@ -234,16 +234,16 @@ Check the docker containers with &#34;docker ps&#34;:</p>
 <p>
 You can check these context on ~/.kube/config:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">contexts</span>:
-- <span style="color:#66d9ef">context</span>:
-    <span style="color:#66d9ef">cluster</span>: kind-2k8s
-    <span style="color:#66d9ef">user</span>: kind-2k8s
-  <span style="color:#66d9ef">name</span>: kind-2k8s
-- <span style="color:#66d9ef">context</span>:
-    <span style="color:#66d9ef">cluster</span>: kind-kind
-    <span style="color:#66d9ef">user</span>: kind-kind
-  <span style="color:#66d9ef">name</span>: kind-kind
-<span style="color:#66d9ef">current-context</span>: kind-2k8s</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">contexts</span>:
+- <span style="color:#f92672">context</span>:
+    <span style="color:#f92672">cluster</span>: <span style="color:#ae81ff">kind-2k8s</span>
+    <span style="color:#f92672">user</span>: <span style="color:#ae81ff">kind-2k8s</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kind-2k8s</span>
+- <span style="color:#f92672">context</span>:
+    <span style="color:#f92672">cluster</span>: <span style="color:#ae81ff">kind-kind</span>
+    <span style="color:#f92672">user</span>: <span style="color:#ae81ff">kind-kind</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kind-kind</span>
+<span style="color:#f92672">current-context</span>: <span style="color:#ae81ff">kind-2k8s</span></code></pre></div></p>
 <p>
 Some interesting tools like <a href="https://kubectx.dev">Kubectx</a> can make your life easier to change between contexts and namespaces.</p>
 <p>
@@ -282,7 +282,8 @@ the worker nodes in the cluster.</p>
   <span style="color:#75715e">// Execute the actions in a new context.
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">action</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">actionsToRun</span> {
     <span style="color:#a6e22e">action</span>.<span style="color:#a6e22e">Execute</span>(<span style="color:#a6e22e">actionsContext</span>)
-  }</code></pre></div></p>
+  }
+</code></pre></div></p>
 <p>
 The interesting part here is how customizable and adaptable is the project since the idea is to get an ephemeral cheap cluster 
 for testing. This is a quicker alternative for Minikube, and can be used inside or outside a CI, for cases you don&#39;t need
@@ -298,24 +299,24 @@ to keep or persist data and configuration for long time.</p>
 If you want to create other roles like workers you can use the following configuration. In this example we have 2 worker nodes and a control plane.
 Some other configurations from kubeadm can be passed via patches configuration:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">config.yaml
--<span style="color:#e6db74">-
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">kind: Cluster</span>
-<span style="color:#66d9ef">apiVersion</span>: kind.x-k8s.io/v1alpha4
-<span style="color:#66d9ef">nodes</span>:
-- <span style="color:#66d9ef">role</span>: control-plane
-- <span style="color:#66d9ef">role</span>: worker
-- <span style="color:#66d9ef">role</span>: worker
-<span style="color:#66d9ef">kubeadmConfigPatches</span>:
-- <span style="color:#e6db74">|
-</span><span style="color:#e6db74">  apiVersion: kubeadm.k8s.io/v1beta2</span>
-  <span style="color:#66d9ef">kind</span>: ClusterConfiguration
-  <span style="color:#66d9ef">metadata</span>:
-    <span style="color:#66d9ef">name</span>: config
-  <span style="color:#66d9ef">apiServer</span>:
-    <span style="color:#66d9ef">extraArgs</span>:
-      <span style="color:#66d9ef">&#34;v&#34;: </span><span style="color:#e6db74">&#34;6&#34;</span></code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">config.yaml</span>
+--
+
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">kind.x-k8s.io/v1alpha4</span>
+<span style="color:#f92672">nodes</span>:
+- <span style="color:#f92672">role</span>: <span style="color:#ae81ff">control-plane</span>
+- <span style="color:#f92672">role</span>: <span style="color:#ae81ff">worker</span>
+- <span style="color:#f92672">role</span>: <span style="color:#ae81ff">worker</span>
+<span style="color:#f92672">kubeadmConfigPatches</span>:
+- |<span style="color:#e6db74">
+</span><span style="color:#e6db74">  apiVersion: kubeadm.k8s.io/v1beta2
+</span><span style="color:#e6db74">  kind: ClusterConfiguration
+</span><span style="color:#e6db74">  metadata:
+</span><span style="color:#e6db74">    name: config
+</span><span style="color:#e6db74">  apiServer:
+</span><span style="color:#e6db74">    extraArgs:
+</span><span style="color:#e6db74">      &#34;v&#34;: &#34;6&#34;</span>  </code></pre></div></p>
 <p>
 Starting </p>
 <p>
@@ -379,21 +380,21 @@ Live configuration changes
 <p>
 Kubernetes manifests resides in <em>etc/kubernetes/manifests</em>, you can change the specification and the part of the system will be restarted.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: Pod
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">creationTimestamp</span>: <span style="color:#66d9ef">null</span>
-  <span style="color:#66d9ef">labels</span>:
-    <span style="color:#66d9ef">component</span>: kube-apiserver
-    <span style="color:#66d9ef">tier</span>: control-plane
-  <span style="color:#66d9ef">name</span>: kube-apiserver
-  <span style="color:#66d9ef">namespace</span>: kube-system
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">containers</span>:
-  - <span style="color:#66d9ef">command</span>:
-    - kube-apiserver
-    - ...
-    - --v=<span style="color:#ae81ff">1</span></code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">creationTimestamp</span>: <span style="color:#66d9ef">null</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">component</span>: <span style="color:#ae81ff">kube-apiserver</span>
+    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">control-plane</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kube-apiserver</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">kube-system</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">command</span>:
+    - <span style="color:#ae81ff">kube-apiserver</span>
+    - <span style="color:#ae81ff">...</span>
+    - --<span style="color:#ae81ff">v=1</span></code></pre></div></p>
 <p>
 Checking the logs again, the container id must change the process restarted should have the new value:</p>
 <p>
@@ -480,7 +481,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

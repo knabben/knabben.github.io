@@ -6,7 +6,7 @@
     
     <title>Kubernetes Deployment Workloads | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -192,32 +192,33 @@ A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at 
 	<span style="color:#75715e">// Template is the object that describes the pod that will be created if insufficient replicas are detected.
 </span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Template</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">PodTemplateSpec</span> <span style="color:#e6db74">`json:&#34;template,omitempty&#34;`</span>
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <div id="outline-container-headline-2" class="outline-4">
 <h4 id="headline-2">
 Example
 </h4>
 <div id="outline-text-headline-2" class="outline-text-4">
 <p>
- <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"> <span style="color:#66d9ef">apiVersion</span>: apps/v1
- <span style="color:#66d9ef">kind</span>: ReplicaSet
- <span style="color:#66d9ef">metadata</span>:
-   <span style="color:#66d9ef">name</span>: frontend
-   <span style="color:#66d9ef">labels</span>:
-     <span style="color:#66d9ef">tier</span>: frontend
- <span style="color:#66d9ef">spec</span>:
-   <span style="color:#66d9ef">replicas</span>: <span style="color:#ae81ff">3</span>
-   <span style="color:#66d9ef">selector</span>:
-     <span style="color:#66d9ef">matchLabels</span>:
-       <span style="color:#66d9ef">tier</span>: frontend
-   <span style="color:#66d9ef">template</span>:
-     <span style="color:#66d9ef">metadata</span>:
-       <span style="color:#66d9ef">labels</span>:
-         <span style="color:#66d9ef">tier</span>: frontend
-     <span style="color:#66d9ef">spec</span>:
-       <span style="color:#66d9ef">containers</span>:
-       - <span style="color:#66d9ef">name</span>: php-redis
-         <span style="color:#66d9ef">image</span>: gcr.io/google_samples/gb-frontend:v3
+ <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"> <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+ <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ReplicaSet</span>
+ <span style="color:#f92672">metadata</span>:
+   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">frontend</span>
+   <span style="color:#f92672">labels</span>:
+     <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">frontend</span>
+ <span style="color:#f92672">spec</span>:
+   <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>
+   <span style="color:#f92672">selector</span>:
+     <span style="color:#f92672">matchLabels</span>:
+       <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">frontend</span>
+   <span style="color:#f92672">template</span>:
+     <span style="color:#f92672">metadata</span>:
+       <span style="color:#f92672">labels</span>:
+         <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">frontend</span>
+     <span style="color:#f92672">spec</span>:
+       <span style="color:#f92672">containers</span>:
+       - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">php-redis</span>
+         <span style="color:#f92672">image</span>: <span style="color:#ae81ff">gcr.io/google_samples/gb-frontend:v3</span>
  </code></pre></div></p>
 <p>
  For the explanation the selector field must match the same label of your Pods, it means you can reuse already existent pods on this match
@@ -244,7 +245,8 @@ Template
 </span><span style="color:#75715e"></span>	 <span style="color:#75715e">// +optional
 </span><span style="color:#75715e"></span>	 <span style="color:#a6e22e">Spec</span> <span style="color:#a6e22e">PodSpec</span> <span style="color:#e6db74">`json:&#34;spec,omitempty&#34; protobuf:&#34;bytes,2,opt,name=spec&#34;`</span>
  }
- </code></pre></div></p>
+ 
+</code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-4" class="outline-4">
@@ -264,7 +266,8 @@ kube-controller ReplicaSet
          <span style="color:#75715e">// delete pods - rsc.podControl.DeletePod
 </span><span style="color:#75715e"></span>     }
  }
- </code></pre></div></p>
+ 
+</code></pre></div></p>
 <p>
  If you want to give a deeper dive on <a href="https://github.com/vmware-tanzu/tgik/blob/master/episodes/093/README.md">it</a>.</p>
 </div>
@@ -301,31 +304,32 @@ You can define Deployments to create new ReplicaSets, or to remove existing Depl
 
 	<span style="color:#75715e">// Indicates that the deployment is paused.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Paused</span> <span style="color:#66d9ef">bool</span> <span style="color:#e6db74">`json:&#34;paused,omitempty&#34; protobuf:&#34;varint,7,opt,name=paused&#34;`</span>
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 Getting the example:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: apps/v1
-<span style="color:#66d9ef">kind</span>: Deployment
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: nginx-deployment
-  <span style="color:#66d9ef">labels</span>:
-    <span style="color:#66d9ef">app</span>: nginx
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">replicas</span>: <span style="color:#ae81ff">3</span>
-  <span style="color:#66d9ef">selector</span>:
-    <span style="color:#66d9ef">matchLabels</span>:
-      <span style="color:#66d9ef">app</span>: nginx
-  <span style="color:#66d9ef">template</span>:
-    <span style="color:#66d9ef">metadata</span>:
-      <span style="color:#66d9ef">labels</span>:
-        <span style="color:#66d9ef">app</span>: nginx
-    <span style="color:#66d9ef">spec</span>:
-      <span style="color:#66d9ef">containers</span>:
-      - <span style="color:#66d9ef">name</span>: nginx
-        <span style="color:#66d9ef">image</span>: nginx:<span style="color:#ae81ff">1.7.9</span>
-        <span style="color:#66d9ef">ports</span>:
-        - <span style="color:#66d9ef">containerPort</span>: <span style="color:#ae81ff">80</span></code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-deployment</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">matchLabels</span>:
+      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+  <span style="color:#f92672">template</span>:
+    <span style="color:#f92672">metadata</span>:
+      <span style="color:#f92672">labels</span>:
+        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+    <span style="color:#f92672">spec</span>:
+      <span style="color:#f92672">containers</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:1.7.9</span>
+        <span style="color:#f92672">ports</span>:
+        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span></code></pre></div></p>
 <div id="outline-container-headline-6" class="outline-4">
 <h4 id="headline-6">
 Replicas, selectors and templates.
@@ -353,7 +357,8 @@ The deployment strategy can be used between two types actually:</p>
 
 	<span style="color:#75715e">// Replace the old ReplicaSets by new one using rolling update i.e gradually scale down the old ReplicaSets and scale up the new one.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">RollingUpdateDeploymentStrategyType</span> <span style="color:#a6e22e">DeploymentStrategyType</span> = <span style="color:#e6db74">&#34;RollingUpdate&#34;</span>
-)</code></pre></div></p>
+)
+</code></pre></div></p>
 <p>
 The Recreate one can have some downtime.</p>
 </div>
@@ -468,7 +473,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

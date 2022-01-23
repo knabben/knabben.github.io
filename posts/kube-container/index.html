@@ -6,7 +6,7 @@
     
     <title>Kubernetes Container API | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -228,7 +228,8 @@ the possibility to create multiple containers in a unique Pod.</p>
 </span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/policy/security-context/
 </span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">SecurityContext</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SecurityContext</span> <span style="color:#e6db74">`json:&#34;securityContext,omitempty&#34;`</span>
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-2" class="outline-3">
@@ -276,7 +277,8 @@ This is used to set the way the image will be pulled from the registry.</p>
 	}
 
 	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 On kuberuntime_container.go:startContainer -&gt; EnsureImageExists()</p>
 </div>
@@ -302,18 +304,18 @@ Container design can be split in 3 categories:</p>
 <p>
 Multi-container definition example:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"> <span style="color:#66d9ef">apiVersion</span>: v1
- <span style="color:#66d9ef">kind</span>: Pod
- <span style="color:#66d9ef">metadata</span>:
-   <span style="color:#66d9ef">labels</span>:
-     <span style="color:#66d9ef">app</span>: lab1
-   <span style="color:#66d9ef">name</span>: busybox
- <span style="color:#66d9ef">spec</span>:
-   <span style="color:#66d9ef">containers</span>:
-   - <span style="color:#66d9ef">image</span>: busybox
-     <span style="color:#66d9ef">name</span>: main
-   - <span style="color:#66d9ef">image</span>: busybox
-     <span style="color:#66d9ef">name</span>: sidecar
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"> <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+ <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+ <span style="color:#f92672">metadata</span>:
+   <span style="color:#f92672">labels</span>:
+     <span style="color:#f92672">app</span>: <span style="color:#ae81ff">lab1</span>
+   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+ <span style="color:#f92672">spec</span>:
+   <span style="color:#f92672">containers</span>:
+   - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+     <span style="color:#f92672">name</span>: <span style="color:#ae81ff">main</span>
+   - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+     <span style="color:#f92672">name</span>: <span style="color:#ae81ff">sidecar</span>
  </code></pre></div></p>
 </li>
 </ul>
@@ -334,13 +336,13 @@ Indicates whether the Container is ready to service requests. If the readiness p
 removes the Pod’s IP address from the endpoints of all Services that match the Pod. The default state of readiness
  before the initial delay is Failure. If a Container does not provide a readiness probe, the default state is Success.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">readinessProbe</span>:
-  <span style="color:#66d9ef">exec</span>:
-    <span style="color:#66d9ef">command</span>:
-      - cat
-      - /tmp/health
-  <span style="color:#66d9ef">initialDelaySeconds</span>: <span style="color:#ae81ff">5</span>
-  <span style="color:#66d9ef">periodSeconds</span>: <span style="color:#ae81ff">5</span></code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">readinessProbe</span>:
+  <span style="color:#f92672">exec</span>:
+    <span style="color:#f92672">command</span>:
+      - <span style="color:#ae81ff">cat</span>
+      - <span style="color:#ae81ff">/tmp/health</span>
+  <span style="color:#f92672">initialDelaySeconds</span>: <span style="color:#ae81ff">5</span>
+  <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">5</span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-9" class="outline-4">
@@ -352,17 +354,17 @@ Ports and livenessProbe
 Setting the port by name and value, this can be used to test the container via a liveness 
 probe uses an HTTP GET request.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  <span style="color:#66d9ef">ports</span>:
-  - <span style="color:#66d9ef">name</span>: liveness-port
-    <span style="color:#66d9ef">containerPort</span>: <span style="color:#ae81ff">8080</span>
-    <span style="color:#66d9ef">hostPort</span>: <span style="color:#ae81ff">8080</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  <span style="color:#f92672">ports</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">liveness-port</span>
+    <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">8080</span>
+    <span style="color:#f92672">hostPort</span>: <span style="color:#ae81ff">8080</span>
 
-  <span style="color:#66d9ef">livenessProbe</span>:
-    <span style="color:#66d9ef">httpGet</span>:
-      <span style="color:#66d9ef">path</span>: /healthz
-      <span style="color:#66d9ef">port</span>: liveness-port
-    <span style="color:#66d9ef">failureThreshold</span>: <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">periodSeconds</span>: <span style="color:#ae81ff">10</span></code></pre></div></p>
+  <span style="color:#f92672">livenessProbe</span>:
+    <span style="color:#f92672">httpGet</span>:
+      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/healthz</span>
+      <span style="color:#f92672">port</span>: <span style="color:#ae81ff">liveness-port</span>
+    <span style="color:#f92672">failureThreshold</span>: <span style="color:#ae81ff">1</span>
+    <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">10</span></code></pre></div></p>
 </div>
 </div>
 </div>
@@ -389,20 +391,20 @@ ConfigMaps
 <p>
 Set the configMapRef, for a regular environment variable is possible to use env: - name, value.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: Pod
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: dapi-test-pod
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">containers</span>:
-    - <span style="color:#66d9ef">name</span>: test-container
-      <span style="color:#66d9ef">image</span>: k8s.gcr.io/busybox
-      <span style="color:#66d9ef">command</span>: [ <span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;env&#34;</span> ]
-      <span style="color:#66d9ef">envFrom</span>:
-      - <span style="color:#66d9ef">configMapRef</span>:
-          <span style="color:#66d9ef">name</span>: special-config
-  <span style="color:#66d9ef">restartPolicy</span>: Never
-kubectl logs pod</code></pre></div></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">dapi-test-pod</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">test-container</span>
+      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">k8s.gcr.io/busybox</span>
+      <span style="color:#f92672">command</span>: [ <span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;env&#34;</span> ]
+      <span style="color:#f92672">envFrom</span>:
+      - <span style="color:#f92672">configMapRef</span>:
+          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">special-config</span>
+  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
+<span style="color:#ae81ff">kubectl logs pod</span></code></pre></div></p>
 <p>
 Create the configmap and run the pod.</p>
 <p>
@@ -448,22 +450,22 @@ Each container of a pod can specify one or more of the following:</p>
 </ul>
 <p>Creating a test pod with correct limits for CPU.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
-<span style="color:#66d9ef">kind</span>: Pod
-<span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: cpu-demo
-  <span style="color:#66d9ef">namespace</span>: cpu-example
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">containers</span>:
-  - <span style="color:#66d9ef">name</span>: cpu-demo-ctr
-    <span style="color:#66d9ef">image</span>: vish/stress
-    <span style="color:#66d9ef">resources</span>:
-      <span style="color:#66d9ef">limits</span>:
-        <span style="color:#66d9ef">cpu</span>: <span style="color:#e6db74">&#34;1&#34;</span>
-      <span style="color:#66d9ef">requests</span>:
-        <span style="color:#66d9ef">cpu</span>: <span style="color:#e6db74">&#34;0.5&#34;</span>
-    <span style="color:#66d9ef">args</span>:
-    - -cpus
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cpu-demo</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">cpu-example</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">containers</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cpu-demo-ctr</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">vish/stress</span>
+    <span style="color:#f92672">resources</span>:
+      <span style="color:#f92672">limits</span>:
+        <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;1&#34;</span>
+      <span style="color:#f92672">requests</span>:
+        <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;0.5&#34;</span>
+    <span style="color:#f92672">args</span>:
+    - -<span style="color:#ae81ff">cpus</span>
     - <span style="color:#e6db74">&#34;2&#34;</span></code></pre></div></p>
 <p>
 Check the consume of the resource in the node.</p>
@@ -590,7 +592,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

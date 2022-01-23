@@ -6,7 +6,7 @@
     
     <title>Ecto vs. Django ORM | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -348,17 +348,17 @@ As you can see phoenix created the models, a unit test file and a migration file
 <p>
 We have created a one-to-one relationship, so you can see a belongs_to.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir">defmodule <span style="color:#a6e22e">App2.Music</span> do
-  use <span style="color:#a6e22e">App2.Web</span>, <span style="color:#e6db74">:model</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir"><span style="color:#66d9ef">defmodule</span> <span style="color:#a6e22e">App2.Music</span> <span style="color:#66d9ef">do</span>
+  <span style="color:#f92672">use</span> <span style="color:#a6e22e">App2.Web</span>, <span style="color:#e6db74">:model</span>
 
-  schema <span style="color:#e6db74">&#34;music&#34;</span> do
+  schema <span style="color:#e6db74">&#34;music&#34;</span> <span style="color:#66d9ef">do</span>
     field <span style="color:#e6db74">:name</span>, <span style="color:#e6db74">:string</span>
     belongs_to <span style="color:#e6db74">:album</span>, <span style="color:#a6e22e">App2.Album</span>
 
     timestamps
-  end
+  <span style="color:#66d9ef">end</span>
   ...
-end</code></pre></div></p>
+<span style="color:#66d9ef">end</span></code></pre></div></p>
 <p>
 Run your migrate command to create the tables on the database, there&#39;s lots of boilerplate code :</p>
 <p>
@@ -438,7 +438,7 @@ iex(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">&gt;</span>
 
 <span style="color:#75715e"># Fetch all</span>
 
-iex(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">App2.Album.Repo.All</span>(<span style="color:#a6e22e">App3.Album</span>) <span style="color:#f92672">|&gt;</span> <span style="color:#a6e22e">Enum</span><span style="color:#f92672">.</span>map(fn(x) <span style="color:#f92672">-&gt;</span> x<span style="color:#f92672">.</span>name end)
+iex(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">App2.Album.Repo.All</span>(<span style="color:#a6e22e">App3.Album</span>) <span style="color:#f92672">|&gt;</span> <span style="color:#a6e22e">Enum</span><span style="color:#f92672">.</span>map(<span style="color:#66d9ef">fn</span>(x) <span style="color:#f92672">-&gt;</span> x<span style="color:#f92672">.</span>name <span style="color:#66d9ef">end</span>)
 [<span style="color:#e6db74">&#34;new_album&#34;</span>]
 
 <span style="color:#75715e"># Create with one-to-one relationship</span>
@@ -448,7 +448,7 @@ iex(<span style="color:#ae81ff">3</span>)<span style="color:#f92672">&gt;</span>
 
 <span style="color:#75715e"># Filter by LIKE</span>
 
-iex(<span style="color:#ae81ff">4</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">App2.Repo</span><span style="color:#f92672">.</span>all(from p in <span style="color:#a6e22e">App2.Album</span>, <span style="color:#e6db74">where</span>: like(p<span style="color:#f92672">.</span>name, <span style="color:#e6db74">~s&#39;%new%&#39;</span>) , <span style="color:#e6db74">select</span>: p, <span style="color:#e6db74">order_by</span>: p<span style="color:#f92672">.</span>id)
+iex(<span style="color:#ae81ff">4</span>)<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">App2.Repo</span><span style="color:#f92672">.</span>all(from p <span style="color:#f92672">in</span> <span style="color:#a6e22e">App2.Album</span>, <span style="color:#e6db74">where</span>: like(p<span style="color:#f92672">.</span>name, <span style="color:#e6db74">~s&#39;%new%&#39;</span>) , <span style="color:#e6db74">select</span>: p, <span style="color:#e6db74">order_by</span>: p<span style="color:#f92672">.</span>id)
 <span style="color:#75715e"># SELECT a0.&#34;id&#34;, a0.&#34;name&#34;, a0.&#34;producer&#34;, a0.&#34;inserted_at&#34;, a0.&#34;updated_at&#34;</span>
 <span style="color:#75715e"># FROM &#34;album&#34; AS a0 WHERE (a0.&#34;name&#34; LIKE &#39;%new%&#39;) ORDER BY a0.&#34;id&#34;</span>
 
@@ -580,7 +580,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

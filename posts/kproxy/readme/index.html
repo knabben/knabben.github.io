@@ -6,7 +6,7 @@
     
     <title>Kube-proxy ClusterIP | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -295,7 +295,8 @@ our service and other paths, a nice diagram around from StackRox [1], shows the 
 		<span style="color:#a6e22e">masqRule</span> = append(<span style="color:#a6e22e">masqRule</span>, <span style="color:#e6db74">&#34;--random-fully&#34;</span>)
 	}
 	<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">masqRule</span><span style="color:#f92672">...</span>)
-<span style="color:#f92672">...</span></code></pre></div>
+<span style="color:#f92672">...</span>
+</code></pre></div>
 
 <p>This part is important the packet can be marked as <code>KUBE-MARK-MASQ</code> or <code>KUBE-MARK-DROP</code>, a SOURCE NAT Masquerade can happen in
 the <code>KUBE-POSTROUTING</code> IF the packet comes from outside the cluster (not from a Pod), meaning the IP source
@@ -321,7 +322,8 @@ Chain KUBE-SERVICES (2 references)
 </span><span style="color:#75715e"></span>		} <span style="color:#66d9ef">else</span> {
 		    <span style="color:#f92672">-</span><span style="color:#a6e22e">j</span> <span style="color:#a6e22e">REJECT</span>
 		}
-	}</code></pre></div>
+	}
+</code></pre></div>
 
 <p>Checking this Chain in particular a few things to consider, 1) the KUBE-MARK-MASQ tag (External SNAT applied) when
 the traffic comes from outside the cluster, 2) another JUMP to <code>KUBE-SEP-HUXRPHBUO34UVPEF</code></p>
@@ -352,7 +354,8 @@ Chain KUBE-SVC-2CMXP7HKUVJN7L6M (1 references)
 	}
 	<span style="color:#75715e">// The final (or only if n == 1) rule is a guaranteed match.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>, <span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">endpointChain</span>))
-	<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)</code></pre></div>
+	<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)
+</code></pre></div>
 <pre><code>// -A KUBE-SVC-2CMXP7HKUVJN7L6M -m comment --comment default/nginx -j KUBE-SEP-HUXRPHBUO34UVPEF</code></pre>
 <p>Finally, the KUBE-SEP chain finalized with 1) Ensure the SNAT happens, 2) Finally a DNAT is created, translating
 the CluserIP address to the final POD IP address, iptables will ensure a load balancing with probabilities
@@ -369,11 +372,13 @@ pkts bytes target       prot opt in     out     source               destination
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// Handle traffic that loops back to the originator with SNAT.
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, append(<span style="color:#a6e22e">args</span>,
 	<span style="color:#e6db74">&#34;-s&#34;</span>, <span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">ToCIDR</span>(<span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">ParseIP</span>(<span style="color:#a6e22e">epIP</span>)),
-	<span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">KubeMarkMasqChain</span>))<span style="color:#f92672">...</span>)</code></pre></div>
+	<span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">KubeMarkMasqChain</span>))<span style="color:#f92672">...</span>)
+</code></pre></div>
 <pre><code>// -A KUBE-SEP-HUXRPHBUO34UVPEF -m comment --comment default/nginx -s 10.244.2.2/32 -j KUBE-MARK-MASQ</code></pre>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// DNAT to final destination.
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>, <span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#a6e22e">protocol</span>, <span style="color:#e6db74">&#34;-p&#34;</span>, <span style="color:#a6e22e">protocol</span>, <span style="color:#e6db74">&#34;-j&#34;</span>, <span style="color:#e6db74">&#34;DNAT&#34;</span>, <span style="color:#e6db74">&#34;--to-destination&#34;</span>, <span style="color:#a6e22e">endpoints</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Endpoint</span>)
-<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)</code></pre></div>
+<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)
+</code></pre></div>
 <pre><code>// -A KUBE-SEP-HUXRPHBUO34UVPEF -m comment --comment default/nginx -m tcp -p tcp -j DNAT --to-destination 10.244.2.2:80</code></pre>
 <h2 id="references">References</h2>
 
@@ -444,7 +449,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 

@@ -6,7 +6,7 @@
     
     <title>Golang vs. Python | knabben</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.74.3" />
+    <meta name="generator" content="Hugo 0.80.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -263,7 +263,8 @@ Lets try the similar stuff on Go, first thing to notice is the lack of built-in 
 
     <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">file</span>))
     <span style="color:#a6e22e">read_csv</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">r</span>)
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 Now that we have our POST parameters lets make the request.</p>
 </div>
@@ -313,7 +314,8 @@ In go we have the same methods</p>
         <span style="color:#a6e22e">duration</span> = append(<span style="color:#a6e22e">duration</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>))
     }
     <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">duration</span>)
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-4" class="outline-3">
@@ -353,7 +355,8 @@ Now lets say we need to test it on a Windows x86 environment, you will need to i
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">GOOS</span>=<span style="color:#a6e22e">windows</span> <span style="color:#a6e22e">GOARCH</span>=<span style="color:#ae81ff">386</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">v</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span>
 <span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">file</span> <span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>
-<span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>: <span style="color:#a6e22e">PE32</span> <span style="color:#a6e22e">executable</span> (<span style="color:#a6e22e">console</span>) <span style="color:#a6e22e">Intel</span> <span style="color:#ae81ff">80386</span> (<span style="color:#a6e22e">stripped</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">external</span> <span style="color:#a6e22e">PDB</span>), <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">MS</span> <span style="color:#a6e22e">Windows</span></code></pre></div></p>
+<span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>: <span style="color:#a6e22e">PE32</span> <span style="color:#a6e22e">executable</span> (<span style="color:#a6e22e">console</span>) <span style="color:#a6e22e">Intel</span> <span style="color:#ae81ff">80386</span> (<span style="color:#a6e22e">stripped</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">external</span> <span style="color:#a6e22e">PDB</span>), <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">MS</span> <span style="color:#a6e22e">Windows</span>
+</code></pre></div></p>
 <p>
 The deployment of the code is a statically linked binary on the right folder, you can achieve something similar with Twitter PeX [1]</p>
 </div>
@@ -470,7 +473,8 @@ Instead of a loop event, go have the idea of Goroutines and channels to communic
         <span style="color:#a6e22e">first</span> = <span style="color:#66d9ef">false</span>
     }
     <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">lines</span>, <span style="color:#a6e22e">ch</span>)
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 <p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span> <span style="color:#f92672">--</span><span style="color:#a6e22e">csv</span> <span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">csv</span>
 <span style="color:#ae81ff">1.008839797</span><span style="color:#a6e22e">s</span>
@@ -478,7 +482,8 @@ Instead of a loop event, go have the idea of Goroutines and channels to communic
 <span style="color:#ae81ff">1.010747957</span><span style="color:#a6e22e">s</span>
 <span style="color:#ae81ff">1.011410825</span><span style="color:#a6e22e">s</span>
 <span style="color:#ae81ff">1.012543644</span><span style="color:#a6e22e">s</span>
-<span style="color:#a6e22e">Mean</span>:  <span style="color:#ae81ff">1.010714299</span><span style="color:#a6e22e">s</span></code></pre></div></p>
+<span style="color:#a6e22e">Mean</span>:  <span style="color:#ae81ff">1.010714299</span><span style="color:#a6e22e">s</span>
+</code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-8" class="outline-3">
@@ -601,7 +606,7 @@ if (!doNotTrack) {
 <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://thefind.live/" >
-    &copy; 2021 - Amim Knabben
+    &copy; 2022 - Amim Knabben
   </a>
     <div>
 
