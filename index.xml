@@ -6,7 +6,18 @@
     <description>Recent content on knabben</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://thefind.live/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://thefind.live/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cluster API Provider for Azure (CAPZ)</title>
+      <link>http://thefind.live/posts/capz/readme/</link>
+      <pubDate>Sun, 20 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://thefind.live/posts/capz/readme/</guid>
+      <description>Introduction From the official documentation [1] we have the original definition of Cluster API, it brings a declarative, Kubernetes-style APIs to cluster creation, configuration and management. The API itself is shared across multiple cloud providers allowing for true Azure hybrid deployments of Kubernetes.
+Target Cluster Diagram This cluster was generated using the make create-workload-cluster from the CAPZ repository.
+The diagram describes the CRDs [2] and objects created related to this Workload cluster inside Azure.</description>
+    </item>
+    
     <item>
       <title>KPNG Windows Userspace</title>
       <link>http://thefind.live/posts/kpng-proxy/readme/</link>

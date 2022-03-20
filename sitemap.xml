@@ -3,17 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://thefind.live/</loc>
-    <lastmod>2022-01-22T00:00:00+00:00</lastmod>
+    <loc>http://thefind.live/posts/capz/readme/</loc>
+    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://thefind.live/posts/kpng-proxy/readme/</loc>
-    <lastmod>2022-01-22T00:00:00+00:00</lastmod>
+    <loc>http://thefind.live/</loc>
+    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://thefind.live/posts/</loc>
+    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://thefind.live/posts/kpng-proxy/readme/</loc>
     <lastmod>2022-01-22T00:00:00+00:00</lastmod>
   </url>
   

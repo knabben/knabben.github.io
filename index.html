@@ -36,7 +36,7 @@
 <meta property="og:description" content="sdaf" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://thefind.live/" />
-<meta property="og:updated_time" content="2022-01-22T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-03-20T00:00:00+00:00" />
 <meta itemprop="name" content="knabben">
 <meta itemprop="description" content="sdaf">
 <meta name="twitter:card" content="summary"/>
@@ -142,6 +142,27 @@
       <section class="w-100" style="display: table;">
         <div class="w-100" style="display: table-row;">
           <div style="width: 90%; display: table-cell;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden">
+  
+  <div class="f6">
+    March 20, 2022
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="http://thefind.live/posts/capz/readme/" class="link black dim">
+      Cluster API Provider for Azure (CAPZ)
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction From the official documentation [1] we have the original definition of Cluster API, it brings a declarative, Kubernetes-style APIs to cluster creation, configuration and management. The API itself is shared across multiple cloud providers allowing for true Azure hybrid deployments of Kubernetes.
+Target Cluster Diagram This cluster was generated using the make create-workload-cluster from the CAPZ repository.
+The diagram describes the CRDs [2] and objects created related to this Workload cluster inside Azure.
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden">
@@ -324,28 +345,6 @@ sudo kubeadm init --pod-network-cidr=192.
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden">
-  
-  <div class="f6">
-    December 27, 2020
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="http://thefind.live/posts/netpol/readme/" class="link black dim">
-      Network Policy E2E test suite
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Network policy This post documents a few steps to test the E2E framework using the Kind cluster with different CNIs, giving the developer some good tooling for debugging and quick test replication.
-Use this script to bring a Kind cluster with a specific CNI setup.
-Finding the config parameters In the ~/.kube/config you can find the Cluster sections host, use the IP and Port to start the tests.
-apiVersion: v1 clusters: - cluster: certificate-authority-data: .
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -355,6 +354,12 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://thefind.live/posts/netpol/readme/" class="link black dim">
+              Network Policy E2E test suite
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-dynamic/" class="link black dim">
@@ -371,12 +376,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://thefind.live/posts/kube-net/" class="link black dim">
               Kubernetes Networking 101
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://thefind.live/posts/kube-depl/" class="link black dim">
-              Kubernetes Deployment Workloads
             </a>
           </h2>
         
