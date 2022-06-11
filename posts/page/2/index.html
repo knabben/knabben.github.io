@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://knabben.github.io/posts/" />
-<meta property="og:updated_time" content="2022-03-20T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-06-10T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -117,6 +117,26 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://knabben.github.io/posts/netpol-win/readme/" class="link black dim">
+        Kubernetes Windows Nodes
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction This post is a walkthrough on using a Windows node to run network policies with agnhost:2.26 mappings in order to understand how suitable the netpol suite is ready for it.
+https://github.com/kubernetes/kubernetes/tree/master/test/e2e/network/netpol
+Setting up the cluster Our master needs to be on Linux, so a GCP Vm with COS is being used, following up the quickstart on this node:
+https://docs.projectcalico.org/getting-started/kubernetes/quickstart
+Start the cluster in the following subnet with Kubeadm:
+sudo kubeadm init --pod-network-cidr=192.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -268,26 +288,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
  Or from source:
  $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1
   First steps   To create a new cluster you must run:
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://knabben.github.io/posts/sawtooth-cheatsheet/" class="link black dim">
-        Sawtooth Cheatsheet
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
- $ vagrant init ubuntu/xenial64 $ vagrant up
- After the box is up we need to add the correct repository:
- $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update
- Install the package:
- $ sudo apt install -y sawtooth
     </div>
   </div>
 </div>

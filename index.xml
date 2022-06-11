@@ -6,7 +6,18 @@
     <description>Recent content on knabben</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 10 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Border Gateway Protocol (BGP) and Kubernetes</title>
+      <link>https://knabben.github.io/posts/bgp/readme/</link>
+      <pubDate>Fri, 10 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://knabben.github.io/posts/bgp/readme/</guid>
+      <description>Introduction On this post I want to write a bit about Border Gateway Protocol, Calico and Kubernetes, in the examples we are going to see an use case with OpenBSD/openbgp and after Project Calico with BGP mode to illustrate how this protocol can be used in the CNI to provide automatic routing across nodes.
+After reading leave comments in the end and share the post. Nuff said.
+BGP protocol The RFC of BGP-4 is pretty clear in the abstract about the primary function of BGP [1] being is to exchange network reachability information with other BGP systems.</description>
+    </item>
+    
     <item>
       <title>Cluster API Provider for Azure (CAPZ)</title>
       <link>https://knabben.github.io/posts/capz/readme/</link>
