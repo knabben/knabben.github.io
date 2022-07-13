@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://knabben.github.io/posts/" />
-<meta property="og:updated_time" content="2022-06-10T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-07-12T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -117,6 +117,21 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://knabben.github.io/posts/capa/readme/" class="link black dim">
+        Cluster API Provider for AWS (CAPA)
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction The Cluster API is a Kubernetes project to bring declarative, Kubernetes-style APIs to cluster creation, configuration, and management. You can create new workload clusters from a management cluster in a descritive way, the ClusterAPI controllers provide the initial management cluster setup and a tool called clusterctl to manage them. Workloads clusters are specilized controllers on separated projects called providers. Each cloud provider will have it's own controllers and ways to build the workload cluster obeying the rules and logic defined in the spec and workflow diagrams here [2].
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
@@ -256,22 +271,6 @@ A standard called CNI (Container Network Interface) was created, to formalize an
       Introduction On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the --mode=iptables and a few debugging commands to illustrate all the packet paths and endpoints. There's a simple cluster with 3 nodes on v1.21.1 created with Kind and kindnet as CNI.
 Setup These are the following ips:
 $ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME cluster-control-plane Ready control-plane,master 26h v1.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://knabben.github.io/posts/istio/readme/" class="link black dim">
-        Istio drill down - Part I
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction This post is a review and notes of some Istio tutorials around with the latest version, again the base cluster is created by kind and is being used as a CNI.
-NAMESPACE NAME READY STATUS RESTARTS AGE kube-system calico-kube-controllers-5c6f6b67db-8rx2s 1/1 Running 0 4h26m kube-system calico-node-9fccq 1/1 Running 0 4h26m kube-system calico-node-b77sb 1/1 Running 0 4h26m kube-system calico-node-jf4z2 1/1 Running 0 4h26m kube-system calico-node-sl9qd 1/1 Running 0 4h26m kube-system coredns-74ff55c5b-dbwpl 1/1 Running 0 4h27m kube-system coredns-74ff55c5b-gpvz7 1/1 Running 0 4h27m kube-system etcd-calico-control-plane 1/1 Running 0 4h27m kube-system kube-apiserver-calico-control-plane 1/1 Running 0 4h27m kube-system kube-controller-manager-calico-control-plane 1/1 Running 0 4h27m kube-system kube-proxy-cc8sr 1/1 Running 0 4h27m kube-system kube-proxy-gbkl6 1/1 Running 0 4h27m kube-system kube-proxy-j2blv 1/1 Running 0 4h27m kube-system kube-proxy-jp9xm 1/1 Running 0 4h27m kube-system kube-scheduler-calico-control-plane 1/1 Running 0 4h27m local-path-storage local-path-provisioner-78776bfc44-m7kpq 1/1 Running 0 4h27m Installation This workshop one is made for GCP, but we are using a local cluster with Kind, Bypass old installation methods, and use the latest installation on v1.
     </div>
   </div>
 </div>

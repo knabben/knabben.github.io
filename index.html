@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://knabben.github.io/" />
-<meta property="og:updated_time" content="2022-06-10T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-07-12T00:00:00+00:00" />
 <meta itemprop="name" content="knabben">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -135,6 +135,25 @@
       <section class="w-100" style="display: table;">
         <div class="w-90" style="vertical-align:top; display: table-cell;">
           <div style="width: 100%;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
+  
+  <div class="f6">
+    July 12, 2022
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="https://knabben.github.io/posts/capa/readme/" class="link black dim">
+      Cluster API Provider for AWS (CAPA)
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction The Cluster API is a Kubernetes project to bring declarative, Kubernetes-style APIs to cluster creation, configuration, and management. You can create new workload clusters from a management cluster in a descritive way, the ClusterAPI controllers provide the initial management cluster setup and a tool called clusterctl to manage them. Workloads clusters are specilized controllers on separated projects called providers. Each cloud provider will have it's own controllers and ways to build the workload cluster obeying the rules and logic defined in the spec and workflow diagrams here [2].
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
@@ -315,26 +334,6 @@ $ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
-  
-  <div class="f6">
-    March 6, 2021
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="https://knabben.github.io/posts/istio/readme/" class="link black dim">
-      Istio drill down - Part I
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Introduction This post is a review and notes of some Istio tutorials around with the latest version, again the base cluster is created by kind and is being used as a CNI.
-NAMESPACE NAME READY STATUS RESTARTS AGE kube-system calico-kube-controllers-5c6f6b67db-8rx2s 1/1 Running 0 4h26m kube-system calico-node-9fccq 1/1 Running 0 4h26m kube-system calico-node-b77sb 1/1 Running 0 4h26m kube-system calico-node-jf4z2 1/1 Running 0 4h26m kube-system calico-node-sl9qd 1/1 Running 0 4h26m kube-system coredns-74ff55c5b-dbwpl 1/1 Running 0 4h27m kube-system coredns-74ff55c5b-gpvz7 1/1 Running 0 4h27m kube-system etcd-calico-control-plane 1/1 Running 0 4h27m kube-system kube-apiserver-calico-control-plane 1/1 Running 0 4h27m kube-system kube-controller-manager-calico-control-plane 1/1 Running 0 4h27m kube-system kube-proxy-cc8sr 1/1 Running 0 4h27m kube-system kube-proxy-gbkl6 1/1 Running 0 4h27m kube-system kube-proxy-j2blv 1/1 Running 0 4h27m kube-system kube-proxy-jp9xm 1/1 Running 0 4h27m kube-system kube-scheduler-calico-control-plane 1/1 Running 0 4h27m local-path-storage local-path-provisioner-78776bfc44-m7kpq 1/1 Running 0 4h27m Installation This workshop one is made for GCP, but we are using a local cluster with Kind, Bypass old installation methods, and use the latest installation on v1.
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -358,6 +357,12 @@ NAMESPACE NAME READY STATUS RESTARTS AGE kube-system calico-kube-controllers-5c6
         
         
           <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="https://knabben.github.io/posts/istio/readme/" class="link black dim">
+              Istio drill down - Part I
+            </a>
+          </h2>
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://knabben.github.io/posts/netpol-win/readme/" class="link black dim">
               Kubernetes Windows Nodes
             </a>
@@ -372,12 +377,6 @@ NAMESPACE NAME READY STATUS RESTARTS AGE kube-system calico-kube-controllers-5c6
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://knabben.github.io/posts/kube-dynamic/" class="link black dim">
               Kubelet Dynamic Configuration
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://knabben.github.io/posts/kube-debug/" class="link black dim">
-              Kubelet Debugging Session
             </a>
           </h2>
         

@@ -6,7 +6,16 @@
     <description>Recent content in Posts on knabben</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cluster API Provider for AWS (CAPA)</title>
+      <link>https://knabben.github.io/posts/capa/readme/</link>
+      <pubDate>Tue, 12 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://knabben.github.io/posts/capa/readme/</guid>
+      <description>Introduction The Cluster API is a Kubernetes project to bring declarative, Kubernetes-style APIs to cluster creation, configuration, and management. You can create new workload clusters from a management cluster in a descritive way, the ClusterAPI controllers provide the initial management cluster setup and a tool called clusterctl to manage them. Workloads clusters are specilized controllers on separated projects called providers. Each cloud provider will have it&#39;s own controllers and ways to build the workload cluster obeying the rules and logic defined in the spec and workflow diagrams here [2].</description>
+    </item>
+    
     <item>
       <title>Border Gateway Protocol (BGP) and Kubernetes</title>
       <link>https://knabben.github.io/posts/bgp/readme/</link>
