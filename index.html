@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://knabben.github.io/" />
-<meta property="og:updated_time" content="2022-07-12T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-07-30T00:00:00+00:00" />
 <meta itemprop="name" content="knabben">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -135,6 +135,27 @@
       <section class="w-100" style="display: table;">
         <div class="w-90" style="vertical-align:top; display: table-cell;">
           <div style="width: 100%;">
+            
+            <div>
+              <div class="mb3 pa4 mid-gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
+  
+  <div class="f6">
+    July 30, 2022
+  </div>
+  
+  <h1 class="f3 near-black">
+    <a href="https://knabben.github.io/posts/cc/readme/" class="link black dim">
+      Hybrid nodes with ClusterClass
+    </a>
+  </h1>
+  <div class="nested-links f5 lh-copy nested-copy-line-height">
+    Introduction This post will be quick one to show how build a hybrid cluster using ClusterClass.
+The idea behind ClusterClass is simple: define the shape of your cluster once, and reuse it many times, abstracting the complexities and the internals of a Kubernetes cluster away. [1]
+From the original CAEP: Cluster API does not expose a native way to provision multiple clusters of the same configuration. The ClusterClass object is supposed to act as a collection of template references which can be used to create managed topologies.
+  </div>
+</div>
+
+            </div>
             
             <div>
               <div class="mb3 pa4 mid-gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
@@ -313,27 +334,6 @@ A standard called CNI (Container Network Interface) was created, to formalize an
 
             </div>
             
-            <div>
-              <div class="mb3 pa4 mid-gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
-  
-  <div class="f6">
-    June 14, 2021
-  </div>
-  
-  <h1 class="f3 near-black">
-    <a href="https://knabben.github.io/posts/kproxy/readme/" class="link black dim">
-      Kube-proxy ClusterIP
-    </a>
-  </h1>
-  <div class="nested-links f5 lh-copy nested-copy-line-height">
-    Introduction On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the --mode=iptables and a few debugging commands to illustrate all the packet paths and endpoints. There's a simple cluster with 3 nodes on v1.21.1 created with Kind and kindnet as CNI.
-Setup These are the following ips:
-$ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME cluster-control-plane Ready control-plane,master 26h v1.
-  </div>
-</div>
-
-            </div>
-            
           </div>
         </div>
 
@@ -358,6 +358,12 @@ $ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL
         
         
           <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="https://knabben.github.io/posts/kproxy/readme/" class="link black dim">
+              Kube-proxy ClusterIP
+            </a>
+          </h2>
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://knabben.github.io/posts/istio/readme/" class="link black dim">
               Istio drill down - Part I
             </a>
@@ -372,12 +378,6 @@ $ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://knabben.github.io/posts/netpol/readme/" class="link black dim">
               Network Policy E2E test suite
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://knabben.github.io/posts/kube-dynamic/" class="link black dim">
-              Kubelet Dynamic Configuration
             </a>
           </h2>
         

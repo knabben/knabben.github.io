@@ -6,7 +6,18 @@
     <description>Recent content on knabben</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 30 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hybrid nodes with ClusterClass</title>
+      <link>https://knabben.github.io/posts/cc/readme/</link>
+      <pubDate>Sat, 30 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://knabben.github.io/posts/cc/readme/</guid>
+      <description>Introduction This post will be quick one to show how build a hybrid cluster using ClusterClass.
+The idea behind ClusterClass is simple: define the shape of your cluster once, and reuse it many times, abstracting the complexities and the internals of a Kubernetes cluster away. [1]
+From the original CAEP: Cluster API does not expose a native way to provision multiple clusters of the same configuration. The ClusterClass object is supposed to act as a collection of template references which can be used to create managed topologies.</description>
+    </item>
+    
     <item>
       <title>Cluster API Provider for AWS (CAPA)</title>
       <link>https://knabben.github.io/posts/capa/readme/</link>

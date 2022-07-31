@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://knabben.github.io/posts/" />
-<meta property="og:updated_time" content="2022-07-12T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-07-30T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -117,6 +117,23 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://knabben.github.io/posts/cc/readme/" class="link black dim">
+        Hybrid nodes with ClusterClass
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction This post will be quick one to show how build a hybrid cluster using ClusterClass.
+The idea behind ClusterClass is simple: define the shape of your cluster once, and reuse it many times, abstracting the complexities and the internals of a Kubernetes cluster away. [1]
+From the original CAEP: Cluster API does not expose a native way to provision multiple clusters of the same configuration. The ClusterClass object is supposed to act as a collection of template references which can be used to create managed topologies.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
@@ -254,23 +271,6 @@ The Kubernetes community have the Windows Special Interest Group [2], focusing o
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introduction With the advance of Containers, the network segmentation was required at level of the isolated applications, logically it's another copy of the network stack, with it's own routes, firewall rules and net devices. By convention these named network namespaces (ns) is an object at /var/run/netns/ as we are going to see in the sequence. A few tools to manage netns at user-space level resides on [1].
 A standard called CNI (Container Network Interface) was created, to formalize and create a baseline that consists of a specification and libraries for writing plugins to configure network interfaces in Linux containers, along with a number of supported plugins.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://knabben.github.io/posts/kproxy/readme/" class="link black dim">
-        Kube-proxy ClusterIP
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the --mode=iptables and a few debugging commands to illustrate all the packet paths and endpoints. There's a simple cluster with 3 nodes on v1.21.1 created with Kind and kindnet as CNI.
-Setup These are the following ips:
-$ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME cluster-control-plane Ready control-plane,master 26h v1.
     </div>
   </div>
 </div>

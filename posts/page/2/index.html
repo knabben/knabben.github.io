@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://knabben.github.io/posts/" />
-<meta property="og:updated_time" content="2022-07-12T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-07-30T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -117,6 +117,23 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://knabben.github.io/posts/kproxy/readme/" class="link black dim">
+        Kube-proxy ClusterIP
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the --mode=iptables and a few debugging commands to illustrate all the packet paths and endpoints. There's a simple cluster with 3 nodes on v1.21.1 created with Kind and kindnet as CNI.
+Setup These are the following ips:
+$ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME cluster-control-plane Ready control-plane,master 26h v1.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
@@ -266,23 +283,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Introduction   Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
   POD diagram    Pod struct
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://knabben.github.io/posts/kube-ctl/" class="link black dim">
-        Kubectl Walkthrough
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
- The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
-  Kubectl debugging and API server   Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.
     </div>
   </div>
 </div>
