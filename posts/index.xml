@@ -6,19 +6,7 @@
     <description>Recent content in Posts on knabben</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>SAP-CCO - Design for Organizational Complexity</title>
-      <link>https://knabben.github.io/posts/awsprof/readme/</link>
-      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://knabben.github.io/posts/awsprof/readme/</guid>
-      <description>Domain 1: Design for Organizational Complexity  Percentage: 12.5%  1 Determine cross-account authentication and access strategy for complex organizations.  Analyze the organizational structure  Evaluate the current authentication infrastructure  Analyze the AWS resources at an account level  Determine an auditing strategy for authentication and access
-Identity &amp;amp; Federation IAM - Roles, Groups, Policies (Resources, types) STS to assume role
-Identity Federation SAML 2.0 federation ADFS
-Web Identity Federation Cognito Microsoft AD / AD Federation services - Active Directory integration</description>
-    </item>
-    
+    <lastBuildDate>Sat, 30 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://knabben.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hybrid nodes with ClusterClass</title>
       <link>https://knabben.github.io/posts/cc/readme/</link>
