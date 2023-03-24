@@ -6,16 +6,14 @@
     <description>Recent content on OPSSEC.in</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Multi AZ on Kubernetes and vSphere</title>
       <link>https://opssec.in/posts/multiaz/readme/</link>
-      <pubDate>Wed, 22 Feb 2023 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 22 Mar 2023 00:00:00 +0000</pubDate>
       
       <guid>https://opssec.in/posts/multiaz/readme/</guid>
-      <description>Introduction On this post I want to write a bit about Border Gateway Protocol, Calico and Kubernetes, in the examples we are going to see an use case with OpenBSD/openbgp and after Project Calico with BGP mode to illustrate how this protocol can be used in the CNI to provide automatic routing across nodes.
-After reading leave comments in the end and share the post. Nuff said.
-Conclusion Listening   References </description>
+      <description>Introduction Multi-AZ is a concept very well known on public clouds, its a technique used to provide high availability for services. On AWS they are distinct locations within an AWS region that re engineered to be isolated from failures in other AZ. On vSphere and on-premises, the datacenter is normally on one building only, and the AZ can be defined by server racks instead for exmaple. On this blog post I will cover a few notes on how to use ClusterAPI vSphere and setup a Kubernetes cluster on a segmented infrastructure on vCenter.</description>
     </item>
     
     <item>
