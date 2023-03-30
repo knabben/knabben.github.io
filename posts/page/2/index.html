@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://opssec.in/posts/" />
-<meta property="og:updated_time" content="2023-03-22T00:00:00+00:00" />
+<meta property="og:updated_time" content="2023-03-30T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -120,6 +120,22 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://opssec.in/posts/vxlan-windows/readme/" class="link black dim">
+        Windows and Calico overlay networking
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction Windows are nowadays a must in a lot of multi-os clusters around companies, all big providers support the creation of Windows server machines and the support of containers in this OS is getting stronger on a daily basis [1].
+The Kubernetes community have the Windows Special Interest Group [2], focusing on workloads and scheduling support for these Windows nodes. As support tooling and sub-projects around the main SIGs on K8s, a few experimentations are born like the Dev-Tools [3].
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
@@ -270,22 +286,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       ReplicaSets   A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
  // ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://opssec.in/posts/kube-container/" class="link black dim">
-        Kubernetes Container API
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Container from PodSpec   The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
- // A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes.
     </div>
   </div>
 </div>

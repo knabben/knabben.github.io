@@ -6,7 +6,17 @@
     <description>Recent content on OPSSEC.in</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 30 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows Containers and .NET apps</title>
+      <link>https://opssec.in/posts/dotnet/readme/</link>
+      <pubDate>Thu, 30 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/posts/dotnet/readme/</guid>
+      <description>Introduction That&#39;s a common question, what kind of workloads can you run on Windows clusters? In this post we are going to check the possibilities and how to build and run these services on a Windows cluster. There&#39;s a plenty of examples on all languages and build process spread over the Internet. This document intends to enumerate and list them for a quick review and reference.
+To do your choice a few topics that can compare both technologies.</description>
+    </item>
+    
     <item>
       <title>Multi AZ on Kubernetes and vSphere</title>
       <link>https://opssec.in/posts/multiaz/readme/</link>

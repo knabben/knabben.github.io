@@ -3,17 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://opssec.in/posts/multiaz/readme/</loc>
-    <lastmod>2023-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://opssec.in/</loc>
-    <lastmod>2023-03-22T00:00:00+00:00</lastmod>
+    <lastmod>2023-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://opssec.in/posts/</loc>
+    <lastmod>2023-03-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://opssec.in/posts/dotnet/readme/</loc>
+    <lastmod>2023-03-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://opssec.in/posts/multiaz/readme/</loc>
     <lastmod>2023-03-22T00:00:00+00:00</lastmod>
   </url>
   
