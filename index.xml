@@ -6,7 +6,16 @@
     <description>Recent content on OPSSEC.in</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows CNI tracing and deep dive</title>
+      <link>https://opssec.in/posts/slow/readme/</link>
+      <pubDate>Thu, 06 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/posts/slow/readme/</guid>
+      <description>Introduction I have spent some time debugging a very interesting issue that was noticed in one Windows cluster, the network initialization of this cluster was having a delay of a few seconds before the external world communication starts. This post will explain the steps taken and the deep dive executed to find the root cause of the problem. A clear solution is not presented, but this can post can guide on debuggability of similar issues.</description>
+    </item>
+    
     <item>
       <title>Windows Containers and .NET apps</title>
       <link>https://opssec.in/posts/dotnet/readme/</link>

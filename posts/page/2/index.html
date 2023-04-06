@@ -36,7 +36,7 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://opssec.in/posts/" />
-<meta property="og:updated_time" content="2023-03-30T00:00:00+00:00" />
+<meta property="og:updated_time" content="2023-04-06T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="HTP and others BS">
 <meta name="twitter:card" content="summary"/>
@@ -120,6 +120,21 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://opssec.in/posts/winuserspace/readme/" class="link black dim">
+        Kube-proxy Winuserspace Mode
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Introduction This post will introduce and detail the windows userspace mode on kube-proxy, the code walkthrough provided here has the goal to clarify the event based architecture of kube-proxy, and bring attention to how this component watches and reacts for events happening on Services and Endpoints API objects. This component goal is to proxy and load-balance the traffic to a binded IP/PORT pair across different backend services. Read more about Kube-Proxy in the official docs [1].
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
@@ -275,22 +290,6 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
 </div>
 </div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden" style="padding-top: 1em; padding-bottom: 3em;">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://opssec.in/posts/kube-depl/" class="link black dim">
-        Kubernetes Deployment Workloads
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      ReplicaSets   A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
- // ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
-    </div>
-  </div>
-</div>
-</div>
-      
     </section>
 <ul class="pagination">
   <li class="page-item">
@@ -308,17 +307,17 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
   <li class="page-item">
     <a class="page-link" href="/posts/page/3/">3</a>
   </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/4/">4</a>
+  <li class="page-item disabled">
+    <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
   </li>
   <li class="page-item">
-    <a class="page-link" href="/posts/page/5/">5</a>
+    <a class="page-link" href="/posts/page/6/">6</a>
   </li>
   <li class="page-item">
     <a href="/posts/page/3/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
   </li>
   <li class="page-item">
-    <a href="/posts/page/5/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    <a href="/posts/page/6/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
   </li>
 </ul>
 
