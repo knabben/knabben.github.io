@@ -6,7 +6,7 @@
     
     <title>Kubectl Walkthrough | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,29 +28,24 @@
     
     
     <meta property="og:title" content="Kubectl Walkthrough" />
-<meta property="og:description" content="Introduction   This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
- The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
-  Kubectl debugging and API server   Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response." />
+<meta property="og:description" content="Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/kube-ctl/" />
+<meta property="og:url" content="https://opssec.in/posts/kube-ctl/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-12-26T15:00:00+00:00" />
 <meta property="article:modified_time" content="2019-12-26T15:00:00+00:00" />
 <meta itemprop="name" content="Kubectl Walkthrough">
-<meta itemprop="description" content="Introduction   This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
- The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
-  Kubectl debugging and API server   Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.">
-<meta itemprop="datePublished" content="2019-12-26T15:00:00+00:00" />
+<meta itemprop="description" content="Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response."><meta itemprop="datePublished" content="2019-12-26T15:00:00+00:00" />
 <meta itemprop="dateModified" content="2019-12-26T15:00:00+00:00" />
 <meta itemprop="wordCount" content="845">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubectl Walkthrough"/>
-<meta name="twitter:description" content="Introduction   This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
- The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
-  Kubectl debugging and API server   Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response."/>
+<meta name="twitter:description" content="Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response."/>
 
   </head>
 
@@ -165,6 +160,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Kubectl Walkthrough</h1>
       
       
@@ -194,46 +190,46 @@ Kubectl debugging and API server
 <p>
 Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">kubectl run nginx8 --image<span style="color:#f92672">=</span>nginx -v<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> --generator<span style="color:#f92672">=</span>run-pod/v1
-
-I1226 12:59:46.868834   <span style="color:#ae81ff">22924</span> loader.go:375<span style="color:#f92672">]</span> Config loaded from file:  /Users/amimknabben/.kube/config
-I1226 12:59:46.878441   <span style="color:#ae81ff">22924</span> request.go:968<span style="color:#f92672">]</span> Request Body: 
-
-<span style="color:#f92672">{</span>
-  <span style="color:#e6db74">&#34;kind&#34;</span>: <span style="color:#e6db74">&#34;Pod&#34;</span>,
-  <span style="color:#e6db74">&#34;apiVersion&#34;</span>: <span style="color:#e6db74">&#34;v1&#34;</span>,
-  <span style="color:#e6db74">&#34;metadata&#34;</span>: <span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>,
-    <span style="color:#e6db74">&#34;creationTimestamp&#34;</span>: null,
-    <span style="color:#e6db74">&#34;labels&#34;</span>: <span style="color:#f92672">{</span>
-      <span style="color:#e6db74">&#34;run&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>
-    <span style="color:#f92672">}</span>
-  <span style="color:#f92672">}</span>,
-  <span style="color:#e6db74">&#34;spec&#34;</span>: <span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;containers&#34;</span>: <span style="color:#f92672">[</span>
-      <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>,
-        <span style="color:#e6db74">&#34;image&#34;</span>: <span style="color:#e6db74">&#34;nginx&#34;</span>,
-        <span style="color:#e6db74">&#34;resources&#34;</span>: <span style="color:#f92672">{}</span>
-      <span style="color:#f92672">}</span>
-    <span style="color:#f92672">]</span>,
-    <span style="color:#e6db74">&#34;restartPolicy&#34;</span>: <span style="color:#e6db74">&#34;Always&#34;</span>,
-    <span style="color:#e6db74">&#34;dnsPolicy&#34;</span>: <span style="color:#e6db74">&#34;ClusterFirst&#34;</span>
-  <span style="color:#f92672">}</span>,
-  <span style="color:#e6db74">&#34;status&#34;</span>: <span style="color:#f92672">{}</span>
-<span style="color:#f92672">}</span>
-I1226 12:59:46.878511   <span style="color:#ae81ff">22924</span> round_trippers.go:420<span style="color:#f92672">]</span> POST https://127.0.0.1:64462/api/v1/namespaces/default/pods
-I1226 12:59:46.878519   <span style="color:#ae81ff">22924</span> round_trippers.go:427<span style="color:#f92672">]</span> Request Headers:
-I1226 12:59:46.878525   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     Content-Type: application/json
-I1226 12:59:46.878530   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     Accept: application/json, */*
-I1226 12:59:46.878535   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     User-Agent: kubectl/v1.16.2 <span style="color:#f92672">(</span>darwin/amd64<span style="color:#f92672">)</span> kubernetes/c97fe50
-I1226 12:59:47.074562   <span style="color:#ae81ff">22924</span> round_trippers.go:446<span style="color:#f92672">]</span> Response Status: <span style="color:#ae81ff">201</span> Created in <span style="color:#ae81ff">196</span> milliseconds
-I1226 12:59:47.074584   <span style="color:#ae81ff">22924</span> round_trippers.go:449<span style="color:#f92672">]</span> Response Headers:
-I1226 12:59:47.074596   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Cache-Control: no-cache, private
-I1226 12:59:47.074602   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Content-Type: application/json
-I1226 12:59:47.074607   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Content-Length: <span style="color:#ae81ff">1209</span>
-I1226 12:59:47.074612   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Date: Thu, <span style="color:#ae81ff">26</span> Dec <span style="color:#ae81ff">2019</span> 17:59:47 GMT
-I1226 12:59:47.077981   <span style="color:#ae81ff">22924</span> request.go:968<span style="color:#f92672">]</span> Response Body: <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;Pod&#34;</span>,<span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;v1&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;nginx8&#34;</span>,<span style="color:#e6db74">&#34;namespace&#34;</span>:<span style="color:#e6db74">&#34;default&#34;</span>,<span style="color:#e6db74">&#34;selfLink&#34;</span>:<span style="color:#e6db74">&#34;/api/v1/namespaces/default/pods/nginx8&#34;</span>,<span style="color:#e6db74">&#34;uid&#34;</span>:<span style="color:#e6db74">&#34;414b0331-b3e2-41ee-8b65-ca8edf10cbbd&#34;</span>...</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl run nginx8 --image<span style="color:#f92672">=</span>nginx -v<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> --generator<span style="color:#f92672">=</span>run-pod/v1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>I1226 12:59:46.868834   <span style="color:#ae81ff">22924</span> loader.go:375<span style="color:#f92672">]</span> Config loaded from file:  /Users/amimknabben/.kube/config
+</span></span><span style="display:flex;"><span>I1226 12:59:46.878441   <span style="color:#ae81ff">22924</span> request.go:968<span style="color:#f92672">]</span> Request Body: 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;kind&#34;</span>: <span style="color:#e6db74">&#34;Pod&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;apiVersion&#34;</span>: <span style="color:#e6db74">&#34;v1&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;metadata&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;creationTimestamp&#34;</span>: null,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;labels&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;run&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;spec&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;containers&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;nginx8&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;image&#34;</span>: <span style="color:#e6db74">&#34;nginx&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;resources&#34;</span>: <span style="color:#f92672">{}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;restartPolicy&#34;</span>: <span style="color:#e6db74">&#34;Always&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;dnsPolicy&#34;</span>: <span style="color:#e6db74">&#34;ClusterFirst&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;status&#34;</span>: <span style="color:#f92672">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>I1226 12:59:46.878511   <span style="color:#ae81ff">22924</span> round_trippers.go:420<span style="color:#f92672">]</span> POST https://127.0.0.1:64462/api/v1/namespaces/default/pods
+</span></span><span style="display:flex;"><span>I1226 12:59:46.878519   <span style="color:#ae81ff">22924</span> round_trippers.go:427<span style="color:#f92672">]</span> Request Headers:
+</span></span><span style="display:flex;"><span>I1226 12:59:46.878525   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     Content-Type: application/json
+</span></span><span style="display:flex;"><span>I1226 12:59:46.878530   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     Accept: application/json, */*
+</span></span><span style="display:flex;"><span>I1226 12:59:46.878535   <span style="color:#ae81ff">22924</span> round_trippers.go:431<span style="color:#f92672">]</span>     User-Agent: kubectl/v1.16.2 <span style="color:#f92672">(</span>darwin/amd64<span style="color:#f92672">)</span> kubernetes/c97fe50
+</span></span><span style="display:flex;"><span>I1226 12:59:47.074562   <span style="color:#ae81ff">22924</span> round_trippers.go:446<span style="color:#f92672">]</span> Response Status: <span style="color:#ae81ff">201</span> Created in <span style="color:#ae81ff">196</span> milliseconds
+</span></span><span style="display:flex;"><span>I1226 12:59:47.074584   <span style="color:#ae81ff">22924</span> round_trippers.go:449<span style="color:#f92672">]</span> Response Headers:
+</span></span><span style="display:flex;"><span>I1226 12:59:47.074596   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Cache-Control: no-cache, private
+</span></span><span style="display:flex;"><span>I1226 12:59:47.074602   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Content-Type: application/json
+</span></span><span style="display:flex;"><span>I1226 12:59:47.074607   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Content-Length: <span style="color:#ae81ff">1209</span>
+</span></span><span style="display:flex;"><span>I1226 12:59:47.074612   <span style="color:#ae81ff">22924</span> round_trippers.go:452<span style="color:#f92672">]</span>     Date: Thu, <span style="color:#ae81ff">26</span> Dec <span style="color:#ae81ff">2019</span> 17:59:47 GMT
+</span></span><span style="display:flex;"><span>I1226 12:59:47.077981   <span style="color:#ae81ff">22924</span> request.go:968<span style="color:#f92672">]</span> Response Body: <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;Pod&#34;</span>,<span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;v1&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;nginx8&#34;</span>,<span style="color:#e6db74">&#34;namespace&#34;</span>:<span style="color:#e6db74">&#34;default&#34;</span>,<span style="color:#e6db74">&#34;selfLink&#34;</span>:<span style="color:#e6db74">&#34;/api/v1/namespaces/default/pods/nginx8&#34;</span>,<span style="color:#e6db74">&#34;uid&#34;</span>:<span style="color:#e6db74">&#34;414b0331-b3e2-41ee-8b65-ca8edf10cbbd&#34;</span>...</span></span></code></pre></div></p>
 <p>
 Resources are Kubernetes objects, and their configuration is applied (declarative Create/Update/Delette) to a Kubernetes
 cluster using tools such as kubectl, stored in an ETCd and then actuated by a controller. The <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#pod-v1-core">documetation</a> is available.</p>
@@ -247,23 +243,13 @@ process of mapping GVKs to GVRs is called REST mapping.</p>
 <p>
 The resources are identified by the following fields:</p>
 <ol>
-<li>
-<p>apiVersion</p>
-</li>
-<li>
-<p>kind</p>
-</li>
-<li>
-<p>metadata</p>
-</li>
+<li>apiVersion</li>
+<li>kind</li>
+<li>metadata</li>
 </ol>
 <ul>
-<li>
-<p>namespace (instance namespace)</p>
-</li>
-<li>
-<p>name (instance name)</p>
-</li>
+<li>namespace (instance namespace)</li>
+<li>name (instance name)</li>
 </ul>
 <p>Resources also have <strong>TypeMeta</strong>, <strong>ObjectMeta</strong>, <strong>Spec</strong> (the desired state) and <strong>Status</strong> (the observed state)</p>
 <p>
@@ -281,80 +267,79 @@ We can see the grouping of commands here:</p>
 <p>
 Settings, cluster and deploy commands are going to be checked further.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#a6e22e">groups</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">templates</span>.<span style="color:#a6e22e">CommandGroups</span>{
-		{
-			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Basic Commands (Beginner):&#34;</span>,
-			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
-				<span style="color:#a6e22e">create</span>.<span style="color:#a6e22e">NewCmdCreate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">expose</span>.<span style="color:#a6e22e">NewCmdExposeService</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">run</span>.<span style="color:#a6e22e">NewCmdRun</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">set</span>.<span style="color:#a6e22e">NewCmdSet</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-			},
-		},
-		{
-			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Basic Commands (Intermediate):&#34;</span>,
-			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
-				<span style="color:#a6e22e">explain</span>.<span style="color:#a6e22e">NewCmdExplain</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">get</span>.<span style="color:#a6e22e">NewCmdGet</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">edit</span>.<span style="color:#a6e22e">NewCmdEdit</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">delete</span>.<span style="color:#a6e22e">NewCmdDelete</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-			},
-		},
-		{
-			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Deploy Commands:&#34;</span>,
-			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
-				<span style="color:#a6e22e">rollout</span>.<span style="color:#a6e22e">NewCmdRollout</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">rollingupdate</span>.<span style="color:#a6e22e">NewCmdRollingUpdate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">scale</span>.<span style="color:#a6e22e">NewCmdScale</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">autoscale</span>.<span style="color:#a6e22e">NewCmdAutoscale</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-			},
-		},
-		{
-			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Cluster Management Commands:&#34;</span>,
-			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
-				<span style="color:#a6e22e">certificates</span>.<span style="color:#a6e22e">NewCmdCertificate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">clusterinfo</span>.<span style="color:#a6e22e">NewCmdClusterInfo</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">top</span>.<span style="color:#a6e22e">NewCmdTop</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdCordon</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdUncordon</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdDrain</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">taint</span>.<span style="color:#a6e22e">NewCmdTaint</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-			},
-		},
-		{
-			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Troubleshooting and Debugging Commands:&#34;</span>,
-			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
-				<span style="color:#a6e22e">describe</span>.<span style="color:#a6e22e">NewCmdDescribe</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">logs</span>.<span style="color:#a6e22e">NewCmdLogs</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">attach</span>.<span style="color:#a6e22e">NewCmdAttach</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">cmdexec</span>.<span style="color:#a6e22e">NewCmdExec</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">portforward</span>.<span style="color:#a6e22e">NewCmdPortForward</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">proxy</span>.<span style="color:#a6e22e">NewCmdProxy</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">cp</span>.<span style="color:#a6e22e">NewCmdCp</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">NewCmdAuth</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-			},
-		},
-		{
-			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Advanced Commands:&#34;</span>,
-			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
-				<span style="color:#a6e22e">diff</span>.<span style="color:#a6e22e">NewCmdDiff</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">apply</span>.<span style="color:#a6e22e">NewCmdApply</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">patch</span>.<span style="color:#a6e22e">NewCmdPatch</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">replace</span>.<span style="color:#a6e22e">NewCmdReplace</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">wait</span>.<span style="color:#a6e22e">NewCmdWait</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">convert</span>.<span style="color:#a6e22e">NewCmdConvert</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">kustomize</span>.<span style="color:#a6e22e">NewCmdKustomize</span>(<span style="color:#a6e22e">ioStreams</span>),
-			},
-		},
-		{
-			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Settings Commands:&#34;</span>,
-			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
-				<span style="color:#a6e22e">label</span>.<span style="color:#a6e22e">NewCmdLabel</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">annotate</span>.<span style="color:#a6e22e">NewCmdAnnotate</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
-				<span style="color:#a6e22e">completion</span>.<span style="color:#a6e22e">NewCmdCompletion</span>(<span style="color:#a6e22e">ioStreams</span>.<span style="color:#a6e22e">Out</span>, <span style="color:#e6db74">&#34;&#34;</span>),
-			},
-		},
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span>	<span style="color:#a6e22e">groups</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">templates</span>.<span style="color:#a6e22e">CommandGroups</span>{
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Basic Commands (Beginner):&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">create</span>.<span style="color:#a6e22e">NewCmdCreate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">expose</span>.<span style="color:#a6e22e">NewCmdExposeService</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">run</span>.<span style="color:#a6e22e">NewCmdRun</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">set</span>.<span style="color:#a6e22e">NewCmdSet</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Basic Commands (Intermediate):&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">explain</span>.<span style="color:#a6e22e">NewCmdExplain</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">get</span>.<span style="color:#a6e22e">NewCmdGet</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">edit</span>.<span style="color:#a6e22e">NewCmdEdit</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">delete</span>.<span style="color:#a6e22e">NewCmdDelete</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Deploy Commands:&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">rollout</span>.<span style="color:#a6e22e">NewCmdRollout</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">rollingupdate</span>.<span style="color:#a6e22e">NewCmdRollingUpdate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">scale</span>.<span style="color:#a6e22e">NewCmdScale</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">autoscale</span>.<span style="color:#a6e22e">NewCmdAutoscale</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Cluster Management Commands:&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">certificates</span>.<span style="color:#a6e22e">NewCmdCertificate</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">clusterinfo</span>.<span style="color:#a6e22e">NewCmdClusterInfo</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">top</span>.<span style="color:#a6e22e">NewCmdTop</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdCordon</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdUncordon</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">drain</span>.<span style="color:#a6e22e">NewCmdDrain</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">taint</span>.<span style="color:#a6e22e">NewCmdTaint</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Troubleshooting and Debugging Commands:&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">describe</span>.<span style="color:#a6e22e">NewCmdDescribe</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">logs</span>.<span style="color:#a6e22e">NewCmdLogs</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">attach</span>.<span style="color:#a6e22e">NewCmdAttach</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">cmdexec</span>.<span style="color:#a6e22e">NewCmdExec</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">portforward</span>.<span style="color:#a6e22e">NewCmdPortForward</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">proxy</span>.<span style="color:#a6e22e">NewCmdProxy</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">cp</span>.<span style="color:#a6e22e">NewCmdCp</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">NewCmdAuth</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Advanced Commands:&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">diff</span>.<span style="color:#a6e22e">NewCmdDiff</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">apply</span>.<span style="color:#a6e22e">NewCmdApply</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">patch</span>.<span style="color:#a6e22e">NewCmdPatch</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">replace</span>.<span style="color:#a6e22e">NewCmdReplace</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">wait</span>.<span style="color:#a6e22e">NewCmdWait</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">convert</span>.<span style="color:#a6e22e">NewCmdConvert</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">kustomize</span>.<span style="color:#a6e22e">NewCmdKustomize</span>(<span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Settings Commands:&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Commands</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">label</span>.<span style="color:#a6e22e">NewCmdLabel</span>(<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">annotate</span>.<span style="color:#a6e22e">NewCmdAnnotate</span>(<span style="color:#e6db74">&#34;kubectl&#34;</span>, <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">ioStreams</span>),
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">completion</span>.<span style="color:#a6e22e">NewCmdCompletion</span>(<span style="color:#a6e22e">ioStreams</span>.<span style="color:#a6e22e">Out</span>, <span style="color:#e6db74">&#34;&#34;</span>),
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		},</span></span></code></pre></div></p>
 <p>
 <img src="/posts/kube-ctl/kubectl.png" alt="" class="" style="width: 80%; ">
 </p>
@@ -373,15 +358,15 @@ JSONPath vs jq
 <p>
 Besides Jq (a sed like tools but for JSON data) being a very useful one, Kubectl comes with JSONPath cababilities (Like XPath but for JSON).</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show the kind of all namespace deployments</span>
-kubectl get deployment -o<span style="color:#f92672">=</span>jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].kind}{&#34;\n&#34;}&#39;</span>
-Deplyoment
-Deplyoment
-
-<span style="color:#75715e"># Iterate then name of all deployments and pipe to a delete command</span>
-kubectl get deployment.v1.apps -o<span style="color:#f92672">=</span>jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{range .items[*]}{.metadata.name}{&#34;\n&#34;}{end}&#39;</span> | xargs kubectl delete deployment
-deployment.apps <span style="color:#e6db74">&#34;nginx&#34;</span> deleted
-deployment.apps <span style="color:#e6db74">&#34;nginx2&#34;</span> deleted</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Show the kind of all namespace deployments</span>
+</span></span><span style="display:flex;"><span>kubectl get deployment -o<span style="color:#f92672">=</span>jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].kind}{&#34;\n&#34;}&#39;</span>
+</span></span><span style="display:flex;"><span>Deplyoment
+</span></span><span style="display:flex;"><span>Deplyoment
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Iterate then name of all deployments and pipe to a delete command</span>
+</span></span><span style="display:flex;"><span>kubectl get deployment.v1.apps -o<span style="color:#f92672">=</span>jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{range .items[*]}{.metadata.name}{&#34;\n&#34;}{end}&#39;</span> | xargs kubectl delete deployment
+</span></span><span style="display:flex;"><span>deployment.apps <span style="color:#e6db74">&#34;nginx&#34;</span> deleted
+</span></span><span style="display:flex;"><span>deployment.apps <span style="color:#e6db74">&#34;nginx2&#34;</span> deleted</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-6" class="outline-4">
@@ -392,43 +377,43 @@ Basic Explain and resources
 <p>
 You can list the available resources with api-resources and get the documentation with explain:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl api-resources
-
-NAME                              SHORTNAMES   APIGROUP                       NAMESPACED   KIND
-...
-customresourcedefinitions         crd,crds     apiextensions.k8s.io           false        CustomResourceDefinition
-...
-
----
-
-$ kubectl explain crd
-KIND:     CustomResourceDefinition
-VERSION:  apiextensions.k8s.io/v1
-
-DESCRIPTION:
-     CustomResourceDefinition represents a resource that should be exposed on
-     the API server. Its name MUST be in the format &lt;.spec.name&gt;.&lt;.spec.group&gt;.
-
-FIELDS:
-   apiVersion   &lt;string&gt;
-     APIVersion defines the versioned schema of this representation of an
-     object. Servers should convert recognized schemas to the latest internal
-     value, and may reject unrecognized values. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-
-   kind &lt;string&gt;
-     Kind is a string value representing the REST resource this object
-     represents. Servers may infer this from the endpoint the client submits
-     requests to. Cannot be updated. In CamelCase. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-
-   metadata     &lt;Object&gt;
-
-   spec &lt;Object&gt; -required-
-     spec describes how the user wants the resources to appear
-
-   status       &lt;Object&gt;
-     status indicates the actual state of the CustomResourceDefinition</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl api-resources
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                              SHORTNAMES   APIGROUP                       NAMESPACED   KIND
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>customresourcedefinitions         crd,crds     apiextensions.k8s.io           false        CustomResourceDefinition
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl explain crd
+</span></span><span style="display:flex;"><span>KIND:     CustomResourceDefinition
+</span></span><span style="display:flex;"><span>VERSION:  apiextensions.k8s.io/v1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DESCRIPTION:
+</span></span><span style="display:flex;"><span>     CustomResourceDefinition represents a resource that should be exposed on
+</span></span><span style="display:flex;"><span>     the API server. Its name MUST be in the format &lt;.spec.name&gt;.&lt;.spec.group&gt;.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FIELDS:
+</span></span><span style="display:flex;"><span>   apiVersion   &lt;string&gt;
+</span></span><span style="display:flex;"><span>     APIVersion defines the versioned schema of this representation of an
+</span></span><span style="display:flex;"><span>     object. Servers should convert recognized schemas to the latest internal
+</span></span><span style="display:flex;"><span>     value, and may reject unrecognized values. More info:
+</span></span><span style="display:flex;"><span>     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   kind &lt;string&gt;
+</span></span><span style="display:flex;"><span>     Kind is a string value representing the REST resource this object
+</span></span><span style="display:flex;"><span>     represents. Servers may infer this from the endpoint the client submits
+</span></span><span style="display:flex;"><span>     requests to. Cannot be updated. In CamelCase. More info:
+</span></span><span style="display:flex;"><span>     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   metadata     &lt;Object&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   spec &lt;Object&gt; -required-
+</span></span><span style="display:flex;"><span>     spec describes how the user wants the resources to appear
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   status       &lt;Object&gt;
+</span></span><span style="display:flex;"><span>     status indicates the actual state of the CustomResourceDefinition</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-7" class="outline-4">
@@ -436,7 +421,7 @@ FIELDS:
 Bash autocomplete
 </h4>
 <div id="outline-text-headline-7" class="outline-text-4">
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">source &lt;<span style="color:#f92672">(</span>kubectl completion zsh|bash<span style="color:#f92672">)</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>source &lt;<span style="color:#f92672">(</span>kubectl completion zsh|bash<span style="color:#f92672">)</span></span></span></code></pre></div>
 </div>
 </div>
 <div id="outline-container-headline-8" class="outline-4">
@@ -502,7 +487,7 @@ Listening
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

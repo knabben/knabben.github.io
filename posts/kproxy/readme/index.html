@@ -6,7 +6,7 @@
     
     <title>Kube-proxy ClusterIP | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Kube-proxy ClusterIP" />
 <meta property="og:description" content="ClusterIP iptables configurations" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/kproxy/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/kproxy/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-06-14T00:00:00+00:00" />
 <meta property="article:modified_time" content="2021-06-14T00:00:00+00:00" />
 <meta itemprop="name" content="Kube-proxy ClusterIP">
-<meta itemprop="description" content="ClusterIP iptables configurations">
-<meta itemprop="datePublished" content="2021-06-14T00:00:00+00:00" />
+<meta itemprop="description" content="ClusterIP iptables configurations"><meta itemprop="datePublished" content="2021-06-14T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-06-14T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1432">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kube-proxy ClusterIP"/>
 <meta name="twitter:description" content="ClusterIP iptables configurations"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Kube-proxy ClusterIP</h1>
       
       
@@ -168,22 +164,19 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="introduction">Introduction</h2>
-
 <p>On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the <code>--mode=iptables</code>
-and a few debugging commands to illustrate all the packet paths and endpoints. There's a simple cluster with 3 nodes
+and a few debugging commands to illustrate all the packet paths and endpoints. There&rsquo;s a simple cluster with 3 nodes
 on v1.21.1 created with Kind and kindnet as CNI.</p>
-
 <h2 id="setup">Setup</h2>
-
 <p>These are the following ips:</p>
-<pre><code>$ kubectl get nodes -A -o wide                                                                                                                                                                   [21:42:09]
+<pre tabindex="0"><code>$ kubectl get nodes -A -o wide                                                                                                                                                                   [21:42:09]
 
 NAME                    STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE       KERNEL-VERSION     CONTAINER-RUNTIME
 cluster-control-plane   Ready    control-plane,master   26h   v1.21.1   172.18.0.4    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2
 cluster-worker          Ready    &lt;none&gt;                 26h   v1.21.1   172.18.0.2    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2
-cluster-worker2         Ready    &lt;none&gt;                 26h   v1.21.1   172.18.0.3    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2</code></pre>
-<p>Setting up the pods, a client one and a nginx server:</p>
-<pre><code>$ kubectl run client --image=busybox --restart=Never -- sleep 1d
+cluster-worker2         Ready    &lt;none&gt;                 26h   v1.21.1   172.18.0.3    &lt;none&gt;        Ubuntu 21.04   5.8.0-55-generic   containerd://1.5.2
+</code></pre><p>Setting up the pods, a client one and a nginx server:</p>
+<pre tabindex="0"><code>$ kubectl run client --image=busybox --restart=Never -- sleep 1d
 $ kubectl run nginx --image=nginx
 $ kubectl expose pod/nginx --name nginx --port 80
 
@@ -194,199 +187,177 @@ nginx    1/1     Running   0          25h     10.244.2.2   cluster-worker2   &lt
 
 $ kubectl get svc
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
-nginx        ClusterIP   10.96.34.82     &lt;none&gt;        80/TCP    26h</code></pre>
-<p>So we have Pod client on <code>10.244.1.3</code>, and nginx on <code>10.244.2.2</code> and the service running on ClusterIP <code>10.96.34.82</code>
+nginx        ClusterIP   10.96.34.82     &lt;none&gt;        80/TCP    26h
+</code></pre><p>So we have Pod client on <code>10.244.1.3</code>, and nginx on <code>10.244.2.2</code> and the service running on ClusterIP <code>10.96.34.82</code>
 this is a virtual IP address, and as we can see will be used to load balance the traffic between the pods
 behind the service.</p>
-
 <p>Lets take a look in the Endpoint object, as we can see the service is:</p>
-<pre><code>$ kubectl get endpoints nginx
+<pre tabindex="0"><code>$ kubectl get endpoints nginx
 NAME    ENDPOINTS       AG
-nginx   10.244.2.2:80   2d1h</code></pre>
-<h2 id="connection-tests">Connection tests</h2>
-
+nginx   10.244.2.2:80   2d1h
+</code></pre><h2 id="connection-tests">Connection tests</h2>
 <p>From the <code>10.244.1.3</code> our client gonna hit on nginx on <code>10.244.2.2</code>, via the service virtual IP (<code>10.96.34.82</code>).</p>
-<pre><code>$ host nginx
+<pre tabindex="0"><code>$ host nginx
 nginx.default.svc.cluster.local has address 10.96.34.82
 $ wget -S -O index.html nginx
 Connecting to nginx (10.96.34.82:80)
-...</code></pre>
-<p>Running tcpdump in the the server, we can see the correct handshake.</p>
-<pre><code>10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [S], cksum 0x191b (incorrect -&gt; 0x1060), seq 1038765636, win 64240, options [mss 1460,sackOK,TS val 3348512221 ecr 0,nop,wscale 7], length 0
+...
+</code></pre><p>Running tcpdump in the the server, we can see the correct handshake.</p>
+<pre tabindex="0"><code>10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [S], cksum 0x191b (incorrect -&gt; 0x1060), seq 1038765636, win 64240, options [mss 1460,sackOK,TS val 3348512221 ecr 0,nop,wscale 7], length 0
 10.244.2.2.80 &gt; 10.244.1.3.37328: Flags [S.], cksum 0x191b (incorrect -&gt; 0x8a59), seq 1687129480, ack 1038765637, win 65160, options [mss 1460,sackOK,TS val 3660625428 ecr 3348512221,nop,wscale 7], length 0
 10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [.], cksum 0x1913 (incorrect -&gt; 0xb5b8), seq 1, ack 1, win 502, options [nop,nop,TS val 3348512221 ecr 3660625428], length 0
-10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [P.], cksum 0x1957 (incorrect -&gt; 0x59ab), seq 1:69, ack 1, win 502, options [nop,nop,TS val 3348512221 ecr 3660625428], length 68: HTTP, length: 68</code></pre>
-<h2 id="kubeproxy-rules-and-chains">Kube-Proxy rules and chains</h2>
-
+10.244.1.3.37328 &gt; 10.244.2.2.80: Flags [P.], cksum 0x1957 (incorrect -&gt; 0x59ab), seq 1:69, ack 1, win 502, options [nop,nop,TS val 3348512221 ecr 3660625428], length 68: HTTP, length: 68
+</code></pre><h2 id="kube-proxy-rules-and-chains">Kube-Proxy rules and chains</h2>
 <p>The mode is iptables, accordingly to the documentation:</p>
-<pre><code>In this mode, kube-proxy watches the Kubernetes control plane for the addition and removal of Service and Endpoint 
+<pre tabindex="0"><code>In this mode, kube-proxy watches the Kubernetes control plane for the addition and removal of Service and Endpoint 
 objects. For each Service, it installs iptables rules, which capture traffic to the Service&#39;s clusterIP and port, 
 and redirect that traffic to one of the Service&#39;s backend sets. For each Endpoint object, 
-it installs iptables rules which select a backend Pod.</code></pre>
-<p>OK, lets check the rules created by <code>iptables-save</code> in the worker, there're some interesting rules created regarding
+it installs iptables rules which select a backend Pod.
+</code></pre><p>OK, lets check the rules created by <code>iptables-save</code> in the worker, there&rsquo;re some interesting rules created regarding
 our service and other paths, a nice diagram around from StackRox [1], shows the proper flow in the chains</p>
-
 <img src="https://res.cloudinary.com/stackrox/v1578619751/kube-networking-5_zswvwp.svg" alt="" class="" style="width: 100%; ">
 
-<pre><code>*nat
+<pre tabindex="0"><code>*nat
 ...
 -A PREROUTING -m comment --comment &#34;kubernetes service portals&#34; -j KUBE-SERVICES
 -A OUTPUT -m comment --comment &#34;kubernetes service portals&#34; -j KUBE-SERVICES
 -A POSTROUTING -m comment --comment &#34;kubernetes postrouting rules&#34; -j KUBE-POSTROUTING
-...</code></pre>
-<p>Important things to notice here, the first chain on NAT PREROUTING move packets to the KUBE-SERVICE chain.</p>
-<pre><code>-A KUBE-MARK-DROP -j MARK --set-xmark 0x8000/0x8000
+...
+</code></pre><p>Important things to notice here, the first chain on NAT PREROUTING move packets to the KUBE-SERVICE chain.</p>
+<pre tabindex="0"><code>-A KUBE-MARK-DROP -j MARK --set-xmark 0x8000/0x8000
 -A KUBE-MARK-MASQ -j MARK --set-xmark 0x4000/0x4000
 -A KUBE-POSTROUTING -m mark ! --mark 0x4000/0x4000 -j RETURN
 -A KUBE-POSTROUTING -j MARK --set-xmark 0x4000/0x0
--A KUBE-POSTROUTING -m comment --comment &#34;kubernetes service traffic requiring SNAT&#34; -j MASQUERADE --random-fully</code></pre>
-<p>These rules are grant on <code>syncProxyRules:871</code>, before each synchronization:</p>
-
+-A KUBE-POSTROUTING -m comment --comment &#34;kubernetes service traffic requiring SNAT&#34; -j MASQUERADE --random-fully
+</code></pre><p>These rules are grant on <code>syncProxyRules:871</code>, before each synchronization:</p>
 <p><a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L953">https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L953</a></p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">iptablesJumpChains</span> = []<span style="color:#a6e22e">iptablesJumpChain</span>{
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeExternalServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainInput</span>, <span style="color:#e6db74">&#34;kubernetes externally-visible service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeExternalServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainForward</span>, <span style="color:#e6db74">&#34;kubernetes externally-visible service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeNodePortsChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainInput</span>, <span style="color:#e6db74">&#34;kubernetes health check service ports&#34;</span>, <span style="color:#66d9ef">nil</span>},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainForward</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainOutput</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeForwardChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainForward</span>, <span style="color:#e6db74">&#34;kubernetes forwarding rules&#34;</span>, <span style="color:#66d9ef">nil</span>},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainOutput</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, <span style="color:#66d9ef">nil</span>},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainPrerouting</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, <span style="color:#66d9ef">nil</span>},
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">kubePostroutingChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainPostrouting</span>, <span style="color:#e6db74">&#34;kubernetes postrouting rules&#34;</span>, <span style="color:#66d9ef">nil</span>},
-}
-
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">iptablesEnsureChains</span> = []<span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">table</span> <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">Table</span>
-	<span style="color:#a6e22e">chain</span> <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">Chain</span>
-}{
-	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">KubeMarkDropChain</span>},
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">syncProxyRules</span>() {
-<span style="color:#f92672">...</span>
-	<span style="color:#75715e">// Create and link the kube chains.
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">jump</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">iptablesJumpChains</span> {
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">EnsureChain</span>(<span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">ErrorS</span>(<span style="color:#a6e22e">err</span>, <span style="color:#e6db74">&#34;Failed to ensure chain exists&#34;</span>, <span style="color:#e6db74">&#34;table&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#e6db74">&#34;chain&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>)
-			<span style="color:#66d9ef">return</span>
-		}
-		<span style="color:#a6e22e">args</span> <span style="color:#f92672">:=</span> append(<span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">extraArgs</span>,
-			<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;comment&#34;</span>, <span style="color:#e6db74">&#34;--comment&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">comment</span>,
-			<span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>),
-		)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">EnsureRule</span>(<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">Prepend</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">srcChain</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">ErrorS</span>(<span style="color:#a6e22e">err</span>, <span style="color:#e6db74">&#34;Failed to ensure chain jumps&#34;</span>, <span style="color:#e6db74">&#34;table&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#e6db74">&#34;srcChain&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">srcChain</span>, <span style="color:#e6db74">&#34;dstChain&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>)
-			<span style="color:#66d9ef">return</span>
-		}
-	}
-
-	<span style="color:#75715e">// ensure KUBE-MARK-DROP chain exist but do not change any rules
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">iptablesEnsureChains</span> {
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">EnsureChain</span>(<span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">table</span>, <span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">chain</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">ErrorS</span>(<span style="color:#a6e22e">err</span>, <span style="color:#e6db74">&#34;Failed to ensure chain exists&#34;</span>, <span style="color:#e6db74">&#34;table&#34;</span>, <span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">table</span>, <span style="color:#e6db74">&#34;chain&#34;</span>, <span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">chain</span>)
-			<span style="color:#66d9ef">return</span>
-		}
-	}
-<span style="color:#f92672">...</span>
-	<span style="color:#a6e22e">masqRule</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{
-		<span style="color:#e6db74">&#34;-A&#34;</span>, string(<span style="color:#a6e22e">kubePostroutingChain</span>),
-		<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;comment&#34;</span>, <span style="color:#e6db74">&#34;--comment&#34;</span>, <span style="color:#e6db74">`&#34;kubernetes service traffic requiring SNAT&#34;`</span>,
-		<span style="color:#e6db74">&#34;-j&#34;</span>, <span style="color:#e6db74">&#34;MASQUERADE&#34;</span>,
-	}
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">HasRandomFully</span>() {
-		<span style="color:#a6e22e">masqRule</span> = append(<span style="color:#a6e22e">masqRule</span>, <span style="color:#e6db74">&#34;--random-fully&#34;</span>)
-	}
-	<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">masqRule</span><span style="color:#f92672">...</span>)
-<span style="color:#f92672">...</span>
-</code></pre></div>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">iptablesJumpChains</span> = []<span style="color:#a6e22e">iptablesJumpChain</span>{
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeExternalServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainInput</span>, <span style="color:#e6db74">&#34;kubernetes externally-visible service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeExternalServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainForward</span>, <span style="color:#e6db74">&#34;kubernetes externally-visible service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeNodePortsChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainInput</span>, <span style="color:#e6db74">&#34;kubernetes health check service ports&#34;</span>, <span style="color:#66d9ef">nil</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainForward</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainOutput</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;conntrack&#34;</span>, <span style="color:#e6db74">&#34;--ctstate&#34;</span>, <span style="color:#e6db74">&#34;NEW&#34;</span>}},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableFilter</span>, <span style="color:#a6e22e">kubeForwardChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainForward</span>, <span style="color:#e6db74">&#34;kubernetes forwarding rules&#34;</span>, <span style="color:#66d9ef">nil</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainOutput</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, <span style="color:#66d9ef">nil</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">kubeServicesChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainPrerouting</span>, <span style="color:#e6db74">&#34;kubernetes service portals&#34;</span>, <span style="color:#66d9ef">nil</span>},
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">kubePostroutingChain</span>, <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">ChainPostrouting</span>, <span style="color:#e6db74">&#34;kubernetes postrouting rules&#34;</span>, <span style="color:#66d9ef">nil</span>},
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">iptablesEnsureChains</span> = []<span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">table</span> <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">Table</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">chain</span> <span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">Chain</span>
+</span></span><span style="display:flex;"><span>}{
+</span></span><span style="display:flex;"><span>	{<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">TableNAT</span>, <span style="color:#a6e22e">KubeMarkDropChain</span>},
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">syncProxyRules</span>() {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Create and link the kube chains.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">jump</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">iptablesJumpChains</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">EnsureChain</span>(<span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">ErrorS</span>(<span style="color:#a6e22e">err</span>, <span style="color:#e6db74">&#34;Failed to ensure chain exists&#34;</span>, <span style="color:#e6db74">&#34;table&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#e6db74">&#34;chain&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">args</span> <span style="color:#f92672">:=</span> append(<span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">extraArgs</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;comment&#34;</span>, <span style="color:#e6db74">&#34;--comment&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">comment</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>),
+</span></span><span style="display:flex;"><span>		)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">EnsureRule</span>(<span style="color:#a6e22e">utiliptables</span>.<span style="color:#a6e22e">Prepend</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">srcChain</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">ErrorS</span>(<span style="color:#a6e22e">err</span>, <span style="color:#e6db74">&#34;Failed to ensure chain jumps&#34;</span>, <span style="color:#e6db74">&#34;table&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">table</span>, <span style="color:#e6db74">&#34;srcChain&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">srcChain</span>, <span style="color:#e6db74">&#34;dstChain&#34;</span>, <span style="color:#a6e22e">jump</span>.<span style="color:#a6e22e">dstChain</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ensure KUBE-MARK-DROP chain exist but do not change any rules
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">iptablesEnsureChains</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">EnsureChain</span>(<span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">table</span>, <span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">chain</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">ErrorS</span>(<span style="color:#a6e22e">err</span>, <span style="color:#e6db74">&#34;Failed to ensure chain exists&#34;</span>, <span style="color:#e6db74">&#34;table&#34;</span>, <span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">table</span>, <span style="color:#e6db74">&#34;chain&#34;</span>, <span style="color:#a6e22e">ch</span>.<span style="color:#a6e22e">chain</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">masqRule</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;-A&#34;</span>, string(<span style="color:#a6e22e">kubePostroutingChain</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;comment&#34;</span>, <span style="color:#e6db74">&#34;--comment&#34;</span>, <span style="color:#e6db74">`&#34;kubernetes service traffic requiring SNAT&#34;`</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;-j&#34;</span>, <span style="color:#e6db74">&#34;MASQUERADE&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">iptables</span>.<span style="color:#a6e22e">HasRandomFully</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">masqRule</span> = append(<span style="color:#a6e22e">masqRule</span>, <span style="color:#e6db74">&#34;--random-fully&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">masqRule</span><span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span></span></span></code></pre></div>
 <p>This part is important the packet can be marked as <code>KUBE-MARK-MASQ</code> or <code>KUBE-MARK-DROP</code>, a SOURCE NAT Masquerade can happen in
 the <code>KUBE-POSTROUTING</code> IF the packet comes from outside the cluster (not from a Pod), meaning the IP source
 is going to be the Node ip instead.</p>
-
-<p>Checking the KUBE-SERVICE chain. There's a Target on the <code>KUBE-SVC-2CMXP7HKUVJN7L6M</code> chain when the destination is
+<p>Checking the KUBE-SERVICE chain. There&rsquo;s a Target on the <code>KUBE-SVC-2CMXP7HKUVJN7L6M</code> chain when the destination is
 for IP address of the service (from any source) on TCP 80.</p>
-<pre><code>$ iptables -v --numeric --table nat --list KUBE-SERVICES
+<pre tabindex="0"><code>$ iptables -v --numeric --table nat --list KUBE-SERVICES
 Chain KUBE-SERVICES (2 references)
  pkts bytes target                     prot opt in     out     source               destination         
-    0     0 KUBE-SVC-2CMXP7HKUVJN7L6M  tcp  --  *      *       0.0.0.0/0            10.96.34.82          /* default/nginx cluster IP */ tcp dpt:80</code></pre>
-<p>These services rule for ClusterIP starts to be created in this mais loop</p>
-
+    0     0 KUBE-SVC-2CMXP7HKUVJN7L6M  tcp  --  *      *       0.0.0.0/0            10.96.34.82          /* default/nginx cluster IP */ tcp dpt:80
+</code></pre><p>These services rule for ClusterIP starts to be created in this mais loop</p>
 <p><a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L1015">https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L1015</a></p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">svcName</span>, <span style="color:#a6e22e">svc</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">serviceMap</span> {
-		<span style="color:#a6e22e">hasEndpoints</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">readyEndpoints</span>) &gt; <span style="color:#ae81ff">0</span>	
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hasEndpoints</span> {  <span style="color:#75715e">// create the service rules, jumping to SVC chain
-</span><span style="color:#75715e"></span>			<span style="color:#75715e">// proxier.masqueradeAll
-</span><span style="color:#75715e"></span>
-			<span style="color:#75715e">// -A KUBE-SVC-2CMXP7HKUVJN7L6M ! -s 10.244.0.0/16 -d 10.96.34.82/32 -p tcp -m comment --comment &#34;default/nginx cluster IP&#34; -m tcp --dport 80 -j KUBE-MARK-MASQ
-</span><span style="color:#75715e"></span>			<span style="color:#75715e">// -A KUBE-SERVICES -d 10.96.34.82/32 -p tcp -m comment --comment &#34;default/nginx cluster IP&#34; -m tcp --dport 80 -j KUBE-SVC-2CMXP7HKUVJN7L6M
-</span><span style="color:#75715e"></span>		} <span style="color:#66d9ef">else</span> {
-		    <span style="color:#f92672">-</span><span style="color:#a6e22e">j</span> <span style="color:#a6e22e">REJECT</span>
-		}
-	}
-</code></pre></div>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">svcName</span>, <span style="color:#a6e22e">svc</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">serviceMap</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">hasEndpoints</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">readyEndpoints</span>) &gt; <span style="color:#ae81ff">0</span>	
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hasEndpoints</span> {  <span style="color:#75715e">// create the service rules, jumping to SVC chain
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#75715e">// proxier.masqueradeAll
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// -A KUBE-SVC-2CMXP7HKUVJN7L6M ! -s 10.244.0.0/16 -d 10.96.34.82/32 -p tcp -m comment --comment &#34;default/nginx cluster IP&#34; -m tcp --dport 80 -j KUBE-MARK-MASQ
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#75715e">// -A KUBE-SERVICES -d 10.96.34.82/32 -p tcp -m comment --comment &#34;default/nginx cluster IP&#34; -m tcp --dport 80 -j KUBE-SVC-2CMXP7HKUVJN7L6M
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		    <span style="color:#f92672">-</span><span style="color:#a6e22e">j</span> <span style="color:#a6e22e">REJECT</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}</span></span></code></pre></div>
 <p>Checking this Chain in particular a few things to consider, 1) the KUBE-MARK-MASQ tag (External SNAT applied) when
 the traffic comes from outside the cluster, 2) another JUMP to <code>KUBE-SEP-HUXRPHBUO34UVPEF</code></p>
-<pre><code>$ iptables -v --numeric --table nat --list KUBE-SVC-2CMXP7HKUVJN7L6M 
+<pre tabindex="0"><code>$ iptables -v --numeric --table nat --list KUBE-SVC-2CMXP7HKUVJN7L6M 
 Chain KUBE-SVC-2CMXP7HKUVJN7L6M (1 references)
  pkts bytes target                      prot opt in     out     source               destination         
     0     0 KUBE-MARK-MASQ              tcp  --  *      *      !10.244.0.0/16        10.96.34.82          /* default/nginx cluster IP */ tcp dpt:80
-    0     0 KUBE-SEP-HUXRPHBUO34UVPEF   all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* default/nginx */</code></pre>
-<p>This iteration inside the service loop, brings the creation of new chains for final DNAT and the jump between them
- as seen in the last rule:</p>
-
+    0     0 KUBE-SEP-HUXRPHBUO34UVPEF   all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* default/nginx */
+</code></pre><p>This iteration inside the service loop, brings the creation of new chains for final DNAT and the jump between them
+as seen in the last rule:</p>
 <p><a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L1407">https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L1407</a></p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// filling the endpoint chains from ready endpoints for this service.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">ep</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">readyEndpoints</span> {
-	<span style="color:#a6e22e">endpointChain</span> = <span style="color:#a6e22e">epInfo</span>.<span style="color:#a6e22e">endpointChain</span>(<span style="color:#a6e22e">svcNameString</span>, <span style="color:#a6e22e">protocol</span>)
-	<span style="color:#a6e22e">endpointChains</span> = append(<span style="color:#a6e22e">endpointChains</span>, <span style="color:#a6e22e">endpointChain</span>)
-}
-
-<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">endpointChain</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">endpointChains</span> {
-	<span style="color:#a6e22e">args</span> = <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">appendServiceCommentLocked</span>(<span style="color:#a6e22e">args</span>, <span style="color:#a6e22e">svcNameString</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> &lt; (<span style="color:#a6e22e">n</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) {
-		<span style="color:#75715e">// Each rule is a probabilistic match.
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>,
-			<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;statistic&#34;</span>,
-			<span style="color:#e6db74">&#34;--mode&#34;</span>, <span style="color:#e6db74">&#34;random&#34;</span>,
-			<span style="color:#e6db74">&#34;--probability&#34;</span>, <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">probability</span>(<span style="color:#a6e22e">n</span><span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>))
-	}
-	<span style="color:#75715e">// The final (or only if n == 1) rule is a guaranteed match.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>, <span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">endpointChain</span>))
-	<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)
-</code></pre></div>
-<pre><code>// -A KUBE-SVC-2CMXP7HKUVJN7L6M -m comment --comment default/nginx -j KUBE-SEP-HUXRPHBUO34UVPEF</code></pre>
-<p>Finally, the KUBE-SEP chain finalized with 1) Ensure the SNAT happens, 2) Finally a DNAT is created, translating
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// filling the endpoint chains from ready endpoints for this service.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">ep</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">readyEndpoints</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">endpointChain</span> = <span style="color:#a6e22e">epInfo</span>.<span style="color:#a6e22e">endpointChain</span>(<span style="color:#a6e22e">svcNameString</span>, <span style="color:#a6e22e">protocol</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">endpointChains</span> = append(<span style="color:#a6e22e">endpointChains</span>, <span style="color:#a6e22e">endpointChain</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">endpointChain</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">endpointChains</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">args</span> = <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">appendServiceCommentLocked</span>(<span style="color:#a6e22e">args</span>, <span style="color:#a6e22e">svcNameString</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> &lt; (<span style="color:#a6e22e">n</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Each rule is a probabilistic match.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;statistic&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;--mode&#34;</span>, <span style="color:#e6db74">&#34;random&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;--probability&#34;</span>, <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">probability</span>(<span style="color:#a6e22e">n</span><span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// The final (or only if n == 1) rule is a guaranteed match.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>, <span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">endpointChain</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)</span></span></code></pre></div>
+<pre tabindex="0"><code>// -A KUBE-SVC-2CMXP7HKUVJN7L6M -m comment --comment default/nginx -j KUBE-SEP-HUXRPHBUO34UVPEF
+</code></pre><p>Finally, the KUBE-SEP chain finalized with 1) Ensure the SNAT happens, 2) Finally a DNAT is created, translating
 the CluserIP address to the final POD IP address, iptables will ensure a load balancing with probabilities
 if multiple pod exists under this service.</p>
-<pre><code>$ iptables -v --numeric --table nat --list KUBE-SEP-HUXRPHBUO34UVPEF
+<pre tabindex="0"><code>$ iptables -v --numeric --table nat --list KUBE-SEP-HUXRPHBUO34UVPEF
 Chain KUBE-SEP-HUXRPHBUO34UVPEF (1 references)
 pkts bytes target       prot opt in     out     source               destination
 0     0    KUBE-MARK-MASQ  all  --  *      *       10.244.2.2           0.0.0.0/0            /* default/nginx */
-0     0    DNAT            tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            /* default/nginx */ tcp to:10.244.2.2:80</code></pre>
-<p>Yet, for each service the DNAT is made with the proper probability and service port endpoint translation:</p>
-
+0     0    DNAT            tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            /* default/nginx */ tcp to:10.244.2.2:80
+</code></pre><p>Yet, for each service the DNAT is made with the proper probability and service port endpoint translation:</p>
 <p><a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L1444">https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/iptables/proxier.go#L1444</a></p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// Handle traffic that loops back to the originator with SNAT.
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, append(<span style="color:#a6e22e">args</span>,
-	<span style="color:#e6db74">&#34;-s&#34;</span>, <span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">ToCIDR</span>(<span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">ParseIP</span>(<span style="color:#a6e22e">epIP</span>)),
-	<span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">KubeMarkMasqChain</span>))<span style="color:#f92672">...</span>)
-</code></pre></div>
-<pre><code>// -A KUBE-SEP-HUXRPHBUO34UVPEF -m comment --comment default/nginx -s 10.244.2.2/32 -j KUBE-MARK-MASQ</code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// DNAT to final destination.
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>, <span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#a6e22e">protocol</span>, <span style="color:#e6db74">&#34;-p&#34;</span>, <span style="color:#a6e22e">protocol</span>, <span style="color:#e6db74">&#34;-j&#34;</span>, <span style="color:#e6db74">&#34;DNAT&#34;</span>, <span style="color:#e6db74">&#34;--to-destination&#34;</span>, <span style="color:#a6e22e">endpoints</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Endpoint</span>)
-<span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)
-</code></pre></div>
-<pre><code>// -A KUBE-SEP-HUXRPHBUO34UVPEF -m comment --comment default/nginx -m tcp -p tcp -j DNAT --to-destination 10.244.2.2:80</code></pre>
-<h2 id="references">References</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// Handle traffic that loops back to the originator with SNAT.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, append(<span style="color:#a6e22e">args</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;-s&#34;</span>, <span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">ToCIDR</span>(<span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">ParseIP</span>(<span style="color:#a6e22e">epIP</span>)),
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;-j&#34;</span>, string(<span style="color:#a6e22e">KubeMarkMasqChain</span>))<span style="color:#f92672">...</span>)</span></span></code></pre></div>
+<pre tabindex="0"><code>// -A KUBE-SEP-HUXRPHBUO34UVPEF -m comment --comment default/nginx -s 10.244.2.2/32 -j KUBE-MARK-MASQ
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// DNAT to final destination.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>, <span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#a6e22e">protocol</span>, <span style="color:#e6db74">&#34;-p&#34;</span>, <span style="color:#a6e22e">protocol</span>, <span style="color:#e6db74">&#34;-j&#34;</span>, <span style="color:#e6db74">&#34;DNAT&#34;</span>, <span style="color:#e6db74">&#34;--to-destination&#34;</span>, <span style="color:#a6e22e">endpoints</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Endpoint</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">utilproxy</span>.<span style="color:#a6e22e">WriteLine</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">natRules</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)</span></span></code></pre></div>
+<pre tabindex="0"><code>// -A KUBE-SEP-HUXRPHBUO34UVPEF -m comment --comment default/nginx -m tcp -p tcp -j DNAT --to-destination 10.244.2.2:80
+</code></pre><h2 id="references">References</h2>
 <p>[1] <a href="https://www.stackrox.com/post/2020/01/kubernetes-networking-demystified/">https://www.stackrox.com/post/2020/01/kubernetes-networking-demystified/</a></p>
-
 <p>[2] <a href="https://courses.academy.tigera.io/courses/course-v1">https://courses.academy.tigera.io/courses/course-v1</a></p>
 <ul class="pa0">
   
@@ -395,7 +366,7 @@ pkts bytes target       prot opt in     out     source               destination
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

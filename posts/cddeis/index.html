@@ -6,7 +6,7 @@
     
     <title>Continuous Deployment and DEIS | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,26 +28,24 @@
     
     
     <meta property="og:title" content="Continuous Deployment and DEIS" />
-<meta property="og:description" content="Introduction   Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
- &#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;" />
+<meta property="og:description" content="Introduction Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
+&#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;
+What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/cddeis/" />
+<meta property="og:url" content="https://opssec.in/posts/cddeis/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2016-11-27T00:00:00+00:00" />
 <meta property="article:modified_time" content="2016-11-27T00:00:00+00:00" />
 <meta itemprop="name" content="Continuous Deployment and DEIS">
-<meta itemprop="description" content="Introduction   Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
- &#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;">
-<meta itemprop="datePublished" content="2016-11-27T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
+&#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;
+What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback."><meta itemprop="datePublished" content="2016-11-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2016-11-27T00:00:00+00:00" />
 <meta itemprop="wordCount" content="2318">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Continuous Deployment and DEIS"/>
-<meta name="twitter:description" content="Introduction   Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
- &#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;"/>
+<meta name="twitter:description" content="Introduction Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
+&#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&#34;
+What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback."/>
 
   </head>
 
@@ -162,6 +160,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Continuous Deployment and DEIS</h1>
       
       
@@ -194,21 +193,11 @@ Deployment Pipeline
 </h3>
 <div id="outline-text-headline-2" class="outline-text-3">
 <ol>
-<li>
-<p>Commit stage - This stage normally is holded by a CI process, it creates the artifact, to be used by the pipeline.</p>
-</li>
-<li>
-<p>Automated Acceptance testing - You should have a staging environment for this kind of tests, it means you must create an environment equals your production to run it.</p>
-</li>
-<li>
-<p>Automated capacity testing - The same env is used here, you can use tools like Tsung, jmeter.</p>
-</li>
-<li>
-<p>Manual testing (exploratory) - So it expects that you have your last step, to find bugs navigating on the system.</p>
-</li>
-<li>
-<p>Release - Deploy it!</p>
-</li>
+<li>Commit stage - This stage normally is holded by a CI process, it creates the artifact, to be used by the pipeline.</li>
+<li>Automated Acceptance testing - You should have a staging environment for this kind of tests, it means you must create an environment equals your production to run it.</li>
+<li>Automated capacity testing - The same env is used here, you can use tools like Tsung, jmeter.</li>
+<li>Manual testing (exploratory) - So it expects that you have your last step, to find bugs navigating on the system.</li>
+<li>Release - Deploy it!</li>
 </ol>
 <p>&#34;Automation is the key. It allows all of the common tasks involved in the creation and deployment of software to be performed by developers, testers, and operations personnel, at the push of a button.</p>
 <p>
@@ -285,47 +274,47 @@ Settings up the Kubernetes Cluster
 <p>
 We are using the &#34;new&#34; kubeadm tool to setup the cluster on a Debian machines for development, take a look on the documentation but you can run this script to have it up:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/bash
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e"># Remove old kubeadm stuff</span>
-kubeadm reset
-systemctl restart kubelet
-
-kubeadm init
-
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f /etc/kubernetes/kubelet.conf <span style="color:#f92672">]</span>
-<span style="color:#66d9ef">then</span>
-	export KUBECONFIG<span style="color:#f92672">=</span>/etc/kubernetes/kubelet.conf
-<span style="color:#66d9ef">fi</span>
-
-<span style="color:#75715e"># Create pod network</span>
-kubectl apply -f https://git.io/weave-kube
-<span style="color:#75715e"># Enable pods start</span>
-kubectl taint nodes --all dedicated-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove old kubeadm stuff</span>
+</span></span><span style="display:flex;"><span>kubeadm reset
+</span></span><span style="display:flex;"><span>systemctl restart kubelet
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kubeadm init
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f /etc/kubernetes/kubelet.conf <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>	export KUBECONFIG<span style="color:#f92672">=</span>/etc/kubernetes/kubelet.conf
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create pod network</span>
+</span></span><span style="display:flex;"><span>kubectl apply -f https://git.io/weave-kube
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable pods start</span>
+</span></span><span style="display:flex;"><span>kubectl taint nodes --all dedicated-</span></span></code></pre></div></p>
 <p>
 So far so good, you have a bunch of docker containers check it with ps or try to run a new &#39;kubectl run nginx –image=nginx&#39;</p>
 <p>
 We can start Deis with the following helmc script:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ helmc generate workflow-v2.8.0
-$ helmc install workflow-v2.8.0
-
-NAME                                     READY     STATUS    RESTARTS   AGE
-deis-builder-415246326-97ioi             1/1       Running   <span style="color:#ae81ff">13</span>         15h
-deis-controller-1590631305-rqev9         1/1       Running   <span style="color:#ae81ff">13</span>         15h
-deis-database-510315365-3oro8            1/1       Running   <span style="color:#ae81ff">7</span>          15h
-deis-logger-9212198-n38h8                1/1       Running   <span style="color:#ae81ff">17</span>         15h
-deis-logger-fluentd-mny1o                1/1       Running   <span style="color:#ae81ff">4</span>          15h
-deis-logger-redis-663064164-jm8fx        1/1       Running   <span style="color:#ae81ff">4</span>          15h
-deis-minio-3160338312-oxhp9              1/1       Running   <span style="color:#ae81ff">4</span>          15h
-deis-monitor-grafana-432364990-fieg8     1/1       Running   <span style="color:#ae81ff">4</span>          15h
-deis-monitor-influxdb-2729526471-d7v66   1/1       Running   <span style="color:#ae81ff">4</span>          15h
-deis-monitor-telegraf-d3gva              1/1       Running   <span style="color:#ae81ff">14</span>         15h
-deis-nsqd-3264449345-inu6p               1/1       Running   <span style="color:#ae81ff">4</span>          15h
-deis-registry-2182132043-5go81           1/1       Running   <span style="color:#ae81ff">14</span>         15h
-deis-registry-proxy-s6aph                1/1       Running   <span style="color:#ae81ff">4</span>          15h
-deis-router-2457652422-tznjt             1/1       Running   <span style="color:#ae81ff">6</span>          15h
-deis-workflow-manager-2210821749-4lqkp   1/1       Running   <span style="color:#ae81ff">4</span>          15h</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ helmc generate workflow-v2.8.0
+</span></span><span style="display:flex;"><span>$ helmc install workflow-v2.8.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                                     READY     STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>deis-builder-415246326-97ioi             1/1       Running   <span style="color:#ae81ff">13</span>         15h
+</span></span><span style="display:flex;"><span>deis-controller-1590631305-rqev9         1/1       Running   <span style="color:#ae81ff">13</span>         15h
+</span></span><span style="display:flex;"><span>deis-database-510315365-3oro8            1/1       Running   <span style="color:#ae81ff">7</span>          15h
+</span></span><span style="display:flex;"><span>deis-logger-9212198-n38h8                1/1       Running   <span style="color:#ae81ff">17</span>         15h
+</span></span><span style="display:flex;"><span>deis-logger-fluentd-mny1o                1/1       Running   <span style="color:#ae81ff">4</span>          15h
+</span></span><span style="display:flex;"><span>deis-logger-redis-663064164-jm8fx        1/1       Running   <span style="color:#ae81ff">4</span>          15h
+</span></span><span style="display:flex;"><span>deis-minio-3160338312-oxhp9              1/1       Running   <span style="color:#ae81ff">4</span>          15h
+</span></span><span style="display:flex;"><span>deis-monitor-grafana-432364990-fieg8     1/1       Running   <span style="color:#ae81ff">4</span>          15h
+</span></span><span style="display:flex;"><span>deis-monitor-influxdb-2729526471-d7v66   1/1       Running   <span style="color:#ae81ff">4</span>          15h
+</span></span><span style="display:flex;"><span>deis-monitor-telegraf-d3gva              1/1       Running   <span style="color:#ae81ff">14</span>         15h
+</span></span><span style="display:flex;"><span>deis-nsqd-3264449345-inu6p               1/1       Running   <span style="color:#ae81ff">4</span>          15h
+</span></span><span style="display:flex;"><span>deis-registry-2182132043-5go81           1/1       Running   <span style="color:#ae81ff">14</span>         15h
+</span></span><span style="display:flex;"><span>deis-registry-proxy-s6aph                1/1       Running   <span style="color:#ae81ff">4</span>          15h
+</span></span><span style="display:flex;"><span>deis-router-2457652422-tznjt             1/1       Running   <span style="color:#ae81ff">6</span>          15h
+</span></span><span style="display:flex;"><span>deis-workflow-manager-2210821749-4lqkp   1/1       Running   <span style="color:#ae81ff">4</span>          15h</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-8" class="outline-3">
@@ -368,11 +357,11 @@ Going through the flow we find the create command, again take a look on AppCreat
 <p>
 After register a new user and login the system, you have to put your publickey on DEIS to be able to push code.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">deis keys:add ~/.key.pub</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>deis keys:add ~/.key.pub</span></span></code></pre></div></p>
 <p>
 When you create a new app (deis create yourapp), a remote git repository will be created and point to your builder host (port 2222). All you need to do is push your local repo to the remote:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git push origin deis</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git push origin deis</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-11" class="outline-3">
@@ -383,53 +372,53 @@ Builder and slugs
 <p>
 DEIS Builder will handle your request and based on the server hooks start the builder pod, suppose we are using a Dockerfile commited on the project, lets take a look on the dockerbuild file:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">...
-<span style="color:#75715e"># The .tar.gz file artifact is fetched from the Builder Storage</span>
-with tarfile.open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;apptar&#34;</span>, <span style="color:#e6db74">&#34;r:gz&#34;</span><span style="color:#f92672">)</span> as tar:
-    tar.extractall<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/app/&#34;</span><span style="color:#f92672">)</span>
-
-<span style="color:#75715e"># Use docker api to build and push docker to registry</span>
-client <span style="color:#f92672">=</span> docker.Client<span style="color:#f92672">(</span>version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;auto&#39;</span><span style="color:#f92672">)</span>
-registry <span style="color:#f92672">=</span> get_registry_name<span style="color:#f92672">()</span>
-imageName, imageTag <span style="color:#f92672">=</span> os.getenv<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;IMG_NAME&#39;</span><span style="color:#f92672">)</span>.split<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;:&#34;</span>, 1<span style="color:#f92672">)</span>
-repo <span style="color:#f92672">=</span> registry + <span style="color:#e6db74">&#34;/&#34;</span> + os.getenv<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;IMG_NAME&#39;</span><span style="color:#f92672">)</span>
-stream <span style="color:#f92672">=</span> client.build<span style="color:#f92672">(</span>tag<span style="color:#f92672">=</span>repo, stream<span style="color:#f92672">=</span>True, decode<span style="color:#f92672">=</span>True, rm<span style="color:#f92672">=</span>True, pull<span style="color:#f92672">=</span>True, path<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/app&#39;</span><span style="color:#f92672">)</span>
-log_output<span style="color:#f92672">(</span>stream, True<span style="color:#f92672">)</span>
-print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Pushing to registry&#34;</span><span style="color:#f92672">)</span>
-stream <span style="color:#f92672">=</span> client.push<span style="color:#f92672">(</span>registry+<span style="color:#e6db74">&#39;/&#39;</span>+imageName, tag<span style="color:#f92672">=</span>imageTag, stream<span style="color:#f92672">=</span>True<span style="color:#f92672">)</span>
-...</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The .tar.gz file artifact is fetched from the Builder Storage</span>
+</span></span><span style="display:flex;"><span>with tarfile.open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;apptar&#34;</span>, <span style="color:#e6db74">&#34;r:gz&#34;</span><span style="color:#f92672">)</span> as tar:
+</span></span><span style="display:flex;"><span>    tar.extractall<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/app/&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Use docker api to build and push docker to registry</span>
+</span></span><span style="display:flex;"><span>client <span style="color:#f92672">=</span> docker.Client<span style="color:#f92672">(</span>version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;auto&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>registry <span style="color:#f92672">=</span> get_registry_name<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>imageName, imageTag <span style="color:#f92672">=</span> os.getenv<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;IMG_NAME&#39;</span><span style="color:#f92672">)</span>.split<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;:&#34;</span>, 1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>repo <span style="color:#f92672">=</span> registry + <span style="color:#e6db74">&#34;/&#34;</span> + os.getenv<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;IMG_NAME&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>stream <span style="color:#f92672">=</span> client.build<span style="color:#f92672">(</span>tag<span style="color:#f92672">=</span>repo, stream<span style="color:#f92672">=</span>True, decode<span style="color:#f92672">=</span>True, rm<span style="color:#f92672">=</span>True, pull<span style="color:#f92672">=</span>True, path<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/app&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>log_output<span style="color:#f92672">(</span>stream, True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Pushing to registry&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>stream <span style="color:#f92672">=</span> client.push<span style="color:#f92672">(</span>registry+<span style="color:#e6db74">&#39;/&#39;</span>+imageName, tag<span style="color:#f92672">=</span>imageTag, stream<span style="color:#f92672">=</span>True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>...</span></span></code></pre></div></p>
 <p>
 PS: In production I really recommend to use ECR (external docker repository) and an external artifacts storage, take a look on ~/.helmc/workflow/charts/workflow-v2.8.0/tpl/generate_params.toml, otherwise you can full your disk very fast:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">storage <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3&#34;</span>
-repository_location <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ecr&#34;</span>
-
-<span style="color:#f92672">[</span>ecr<span style="color:#f92672">]</span>
-region <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;us-east-1&#34;</span>
-hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;...ecr.us-east-1.amazonaws.com&#34;</span>
-
-<span style="color:#f92672">[</span>s3<span style="color:#f92672">]</span>
-registry_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisregistry&#34;</span>  <span style="color:#75715e"># Docker Registry</span>
-database_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisdb&#34;</span>  <span style="color:#75715e"># PGSql backups</span>
-builder_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisbuild&#34;</span>  <span style="color:#75715e"># Artifacts</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>storage <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3&#34;</span>
+</span></span><span style="display:flex;"><span>repository_location <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ecr&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ecr<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>region <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;us-east-1&#34;</span>
+</span></span><span style="display:flex;"><span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;...ecr.us-east-1.amazonaws.com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>s3<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>registry_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisregistry&#34;</span>  <span style="color:#75715e"># Docker Registry</span>
+</span></span><span style="display:flex;"><span>database_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisdb&#34;</span>  <span style="color:#75715e"># PGSql backups</span>
+</span></span><span style="display:flex;"><span>builder_bucket <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;deisbuild&#34;</span>  <span style="color:#75715e"># Artifacts</span></span></span></code></pre></div></p>
 <p>
 PS2: You can have a similar JOB on jenkins pipeline, something like:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">node <span style="color:#f92672">{</span>
-	stage <span style="color:#e6db74">&#39;login&#39;</span>
-	sh <span style="color:#e6db74">&#39;$(aws ecr get-login)&#39;</span>
-
-    stage <span style="color:#e6db74">&#39;git&#39;</span>
-	dir<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;project&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-		git credentialsId: <span style="color:#e6db74">&#39;xxx&#39;</span>, url: <span style="color:#e6db74">&#39;git@github.com:comp/proj&#39;</span>
-	<span style="color:#f92672">}</span>
-
-	stage <span style="color:#e6db74">&#39;build_push&#39;</span>
-	docker.withRegistry<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;http://..us-east-1.amazonaws.com&#39;</span>, <span style="color:#e6db74">&#39;proj&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-		def proj <span style="color:#f92672">=</span> docker.build<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;proj:</span><span style="color:#e6db74">${</span>env.BUILD_NUMBER<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">)</span>
-		proj.push<span style="color:#f92672">()</span>
-	<span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>node <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	stage <span style="color:#e6db74">&#39;login&#39;</span>
+</span></span><span style="display:flex;"><span>	sh <span style="color:#e6db74">&#39;$(aws ecr get-login)&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stage <span style="color:#e6db74">&#39;git&#39;</span>
+</span></span><span style="display:flex;"><span>	dir<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;project&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		git credentialsId: <span style="color:#e6db74">&#39;xxx&#39;</span>, url: <span style="color:#e6db74">&#39;git@github.com:comp/proj&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	stage <span style="color:#e6db74">&#39;build_push&#39;</span>
+</span></span><span style="display:flex;"><span>	docker.withRegistry<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;http://..us-east-1.amazonaws.com&#39;</span>, <span style="color:#e6db74">&#39;proj&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		def proj <span style="color:#f92672">=</span> docker.build<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;proj:</span><span style="color:#e6db74">${</span>env.BUILD_NUMBER<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>		proj.push<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span></span></span></code></pre></div></p>
 <p>
 I have the artifact and now? Step back and ask again: I have the artifact, how? The answer is the func build on pkg/gitreceive/build.go, it started the build pod watched it run outputed the logs and launched it with hook.CreateBuild, here we came back again to the controller pod c.Request(&#34;POST&#34;, &#34;<em>v2/hooks/build</em>&#34;, b), can you see what da heck if microservices?</p>
 </div>
@@ -440,28 +429,28 @@ Back to the controller
 </h3>
 <div id="outline-text-headline-12" class="outline-text-3">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">urls<span style="color:#f92672">.</span>py
-url(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;^hooks/build/?$&#39;</span>, views<span style="color:#f92672">.</span>BuildHookViewSet<span style="color:#f92672">.</span>as_view({<span style="color:#e6db74">&#39;post&#39;</span>: <span style="color:#e6db74">&#39;create&#39;</span>})),
-
-To resume the stack<span style="color:#f92672">-</span> <span style="color:#f92672">&gt;</span> BuildHookViewSet <span style="color:#f92672">-&gt;</span> starts a new Build object <span style="color:#f92672">and</span> <span style="color:#66d9ef">with</span> a post_save signal starts a new release <span style="color:#66d9ef">with</span> models<span style="color:#f92672">/</span>build<span style="color:#f92672">.</span>py:<span style="color:#ae81ff">65</span>
-
-self<span style="color:#f92672">.</span>app<span style="color:#f92672">.</span>deploy(new_release)
-
-models<span style="color:#f92672">/</span>app<span style="color:#f92672">.</span>py:<span style="color:#ae81ff">446</span> <span style="color:#66d9ef">as</span> a FK of the build<span style="color:#f92672">.</span> lets deploy a new revision of the app<span style="color:#f92672">.</span>
-
-tasks <span style="color:#f92672">=</span> [
-	functools<span style="color:#f92672">.</span>partial(
-		self<span style="color:#f92672">.</span>_scheduler<span style="color:#f92672">.</span>deploy,
-		namespace<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>id,
-		name<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_get_job_id(scale_type),
-		image<span style="color:#f92672">=</span>image,
-		entrypoint<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_get_entrypoint(scale_type),
-		command<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_get_command(scale_type),
-		<span style="color:#f92672">**</span>kwargs
-	) <span style="color:#66d9ef">for</span> scale_type, kwargs <span style="color:#f92672">in</span> deploys<span style="color:#f92672">.</span>items()
-]
-
-async_run(tasks)  <span style="color:#75715e"># Just a bunch of asyncio threads</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>urls<span style="color:#f92672">.</span>py
+</span></span><span style="display:flex;"><span>url(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;^hooks/build/?$&#39;</span>, views<span style="color:#f92672">.</span>BuildHookViewSet<span style="color:#f92672">.</span>as_view({<span style="color:#e6db74">&#39;post&#39;</span>: <span style="color:#e6db74">&#39;create&#39;</span>})),
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To resume the stack<span style="color:#f92672">-</span> <span style="color:#f92672">&gt;</span> BuildHookViewSet <span style="color:#f92672">-&gt;</span> starts a new Build object <span style="color:#f92672">and</span> <span style="color:#66d9ef">with</span> a post_save signal starts a new release <span style="color:#66d9ef">with</span> models<span style="color:#f92672">/</span>build<span style="color:#f92672">.</span>py:<span style="color:#ae81ff">65</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>self<span style="color:#f92672">.</span>app<span style="color:#f92672">.</span>deploy(new_release)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>models<span style="color:#f92672">/</span>app<span style="color:#f92672">.</span>py:<span style="color:#ae81ff">446</span> <span style="color:#66d9ef">as</span> a FK of the build<span style="color:#f92672">.</span> lets deploy a new revision of the app<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tasks <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>	functools<span style="color:#f92672">.</span>partial(
+</span></span><span style="display:flex;"><span>		self<span style="color:#f92672">.</span>_scheduler<span style="color:#f92672">.</span>deploy,
+</span></span><span style="display:flex;"><span>		namespace<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>id,
+</span></span><span style="display:flex;"><span>		name<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_get_job_id(scale_type),
+</span></span><span style="display:flex;"><span>		image<span style="color:#f92672">=</span>image,
+</span></span><span style="display:flex;"><span>		entrypoint<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_get_entrypoint(scale_type),
+</span></span><span style="display:flex;"><span>		command<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_get_command(scale_type),
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">**</span>kwargs
+</span></span><span style="display:flex;"><span>	) <span style="color:#66d9ef">for</span> scale_type, kwargs <span style="color:#f92672">in</span> deploys<span style="color:#f92672">.</span>items()
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>async_run(tasks)  <span style="color:#75715e"># Just a bunch of asyncio threads</span></span></span></code></pre></div></p>
 <p>
 The _scheduler object here looks interesting, the AuditModel (parent of App) do importlib.import_module(settings.SCHEDULER_MODULE) on scheduler property, the scheduler module starts the KubeHTTPClient and the deploy creates/update a deployment Kubernetes via REST API with some custom data.</p>
 </div>
@@ -483,7 +472,7 @@ HELM
 <p>
 Helm 2.0 [6] is Kubernetes package manager build by DEIS, you can find some ready Charts, kudos to the Jenkins one:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">helm install stable/jenkins</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm install stable/jenkins</span></span></code></pre></div></p>
 <p>
 You can start your own helm with create and manage the deployments with upgrade, releases and etc. Another good project on top of kubernetes to keep the eye on.</p>
 </div>
@@ -573,7 +562,7 @@ Bibliography
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

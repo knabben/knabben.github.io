@@ -6,7 +6,7 @@
     
     <title>Network Policy E2E test suite | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Network Policy E2E test suite" />
 <meta property="og:description" content="Walkthrough on netpol E2E framework" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/netpol/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/netpol/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-12-27T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-12-27T00:00:00+00:00" />
 <meta itemprop="name" content="Network Policy E2E test suite">
-<meta itemprop="description" content="Walkthrough on netpol E2E framework">
-<meta itemprop="datePublished" content="2020-12-27T00:00:00+00:00" />
+<meta itemprop="description" content="Walkthrough on netpol E2E framework"><meta itemprop="datePublished" content="2020-12-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-12-27T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1654">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Network Policy E2E test suite"/>
 <meta name="twitter:description" content="Walkthrough on netpol E2E framework"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Network Policy E2E test suite</h1>
       
       
@@ -168,856 +164,711 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="network-policy">Network policy</h2>
-
 <p>This post documents a few steps to test the E2E framework using the Kind cluster with different
 CNIs, giving the developer some good tooling for debugging and quick test replication.</p>
-
 <p>Use this <a href="https://github.com/jayunit100/k8sprototypes/blob/master/kind/kind-local-up.sh">script</a> to bring a
 Kind cluster with a specific CNI setup.</p>
-
 <h3 id="finding-the-config-parameters">Finding the config parameters</h3>
-
 <p>In the <em>~/.kube/config</em> you can find the Cluster sections host, use the IP and Port to start the tests.</p>
-<pre><code>apiVersion: v1
+<pre tabindex="0"><code>apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: ...
-    server: https://127.0.0.1:39913</code></pre>
-<h3 id="focused-tests">Focused tests</h3>
-
+    server: https://127.0.0.1:39913
+</code></pre><h3 id="focused-tests">Focused tests</h3>
 <p>Use this command to start the test suite:</p>
-<pre><code>KUBERNETES_SERVICE_HOST=127.0.0.1 KUBERNETES_SERVICE_PORT=39913 \
+<pre tabindex="0"><code>KUBERNETES_SERVICE_HOST=127.0.0.1 KUBERNETES_SERVICE_PORT=39913 \
     _output/local/bin/linux/amd64/e2e.test \
     --provider=local \
     --ginkgo.focus=&#34;Netpol&#34; \
     --kubeconfig=/root/.kube/config \
-    --report-dir=/tmp/output</code></pre>
-<p>The focus will provide the <em>Network Policy</em> under <em>test/e2e/netpol/network_policy.go</em> on this namespace:</p>
-
+    --report-dir=/tmp/output
+</code></pre><p>The focus will provide the <em>Network Policy</em> under <em>test/e2e/netpol/network_policy.go</em> on this namespace:</p>
 <ul>
 <li><strong>[sig-network] Netpol [LinuxOnly] NetworkPolicy between server and client</strong></li>
 </ul>
-
 <p>More details and stdout are on <em>junit_01.xml</em> files on each folder.</p>
-
 <h3 id="antrea">Antrea</h3>
-
 <p>Time: <a href="../output_antrea/junit_01.xml">1451.601s</a></p>
-
 <p>Command:</p>
-<pre><code>sandbox:~$ CLUSTER=antrea ./kind-local-up.sh</code></pre>
-<table>
+<pre tabindex="0"><code>sandbox:~$ CLUSTER=antrea ./kind-local-up.sh
+</code></pre><table>
 <thead>
 <tr>
-<th align="right">time</th>
-<th align="left">failed</th>
-<th align="left">name</th>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
-<td align="right">41.3918</td>
-<td align="left"></td>
-<td align="left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.3918</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.7032</td>
-<td align="left"></td>
-<td align="left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.7032</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.072</td>
-<td align="left"></td>
-<td align="left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.072</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.149</td>
-<td align="left"></td>
-<td align="left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.149</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">41.0726</td>
-<td align="left"></td>
-<td align="left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.0726</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">44.5425</td>
-<td align="left"></td>
-<td align="left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">44.5425</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.6281</td>
-<td align="left"></td>
-<td align="left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.6281</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.2286</td>
-<td align="left"></td>
-<td align="left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.2286</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">36.7815</td>
-<td align="left"></td>
-<td align="left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.7815</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.8188</td>
-<td align="left"></td>
-<td align="left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">42.8188</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">54.6405</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">54.6405</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">59.7764</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">59.7764</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.7333</td>
-<td align="left"></td>
-<td align="left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.7333</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.2669</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.2669</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.9143</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.9143</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.8143</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.8143</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.8272</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.8272</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.5747</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.5747</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">36.7824</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.7824</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.2507</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.2507</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.7376</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.7376</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.2833</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.2833</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">49.4517</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce updated policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">49.4517</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.1706</td>
-<td align="left"></td>
-<td align="left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.1706</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.1481</td>
-<td align="left"></td>
-<td align="left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+<td style="text-align:right">37.1481</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
 </tr>
-
 <tr>
-<td align="right">38.1034</td>
-<td align="left"></td>
-<td align="left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+<td style="text-align:right">38.1034</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
 </tr>
-
 <tr>
-<td align="right">189.733</td>
-<td align="left"></td>
-<td align="left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+<td style="text-align:right">189.733</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.0466</td>
-<td align="left"></td>
-<td align="left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.0466</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">44.9421</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">44.9421</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">41.5988</td>
-<td align="left"></td>
-<td align="left">should support allow-all policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.5988</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">44.2273</td>
-<td align="left"></td>
-<td align="left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+<td style="text-align:right">44.2273</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
 </tr>
 </tbody>
 </table>
-
 <h3 id="cilium">Cilium</h3>
-
 <p>Time: <a href="../output_cilium/junit_01.xml">1370.553s</a></p>
-
 <p>Command:</p>
-<pre><code>sandbox:~$ CLUSTER=cilium ./kind-local-up.sh</code></pre>
-<table>
+<pre tabindex="0"><code>sandbox:~$ CLUSTER=cilium ./kind-local-up.sh
+</code></pre><table>
 <thead>
 <tr>
-<th align="right">time</th>
-<th align="left">failed</th>
-<th align="left">name</th>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
-<td align="right">43.7662</td>
-<td align="left"></td>
-<td align="left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.7662</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.4651</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.4651</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.7539</td>
-<td align="left"></td>
-<td align="left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.7539</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">50.204</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+<td style="text-align:right">50.204</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">48.8958</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">48.8958</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.9659</td>
-<td align="left"></td>
-<td align="left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.9659</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">46.3589</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">46.3589</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">36.8897</td>
-<td align="left"></td>
-<td align="left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.8897</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">44.3379</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">44.3379</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">40.0372</td>
-<td align="left"></td>
-<td align="left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">40.0372</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.7602</td>
-<td align="left"></td>
-<td align="left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.7602</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">52.7325</td>
-<td align="left"></td>
-<td align="left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">52.7325</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.2191</td>
-<td align="left"></td>
-<td align="left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">42.2191</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.8015</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.8015</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">36.4353</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.4353</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.2781</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.2781</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.684</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.684</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.2452</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.2452</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.326</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.326</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.603</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.603</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.2863</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.2863</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.1103</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.1103</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">40.9576</td>
-<td align="left"></td>
-<td align="left">should enforce updated policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">40.9576</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">41.2865</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.2865</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.2095</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+<td style="text-align:right">42.2095</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
 </tr>
-
 <tr>
-<td align="right">37.474</td>
-<td align="left"></td>
-<td align="left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+<td style="text-align:right">37.474</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
 </tr>
-
 <tr>
-<td align="right">112.803</td>
-<td align="left"></td>
-<td align="left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+<td style="text-align:right">112.803</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">41.3663</td>
-<td align="left"></td>
-<td align="left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.3663</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.0023</td>
-<td align="left"></td>
-<td align="left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.0023</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.1974</td>
-<td align="left"></td>
-<td align="left">should support allow-all policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">42.1974</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">43.8719</td>
-<td align="left"></td>
-<td align="left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+<td style="text-align:right">43.8719</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
 </tr>
 </tbody>
 </table>
-
 <h3 id="calico">Calico</h3>
-
 <p>Time: <a href="../output_calico/junit_01.xml">1324.684s</a></p>
-
 <p>Command:</p>
-<pre><code>sandbox:~$ CLUSTER=calico ./kind-local-up.sh</code></pre>
-<table>
+<pre tabindex="0"><code>sandbox:~$ CLUSTER=calico ./kind-local-up.sh
+</code></pre><table>
 <thead>
 <tr>
-<th align="right">time</th>
-<th align="left">failed</th>
-<th align="left">name</th>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
-<td align="right">35.8095</td>
-<td align="left"></td>
-<td align="left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">35.8095</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">34.0198</td>
-<td align="left"></td>
-<td align="left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">34.0198</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.3741</td>
-<td align="left"></td>
-<td align="left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.3741</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.5764</td>
-<td align="left"></td>
-<td align="left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+<td style="text-align:right">42.5764</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">72.1853</td>
-<td align="left"></td>
-<td align="left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">72.1853</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">44.9761</td>
-<td align="left"></td>
-<td align="left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">44.9761</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.9649</td>
-<td align="left"></td>
-<td align="left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.9649</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.2776</td>
-<td align="left"></td>
-<td align="left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.2776</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">34.4918</td>
-<td align="left"></td>
-<td align="left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">34.4918</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.5749</td>
-<td align="left"></td>
-<td align="left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">42.5749</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.7623</td>
-<td align="left"></td>
-<td align="left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.7623</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">45.2768</td>
-<td align="left"></td>
-<td align="left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">45.2768</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.146</td>
-<td align="left"></td>
-<td align="left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.146</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.3511</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.3511</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">34.7001</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">34.7001</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">35.1533</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">35.1533</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">35.1159</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">35.1159</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">41.341</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.341</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.4367</td>
-<td align="left"></td>
-<td align="left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.4367</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">56.606</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">56.606</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">35.0263</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">35.0263</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">39.1988</td>
-<td align="left"></td>
-<td align="left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">39.1988</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.3293</td>
-<td align="left"></td>
-<td align="left">should enforce updated policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.3293</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.7177</td>
-<td align="left"></td>
-<td align="left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.7177</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.6838</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+<td style="text-align:right">42.6838</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
 </tr>
-
 <tr>
-<td align="right">33.4298</td>
-<td align="left"></td>
-<td align="left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+<td style="text-align:right">33.4298</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
 </tr>
-
 <tr>
-<td align="right">108.302</td>
-<td align="left"></td>
-<td align="left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+<td style="text-align:right">108.302</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">41.1466</td>
-<td align="left"></td>
-<td align="left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.1466</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.3876</td>
-<td align="left"></td>
-<td align="left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.3876</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">41.9732</td>
-<td align="left"></td>
-<td align="left">should support allow-all policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">41.9732</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">44.1808</td>
-<td align="left"></td>
-<td align="left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+<td style="text-align:right">44.1808</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
 </tr>
 </tbody>
 </table>
-
 <h3 id="no-cni">No CNI</h3>
-
 <p>Time: <a href="../output_nocni/junit_01.xml">1093.335</a></p>
-
 <p>Command (without Netpol support):</p>
-<pre><code>sandbox:~$ kind cluster create</code></pre>
-<table>
+<pre tabindex="0"><code>sandbox:~$ kind cluster create
+</code></pre><table>
 <thead>
 <tr>
-<th align="right">time</th>
-<th align="left">failed</th>
-<th align="left">name</th>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
-<td align="right">36.8562</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.8562</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.117</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.117</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.6975</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.6975</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.4686</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.4686</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">32.0948</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">32.0948</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">36.5492</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.5492</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">36.3705</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.3705</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">37.9346</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">37.9346</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.477</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.477</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.6098</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.6098</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.2607</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.2607</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.4111</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.4111</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">36.2295</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">36.2295</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">31.8398</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+<td style="text-align:right">31.8398</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.3985</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.3985</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.3989</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.3989</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">32.5186</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">32.5186</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.3631</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.3631</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">32.8972</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+<td style="text-align:right">32.8972</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">32.2191</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">32.2191</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.2643</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.2643</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.6517</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.6517</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">40.643</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should enforce updated policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">40.643</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">32.9202</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+<td style="text-align:right">32.9202</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">42.4549</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+<td style="text-align:right">42.4549</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
 </tr>
-
 <tr>
-<td align="right">37.3655</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+<td style="text-align:right">37.3655</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
 </tr>
-
 <tr>
-<td align="right">38.5486</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.5486</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">33.6928</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">33.6928</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">38.0615</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">38.0615</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">31.8662</td>
-<td align="left"></td>
-<td align="left">should support allow-all policy [Feature:NetworkPolicy]</td>
+<td style="text-align:right">31.8662</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
 </tr>
-
 <tr>
-<td align="right">32.9995</td>
-<td align="left"><em>failed</em></td>
-<td align="left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+<td style="text-align:right">32.9995</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
 </tr>
 </tbody>
 </table>
-
 <h2 id="more-information">More information</h2>
-
 <ul>
 <li>@jayunit100 - test matrix - <a href="https://github.com/kubernetes/kubernetes/pull/91592">https://github.com/kubernetes/kubernetes/pull/91592</a></li>
 <li>Initial setup post - <a href="https://jayunit100.blogspot.com/2020/05/visualize-networkpolicies-as-truthtables.html">https://jayunit100.blogspot.com/2020/05/visualize-networkpolicies-as-truthtables.html</a></li>
@@ -1029,7 +880,7 @@ clusters:
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

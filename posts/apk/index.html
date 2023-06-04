@@ -6,7 +6,7 @@
     
     <title>Android APK hacking | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,29 +28,24 @@
     
     
     <meta property="og:title" content="Android APK hacking" />
-<meta property="og:description" content="Introduction   The post today is about fun, Kali Linux and Android apps hacking. Check it out!
- Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
-  Host enumeration   The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary." />
+<meta property="og:description" content="Introduction The post today is about fun, Kali Linux and Android apps hacking. Check it out!
+Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
+Host enumeration The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/apk/" />
+<meta property="og:url" content="https://opssec.in/posts/apk/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2016-12-16T00:00:00+00:00" />
 <meta property="article:modified_time" content="2016-12-16T00:00:00+00:00" />
 <meta itemprop="name" content="Android APK hacking">
-<meta itemprop="description" content="Introduction   The post today is about fun, Kali Linux and Android apps hacking. Check it out!
- Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
-  Host enumeration   The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary.">
-<meta itemprop="datePublished" content="2016-12-16T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction The post today is about fun, Kali Linux and Android apps hacking. Check it out!
+Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
+Host enumeration The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary."><meta itemprop="datePublished" content="2016-12-16T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2016-12-16T00:00:00+00:00" />
 <meta itemprop="wordCount" content="726">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Android APK hacking"/>
-<meta name="twitter:description" content="Introduction   The post today is about fun, Kali Linux and Android apps hacking. Check it out!
- Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
-  Host enumeration   The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary."/>
+<meta name="twitter:description" content="Introduction The post today is about fun, Kali Linux and Android apps hacking. Check it out!
+Why? Because people hide your access and don&#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
+Host enumeration The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary."/>
 
   </head>
 
@@ -165,6 +160,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Android APK hacking</h1>
       
       
@@ -204,15 +200,15 @@ The idea is to sniff the network with a man in the middle attack and try to find
 <p>
 The ARP (address resolution protocol) is a MAC Address -&gt; IP translation protocol, lets say my IP machine is 192.168.0.6 and I want to hit 192.168.0.10, when I send a packet for this host and don&#39;t have my MAC table filled (arp -a), I start to ask everyone of the network Who-has this IP.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">a4:02:b9:04:86:99 &gt; ff:ff:ff:ff:ff:ff, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Request who-has 192.168.0.10 tell 192.168.0.6, length <span style="color:#ae81ff">28</span>
-cc:61:e5:70:b4:9e &gt; a4:02:b9:04:86:99, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.10 is-at cc:61:e5:70:b4:9e, length <span style="color:#ae81ff">28</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>a4:02:b9:04:86:99 &gt; ff:ff:ff:ff:ff:ff, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Request who-has 192.168.0.10 tell 192.168.0.6, length <span style="color:#ae81ff">28</span>
+</span></span><span style="display:flex;"><span>cc:61:e5:70:b4:9e &gt; a4:02:b9:04:86:99, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.10 is-at cc:61:e5:70:b4:9e, length <span style="color:#ae81ff">28</span></span></span></code></pre></div></p>
 <p>
 The owner send me back his MAC address, so the OS can craft the full TCP/IP packet. What we are going to do is spoof this reply and overwrite the target arp table, without his request. I am going to use arpspoof -i wlan0 -t 192.168.0.10 192.168.0.1</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">07:30:45.655767 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span>
-07:30:47.655964 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span>
-07:30:49.656158 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span>
-07:30:51.656306 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>07:30:45.655767 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span>
+</span></span><span style="display:flex;"><span>07:30:47.655964 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span>
+</span></span><span style="display:flex;"><span>07:30:49.656158 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span>
+</span></span><span style="display:flex;"><span>07:30:51.656306 a4:02:b9:04:86:99 &gt; 00:00:00:00:00:00, ethertype ARP <span style="color:#f92672">(</span>0x0806<span style="color:#f92672">)</span>, length 42: Ethernet <span style="color:#f92672">(</span>len 6<span style="color:#f92672">)</span>, IPv4 <span style="color:#f92672">(</span>len 4<span style="color:#f92672">)</span>, Reply 192.168.0.1 is-at a4:02:b9:04:86:99, length <span style="color:#ae81ff">28</span></span></span></code></pre></div></p>
 <p>
 It keeps saying: Hey. target .10, your default gateway is on (a4:02…). The problem is, a4:02… is my own machine mac address, so the target starts to send his packets to my MAC (the network switch equipment will do it), and with a simple TCPdump command I can start to learn about the target.</p>
 </div>
@@ -225,7 +221,7 @@ SSL
 <p>
 Oh the app uses SSL as it should be doing. So we need an after-step mitmproxy and a certificate installed on the client. On Security menu is possible to install the certificate pushed to your phone.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">adb push ~/.mitmproxy/mitmproxy-ca-cert.cer /sdcard/</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>adb push ~/.mitmproxy/mitmproxy-ca-cert.cer /sdcard/</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-5" class="outline-3">
@@ -236,33 +232,33 @@ Bank sniffing
 <p>
 After you play around the app you see the requests on MITMProxy, for example the account balance data for a known bank:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt;&gt; POST https://m.santander.com.br/MbbNovoMobileServices/SetupEndpointService
-&gt;&gt; POST https://m.santander.com.br/MbbNovoMobileServices/SaldoContaEndpointService
-
-&lt;?xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;1.0&#39;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>?&gt;
-&lt;soapenv:Envelope xmlns:soapenv<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://schemas.xmlsoap.org/soap/envelope/&#34;</span>&gt;
-  &lt;soapenv:Body&gt;
-    &lt;dlwmin:consultarExtratoPorPeriodoResponse xmlns:dlwmin<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://webservice.mbb.app.bsbr.altec.com/&#34;</span> xmlns:
-      &lt;<span style="color:#66d9ef">return</span>&gt;
-        &lt;lancamentos&gt;
-          &lt;data&gt;15/12/2016&lt;/data&gt;
-          &lt;docto/&gt;
-          &lt;historico&gt;SALDO ANTERIOR&lt;/historico&gt;
-          &lt;valor&gt;xxxx&lt;/valor&gt;
-        &lt;/lancamentos&gt;
-        &lt;lancamentos&gt;
-          &lt;data&gt;15/12/2016&lt;/data&gt;
-          &lt;docto&gt;xxx&lt;/docto&gt;
-          &lt;historico&gt;xxxx 15/12 yyy&lt;/historico&gt;
-          &lt;valor&gt;-xx,00&lt;/valor&gt;
-        &lt;/lancamentos&gt;
-        &lt;lancamentos&gt;
-          &lt;data&gt;16/12/2016&lt;/data&gt;
-          &lt;docto&gt;xxx&lt;/docto&gt;
-          &lt;historico&gt;xxxx 16/12 yyy&lt;/historico&gt;
-          &lt;valor&gt;-xx,00&lt;/valor&gt;
-        &lt;/lancamentos&gt;
-	...</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>&gt;&gt; POST https://m.santander.com.br/MbbNovoMobileServices/SetupEndpointService
+</span></span><span style="display:flex;"><span>&gt;&gt; POST https://m.santander.com.br/MbbNovoMobileServices/SaldoContaEndpointService
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;?xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;1.0&#39;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>?&gt;
+</span></span><span style="display:flex;"><span>&lt;soapenv:Envelope xmlns:soapenv<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://schemas.xmlsoap.org/soap/envelope/&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;soapenv:Body&gt;
+</span></span><span style="display:flex;"><span>    &lt;dlwmin:consultarExtratoPorPeriodoResponse xmlns:dlwmin<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://webservice.mbb.app.bsbr.altec.com/&#34;</span> xmlns:
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#66d9ef">return</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;lancamentos&gt;
+</span></span><span style="display:flex;"><span>          &lt;data&gt;15/12/2016&lt;/data&gt;
+</span></span><span style="display:flex;"><span>          &lt;docto/&gt;
+</span></span><span style="display:flex;"><span>          &lt;historico&gt;SALDO ANTERIOR&lt;/historico&gt;
+</span></span><span style="display:flex;"><span>          &lt;valor&gt;xxxx&lt;/valor&gt;
+</span></span><span style="display:flex;"><span>        &lt;/lancamentos&gt;
+</span></span><span style="display:flex;"><span>        &lt;lancamentos&gt;
+</span></span><span style="display:flex;"><span>          &lt;data&gt;15/12/2016&lt;/data&gt;
+</span></span><span style="display:flex;"><span>          &lt;docto&gt;xxx&lt;/docto&gt;
+</span></span><span style="display:flex;"><span>          &lt;historico&gt;xxxx 15/12 yyy&lt;/historico&gt;
+</span></span><span style="display:flex;"><span>          &lt;valor&gt;-xx,00&lt;/valor&gt;
+</span></span><span style="display:flex;"><span>        &lt;/lancamentos&gt;
+</span></span><span style="display:flex;"><span>        &lt;lancamentos&gt;
+</span></span><span style="display:flex;"><span>          &lt;data&gt;16/12/2016&lt;/data&gt;
+</span></span><span style="display:flex;"><span>          &lt;docto&gt;xxx&lt;/docto&gt;
+</span></span><span style="display:flex;"><span>          &lt;historico&gt;xxxx 16/12 yyy&lt;/historico&gt;
+</span></span><span style="display:flex;"><span>          &lt;valor&gt;-xx,00&lt;/valor&gt;
+</span></span><span style="display:flex;"><span>        &lt;/lancamentos&gt;
+</span></span><span style="display:flex;"><span>	...</span></span></code></pre></div></p>
 <p>
 You can parse data via a crawler (scrapy is a good tool for this) and provide an interface for it, or you can integrate with Prometheus for example and create alerts for certain thresholds for you correlated account balance.</p>
 </div>
@@ -275,23 +271,23 @@ Captchas (BONUS)
 <p>
 One of the websites I had crawled a long time ago, had some captchas to move on, this is a method in python + Tesseract to clean up the captcha and read the content:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">captcha</span>(self):
-   		im <span style="color:#f92672">=</span> array(Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;/tmp/what&#39;</span>)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>))
-		<span style="color:#66d9ef">for</span> idx_row, row <span style="color:#f92672">in</span> enumerate(im):
-			<span style="color:#75715e"># On grayscale get Max value (bg) and Min value (fg)</span>
-			max_v <span style="color:#f92672">=</span> row<span style="color:#f92672">.</span>max()
-			min_v <span style="color:#f92672">=</span> row<span style="color:#f92672">.</span>min()
-			<span style="color:#66d9ef">if</span> idx_row <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e"># Pass first one</span>
-				<span style="color:#66d9ef">for</span> idx_col, col <span style="color:#f92672">in</span> enumerate(row): <span style="color:#75715e"># Iterate through cols</span>
-					<span style="color:#66d9ef">try</span>:
-						before <span style="color:#f92672">=</span> im[idx_row<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][idx_col]
-						after <span style="color:#f92672">=</span> im[idx_row<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>][idx_col]
-						<span style="color:#66d9ef">if</span> col <span style="color:#f92672">==</span> max_v <span style="color:#f92672">and</span> before <span style="color:#f92672">&lt;</span> max_v <span style="color:#f92672">and</span> after <span style="color:#f92672">&lt;</span> max_v:
-							im[idx_row][idx_col] <span style="color:#f92672">=</span> before
-					<span style="color:#66d9ef">except</span> <span style="color:#a6e22e">IndexError</span>:
-						<span style="color:#66d9ef">pass</span>
-		imx <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(im, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;L&#39;</span>)
-		<span style="color:#66d9ef">return</span> image_to_string(imx)<span style="color:#f92672">.</span>upper()<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39; &#39;</span>)</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">captcha</span>(self):
+</span></span><span style="display:flex;"><span>   		im <span style="color:#f92672">=</span> array(Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;/tmp/what&#39;</span>)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> idx_row, row <span style="color:#f92672">in</span> enumerate(im):
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e"># On grayscale get Max value (bg) and Min value (fg)</span>
+</span></span><span style="display:flex;"><span>			max_v <span style="color:#f92672">=</span> row<span style="color:#f92672">.</span>max()
+</span></span><span style="display:flex;"><span>			min_v <span style="color:#f92672">=</span> row<span style="color:#f92672">.</span>min()
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> idx_row <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e"># Pass first one</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">for</span> idx_col, col <span style="color:#f92672">in</span> enumerate(row): <span style="color:#75715e"># Iterate through cols</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>						before <span style="color:#f92672">=</span> im[idx_row<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][idx_col]
+</span></span><span style="display:flex;"><span>						after <span style="color:#f92672">=</span> im[idx_row<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>][idx_col]
+</span></span><span style="display:flex;"><span>						<span style="color:#66d9ef">if</span> col <span style="color:#f92672">==</span> max_v <span style="color:#f92672">and</span> before <span style="color:#f92672">&lt;</span> max_v <span style="color:#f92672">and</span> after <span style="color:#f92672">&lt;</span> max_v:
+</span></span><span style="display:flex;"><span>							im[idx_row][idx_col] <span style="color:#f92672">=</span> before
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">except</span> <span style="color:#a6e22e">IndexError</span>:
+</span></span><span style="display:flex;"><span>						<span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>		imx <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(im, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;L&#39;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> image_to_string(imx)<span style="color:#f92672">.</span>upper()<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39; &#39;</span>)</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-7" class="outline-3">
@@ -323,7 +319,7 @@ Listening
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

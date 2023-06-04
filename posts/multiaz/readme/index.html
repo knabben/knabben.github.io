@@ -6,7 +6,7 @@
     
     <title>Multi AZ on Kubernetes and vSphere | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Multi AZ on Kubernetes and vSphere" />
 <meta property="og:description" content="Detail Windows clusters on Tanzu Kubernetes Grid vSphere with Multi-AZ support" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/multiaz/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/multiaz/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-22T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-03-22T00:00:00+00:00" />
 <meta itemprop="name" content="Multi AZ on Kubernetes and vSphere">
-<meta itemprop="description" content="Detail Windows clusters on Tanzu Kubernetes Grid vSphere with Multi-AZ support">
-<meta itemprop="datePublished" content="2023-03-22T00:00:00+00:00" />
+<meta itemprop="description" content="Detail Windows clusters on Tanzu Kubernetes Grid vSphere with Multi-AZ support"><meta itemprop="datePublished" content="2023-03-22T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-03-22T00:00:00+00:00" />
 <meta itemprop="wordCount" content="477">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Multi AZ on Kubernetes and vSphere"/>
 <meta name="twitter:description" content="Detail Windows clusters on Tanzu Kubernetes Grid vSphere with Multi-AZ support"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Multi AZ on Kubernetes and vSphere</h1>
       
       
@@ -168,104 +164,87 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="introduction">Introduction</h2>
-
 <p>Multi-AZ is a concept very well known on public clouds, its a technique used to provide high availability for services. On AWS they are distinct locations within an AWS region that re engineered to be isolated from failures in other AZ. On vSphere and on-premises, the datacenter is normally on one building only, and the AZ can be defined by server racks instead for exmaple. On this blog post I will cover a few notes on how to use ClusterAPI vSphere and setup a Kubernetes cluster on a segmented infrastructure on vCenter.</p>
-
 <h2 id="initial-concepts">Initial concepts</h2>
-
 <p>To provide integration with the underlying infrastructure, Kubernetes implements the Cloud Provider Interface, it decouple the Controller manager
 control loops regarding the infra, a few interfaces that can be implemented in the CPI are Node, route, service and custom control loops.
 The CPI can also apply zones and region labels to the nodes. It can be enabled by tagging VMs on vSphere with the desired labels.
 You can check the spread on node labels <code>failure-domain.kubernetes.io/zone</code> and <code>failure-domain.kubernetes.io/region</code> [1]</p>
-
 <p>Accordingly to the ClusterAPI vSphere failure domain proposal, vSphere DOES NOT support native region/zone concept,
 to utilize the k8s failure domain feature which relies on nodes with region/zones labels, vsphere CPI added support for region/zone
 deployment options, using tags to configure the topology. It gives users full flexibility to configure arbitrary region and zone definitions [2]</p>
-
 <h3 id="practice">Practice</h3>
-
 <p>For this example we going to spread the nodes across multiple compute clusters in the same Datacenter, this diagram was taken from the CPI website. [3]</p>
-
 <img src="/posts/multiaz/images/clusterbased.png" alt="" class="" style="width: 60%; ">
 
-
 <p>Create 2 categories called k8s-zone and k8s-region, clusters must be tagged as zones and your DC is tagged as region, on this example the region <code>us-east-1</code>, has 3 zones:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ govc tags.attach -c k8s-region us-east-1 /dc0
-
-$ govc tags.attach -c k8s-zone us-east-1a /dc0/host/cluster0
-$ govc tags.attach -c k8s-zone us-east-1b /dc0/host/cluster1
-$ govc tags.attach -c k8s-zone us-east-1c /dc0/host/cluster2</code></pre></div>
-<p>Create 3 clusters in the datacenter and add a resourcePool on each, make sure DRS is enabled for the constraint update.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-region us-east-1 /dc0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-zone us-east-1a /dc0/host/cluster0
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-zone us-east-1b /dc0/host/cluster1
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-zone us-east-1c /dc0/host/cluster2
+</span></span></code></pre></div><p>Create 3 clusters in the datacenter and add a resourcePool on each, make sure DRS is enabled for the constraint update.</p>
 <h3 id="running-with-failure-domain">Running with failure domain</h3>
-
 <p>Create the failure domain and zone deployment objects like the example for all 3 zones:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VSphereFailureDomain</span>
-<span style="color:#f92672">metadata</span>:
- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
-<span style="color:#f92672">spec</span>:
- <span style="color:#f92672">region</span>:
-   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1</span>
-   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">Datacenter</span>
-   <span style="color:#f92672">tagCategory</span>: <span style="color:#ae81ff">k8s-region</span>
- <span style="color:#f92672">zone</span>:
-   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
-   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">ComputeCluster</span>
-   <span style="color:#f92672">tagCategory</span>: <span style="color:#ae81ff">k8s-zone</span>
- <span style="color:#f92672">topology</span>:
-   <span style="color:#f92672">datacenter</span>: <span style="color:#ae81ff">dc0</span>
-   <span style="color:#f92672">computeCluster</span>: <span style="color:#ae81ff">cluster0</span>
-   <span style="color:#f92672">datastore</span>: <span style="color:#ae81ff">sharedVmfs-0</span>
-   <span style="color:#f92672">networks</span>:
-   - <span style="color:#ae81ff">VM Network</span>
----
-<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VSphereDeploymentZone</span>
-<span style="color:#f92672">metadata</span>:
- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
-<span style="color:#f92672">spec</span>:
- <span style="color:#f92672">server</span>: <span style="color:#ae81ff">10.180.0.1</span>
- <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1a</span>
- <span style="color:#f92672">placementConstraint</span>:
-   <span style="color:#f92672">folder</span>: <span style="color:#ae81ff">folder0</span>
-   <span style="color:#f92672">resourcePool</span>: <span style="color:#ae81ff">rp0</span></code></pre></div>
-<p>Make sure your Cluster object machine deployment has the correct <code>failureDomain</code> set.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">    <span style="color:#f92672">workers</span>:
-      <span style="color:#f92672">machineDeployments</span>:
-      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">windows</span>
-        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1a</span>
-        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-0</span>
-        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">windows</span>
-        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1b</span>
-        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-1</span>
-        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">worker</span>
-        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1c</span>
-        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-2</span>
-        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span></code></pre></div>
-<h3 id="creating-the-cluster">Creating the cluster</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VSphereFailureDomain</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">region</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">Datacenter</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">tagCategory</span>: <span style="color:#ae81ff">k8s-region</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">zone</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">ComputeCluster</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">tagCategory</span>: <span style="color:#ae81ff">k8s-zone</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">topology</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">datacenter</span>: <span style="color:#ae81ff">dc0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">computeCluster</span>: <span style="color:#ae81ff">cluster0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">datastore</span>: <span style="color:#ae81ff">sharedVmfs-0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>   - <span style="color:#ae81ff">VM Network</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VSphereDeploymentZone</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">server</span>: <span style="color:#ae81ff">10.180.0.1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">placementConstraint</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">folder</span>: <span style="color:#ae81ff">folder0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">resourcePool</span>: <span style="color:#ae81ff">rp0</span>
+</span></span></code></pre></div><p>Make sure your Cluster object machine deployment has the correct <code>failureDomain</code> set.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>    <span style="color:#f92672">workers</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">machineDeployments</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1b</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">worker</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1c</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h3 id="creating-the-cluster">Creating the cluster</h3>
 <p>You will get some balanced node spread across the vSphere clusters like, this applies for both workloads and control planen nodes.</p>
-
 <img src="/posts/multiaz/images/cluster.png" alt="" class="" style="width: 30%; ">
 
-
 <h2 id="listening">Listening</h2>
-
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/V4U7E4vZHC4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-
 <h2 id="references">References</h2>
-
 <p>[1] <a href="https://github.com/kubernetes/cloud-provider-vsphere/blob/master/docs/book/cloud_provider_interface.md#node-zonesregions-topology">https://github.com/kubernetes/cloud-provider-vsphere/blob/master/docs/book/cloud_provider_interface.md#node-zonesregions-topology</a></p>
-
 <p>[2] <a href="https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/proposal/20201103-failure-domain.md">https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/proposal/20201103-failure-domain.md</a></p>
-
 <p>[3] <a href="https://cloud-provider-vsphere.sigs.k8s.io/tutorials/deploying_cpi_with_multi_dc_vc_aka_zones.html">https://cloud-provider-vsphere.sigs.k8s.io/tutorials/deploying_cpi_with_multi_dc_vc_aka_zones.html</a></p>
 <ul class="pa0">
   
@@ -274,7 +253,7 @@ $ govc tags.attach -c k8s-zone us-east-1c /dc0/host/cluster2</code></pre></div>
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

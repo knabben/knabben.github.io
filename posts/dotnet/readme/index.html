@@ -6,7 +6,7 @@
     
     <title>Windows Containers and .NET apps | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Windows Containers and .NET apps" />
 <meta property="og:description" content="How to run Windows workload" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/dotnet/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/dotnet/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-30T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-03-30T00:00:00+00:00" />
 <meta itemprop="name" content="Windows Containers and .NET apps">
-<meta itemprop="description" content="How to run Windows workload">
-<meta itemprop="datePublished" content="2023-03-30T00:00:00+00:00" />
+<meta itemprop="description" content="How to run Windows workload"><meta itemprop="datePublished" content="2023-03-30T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-03-30T00:00:00+00:00" />
 <meta itemprop="wordCount" content="841">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Windows Containers and .NET apps"/>
 <meta name="twitter:description" content="How to run Windows workload"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Windows Containers and .NET apps</h1>
       
       
@@ -168,182 +164,155 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="introduction">Introduction</h2>
-
-<p>That's a common question, what kind of workloads can you run on Windows clusters? In this post we are going to check the possibilities and how to build and run these services on a Windows cluster. There's a plenty of examples on all languages and build process spread over the Internet. This document intends to enumerate and list them for a quick review and reference.</p>
-
+<p>That&rsquo;s a common question, what kind of workloads can you run on Windows clusters? In this post we are going to check the possibilities and how to build and run these services on a Windows cluster. There&rsquo;s a plenty of examples on all languages and build process spread over the Internet. This document intends to enumerate and list them for a quick review and reference.</p>
 <p>To do your choice a few topics that can compare both technologies. [1] Use .NET for your server application when:</p>
-
 <ul>
 <li>You have cross-platform needs.</li>
-<li>You're targeting microservices.</li>
-<li>You're using Docker containers.</li>
+<li>You&rsquo;re targeting microservices.</li>
+<li>You&rsquo;re using Docker containers.</li>
 <li>You need high-performance and scalable systems.</li>
 <li>You need side-by-side .NET versions per application.</li>
 </ul>
-
 <p>Use .NET Framework for your server application when:</p>
-
 <ul>
 <li>Your app currently uses .NET Framework (recommendation is to extend instead of migrating).</li>
 <li>Your app uses third-party libraries or NuGet packages not available for .NET.</li>
-<li>Your app uses .NET Framework technologies that aren't available for .NET.</li>
-<li>Your app uses a platform that doesn't support .NET.</li>
+<li>Your app uses .NET Framework technologies that aren&rsquo;t available for .NET.</li>
+<li>Your app uses a platform that doesn&rsquo;t support .NET.</li>
 </ul>
-
 <h3 id="net-framework">.NET framework</h3>
-
 <p>MS announced .NET in 2000, being the platform for Windows API development. In this architecture at the time .NET framework was the first platform for development, the last released version is 4.8 and the project was discontinued in 2022. The most common case of usage is to run your current application that was no migrated aka legacy workloads. A few technologies like ASP.NET Web Forms Applications are supported only in .NET framework.</p>
-
 <p>Apps are written in C#, F# or Visual Basic and compiled for Common Intermediary Language (CIL). The main resources are the Common Lanuage Runtime (CRL) and the .NET framework class library. The program only runs on Windows machines. Lets start with the examples on [2]. If you notice only the WindowsServerCore SDK and Runtime are available, meaning the final container OCI image will have 4Gb of size, so be patient in the downloading.</p>
-
 <p>The first step is to build the image from a Dockerfile, check its split on 2 phase containers, the first part builds the binary with the SDK, the second one is responsible to run your ASP.NET application.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build</span>
-<span style="color:#ae81ff">WORKDIR /app</span>
-
-<span style="color:#75715e"># copy csproj and restore as distinct layers</span>
-<span style="color:#ae81ff">COPY *.sln .</span>
-<span style="color:#ae81ff">COPY aspnetapp/*.csproj ./aspnetapp/</span>
-<span style="color:#ae81ff">COPY aspnetapp/*.config ./aspnetapp/</span>
-<span style="color:#ae81ff">RUN nuget restore</span>
-
-<span style="color:#75715e"># copy everything else and build app</span>
-<span style="color:#ae81ff">COPY aspnetapp/. ./aspnetapp/</span>
-<span style="color:#ae81ff">WORKDIR /app/aspnetapp</span>
-<span style="color:#ae81ff">RUN msbuild /p:Configuration=Release -r:False</span>
-
-
-<span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8 AS runtime</span>
-<span style="color:#ae81ff">WORKDIR /inetpub/wwwroot</span>
-<span style="color:#ae81ff">COPY --from=build /app/aspnetapp/. ./</span></code></pre></div>
-<p>First thing to notice is you need a Windows machine with Docker to build the image for windows/amd64 architecture, with these images I could not build using buildx [3], but probably there's a way.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /app</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy csproj and restore as distinct layers</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY *.sln .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/*.csproj ./aspnetapp/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/*.config ./aspnetapp/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN nuget restore</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy everything else and build app</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/. ./aspnetapp/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /app/aspnetapp</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN msbuild /p:Configuration=Release -r:False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8 AS runtime</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /inetpub/wwwroot</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY --from=build /app/aspnetapp/. ./</span>
+</span></span></code></pre></div><p>First thing to notice is you need a Windows machine with Docker to build the image for windows/amd64 architecture, with these images I could not build using buildx [3], but probably there&rsquo;s a way.
 Expose the service and port 8000:80 will be available for requests.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
-  <span style="color:#f92672">labels</span>:
-    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
-<span style="color:#f92672">spec</span>:
-  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-  <span style="color:#f92672">selector</span>:
-    <span style="color:#f92672">matchLabels</span>:
-      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
-  <span style="color:#f92672">template</span>:
-    <span style="color:#f92672">metadata</span>:
-      <span style="color:#f92672">labels</span>:
-        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
-    <span style="color:#f92672">spec</span>:
-      <span style="color:#f92672">nodeSelector</span>:
-        <span style="color:#f92672">kubernetes.io/os</span>: <span style="color:#ae81ff">windows</span>
-      <span style="color:#f92672">containers</span>:
-      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
-        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mcr.microsoft.com/dotnet/framework/samples:aspnetapp</span>
-        <span style="color:#f92672">ports</span>:
-        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
----
-<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
-  <span style="color:#f92672">labels</span>:
-    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
-<span style="color:#f92672">spec</span>:
-  <span style="color:#f92672">ports</span>:
-  - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8000</span>
-    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
-  <span style="color:#f92672">selector</span>:
-    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span></code></pre></div>
-<img src="/posts/dotnet/dotnetfw.png" alt="" class="" style="width: 70%; ">
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodeSelector</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kubernetes.io/os</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mcr.microsoft.com/dotnet/framework/samples:aspnetapp</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span></code></pre></div><img src="/posts/dotnet/dotnetfw.png" alt="" class="" style="width: 70%; ">
 
 <h3 id="net-app">.NET app</h3>
-
 <p>Its a free, cross-platform, open source developer platform for builiding many kinds of apps. Its divided in two parts:</p>
-
 <ul>
 <li>.NET SDK: Set of tools, libraries, and runtimes for development, building, and testing apps.</li>
 <li>.NET Runtimes: Set of runtimes and libraries, for running apps.</li>
 </ul>
-
 <p>Again the SDK is used to build the image and the runtime to run your workload.
 The steps are different though in the sample [4]:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build</span>
-<span style="color:#ae81ff">WORKDIR /source</span>
-
-<span style="color:#75715e"># copy csproj and restore as distinct layers</span>
-<span style="color:#ae81ff">COPY aspnetapp/*.csproj .</span>
-<span style="color:#ae81ff">RUN dotnet restore --use-current-runtime</span>
-
-<span style="color:#75715e"># copy everything else and build app</span>
-<span style="color:#ae81ff">COPY aspnetapp/. .</span>
-<span style="color:#ae81ff">RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained false --no-restore</span>
-
-<span style="color:#75715e"># final stage/image</span>
-<span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/aspnet:7.0</span>
-<span style="color:#ae81ff">WORKDIR /app</span>
-<span style="color:#ae81ff">COPY --from=build /app .</span>
-<span style="color:#ae81ff">ENTRYPOINT [&#34;dotnet&#34;, &#34;aspnetapp.dll&#34;]</span></code></pre></div>
-<p>The <code>dotnet</code> CLI is available to build the project and run the final .dll. With the <code>SqlConnection</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /source</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy csproj and restore as distinct layers</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/*.csproj .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN dotnet restore --use-current-runtime</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy everything else and build app</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/. .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained false --no-restore</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># final stage/image</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/aspnet:7.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /app</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY --from=build /app .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">ENTRYPOINT [&#34;dotnet&#34;, &#34;aspnetapp.dll&#34;]</span>
+</span></span></code></pre></div><p>The <code>dotnet</code> CLI is available to build the project and run the final .dll. With the <code>SqlConnection</code>
 is possible to connect on a MSSQL server, the cool part is that it can run on Windows [5].</p>
-
 <h3 id="golang-mssql">Golang MSSQL</h3>
-
-<p>It's possible to compile a Golang app and run on Windows as well, you need two things:</p>
-
+<p>It&rsquo;s possible to compile a Golang app and run on Windows as well, you need two things:</p>
 <ol>
 <li>Compile a Windows compatible PE32 binary with GOOS=windows GOARCH=amd64</li>
 <li>and build a Windows compatible base image <code>FROM mcr.microsoft.com/windows/nanoserver:1809</code></li>
 </ol>
-
 <p>Copy the binary and run it. The one can test for example the connection to a MSSQL database with this example code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-        <span style="color:#75715e">// Build connection string
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">connString</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;server=%s;user id=%s;password=%s;port=%d;database=%s;&#34;</span>, <span style="color:#a6e22e">server</span>, <span style="color:#a6e22e">user</span>, <span style="color:#a6e22e">password</span>, <span style="color:#a6e22e">port</span>, <span style="color:#a6e22e">database</span>)
-        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
-
-        <span style="color:#75715e">// Create connection pool
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">db</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#e6db74">&#34;mssql&#34;</span>, <span style="color:#a6e22e">connString</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;Error creating connection pool: &#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
-        }
-
-        <span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
-        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
-
-        <span style="color:#a6e22e">appSignal</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#ae81ff">3</span>)
-        <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">appSignal</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
-
-        <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-                <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">appSignal</span>
-                <span style="color:#a6e22e">stop</span>()
-        }()
-
-        <span style="color:#a6e22e">Ping</span>(<span style="color:#a6e22e">ctx</span>)
-}
-</code></pre></div>
-<h2 id="conclusion">Conclusion</h2>
-
-<p>.NET workload is a very specialized one, and the framework is deprecated, still there's a lot of legacy workload and only Windows nodes can run it.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Build connection string
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">connString</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;server=%s;user id=%s;password=%s;port=%d;database=%s;&#34;</span>, <span style="color:#a6e22e">server</span>, <span style="color:#a6e22e">user</span>, <span style="color:#a6e22e">password</span>, <span style="color:#a6e22e">port</span>, <span style="color:#a6e22e">database</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Create connection pool
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">db</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#e6db74">&#34;mssql&#34;</span>, <span style="color:#a6e22e">connString</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;Error creating connection pool: &#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">appSignal</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">appSignal</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">appSignal</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">stop</span>()
+</span></span><span style="display:flex;"><span>        }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Ping</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>.NET workload is a very specialized one, and the framework is deprecated, still there&rsquo;s a lot of legacy workload and only Windows nodes can run it.
 For new apps is encouraged to use .NET or a more modern platform that can be used cross OS.</p>
-
 <h2 id="listening">Listening</h2>
-
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/89Wc6xzCLTA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-
 <h2 id="references">References</h2>
-
 <p>[1] <a href="https://learn.microsoft.com/en-us/dotnet/standard/choosing-core-framework-server">https://learn.microsoft.com/en-us/dotnet/standard/choosing-core-framework-server</a></p>
-
 <p>[2] <a href="https://hub.docker.com/_/microsoft-dotnet-framework-samples/">https://hub.docker.com/_/microsoft-dotnet-framework-samples/</a></p>
-
 <p>[3] <a href="https://fossies.org/linux/kubernetes/test/images/README.md#windows-test-images-considerations">https://fossies.org/linux/kubernetes/test/images/README.md#windows-test-images-considerations</a></p>
-
 <p>[4] <a href="https://github.com/dotnet/dotnet-docker">https://github.com/dotnet/dotnet-docker</a></p>
-
 <p>[5] <a href="https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup">https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup</a></p>
 <ul class="pa0">
   
@@ -352,7 +321,7 @@ For new apps is encouraged to use .NET or a more modern platform that can be use
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

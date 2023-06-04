@@ -6,7 +6,7 @@
     
     <title>Kubernetes Windows Nodes | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Kubernetes Windows Nodes" />
 <meta property="og:description" content="µsoft windows kubernetes playground" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/netpol-win/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/netpol-win/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-02-28T00:00:00+00:00" />
 <meta property="article:modified_time" content="2021-02-28T00:00:00+00:00" />
 <meta itemprop="name" content="Kubernetes Windows Nodes">
-<meta itemprop="description" content="µsoft windows kubernetes playground">
-<meta itemprop="datePublished" content="2021-02-28T00:00:00+00:00" />
+<meta itemprop="description" content="µsoft windows kubernetes playground"><meta itemprop="datePublished" content="2021-02-28T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-02-28T00:00:00+00:00" />
 <meta itemprop="wordCount" content="547">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubernetes Windows Nodes"/>
 <meta name="twitter:description" content="µsoft windows kubernetes playground"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Kubernetes Windows Nodes</h1>
       
       
@@ -168,31 +164,24 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h3 id="introduction">Introduction</h3>
-
 <p>This post is a walkthrough on using a Windows node to run network policies with
 agnhost:2.26 mappings in order to understand how suitable the netpol suite is ready for it.</p>
-
 <p><a href="https://github.com/kubernetes/kubernetes/tree/master/test/e2e/network/netpol">https://github.com/kubernetes/kubernetes/tree/master/test/e2e/network/netpol</a></p>
-
 <h3 id="setting-up-the-cluster">Setting up the cluster</h3>
-
 <img src="/posts/netpol-win/gcp_config.png" alt="" class="" style="width: 100%; ">
-
 
 <p>Our master needs to be on Linux, so a GCP Vm with COS is being used, following
 up the quickstart on this node:</p>
-
 <p><a href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart">https://docs.projectcalico.org/getting-started/kubernetes/quickstart</a></p>
-
 <p>Start the cluster in the following subnet with Kubeadm:</p>
-<pre><code>sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+<pre tabindex="0"><code>sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config</code></pre>
-<p>Install Calico operator and CRDs:</p>
-<pre><code>kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
-kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml</code></pre>
-<p>Check if the pods are running:</p>
-<pre><code>kubectl get pods -A
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre><p>Install Calico operator and CRDs:</p>
+<pre tabindex="0"><code>kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+</code></pre><p>Check if the pods are running:</p>
+<pre tabindex="0"><code>kubectl get pods -A
 calico-system     calico-kube-controllers-6797d7cc89-xmvwv   1/1     Running   0          79m
 calico-system     calico-node-hckk5                          1/1     Running   0          79m
 calico-system     calico-typha-7f598c987d-x2l7m              1/1     Running   0          79m
@@ -203,28 +192,22 @@ kube-system       kube-apiserver-hackbox                     1/1     Running   0
 kube-system       kube-controller-manager-hackbox            1/1     Running   0          103m
 kube-system       kube-proxy-nvfj4                           1/1     Running   0          103m
 kube-system       kube-scheduler-hackbox                     1/1     Running   0          103m
-tigera-operator   tigera-operator-549bf46b5c-kw6ng           1/1     Running   0          79m</code></pre>
-<h3 id="bringing-up-the-windows-node">Bringing up the Windows node</h3>
-
+tigera-operator   tigera-operator-549bf46b5c-kw6ng           1/1     Running   0          79m
+</code></pre><h3 id="bringing-up-the-windows-node">Bringing up the Windows node</h3>
 <img src="/posts/netpol-win/win.png" alt="" class="" style="width: 100%; ">
 
-
-<p>It's required to have at least:</p>
-
+<p>It&rsquo;s required to have at least:</p>
 <ul>
 <li><code>Windows Server 1909 (AKA 19H2 build 18362.1049 or greater), with Docker service enabled</code></li>
 </ul>
-
 <p>So we are using the <code>windows-server-1909-dc-core-for-containers-v20210212</code> machine, connect with RDP:</p>
-
 <p>So you will be able to run ommand as Administrator using powershell. Magically following the instructions
 on ProjectCalico tutorial will add the node on your cluster:</p>
-
 <p><a href="https://docs.projectcalico.org/getting-started/windows-calico/quickstart">https://docs.projectcalico.org/getting-started/windows-calico/quickstart</a></p>
-<pre><code>calicoctl ipam configure --strictaffinity=true  # this is important
-kubectl patch installation default --type=merge -p &#39;{&#34;spec&#34;: {&#34;calicoNetwork&#34;: {&#34;bgp&#34;: &#34;Disabled&#34;}}}&#39;</code></pre>
-<p>Copy the config from the cluster to the windows machine (from ~/.kube/config), and run the installation</p>
-<pre><code>$  c:\install-calico-windows.ps1 -KubeVersion 1.20.1
+<pre tabindex="0"><code>calicoctl ipam configure --strictaffinity=true  # this is important
+kubectl patch installation default --type=merge -p &#39;{&#34;spec&#34;: {&#34;calicoNetwork&#34;: {&#34;bgp&#34;: &#34;Disabled&#34;}}}&#39;
+</code></pre><p>Copy the config from the cluster to the windows machine (from ~/.kube/config), and run the installation</p>
+<pre tabindex="0"><code>$  c:\install-calico-windows.ps1 -KubeVersion 1.20.1
 C:\CalicoWindows\kubernetes\install-kube-services.ps1
 
 Downloading CNI binaries
@@ -241,55 +224,38 @@ Downloaded [https://dl.k8s.io/v1.20.4/kubernetes-node-windows-amd64.tar.gz] =&gt
 * Starting Calico...
 This may take several seconds if the vSwitch needs to be created.
 Waiting for Calico initialisation to finish...
-Waiting for Calico initialisation to finish...StoredLastBootTime , CurrentLastBootTime 20210301012833.499350+000</code></pre>
-<h4 id="check-the-node-is-ready">Check the node is ready</h4>
-<pre><code>NAME                                           STATUS   ROLES                  AGE   VERSION
+Waiting for Calico initialisation to finish...StoredLastBootTime , CurrentLastBootTime 20210301012833.499350+000
+</code></pre><h4 id="check-the-node-is-ready">Check the node is ready</h4>
+<pre tabindex="0"><code>NAME                                           STATUS   ROLES                  AGE   VERSION
 devbox                                         Ready    control-plane,master   23h   v1.20.1
-windows-1.us-east1-b.c.kflow-294915.internal   Ready    &lt;none&gt;                 21h   v1.20.4</code></pre>
-<p>** Found some DNS ISSUES, didn't waste much time on it. **</p>
-
+windows-1.us-east1-b.c.kflow-294915.internal   Ready    &lt;none&gt;                 21h   v1.20.4
+</code></pre><p>** Found some DNS ISSUES, didn&rsquo;t waste much time on it. **</p>
 <h3 id="trying-calico-on-eks">Trying Calico on EKS</h3>
-
 <p>Instead, give another try using EKS as the following guide exemplifies:</p>
-
 <p><a href="https://github.com/tigera-solutions/install-calico-for-windows">https://github.com/tigera-solutions/install-calico-for-windows</a></p>
-
 <p>A few comments here, default Network Policy does not works as <code>amiFamily: WindowsServer2019FullContainer</code>, check the correct
 AMI set below. The simpler method is to go without EKS and eksctl managed hosts:</p>
-
 <p><a href="https://aws.amazon.com/blogs/containers/open-source-calico-for-windows-containers-on-amazon-eks/">https://aws.amazon.com/blogs/containers/open-source-calico-for-windows-containers-on-amazon-eks/</a></p>
-
 <p>This Calico version CNI on v1.7.8 works fine</p>
-
 <p><a href="https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/c1658d5c5d401ad271c4fe6c8fbd96ba4a01d638/config/v1.7/calico.yaml">https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/c1658d5c5d401ad271c4fe6c8fbd96ba4a01d638/config/v1.7/calico.yaml</a></p>
-
 <p>Just make sure you have the correct architecture binary from:</p>
-
 <ul>
 <li><code>curl -LO https://dl.k8s.io/release/v1.20.0/bin/windows/amd64/kubectl.exe</code></li>
 </ul>
-
 <h3 id="initial-netpol-on-win">Initial netpol on Win</h3>
-
 <p>The nodeSelector with <code>windows</code> needs to be explicit in the pod creation:</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-  thePod :<span style="color:#f92672">=</span> pod<span style="color:#f92672">.</span>KubePod()
-  thePod<span style="color:#f92672">.</span>Spec<span style="color:#f92672">.</span>NodeSelector <span style="color:#f92672">=</span> map[string]string{
-      <span style="color:#e6db74">&#34;kubernetes.io/os&#34;</span>: <span style="color:#e6db74">&#34;windows&#34;</span>,
-  }</code></pre></div>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>  thePod <span style="color:#f92672">:=</span> pod<span style="color:#f92672">.</span>KubePod()
+</span></span><span style="display:flex;"><span>  thePod<span style="color:#f92672">.</span>Spec<span style="color:#f92672">.</span>NodeSelector <span style="color:#f92672">=</span> map[string]string{
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;kubernetes.io/os&#34;</span>: <span style="color:#e6db74">&#34;windows&#34;</span>,
+</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
 <p>Otherwise this the Pod will be on Pending status with:</p>
-
 <ul>
 <li><code>pod does not have label vpc.amazonaws.com/PrivateIPv4Address</code></li>
 </ul>
-
 <p>Some other examples on Windows:
 <a href="https://docs.projectcalico.org/getting-started/windows-calico/demo">https://docs.projectcalico.org/getting-started/windows-calico/demo</a></p>
-
 <p>If you wanna dig deeper in the topic:</p>
-
 <p>TGIK 144 - Exploring the State of K8s on Windows
 <a href="https://www.youtube.com/watch?v=WnXnO97tsNo">https://www.youtube.com/watch?v=WnXnO97tsNo</a></p>
 <ul class="pa0">
@@ -299,7 +265,7 @@ AMI set below. The simpler method is to go without EKS and eksctl managed hosts:
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

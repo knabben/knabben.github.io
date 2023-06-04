@@ -6,7 +6,7 @@
     
     <title>OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -36,10 +36,8 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://opssec.in/posts/" />
-<meta property="og:updated_time" content="2023-04-06T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
-<meta itemprop="description" content="HTP and others BS">
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="HTP and others BS"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="HTP and others BS"/>
 
@@ -130,8 +128,8 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      ReplicaSets   A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
- // ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. 	// More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller 	Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
+      ReplicaSets A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
+// ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. // More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller Replicas *int32 `json:&#34;replicas,omitempty&#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
     </div>
   </div>
 </div>
@@ -146,8 +144,8 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Container from PodSpec   The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
- // A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes.
+      Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
+// A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. Name string `json:&#34;name&#34;` // Docker image name. // More info: https://kubernetes.io/docs/concepts/containers/images Image string `json:&#34;image,omitempty&#34;` // Entrypoint array.
     </div>
   </div>
 </div>
@@ -162,8 +160,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
-  POD diagram    Pod struct
+      Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
+POD diagram Pod struct
+PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.
     </div>
   </div>
 </div>
@@ -178,9 +177,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
- The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
-  Kubectl debugging and API server   Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.
+      Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.
     </div>
   </div>
 </div>
@@ -195,13 +194,14 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
- The initial topics are a summary from Kind quickstart
-  Installing   To install Kind you should use:
- $ brew install kind
- Or from source:
- $ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1
-  First steps   To create a new cluster you must run:
+      Introduction This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
+The initial topics are a summary from Kind quickstart
+Installing To install Kind you should use:
+$ brew install kind
+Or from source:
+$ GO111MODULE=&#34;on&#34; go get sigs.k8s.io/kind@v0.6.1
+First steps To create a new cluster you must run:
+# Default cluster name is kind $ kind create cluster Creating cluster &#34;kind&#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &#34;2k8s&#34;
     </div>
   </div>
 </div>
@@ -216,12 +216,13 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Installation  Ubuntu   For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
- $ vagrant init ubuntu/xenial64 $ vagrant up
- After the box is up we need to add the correct repository:
- $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update
- Install the package:
- $ sudo apt install -y sawtooth
+      Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
+$ vagrant init ubuntu/xenial64 $ vagrant up
+After the box is up we need to add the correct repository:
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39; $ sudo apt update
+Install the package:
+$ sudo apt install -y sawtooth
+Docker Install Docker adding key and repo:
     </div>
   </div>
 </div>
@@ -236,9 +237,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
- For this debugging and testing scenario we will have 2 nodes:
- version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.
+      Introduction Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
+For this debugging and testing scenario we will have 2 nodes:
+version: &#34;2.1&#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.
     </div>
   </div>
 </div>
@@ -253,9 +254,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   The idea of this post is to test the Audit dynamic backend with a KIND cluster.
- Kubernetes has 4 stages:
-RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain.   ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.
+      Introduction The idea of this post is to test the Audit dynamic backend with a KIND cluster.
+Kubernetes has 4 stages:
+RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain. ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.
     </div>
   </div>
 </div>
@@ -270,9 +271,9 @@ RequestReceived - The stage for events generated as soon as the audit handler re
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   This is an overview and notes on how to use the client-go Kubernetes API.
-  Kubernetes API resources  Accessing via API   The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).
- You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with  $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;&amp; kubectl api-version
+      Introduction This is an overview and notes on how to use the client-go Kubernetes API.
+Kubernetes API resources Accessing via API The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).
+You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;&amp; kubectl api-version
     </div>
   </div>
 </div>
@@ -287,48 +288,44 @@ RequestReceived - The stage for events generated as soon as the audit handler re
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
- Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
+      Introduction DevMode is very cool for development of transaction processors, but when you go to production it don&#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
+Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
+But without it this algorithm becomes Crash Fault Tolerant only, for our proposes it&#39;s enough.
     </div>
   </div>
 </div>
 </div>
       
     </section>
-<ul class="pagination">
-  <li class="page-item">
-    <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/2/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/">1</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/2/">2</a>
-  </li>
-  <li class="page-item active">
-    <a class="page-link" href="/posts/page/3/">3</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/4/">4</a>
-  </li>
-  <li class="page-item disabled">
-    <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/6/">6</a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/4/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/6/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-  </li>
-</ul>
-
-</article>
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/posts/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/2/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/4/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/6/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul></article>
 
     </main>
     <script type="text/javascript" async

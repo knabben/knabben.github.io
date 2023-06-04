@@ -6,7 +6,7 @@
     
     <title>Windows CNI tracing and deep dive | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Windows CNI tracing and deep dive" />
 <meta property="og:description" content="Killer CNI Tracing" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/slow/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/slow/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-04-06T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-04-06T00:00:00+00:00" />
 <meta itemprop="name" content="Windows CNI tracing and deep dive">
-<meta itemprop="description" content="Killer CNI Tracing">
-<meta itemprop="datePublished" content="2023-04-06T00:00:00+00:00" />
+<meta itemprop="description" content="Killer CNI Tracing"><meta itemprop="datePublished" content="2023-04-06T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-04-06T00:00:00+00:00" />
 <meta itemprop="wordCount" content="712">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Windows CNI tracing and deep dive"/>
 <meta name="twitter:description" content="Killer CNI Tracing"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Windows CNI tracing and deep dive</h1>
       
       
@@ -168,116 +164,92 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="introduction">Introduction</h2>
-
 <p>I have spent some time debugging a very interesting issue that was noticed in one Windows cluster, the network initialization
 of this cluster was having a delay of a few seconds before the external world communication starts. This post will explain the steps
 taken and the deep dive executed to find the root cause of the problem. A clear solution is not presented, but this can
 post can guide on debuggability of similar issues.</p>
-
 <h3 id="containerd-tracing">Containerd Tracing</h3>
-
-<p>First thing is to make sure there's Jaeger installed and accessible by the nodes of the cluster.
+<p>First thing is to make sure there&rsquo;s Jaeger installed and accessible by the nodes of the cluster.
 Take a look in the [1] Jaeger operator, it can be installed with a few specs apply in the cluster. You
 will need an ingress controller to provide it an IP address and external access.</p>
-
 <p>For the jaeger-query and frontend, probably kubectl port-forward can do the trick.</p>
-
 <p>The second step is to configure ContainerD to send the samples directly to the agent. The containerd
 section will need the tracing plugin and OpenTelemtry configuration [2].</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">root = &#34;C:\\ProgramData\\containerd\\root&#34;</span>
-<span style="color:#ae81ff">state = &#34;C:\\ProgramData\\containerd\\state&#34;</span>
-<span style="color:#ae81ff">version = 2</span>
-
-<span style="color:#ae81ff">imports = [&#34;C:\\Program Files\\\\containerd\\conf.d\\*.toml&#34;]</span>
-
-[<span style="color:#ae81ff">grpc]</span>
-  <span style="color:#ae81ff">address = &#34;\\\\.\\pipe\\containerd-containerd&#34;</span>
-
-[<span style="color:#ae81ff">plugins]</span>
-
-  [<span style="color:#ae81ff">plugins.&#34;io.containerd.internal.v1.tracing&#34;]</span>
-    <span style="color:#ae81ff">sampling_ratio = 1.0</span>
-    <span style="color:#ae81ff">service_name = &#34;containerd&#34;</span>
-
-  [<span style="color:#ae81ff">plugins.&#34;io.containerd.tracing.processor.v1.otlp&#34;]</span>
-    <span style="color:#ae81ff">endpoint = &#34;http://10.0.0.5:30841&#34;</span>
-
-  [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;]</span>
-    <span style="color:#ae81ff">sandbox_image = &#34;projects-stg.registry.vmware.com/tkg/pause:3.8-windows-amd64&#34;</span>
-    [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;.cni]</span>
-      <span style="color:#ae81ff">bin_dir = &#34;C:/opt/cni/bin&#34;</span>
-      <span style="color:#ae81ff">conf_dir = &#34;C:/etc/cni/net.d&#34;</span></code></pre></div>
-<p>Notice the endpoint where I'm using a NodePort for the agent service. The last thing is to set
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">root = &#34;C:\\ProgramData\\containerd\\root&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">state = &#34;C:\\ProgramData\\containerd\\state&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">version = 2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">imports = [&#34;C:\\Program Files\\\\containerd\\conf.d\\*.toml&#34;]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">grpc]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">address = &#34;\\\\.\\pipe\\containerd-containerd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">plugins]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.internal.v1.tracing&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">sampling_ratio = 1.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">service_name = &#34;containerd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.tracing.processor.v1.otlp&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">endpoint = &#34;http://10.0.0.5:30841&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">sandbox_image = &#34;projects-stg.registry.vmware.com/tkg/pause:3.8-windows-amd64&#34;</span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;.cni]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">bin_dir = &#34;C:/opt/cni/bin&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">conf_dir = &#34;C:/etc/cni/net.d&#34;</span>
+</span></span></code></pre></div><p>Notice the endpoint where I&rsquo;m using a NodePort for the agent service. The last thing is to set
 debug level in the containerd process so you can see more information in the trace. Other
 interesting thing is to enable the logging in the service installed in the node.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sc.exe config containerd binPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;c:\Program Files\containerd\containerd.exe \
-</span><span style="color:#e6db74">  --run-service --log-file=c:\tmp\containerd.log -l debug&#34;</span></code></pre></div>
-<p>After a restarting the service, and creating the pod again, it possible to notice RunPodSandbox trace:</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sc.exe config containerd binPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;c:\Program Files\containerd\containerd.exe \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --run-service --log-file=c:\tmp\containerd.log -l debug&#34;</span>
+</span></span></code></pre></div><p>After a restarting the service, and creating the pod again, it possible to notice RunPodSandbox trace:</p>
 <img src="/posts/slow/images/trace.png" alt="" class="" style="width: 100%; ">
 
-
-<p>There're 2 interesting events, first <code>51.65ms</code> called <code>begin cni setup</code>, and 5 seconds later the result <code>cni result</code>.
+<p>There&rsquo;re 2 interesting events, first <code>51.65ms</code> called <code>begin cni setup</code>, and 5 seconds later the result <code>cni result</code>.
 Ok, it seems the issue is inside the CNI plugin used, the plugin for this CNI in particular talks with the agent
 via gRPC passing commands like <code>CmdAdd</code> and <code>CmdDel</code>, every time a pod is created or deleted.</p>
-
 <h3 id="debugging-the-cni-plugin">Debugging the CNI plugin</h3>
-
-<p>After deducing the error is in the CNI, I increased the log level of the agent that's receiving the request:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">10:15:26.814722    <span style="color:#ae81ff">3620</span> server.go:425<span style="color:#f92672">]</span> Received CmdAdd request cni_args:<span style="color:#f92672">{</span>container_id:<span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> netns:<span style="color:#e6db74">&#34;786877ce-0bdc-4ff7-a58a-0ba3a62b2a5d&#34;</span> ifname:<span style="color:#e6db74">&#34;eth0&#34;</span> args:<span style="color:#e6db74">&#34;K8S_POD_UID=ed06be31-28f0-44e8-b03e-be36a8e24afa;IgnoreUnknown=1;K8S_POD_NAMESPACE=default;K8S_POD_NAME=db-6cqff;K8S_POD_INFRA_CONTAINER_ID=5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> path:<span style="color:#e6db74">&#34;C:/opt/cni/bin&#34;</span> network_configuration:<span style="color:#e6db74">&#34;{\&#34;capabilities\&#34;:{\&#34;dns\&#34;:true},\&#34;cniVersion\&#34;:\&#34;0.3.0\&#34;,\&#34;ipam\&#34;:{\&#34;type\&#34;:\&#34;host-local\&#34;},\&#34;name\&#34;:\&#34;cni\&#34;,\&#34;runtimeConfig\&#34;:{\&#34;dns\&#34;:{\&#34;Servers\&#34;:[\&#34;100.0.0.10\&#34;],\&#34;Searches\&#34;:[\&#34;default.svc.cluster.local\&#34;,\&#34;svc.cluster.local\&#34;,\&#34;cluster.local\&#34;],\&#34;Options\&#34;:[\&#34;ndots:5\&#34;]}},\&#34;type\&#34;:\&#34;cni\&#34;}&#34;</span><span style="color:#f92672">}</span>
-10:15:26.888326    <span style="color:#ae81ff">3620</span> server.go:495<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Allocated IP addresses&#34;</span> container<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> result<span style="color:#f92672">=</span>&amp;<span style="color:#f92672">{</span>Result:<span style="color:#f92672">{</span>CNIVersion:0.4.0 Interfaces:<span style="color:#f92672">[]</span> IPs:<span style="color:#f92672">[{</span>Version:4 Interface:&lt;nil&gt; Address:<span style="color:#f92672">{</span>IP:100.96.3.22 Mask:ffffff00<span style="color:#f92672">}</span> Gateway:100.96.3.1<span style="color:#f92672">}]</span> Routes:<span style="color:#f92672">[]</span> DNS:<span style="color:#f92672">{</span>Nameservers:<span style="color:#f92672">[]</span> Domain: Search:<span style="color:#f92672">[]</span> Options:<span style="color:#f92672">[]}}</span> VLANID:0<span style="color:#f92672">}</span>
-10:15:26.889584    <span style="color:#ae81ff">3620</span> server_windows.go:42<span style="color:#f92672">]</span> Got runtime DNS configuration: <span style="color:#f92672">{[</span>100.64.0.10<span style="color:#f92672">]</span>  <span style="color:#f92672">[</span>default.svc.cluster.local svc.cluster.local cluster.local<span style="color:#f92672">]</span> <span style="color:#f92672">[]}</span>
-10:15:26.891166    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:136<span style="color:#f92672">]</span> Configuring IP address <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
-10:15:29.386133    <span style="color:#ae81ff">3620</span> pod_configuration_windows.go:97<span style="color:#f92672">]</span> Adding OVS port db-6cqff-568022 <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
-10:15:30.354081    <span style="color:#ae81ff">3620</span> agent.go:531<span style="color:#f92672">]</span> Deleting stale flows from previous round <span style="color:#66d9ef">if</span> any
-10:15:30.354788    <span style="color:#ae81ff">3620</span> agent.go:463<span style="color:#f92672">]</span> Persisting round number <span style="color:#ae81ff">12</span> to OVSDB
-10:15:30.363033    <span style="color:#ae81ff">3620</span> agent.go:468<span style="color:#f92672">]</span> Round number <span style="color:#ae81ff">12</span> was persisted to OVSDB
-10:15:31.772203    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:260<span style="color:#f92672">]</span> Send gratuitous ARP from container interface is not supported on Windows, <span style="color:#66d9ef">return</span> nil
-10:15:31.772867    <span style="color:#ae81ff">3620</span> pod_configuration.go:268<span style="color:#f92672">]</span> Configured interfaces <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
-10:15:31.772867    <span style="color:#ae81ff">3620</span> server.go:522<span style="color:#f92672">]</span> CmdAdd <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418 succeeded</code></pre></div>
-<p>And start measuring how long the stack call was between them, if you notice we have around ~5 seconds of the event receive and the
+<p>After deducing the error is in the CNI, I increased the log level of the agent that&rsquo;s receiving the request:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>10:15:26.814722    <span style="color:#ae81ff">3620</span> server.go:425<span style="color:#f92672">]</span> Received CmdAdd request cni_args:<span style="color:#f92672">{</span>container_id:<span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> netns:<span style="color:#e6db74">&#34;786877ce-0bdc-4ff7-a58a-0ba3a62b2a5d&#34;</span> ifname:<span style="color:#e6db74">&#34;eth0&#34;</span> args:<span style="color:#e6db74">&#34;K8S_POD_UID=ed06be31-28f0-44e8-b03e-be36a8e24afa;IgnoreUnknown=1;K8S_POD_NAMESPACE=default;K8S_POD_NAME=db-6cqff;K8S_POD_INFRA_CONTAINER_ID=5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> path:<span style="color:#e6db74">&#34;C:/opt/cni/bin&#34;</span> network_configuration:<span style="color:#e6db74">&#34;{\&#34;capabilities\&#34;:{\&#34;dns\&#34;:true},\&#34;cniVersion\&#34;:\&#34;0.3.0\&#34;,\&#34;ipam\&#34;:{\&#34;type\&#34;:\&#34;host-local\&#34;},\&#34;name\&#34;:\&#34;cni\&#34;,\&#34;runtimeConfig\&#34;:{\&#34;dns\&#34;:{\&#34;Servers\&#34;:[\&#34;100.0.0.10\&#34;],\&#34;Searches\&#34;:[\&#34;default.svc.cluster.local\&#34;,\&#34;svc.cluster.local\&#34;,\&#34;cluster.local\&#34;],\&#34;Options\&#34;:[\&#34;ndots:5\&#34;]}},\&#34;type\&#34;:\&#34;cni\&#34;}&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>10:15:26.888326    <span style="color:#ae81ff">3620</span> server.go:495<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Allocated IP addresses&#34;</span> container<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> result<span style="color:#f92672">=</span>&amp;<span style="color:#f92672">{</span>Result:<span style="color:#f92672">{</span>CNIVersion:0.4.0 Interfaces:<span style="color:#f92672">[]</span> IPs:<span style="color:#f92672">[{</span>Version:4 Interface:&lt;nil&gt; Address:<span style="color:#f92672">{</span>IP:100.96.3.22 Mask:ffffff00<span style="color:#f92672">}</span> Gateway:100.96.3.1<span style="color:#f92672">}]</span> Routes:<span style="color:#f92672">[]</span> DNS:<span style="color:#f92672">{</span>Nameservers:<span style="color:#f92672">[]</span> Domain: Search:<span style="color:#f92672">[]</span> Options:<span style="color:#f92672">[]}}</span> VLANID:0<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>10:15:26.889584    <span style="color:#ae81ff">3620</span> server_windows.go:42<span style="color:#f92672">]</span> Got runtime DNS configuration: <span style="color:#f92672">{[</span>100.64.0.10<span style="color:#f92672">]</span>  <span style="color:#f92672">[</span>default.svc.cluster.local svc.cluster.local cluster.local<span style="color:#f92672">]</span> <span style="color:#f92672">[]}</span>
+</span></span><span style="display:flex;"><span>10:15:26.891166    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:136<span style="color:#f92672">]</span> Configuring IP address <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
+</span></span><span style="display:flex;"><span>10:15:29.386133    <span style="color:#ae81ff">3620</span> pod_configuration_windows.go:97<span style="color:#f92672">]</span> Adding OVS port db-6cqff-568022 <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
+</span></span><span style="display:flex;"><span>10:15:30.354081    <span style="color:#ae81ff">3620</span> agent.go:531<span style="color:#f92672">]</span> Deleting stale flows from previous round <span style="color:#66d9ef">if</span> any
+</span></span><span style="display:flex;"><span>10:15:30.354788    <span style="color:#ae81ff">3620</span> agent.go:463<span style="color:#f92672">]</span> Persisting round number <span style="color:#ae81ff">12</span> to OVSDB
+</span></span><span style="display:flex;"><span>10:15:30.363033    <span style="color:#ae81ff">3620</span> agent.go:468<span style="color:#f92672">]</span> Round number <span style="color:#ae81ff">12</span> was persisted to OVSDB
+</span></span><span style="display:flex;"><span>10:15:31.772203    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:260<span style="color:#f92672">]</span> Send gratuitous ARP from container interface is not supported on Windows, <span style="color:#66d9ef">return</span> nil
+</span></span><span style="display:flex;"><span>10:15:31.772867    <span style="color:#ae81ff">3620</span> pod_configuration.go:268<span style="color:#f92672">]</span> Configured interfaces <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
+</span></span><span style="display:flex;"><span>10:15:31.772867    <span style="color:#ae81ff">3620</span> server.go:522<span style="color:#f92672">]</span> CmdAdd <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418 succeeded
+</span></span></code></pre></div><p>And start measuring how long the stack call was between them, if you notice we have around ~5 seconds of the event receive and the
 complete success.</p>
-
 <img src="/posts/slow/images/data.jpg" alt="" class="" style="width: 40%; ">
-
 
 <p>There some other process to find these bottlenecks like <code>go pprof</code> that can build a call tree and measure it.
 Or its possible to add <code>klog.Info</code> statements between the calls and continue measuring them until you find the
 bottleneck, when the pprof interface is not open.</p>
-
 <p>Without detailing much about the issue in the CNI, was found that <code>Get-NetAdapter</code> calls were being used to
 verify the existence of the Container interface, those direct powershell calls are very slow and costly.</p>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>The usage of external command calls (mainly scripts) to execute tasks with the kernel can become a problem, powershell
 is very complete and useful but it will slow down your application, this can be perceived when your service is under pressure.</p>
-
 <p>Windows syscalls on Golang are available, the coverage of functionality can be lower or missing required information for
 a particular data structure can happen [4], MS provides a good library HCMSHIM that covers a few Network and processing
 functionalities [5].</p>
-
 <p>In summary a higher level and faster API built-in on Golang could come by default, so the usage of powershell commandlets can be
 replaced.</p>
-
 <h2 id="listening">Listening</h2>
-
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/zv-bJL_vIt0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-
 <h2 id="references">References</h2>
-
 <p>[1] <a href="https://www.jaegertracing.io/docs/1.43/operator/">https://www.jaegertracing.io/docs/1.43/operator/</a></p>
-
 <p>[2] <a href="https://github.com/containerd/containerd/blob/main/docs/tracing.md">https://github.com/containerd/containerd/blob/main/docs/tracing.md</a></p>
-
 <p>[3] <a href="https://go.dev/blog/pprof">https://go.dev/blog/pprof</a></p>
-
 <p>[4] <a href="https://golang.google.cn/pkg/syscall/?GOOS=windows&amp;GOARCH=amd64">https://golang.google.cn/pkg/syscall/?GOOS=windows&amp;GOARCH=amd64</a></p>
-
 <p>[5] <a href="https://github.com/microsoft/hcsshim">https://github.com/microsoft/hcsshim</a></p>
 <ul class="pa0">
   
@@ -286,7 +258,7 @@ replaced.</p>
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

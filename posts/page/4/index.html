@@ -6,7 +6,7 @@
     
     <title>OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -36,10 +36,8 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://opssec.in/posts/" />
-<meta property="og:updated_time" content="2023-04-06T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
-<meta itemprop="description" content="HTP and others BS">
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="HTP and others BS"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="HTP and others BS"/>
 
@@ -130,8 +128,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
- It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+      Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It&#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana.
     </div>
   </div>
 </div>
@@ -146,8 +145,8 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
-  %load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.
+      Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
+%load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&#34;Starting&#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.
     </div>
   </div>
 </div>
@@ -162,9 +161,10 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Pointers   A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
- The type *T is a pointer to a T. The operator that generates the pointer is the &amp;.
- x := 1 p := &amp;x // p, of type *int, points to x  fmt.Println(*p) // &#34;1&#34;  *p = 2 // dereferencing or indirecting  fmt.
+      Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
+The type *T is a pointer to a T. The operator that generates the pointer is the &amp;.
+x := 1 p := &amp;x // p, of type *int, points to x fmt.Println(*p) // &#34;1&#34; *p = 2 // dereferencing or indirecting fmt.Println(x)
+Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:
     </div>
   </div>
 </div>
@@ -179,9 +179,9 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   Starting with the printed Hello World, create a main.go file with the following content:
- package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) } 
- On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.
+      Introduction Starting with the printed Hello World, create a main.go file with the following content:
+package main import ( &#34;fmt&#34; &#34;math/rand&#34; ) func main() { fmt.Println(&#34;Hello, world\n&#34;, rand.Intn(10)) }
+On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.e. math/rand, use rand.*
     </div>
   </div>
 </div>
@@ -196,9 +196,10 @@
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it:
-https://github.com/knabben/spec-lang/tree/master/go   https://github.com/knabben/spec-lang/tree/master/rust     Guess  Tag 0.0.1   println! is used to send the value to stdout.
- let mut guess = String::new();
+      Introduction To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it:
+https://github.com/knabben/spec-lang/tree/master/go https://github.com/knabben/spec-lang/tree/master/rust Guess Tag 0.0.1 println! is used to send the value to stdout.
+let mut guess = String::new();
+For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.
     </div>
   </div>
 </div>
@@ -213,9 +214,9 @@ https://github.com/knabben/spec-lang/tree/master/go   https://github.com/knabben
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sawtooth   A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella.  From the characteristics of the sawtooth we can have: distributed, immutable, secure.
- There&#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.
- An application can be a native business logic or a smart contract virtual machine.
+      Sawtooth A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella. From the characteristics of the sawtooth we can have: distributed, immutable, secure.
+There&#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.
+An application can be a native business logic or a smart contract virtual machine.
     </div>
   </div>
 </div>
@@ -231,9 +232,9 @@ https://github.com/knabben/spec-lang/tree/master/go   https://github.com/knabben
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Long time I don&#39;t write here.
- And, as a matter to learn other languages I&#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey.  As a good start let&#39;s grab two modern interesting languages,
- The summary bellow came from wikipedia an works as a good introduction about both:
-Summary  Golang   A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
+And, as a matter to learn other languages I&#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey. As a good start let&#39;s grab two modern interesting languages,
+The summary bellow came from wikipedia an works as a good introduction about both:
+Summary Golang A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.
     </div>
   </div>
 </div>
@@ -248,7 +249,7 @@ Summary  Golang   A statically typed, compiled programming language designed at 
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introducing Kubernetes   November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
+      Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.
     </div>
   </div>
 </div>
@@ -263,8 +264,8 @@ Summary  Golang   A statically typed, compiled programming language designed at 
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
- The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
+      Introduction According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
+The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.
     </div>
   </div>
 </div>
@@ -279,48 +280,43 @@ Summary  Golang   A statically typed, compiled programming language designed at 
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
-Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.
+      Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.
     </div>
   </div>
 </div>
 </div>
       
     </section>
-<ul class="pagination">
-  <li class="page-item">
-    <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/3/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/">1</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/2/">2</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/3/">3</a>
-  </li>
-  <li class="page-item active">
-    <a class="page-link" href="/posts/page/4/">4</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/5/">5</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/6/">6</a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/5/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/6/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-  </li>
-</ul>
-
-</article>
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/posts/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/3/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/6/" aria-label="Page 6" class="page-link" role="button">6</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/6/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul></article>
 
     </main>
     <script type="text/javascript" async

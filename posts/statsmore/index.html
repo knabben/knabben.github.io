@@ -6,7 +6,7 @@
     
     <title>More statistics and Python | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,26 +28,21 @@
     
     
     <meta property="og:title" content="More statistics and Python" />
-<meta property="og:description" content="Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
-Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib." />
+<meta property="og:description" content="Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/statsmore/" />
+<meta property="og:url" content="https://opssec.in/posts/statsmore/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2017-10-12T00:00:00+00:00" />
 <meta property="article:modified_time" content="2017-10-12T00:00:00+00:00" />
 <meta itemprop="name" content="More statistics and Python">
-<meta itemprop="description" content="Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
-Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.">
-<meta itemprop="datePublished" content="2017-10-12T00:00:00+00:00" />
+<meta itemprop="description" content="Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib."><meta itemprop="datePublished" content="2017-10-12T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2017-10-12T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1172">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="More statistics and Python"/>
-<meta name="twitter:description" content="Simple linear regression  Introduction   This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
-Getting financial data   import pandas as pd import numpy as np import pandas_datareader as web import matplotlib."/>
+<meta name="twitter:description" content="Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib."/>
 
   </head>
 
@@ -162,6 +157,7 @@ Getting financial data   import pandas as pd import numpy as np import pandas_da
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">More statistics and Python</h1>
       
       
@@ -189,50 +185,50 @@ Getting financial data
 </h4>
 <div id="outline-text-headline-3" class="outline-text-4">
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> pandas_datareader <span style="color:#f92672">as</span> web
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> pandas.plotting <span style="color:#f92672">import</span> scatter_matrix
-<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime, timedelta
-
-<span style="color:#f92672">%</span>matplotlib inline
-
-end <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
-start <span style="color:#f92672">=</span> end <span style="color:#f92672">-</span> timedelta(days<span style="color:#f92672">=</span><span style="color:#ae81ff">365</span>)
-
-<span style="color:#75715e"># Fetch historiacal data</span>
-sec_data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
-<span style="color:#66d9ef">for</span> symbol <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#39;MGLU3&#39;</span>, <span style="color:#e6db74">&#39;BTOW3&#39;</span>, <span style="color:#e6db74">&#39;LAME3&#39;</span>, <span style="color:#e6db74">&#39;LREN3&#39;</span>]:
-    sec_data[symbol] <span style="color:#f92672">=</span> web<span style="color:#f92672">.</span>DataReader(<span style="color:#e6db74">&#39;BVMF:{}&#39;</span><span style="color:#f92672">.</span>format(symbol),
-                                      <span style="color:#e6db74">&#39;google&#39;</span>, start, end)[<span style="color:#e6db74">&#39;Close&#39;</span>]
-
-<span style="color:#75715e"># Shift percent return</span>
-sec_returns <span style="color:#f92672">=</span> sec_data<span style="color:#f92672">.</span>pct_change(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">1</span>:]
-
-<span style="color:#75715e"># Plot the cumulative sum of return</span>
-sec_returns<span style="color:#f92672">.</span>cumsum()<span style="color:#f92672">.</span>plot()</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas_datareader <span style="color:#66d9ef">as</span> web
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pandas.plotting <span style="color:#f92672">import</span> scatter_matrix
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime, timedelta
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>end <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+</span></span><span style="display:flex;"><span>start <span style="color:#f92672">=</span> end <span style="color:#f92672">-</span> timedelta(days<span style="color:#f92672">=</span><span style="color:#ae81ff">365</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fetch historiacal data</span>
+</span></span><span style="display:flex;"><span>sec_data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> symbol <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#39;MGLU3&#39;</span>, <span style="color:#e6db74">&#39;BTOW3&#39;</span>, <span style="color:#e6db74">&#39;LAME3&#39;</span>, <span style="color:#e6db74">&#39;LREN3&#39;</span>]:
+</span></span><span style="display:flex;"><span>    sec_data[symbol] <span style="color:#f92672">=</span> web<span style="color:#f92672">.</span>DataReader(<span style="color:#e6db74">&#39;BVMF:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(symbol),
+</span></span><span style="display:flex;"><span>                                      <span style="color:#e6db74">&#39;google&#39;</span>, start, end)[<span style="color:#e6db74">&#39;Close&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Shift percent return</span>
+</span></span><span style="display:flex;"><span>sec_returns <span style="color:#f92672">=</span> sec_data<span style="color:#f92672">.</span>pct_change(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot the cumulative sum of return</span>
+</span></span><span style="display:flex;"><span>sec_returns<span style="color:#f92672">.</span>cumsum()<span style="color:#f92672">.</span>plot()</span></span></code></pre></div></p>
 <p>
 <img src="/posts/statsmore/cumsum.png" alt="" class="" style="width: 50%; ">
 </p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#75715e"># Some numbers about the anual return</span>
-<span style="color:#66d9ef">print</span>(sec_returns<span style="color:#f92672">.</span>mean() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>)
-  MGLU3    <span style="color:#ae81ff">2.234703</span>
-  BTOW3    <span style="color:#ae81ff">0.577344</span>
-  LAME3    <span style="color:#ae81ff">0.173837</span>
-  LREN3    <span style="color:#ae81ff">0.497388</span>
-
-<span style="color:#66d9ef">print</span>(sec_returns<span style="color:#f92672">.</span>std() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">0.5</span>)
-  MGLU3    <span style="color:#ae81ff">0.744661</span>
-  BTOW3    <span style="color:#ae81ff">0.534165</span>
-  LAME3    <span style="color:#ae81ff">0.261230</span>
-  LREN3    <span style="color:#ae81ff">0.290350</span>
-
-<span style="color:#75715e"># Returns of the histogram</span>
-sec_returns<span style="color:#f92672">.</span>hist(bins<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>);</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Some numbers about the anual return</span>
+</span></span><span style="display:flex;"><span>print(sec_returns<span style="color:#f92672">.</span>mean() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>)
+</span></span><span style="display:flex;"><span>  MGLU3    <span style="color:#ae81ff">2.234703</span>
+</span></span><span style="display:flex;"><span>  BTOW3    <span style="color:#ae81ff">0.577344</span>
+</span></span><span style="display:flex;"><span>  LAME3    <span style="color:#ae81ff">0.173837</span>
+</span></span><span style="display:flex;"><span>  LREN3    <span style="color:#ae81ff">0.497388</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(sec_returns<span style="color:#f92672">.</span>std() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">0.5</span>)
+</span></span><span style="display:flex;"><span>  MGLU3    <span style="color:#ae81ff">0.744661</span>
+</span></span><span style="display:flex;"><span>  BTOW3    <span style="color:#ae81ff">0.534165</span>
+</span></span><span style="display:flex;"><span>  LAME3    <span style="color:#ae81ff">0.261230</span>
+</span></span><span style="display:flex;"><span>  LREN3    <span style="color:#ae81ff">0.290350</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Returns of the histogram</span>
+</span></span><span style="display:flex;"><span>sec_returns<span style="color:#f92672">.</span>hist(bins<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>);</span></span></code></pre></div></p>
 <p>
 <img src="/posts/statsmore/histogram-50.png" alt="" class="" style="width: 50%; ">
 </p>
@@ -248,26 +244,26 @@ Study the relationship between values, this evaluates how the variables X and Y 
 <p>
 $$COV(a,b) = \frac{\sum_{k=1}(Ra - \overline{R}a) * (Rb - \overline{R}b)}{n}$$</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-sec_returns<span style="color:#f92672">.</span>var() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>
-
-  MGLU3    <span style="color:#ae81ff">0.554520</span>
-  BTOW3    <span style="color:#ae81ff">0.285332</span>
-  LAME3    <span style="color:#ae81ff">0.068241</span>
-  LREN3    <span style="color:#ae81ff">0.084303</span>
-
-<span style="color:#75715e"># Covariance matrix</span>
-sec_returns<span style="color:#f92672">.</span>cov() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>
-
-          MGLU3     BTOW3     LAME3     LREN3      IBOV
-MGLU3  <span style="color:#ae81ff">0.554520</span>  <span style="color:#ae81ff">0.091651</span>  <span style="color:#ae81ff">0.067703</span>  <span style="color:#ae81ff">0.038393</span>  <span style="color:#ae81ff">0.054705</span>
-BTOW3  <span style="color:#ae81ff">0.091651</span>  <span style="color:#ae81ff">0.285332</span>  <span style="color:#ae81ff">0.079719</span>  <span style="color:#ae81ff">0.051221</span>  <span style="color:#ae81ff">0.048674</span>
-LAME3  <span style="color:#ae81ff">0.067703</span>  <span style="color:#ae81ff">0.079719</span>  <span style="color:#ae81ff">0.068241</span>  <span style="color:#ae81ff">0.042511</span>  <span style="color:#ae81ff">0.034721</span>
-LREN3  <span style="color:#ae81ff">0.038393</span>  <span style="color:#ae81ff">0.051221</span>  <span style="color:#ae81ff">0.042511</span>  <span style="color:#ae81ff">0.084303</span>  <span style="color:#ae81ff">0.040986</span>
-IBOV   <span style="color:#ae81ff">0.054705</span>  <span style="color:#ae81ff">0.048674</span>  <span style="color:#ae81ff">0.034721</span>  <span style="color:#ae81ff">0.040986</span>  <span style="color:#ae81ff">0.042769</span>
-
-<span style="color:#75715e"># Scatter matrix between stocks</span>
-scatter_matrix(sec_returns, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">8</span>), alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>, hist_kwds<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;bins&#39;</span>:<span style="color:#ae81ff">50</span>});</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>sec_returns<span style="color:#f92672">.</span>var() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  MGLU3    <span style="color:#ae81ff">0.554520</span>
+</span></span><span style="display:flex;"><span>  BTOW3    <span style="color:#ae81ff">0.285332</span>
+</span></span><span style="display:flex;"><span>  LAME3    <span style="color:#ae81ff">0.068241</span>
+</span></span><span style="display:flex;"><span>  LREN3    <span style="color:#ae81ff">0.084303</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Covariance matrix</span>
+</span></span><span style="display:flex;"><span>sec_returns<span style="color:#f92672">.</span>cov() <span style="color:#f92672">*</span> <span style="color:#ae81ff">250</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          MGLU3     BTOW3     LAME3     LREN3      IBOV
+</span></span><span style="display:flex;"><span>MGLU3  <span style="color:#ae81ff">0.554520</span>  <span style="color:#ae81ff">0.091651</span>  <span style="color:#ae81ff">0.067703</span>  <span style="color:#ae81ff">0.038393</span>  <span style="color:#ae81ff">0.054705</span>
+</span></span><span style="display:flex;"><span>BTOW3  <span style="color:#ae81ff">0.091651</span>  <span style="color:#ae81ff">0.285332</span>  <span style="color:#ae81ff">0.079719</span>  <span style="color:#ae81ff">0.051221</span>  <span style="color:#ae81ff">0.048674</span>
+</span></span><span style="display:flex;"><span>LAME3  <span style="color:#ae81ff">0.067703</span>  <span style="color:#ae81ff">0.079719</span>  <span style="color:#ae81ff">0.068241</span>  <span style="color:#ae81ff">0.042511</span>  <span style="color:#ae81ff">0.034721</span>
+</span></span><span style="display:flex;"><span>LREN3  <span style="color:#ae81ff">0.038393</span>  <span style="color:#ae81ff">0.051221</span>  <span style="color:#ae81ff">0.042511</span>  <span style="color:#ae81ff">0.084303</span>  <span style="color:#ae81ff">0.040986</span>
+</span></span><span style="display:flex;"><span>IBOV   <span style="color:#ae81ff">0.054705</span>  <span style="color:#ae81ff">0.048674</span>  <span style="color:#ae81ff">0.034721</span>  <span style="color:#ae81ff">0.040986</span>  <span style="color:#ae81ff">0.042769</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Scatter matrix between stocks</span>
+</span></span><span style="display:flex;"><span>scatter_matrix(sec_returns, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">8</span>), alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>, hist_kwds<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;bins&#39;</span>:<span style="color:#ae81ff">50</span>});</span></span></code></pre></div></p>
 <p>
 <img src="/posts/statsmore/scatter-stock.png" alt="" class="" style="width: 50%; ">
 </p>
@@ -283,15 +279,15 @@ Is simply a normalized form of covariance.</p>
 <p>
 $$ CORRx,y = \frac{COVx,y}{\sigma{x}*\sigma{y}} $$</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-sec_returns<span style="color:#f92672">.</span>corr()
-
-          MGLU3     BTOW3     LAME3     LREN3      IBOV
-MGLU3  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.230411</span>  <span style="color:#ae81ff">0.348039</span>  <span style="color:#ae81ff">0.177572</span>  <span style="color:#ae81ff">0.355224</span>
-BTOW3  <span style="color:#ae81ff">0.230411</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.571298</span>  <span style="color:#ae81ff">0.330259</span>  <span style="color:#ae81ff">0.440611</span>
-LAME3  <span style="color:#ae81ff">0.348039</span>  <span style="color:#ae81ff">0.571298</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.560470</span>  <span style="color:#ae81ff">0.642699</span>
-LREN3  <span style="color:#ae81ff">0.177572</span>  <span style="color:#ae81ff">0.330259</span>  <span style="color:#ae81ff">0.560470</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.682574</span>
-IBOV   <span style="color:#ae81ff">0.355224</span>  <span style="color:#ae81ff">0.440611</span>  <span style="color:#ae81ff">0.642699</span>  <span style="color:#ae81ff">0.682574</span>  <span style="color:#ae81ff">1.000000</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>sec_returns<span style="color:#f92672">.</span>corr()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          MGLU3     BTOW3     LAME3     LREN3      IBOV
+</span></span><span style="display:flex;"><span>MGLU3  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.230411</span>  <span style="color:#ae81ff">0.348039</span>  <span style="color:#ae81ff">0.177572</span>  <span style="color:#ae81ff">0.355224</span>
+</span></span><span style="display:flex;"><span>BTOW3  <span style="color:#ae81ff">0.230411</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.571298</span>  <span style="color:#ae81ff">0.330259</span>  <span style="color:#ae81ff">0.440611</span>
+</span></span><span style="display:flex;"><span>LAME3  <span style="color:#ae81ff">0.348039</span>  <span style="color:#ae81ff">0.571298</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.560470</span>  <span style="color:#ae81ff">0.642699</span>
+</span></span><span style="display:flex;"><span>LREN3  <span style="color:#ae81ff">0.177572</span>  <span style="color:#ae81ff">0.330259</span>  <span style="color:#ae81ff">0.560470</span>  <span style="color:#ae81ff">1.000000</span>  <span style="color:#ae81ff">0.682574</span>
+</span></span><span style="display:flex;"><span>IBOV   <span style="color:#ae81ff">0.355224</span>  <span style="color:#ae81ff">0.440611</span>  <span style="color:#ae81ff">0.642699</span>  <span style="color:#ae81ff">0.682574</span>  <span style="color:#ae81ff">1.000000</span></span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-6" class="outline-4">
@@ -302,103 +298,103 @@ Linear Regression
 <p>
 $$ Y = \beta + \alpha * X $$</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#f92672">import</span> statsmodels.api <span style="color:#f92672">as</span> sm
-
-<span style="color:#75715e"># Fetch Ibovespa index</span>
-sec_returns[<span style="color:#e6db74">&#39;IBOV&#39;</span>] <span style="color:#f92672">=</span> web<span style="color:#f92672">.</span>DataReader(
-    <span style="color:#e6db74">&#39;INDEXBVMF:IBOV&#39;</span><span style="color:#f92672">.</span>format(symbol), <span style="color:#e6db74">&#39;google&#39;</span>, start, end
-)[<span style="color:#e6db74">&#39;Close&#39;</span>]<span style="color:#f92672">.</span>pct_change(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">1</span>:]
-
-<span style="color:#66d9ef">print</span>(sec_returns<span style="color:#f92672">.</span>head())</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> statsmodels.api <span style="color:#66d9ef">as</span> sm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fetch Ibovespa index</span>
+</span></span><span style="display:flex;"><span>sec_returns[<span style="color:#e6db74">&#39;IBOV&#39;</span>] <span style="color:#f92672">=</span> web<span style="color:#f92672">.</span>DataReader(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;INDEXBVMF:IBOV&#39;</span><span style="color:#f92672">.</span>format(symbol), <span style="color:#e6db74">&#39;google&#39;</span>, start, end
+</span></span><span style="display:flex;"><span>)[<span style="color:#e6db74">&#39;Close&#39;</span>]<span style="color:#f92672">.</span>pct_change(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(sec_returns<span style="color:#f92672">.</span>head())</span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"> 
-                   MGLU3     BTOW3     LAME3     LREN3      IBOV
-    Date                                                        
-    2016-10-14  0.028029  0.004507  0.027834  0.012278  0.010613
-    2016-10-17 -0.010554  0.038462  0.009247  0.011292  0.015039
-    2016-10-18  0.011556  0.039506  0.024869  0.015302  0.017323
-    2016-10-19  0.010545  0.010689  0.001916 -0.001629 -0.004337
-    2016-10-20  0.000000  0.013514 -0.001912  0.001632  0.005232</code></pre></div> </p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>                   MGLU3     BTOW3     LAME3     LREN3      IBOV
+</span></span><span style="display:flex;"><span>    Date                                                        
+</span></span><span style="display:flex;"><span>    2016-10-14  0.028029  0.004507  0.027834  0.012278  0.010613
+</span></span><span style="display:flex;"><span>    2016-10-17 -0.010554  0.038462  0.009247  0.011292  0.015039
+</span></span><span style="display:flex;"><span>    2016-10-18  0.011556  0.039506  0.024869  0.015302  0.017323
+</span></span><span style="display:flex;"><span>    2016-10-19  0.010545  0.010689  0.001916 -0.001629 -0.004337
+</span></span><span style="display:flex;"><span>    2016-10-20  0.000000  0.013514 -0.001912  0.001632  0.005232</span></span></code></pre></div> </p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#75715e"># Calculate the alfa and beta for LAME3</span>
-X <span style="color:#f92672">=</span> sec_returns[<span style="color:#e6db74">&#39;IBOV&#39;</span>]
-Y <span style="color:#f92672">=</span> sec_returns[<span style="color:#e6db74">&#39;LAME3&#39;</span>]
-result <span style="color:#f92672">=</span> sm<span style="color:#f92672">.</span>regression<span style="color:#f92672">.</span>linear_model<span style="color:#f92672">.</span>OLS(Y, sm<span style="color:#f92672">.</span>add_constant(X))<span style="color:#f92672">.</span>fit()
-result<span style="color:#f92672">.</span>summary()</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Calculate the alfa and beta for LAME3</span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">=</span> sec_returns[<span style="color:#e6db74">&#39;IBOV&#39;</span>]
+</span></span><span style="display:flex;"><span>Y <span style="color:#f92672">=</span> sec_returns[<span style="color:#e6db74">&#39;LAME3&#39;</span>]
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> sm<span style="color:#f92672">.</span>regression<span style="color:#f92672">.</span>linear_model<span style="color:#f92672">.</span>OLS(Y, sm<span style="color:#f92672">.</span>add_constant(X))<span style="color:#f92672">.</span>fit()
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>summary()</span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">                          OLS Regression Results                            
-==============================================================================
-Dep. Variable:                  LAME3   R-squared:                       0.413
-Model:                            OLS   Adj. R-squared:                  0.411
-Method:                 Least Squares   F-statistic:                     173.1
-Date:                Thu, 12 Oct 2017   Prob (F-statistic):           2.71e-30
-Time:                        21:31:42   Log-Likelihood:                 732.24
-No. Observations:                 248   AIC:                            -1460.
-Df Residuals:                     246   BIC:                            -1453.
-Df Model:                           1                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P&gt;|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-const         -0.0001      0.001     -0.144      0.885      -0.002       0.001
-IBOV           0.8118      0.062     13.158      0.000       0.690       0.933
-==============================================================================
-Omnibus:                       14.069   Durbin-Watson:                   2.021
-Prob(Omnibus):                  0.001   Jarque-Bera (JB):               30.752
-Skew:                          -0.205   Prob(JB):                     2.10e-07
-Kurtosis:                       4.675   Cond. No.                         76.6
-==============================================================================</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>                          OLS Regression Results                            
+</span></span><span style="display:flex;"><span>==============================================================================
+</span></span><span style="display:flex;"><span>Dep. Variable:                  LAME3   R-squared:                       0.413
+</span></span><span style="display:flex;"><span>Model:                            OLS   Adj. R-squared:                  0.411
+</span></span><span style="display:flex;"><span>Method:                 Least Squares   F-statistic:                     173.1
+</span></span><span style="display:flex;"><span>Date:                Thu, 12 Oct 2017   Prob (F-statistic):           2.71e-30
+</span></span><span style="display:flex;"><span>Time:                        21:31:42   Log-Likelihood:                 732.24
+</span></span><span style="display:flex;"><span>No. Observations:                 248   AIC:                            -1460.
+</span></span><span style="display:flex;"><span>Df Residuals:                     246   BIC:                            -1453.
+</span></span><span style="display:flex;"><span>Df Model:                           1                                         
+</span></span><span style="display:flex;"><span>Covariance Type:            nonrobust                                         
+</span></span><span style="display:flex;"><span>==============================================================================
+</span></span><span style="display:flex;"><span>                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+</span></span><span style="display:flex;"><span>------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>const         -0.0001      0.001     -0.144      0.885      -0.002       0.001
+</span></span><span style="display:flex;"><span>IBOV           0.8118      0.062     13.158      0.000       0.690       0.933
+</span></span><span style="display:flex;"><span>==============================================================================
+</span></span><span style="display:flex;"><span>Omnibus:                       14.069   Durbin-Watson:                   2.021
+</span></span><span style="display:flex;"><span>Prob(Omnibus):                  0.001   Jarque-Bera (JB):               30.752
+</span></span><span style="display:flex;"><span>Skew:                          -0.205   Prob(JB):                     2.10e-07
+</span></span><span style="display:flex;"><span>Kurtosis:                       4.675   Cond. No.                         76.6
+</span></span><span style="display:flex;"><span>==============================================================================</span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-a <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>params[<span style="color:#ae81ff">0</span>]
-b <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>params[<span style="color:#ae81ff">1</span>]
-X2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(X<span style="color:#f92672">.</span>min(), X<span style="color:#f92672">.</span>max(), <span style="color:#ae81ff">100</span>)
-Y_hat <span style="color:#f92672">=</span> X2 <span style="color:#f92672">*</span> b <span style="color:#f92672">+</span> a
-plt<span style="color:#f92672">.</span>scatter(X, Y, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>);
-plt<span style="color:#f92672">.</span>plot(X2, Y_hat, <span style="color:#e6db74">&#39;r&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>);
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Ibov Value&#39;</span>);
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;LAME3 Value&#39;</span>);</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>params[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>params[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>X2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(X<span style="color:#f92672">.</span>min(), X<span style="color:#f92672">.</span>max(), <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>Y_hat <span style="color:#f92672">=</span> X2 <span style="color:#f92672">*</span> b <span style="color:#f92672">+</span> a
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(X, Y, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>);
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(X2, Y_hat, <span style="color:#e6db74">&#39;r&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>);
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Ibov Value&#39;</span>);
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;LAME3 Value&#39;</span>);</span></span></code></pre></div></p>
 <p>
 <img src="/posts/statsmore/linear-reg-lame3.png" alt="" class="" style="width: 50%; ">
 </p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#f92672">***</span> Exercises: Suppose those are the grades of some students, answer the following: 
-<span style="color:#75715e"># a) what is the correlation coeficient of these variables and the type of relation</span>
-<span style="color:#75715e"># b) construct the equation finding alfa and beta</span>
-<span style="color:#75715e"># c) If the student takes a 6.5 on math what is his note in biology?</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> Exercises: Suppose those are the grades of some students, answer the following: 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># a) what is the correlation coeficient of these variables and the type of relation</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># b) construct the equation finding alfa and beta</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># c) If the student takes a 6.5 on math what is his note in biology?</span></span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> stats
-
-df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
-    <span style="color:#e6db74">&#39;math&#39;</span>: [<span style="color:#ae81ff">9.5</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">8.5</span>, <span style="color:#ae81ff">8.0</span>, <span style="color:#ae81ff">8.0</span>, <span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">6.0</span>, <span style="color:#ae81ff">5.0</span>, <span style="color:#ae81ff">4.0</span>],
-    <span style="color:#e6db74">&#39;bio&#39;</span>: [<span style="color:#ae81ff">3.4</span>, <span style="color:#ae81ff">5.4</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>]
-})
-
-df[<span style="color:#e6db74">&#39;x.y&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;math&#39;</span>] <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#39;bio&#39;</span>]
-df[<span style="color:#e6db74">&#39;x2&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;math&#39;</span>] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
-df[<span style="color:#e6db74">&#39;y2&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;bio&#39;</span>] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
-plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> stats
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;math&#39;</span>: [<span style="color:#ae81ff">9.5</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">8.5</span>, <span style="color:#ae81ff">8.0</span>, <span style="color:#ae81ff">8.0</span>, <span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">6.0</span>, <span style="color:#ae81ff">5.0</span>, <span style="color:#ae81ff">4.0</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;bio&#39;</span>: [<span style="color:#ae81ff">3.4</span>, <span style="color:#ae81ff">5.4</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>]
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;x.y&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;math&#39;</span>] <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#39;bio&#39;</span>]
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;x2&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;math&#39;</span>] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;y2&#39;</span>] <span style="color:#f92672">=</span> round(df[<span style="color:#e6db74">&#39;bio&#39;</span>] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])</span></span></code></pre></div></p>
 <p>
 <img src="/posts/statsmore/exercise-linear.png" alt="" class="" style="width: 50%; ">
 </p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-Answer:
-a)
-np<span style="color:#f92672">.</span>corrcoef(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]
-<span style="color:#f92672">-</span><span style="color:#ae81ff">0.73842044735499168</span>
-
-b)
-stat <span style="color:#f92672">=</span> stats<span style="color:#f92672">.</span>linregress(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])
-slope <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.7042</span>
-intercept <span style="color:#f92672">=</span> <span style="color:#ae81ff">11.67117</span>
-
-c) stat<span style="color:#f92672">.</span>intercept <span style="color:#f92672">+</span> (stat<span style="color:#f92672">.</span>slope <span style="color:#f92672">*</span> <span style="color:#ae81ff">6.5</span>)
-<span style="color:#ae81ff">7.0934163701067607</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Answer:
+</span></span><span style="display:flex;"><span>a)
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>corrcoef(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.73842044735499168</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>b)
+</span></span><span style="display:flex;"><span>stat <span style="color:#f92672">=</span> stats<span style="color:#f92672">.</span>linregress(df[<span style="color:#e6db74">&#39;math&#39;</span>], df[<span style="color:#e6db74">&#39;bio&#39;</span>])
+</span></span><span style="display:flex;"><span>slope <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.7042</span>
+</span></span><span style="display:flex;"><span>intercept <span style="color:#f92672">=</span> <span style="color:#ae81ff">11.67117</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>c) stat<span style="color:#f92672">.</span>intercept <span style="color:#f92672">+</span> (stat<span style="color:#f92672">.</span>slope <span style="color:#f92672">*</span> <span style="color:#ae81ff">6.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7.0934163701067607</span></span></span></code></pre></div></p>
 </div>
 </div>
 </div>
@@ -413,17 +409,17 @@ ANOVA
 <p>
 Variance analysis is a way to test the validity of a null hypothesis and check if the arithmetic means of two or populations are equal. For this case, it is being analyzed three different methods of teaching, and the student&#39;s grade for each method, having a significance level of 1%.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-<span style="color:#f92672">%</span>matplotlib inline
-
-data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
-    <span style="color:#e6db74">&#39;I&#39;</span>: [<span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">51</span>, <span style="color:#ae81ff">65</span>, <span style="color:#ae81ff">87</span>],
-    <span style="color:#e6db74">&#39;II&#39;</span>: [<span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">85</span>, <span style="color:#ae81ff">70</span>, <span style="color:#ae81ff">69</span>, <span style="color:#ae81ff">90</span>],
-    <span style="color:#e6db74">&#39;III&#39;</span>: [<span style="color:#ae81ff">84</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">95</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">67</span>]
-})
-
-data<span style="color:#f92672">.</span>boxplot()</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;I&#39;</span>: [<span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">51</span>, <span style="color:#ae81ff">65</span>, <span style="color:#ae81ff">87</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;II&#39;</span>: [<span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">85</span>, <span style="color:#ae81ff">70</span>, <span style="color:#ae81ff">69</span>, <span style="color:#ae81ff">90</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;III&#39;</span>: [<span style="color:#ae81ff">84</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">95</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">67</span>]
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data<span style="color:#f92672">.</span>boxplot()</span></span></code></pre></div></p>
 <p>
 <img src="/posts/statsmore/bloxplot-anova.png" alt="" class="" style="width: 50%; ">
 </p>
@@ -433,9 +429,7 @@ Testing in 4 steps
 </h4>
 <div id="outline-text-headline-8" class="outline-text-4">
 <ol>
-<li>
-<p>The first step is declare the null hypothesis and the alternative hypothese</p>
-</li>
+<li>The first step is declare the null hypothesis and the alternative hypothese</li>
 </ol>
 <div id="outline-container-headline-9" class="outline-6">
 <h6 id="headline-9">
@@ -448,9 +442,7 @@ H1: The means aren&#39;t equal.
 </h6>
 <div id="outline-text-headline-10" class="outline-text-6">
 <ol>
-<li>
-<p>Defining the critical region</p>
-</li>
+<li>Defining the critical region</li>
 </ol>
 <p>For setting the degree of freedom we have, being k the number of methods and n the total number of observations:</p>
 </div>
@@ -470,19 +462,15 @@ Following the df(2,12) we can find the critical value = 6.93 in the F distributi
 <p>
 http://www.socr.ucla.edu/applets.dir/f_table.html#FTable0.01</p>
 <ol>
-<li>
-<p>We can use scipy stats to fetch the F-value between the three methods</p>
-</li>
+<li>We can use scipy stats to fetch the F-value between the three methods</li>
 </ol>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#f92672">import</span> scipy.stats <span style="color:#f92672">as</span> stats
-f_value, _ <span style="color:#f92672">=</span> stats<span style="color:#f92672">.</span>f_oneway(data[<span style="color:#e6db74">&#39;I&#39;</span>], data[<span style="color:#e6db74">&#39;II&#39;</span>], data[<span style="color:#e6db74">&#39;III&#39;</span>])
-<span style="color:#ae81ff">1.092717464598786</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> scipy.stats <span style="color:#66d9ef">as</span> stats
+</span></span><span style="display:flex;"><span>f_value, _ <span style="color:#f92672">=</span> stats<span style="color:#f92672">.</span>f_oneway(data[<span style="color:#e6db74">&#39;I&#39;</span>], data[<span style="color:#e6db74">&#39;II&#39;</span>], data[<span style="color:#e6db74">&#39;III&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.092717464598786</span></span></span></code></pre></div></p>
 <ol>
-<li>
-<p>Take a decision</p>
-</li>
+<li>Take a decision</li>
 </ol>
 <p>We have the F_value = 1.09 &lt; critical_value = 6.93, and cannot reject the null hypothesis what finishes the conclusion: the arithmetic mean are equal for the three population</p>
 </div>
@@ -497,62 +485,62 @@ Exercises
 <p>
 A director of a company wants to buy a new screw machine, you must learn about the brands from a determined period each one independently makes the following number of screws, our null hypothesis here is to confirm there&#39;s no difference between the mean volume of pieces each machine can build. The significance level is 5%.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> 
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-
-machine_I <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>])
-machine_II <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>])
-machine_III <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span>])
-
-n <span style="color:#f92672">=</span> len(machine_I) <span style="color:#f92672">+</span> len(machine_II) <span style="color:#f92672">+</span> len(machine_III)
-k <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-
-<span style="color:#75715e"># Defining the degrees of freedom</span>
-df1 <span style="color:#f92672">=</span> k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-df2 <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> k
-<span style="color:#75715e"># dg(2,15)</span>
-
-np_m1 <span style="color:#f92672">=</span> round(machine_I<span style="color:#f92672">.</span>mean(), <span style="color:#ae81ff">2</span>)
-np_m2 <span style="color:#f92672">=</span> round(machine_II<span style="color:#f92672">.</span>mean(), <span style="color:#ae81ff">2</span>)
-np_m3 <span style="color:#f92672">=</span> round(machine_III<span style="color:#f92672">.</span>mean(), <span style="color:#ae81ff">2</span>)
-<span style="color:#75715e"># 6.4 9.57 6.33</span>
-
-total_mean <span style="color:#f92672">=</span> (np_m1 <span style="color:#f92672">+</span> np_m2 <span style="color:#f92672">+</span> np_m3) <span style="color:#f92672">/</span> k
-<span style="color:#75715e"># 7.43333333333</span>
-
-<span style="color:#75715e"># Calculating the sum of squares due to the source BETWEEN</span>
-SSB <span style="color:#f92672">=</span> (
-    (len(machine_I) <span style="color:#f92672">*</span> (np_m1 <span style="color:#f92672">-</span> total_mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span>
-    (len(machine_II) <span style="color:#f92672">*</span> (np_m2 <span style="color:#f92672">-</span> total_mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span>
-    (len(machine_III) <span style="color:#f92672">*</span> (np_m3 <span style="color:#f92672">-</span> total_mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)
-)
-<span style="color:#75715e"># 44.6003666667</span>
-MSB <span style="color:#f92672">=</span> SSB <span style="color:#f92672">/</span> df1
-<span style="color:#75715e"># 22.3001833333</span>
-
-<span style="color:#75715e"># Calculating the sum of squares due to the source RESIDUAL</span>
-SSE1 <span style="color:#f92672">=</span> round(((np_m1 <span style="color:#f92672">-</span> machine_I)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">2</span>)
-SSE2 <span style="color:#f92672">=</span> round(((np_m2 <span style="color:#f92672">-</span> machine_II)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">2</span>)
-SSE3 <span style="color:#f92672">=</span> round(((np_m3 <span style="color:#f92672">-</span> machine_III)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">2</span>)
-<span style="color:#75715e"># 5.2 17.71 7.33</span>
-
-total_SSE <span style="color:#f92672">=</span> sum([SSE1, SSE2, SSE3])
-<span style="color:#75715e"># 30.24</span>
-
-MSE <span style="color:#f92672">=</span> total_SSB <span style="color:#f92672">/</span> df2
-<span style="color:#75715e"># 2.016</span>
-
-F_value <span style="color:#f92672">=</span> MSE <span style="color:#f92672">/</span> MSB
-<span style="color:#75715e"># 11.06</span>
-
-<span style="color:#75715e"># for alpha = 0.5 - http://www.socr.ucla.edu/applets.dir/f_table.html#FTable0.05</span>
-null_hypothesis_true <span style="color:#f92672">=</span> f_value <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3.68</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>machine_I <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>])
+</span></span><span style="display:flex;"><span>machine_II <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>])
+</span></span><span style="display:flex;"><span>machine_III <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>n <span style="color:#f92672">=</span> len(machine_I) <span style="color:#f92672">+</span> len(machine_II) <span style="color:#f92672">+</span> len(machine_III)
+</span></span><span style="display:flex;"><span>k <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Defining the degrees of freedom</span>
+</span></span><span style="display:flex;"><span>df1 <span style="color:#f92672">=</span> k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>df2 <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> k
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># dg(2,15)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>np_m1 <span style="color:#f92672">=</span> round(machine_I<span style="color:#f92672">.</span>mean(), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>np_m2 <span style="color:#f92672">=</span> round(machine_II<span style="color:#f92672">.</span>mean(), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>np_m3 <span style="color:#f92672">=</span> round(machine_III<span style="color:#f92672">.</span>mean(), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 6.4 9.57 6.33</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>total_mean <span style="color:#f92672">=</span> (np_m1 <span style="color:#f92672">+</span> np_m2 <span style="color:#f92672">+</span> np_m3) <span style="color:#f92672">/</span> k
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 7.43333333333</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Calculating the sum of squares due to the source BETWEEN</span>
+</span></span><span style="display:flex;"><span>SSB <span style="color:#f92672">=</span> (
+</span></span><span style="display:flex;"><span>    (len(machine_I) <span style="color:#f92672">*</span> (np_m1 <span style="color:#f92672">-</span> total_mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>    (len(machine_II) <span style="color:#f92672">*</span> (np_m2 <span style="color:#f92672">-</span> total_mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>    (len(machine_III) <span style="color:#f92672">*</span> (np_m3 <span style="color:#f92672">-</span> total_mean) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 44.6003666667</span>
+</span></span><span style="display:flex;"><span>MSB <span style="color:#f92672">=</span> SSB <span style="color:#f92672">/</span> df1
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 22.3001833333</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Calculating the sum of squares due to the source RESIDUAL</span>
+</span></span><span style="display:flex;"><span>SSE1 <span style="color:#f92672">=</span> round(((np_m1 <span style="color:#f92672">-</span> machine_I)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>SSE2 <span style="color:#f92672">=</span> round(((np_m2 <span style="color:#f92672">-</span> machine_II)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>SSE3 <span style="color:#f92672">=</span> round(((np_m3 <span style="color:#f92672">-</span> machine_III)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum(), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5.2 17.71 7.33</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>total_SSE <span style="color:#f92672">=</span> sum([SSE1, SSE2, SSE3])
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 30.24</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MSE <span style="color:#f92672">=</span> total_SSB <span style="color:#f92672">/</span> df2
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2.016</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>F_value <span style="color:#f92672">=</span> MSE <span style="color:#f92672">/</span> MSB
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 11.06</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># for alpha = 0.5 - http://www.socr.ucla.edu/applets.dir/f_table.html#FTable0.05</span>
+</span></span><span style="display:flex;"><span>null_hypothesis_true <span style="color:#f92672">=</span> f_value <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3.68</span></span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">| source | SS     | DF | MS     | F     |
-| ------ | ------ | -- | ------ | ----- |
-| factor | 44.60  | 2  | 22.30  | 11.06 |
-| error  | 30.24  | 15 | 2.01   |       |
-| total  | 74.84  | 17 |        |       |</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>| source | SS     | DF | MS     | F     |
+</span></span><span style="display:flex;"><span>| ------ | ------ | -- | ------ | ----- |
+</span></span><span style="display:flex;"><span>| factor | 44.60  | 2  | 22.30  | 11.06 |
+</span></span><span style="display:flex;"><span>| error  | 30.24  | 15 | 2.01   |       |
+</span></span><span style="display:flex;"><span>| total  | 74.84  | 17 |        |       |</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-14" class="outline-3">
@@ -577,7 +565,7 @@ Listening
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

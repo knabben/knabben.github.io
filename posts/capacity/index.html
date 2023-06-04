@@ -6,7 +6,7 @@
     
     <title>Tsung Capacity Test | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,29 +28,24 @@
     
     
     <meta property="og:title" content="Tsung Capacity Test" />
-<meta property="og:description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
- NOTE If you are interested on real traffic replication, consider this project [2].
-  Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions." />
+<meta property="og:description" content="Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/capacity/" />
+<meta property="og:url" content="https://opssec.in/posts/capacity/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2015-07-26T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-07-26T00:00:00+00:00" />
 <meta itemprop="name" content="Tsung Capacity Test">
-<meta itemprop="description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
- NOTE If you are interested on real traffic replication, consider this project [2].
-  Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.">
-<meta itemprop="datePublished" content="2015-07-26T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions."><meta itemprop="datePublished" content="2015-07-26T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2015-07-26T00:00:00+00:00" />
-<meta itemprop="wordCount" content="673">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="wordCount" content="672">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Tsung Capacity Test"/>
-<meta name="twitter:description" content="Introduction   In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
- NOTE If you are interested on real traffic replication, consider this project [2].
-  Configuration   On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions."/>
+<meta name="twitter:description" content="Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions."/>
 
   </head>
 
@@ -165,6 +160,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Tsung Capacity Test</h1>
       
       
@@ -203,145 +199,140 @@ Master
 <p>
  Configure your /etc/hosts file:</p>
 <p>
- <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> 172.31.24.176   node1
- 172.31.24.173   node2
- 172.31.24.174   node3
- 172.31.24.172   node4
- 172.31.24.175   node5
- </code></pre></div></p>
+ <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>172.31.24.176   node1
+</span></span><span style="display:flex;"><span>172.31.24.173   node2
+</span></span><span style="display:flex;"><span>172.31.24.174   node3
+</span></span><span style="display:flex;"><span>172.31.24.172   node4
+</span></span><span style="display:flex;"><span>172.31.24.175   node5</span></span></code></pre></div></p>
 <p>
  Enable Nginx to host logs on /etc/nginx/sites-enabled/default:</p>
 <p>
- <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"> <span style="color:#66d9ef">root</span> <span style="color:#e6db74">/home/admin/.tsung/log</span>;
-
- <span style="color:#66d9ef">index</span> <span style="color:#e6db74">index.html</span> <span style="color:#e6db74">index.htm</span> <span style="color:#e6db74">index.nginx-debian.html</span>;
- <span style="color:#66d9ef">server_name</span> <span style="color:#e6db74">_</span>;
-
- <span style="color:#66d9ef">location</span> <span style="color:#e6db74">/</span> {
-    <span style="color:#f92672">autoindex</span> <span style="color:#66d9ef">on</span>;
-	 <span style="color:#f92672">try_files</span> $uri $uri/ =<span style="color:#ae81ff">404</span>;
- }
- </code></pre></div></p>
+ <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">root</span> <span style="color:#e6db74">/home/admin/.tsung/log</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">index</span> <span style="color:#e6db74">index.html</span> <span style="color:#e6db74">index.htm</span> <span style="color:#e6db74">index.nginx-debian.html</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">server_name</span> <span style="color:#e6db74">_</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">autoindex</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>	 <span style="color:#f92672">try_files</span> $uri $uri/ =<span style="color:#ae81ff">404</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
 <p>
  Lets enable the nginx.conf to handle more concurrent connections:</p>
 <p>
- <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"> <span style="color:#66d9ef">worker_processes</span> <span style="color:#ae81ff">10</span>;
- <span style="color:#66d9ef">pid</span> <span style="color:#e6db74">/run/nginx.pid</span>;
-
- <span style="color:#66d9ef">events</span> {
-  <span style="color:#f92672">worker_connections</span> <span style="color:#ae81ff">20000</span>;
-  <span style="color:#f92672">multi_accept</span> <span style="color:#66d9ef">on</span>;
- }
- </code></pre></div></p>
+ <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">worker_processes</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pid</span> <span style="color:#e6db74">/run/nginx.pid</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">events</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">worker_connections</span> <span style="color:#ae81ff">20000</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">multi_accept</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
 <p>
  In the sequence, we define the Tsung configuration file with the load and arrival packets time.
   We are going to do a progressive load of 2 minutes on the first batch in a rate of 500 rps.
  On the second batch it&#39;s going to be increased to 1000 rps for more 2 minutes</p>
 <p>
- <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+ <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"> <span style="color:#f92672">&lt;tsung</span> <span style="color:#a6e22e">loglevel=</span><span style="color:#e6db74">&#34;notice&#34;</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.0&#34;</span><span style="color:#f92672">&gt;</span>
-   <span style="color:#f92672">&lt;clients&gt;</span>
-    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;6000000&#34;</span> <span style="color:#a6e22e">use_controller_vm=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node1&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.176&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/client&gt;</span>
-    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node2&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.173&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/client&gt;</span>
-    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node3&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.174&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/client&gt;</span>
-    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node4&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.172&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/client&gt;</span>
-    <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node5&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.175&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/client&gt;</span>
-   <span style="color:#f92672">&lt;/clients&gt;</span>
-
-   <span style="color:#f92672">&lt;servers&gt;</span>
-     <span style="color:#f92672">&lt;server</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;192.168.10.10&#34;</span> <span style="color:#a6e22e">port=</span><span style="color:#e6db74">&#34;80&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;tcp&#34;</span><span style="color:#f92672">&gt;&lt;/server&gt;</span>
-   <span style="color:#f92672">&lt;/servers&gt;</span>
-
-   <span style="color:#f92672">&lt;options&gt;</span>
-     <span style="color:#f92672">&lt;option</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;ts_http&#34;</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;user_agent&#34;</span><span style="color:#f92672">&gt;</span>
-       <span style="color:#f92672">&lt;user_agent</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;80&#34;</span><span style="color:#f92672">&gt;</span>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21<span style="color:#f92672">&lt;/user_agent&gt;</span>
-       <span style="color:#f92672">&lt;user_agent</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;20&#34;</span><span style="color:#f92672">&gt;</span>Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4<span style="color:#f92672">&lt;/user_agent&gt;</span>
-     <span style="color:#f92672">&lt;/option&gt;</span>
-   <span style="color:#f92672">&lt;/options&gt;</span>
-
-   <span style="color:#f92672">&lt;load&gt;</span>
-     <span style="color:#f92672">&lt;arrivalphase</span> <span style="color:#a6e22e">phase=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">duration=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;minute&#34;</span><span style="color:#f92672">&gt;</span>
-       <span style="color:#f92672">&lt;users</span> <span style="color:#a6e22e">arrivalrate=</span><span style="color:#e6db74">&#34;500&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;second&#34;</span><span style="color:#f92672">&gt;&lt;/users&gt;</span>
-     <span style="color:#f92672">&lt;/arrivalphase&gt;</span>
-
-     <span style="color:#f92672">&lt;arrivalphase</span> <span style="color:#a6e22e">phase=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">duration=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;minute&#34;</span><span style="color:#f92672">&gt;</span>
-       <span style="color:#f92672">&lt;users</span> <span style="color:#a6e22e">arrivalrate=</span><span style="color:#e6db74">&#34;1000&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;second&#34;</span><span style="color:#f92672">&gt;&lt;/users&gt;</span>
-     <span style="color:#f92672">&lt;/arrivalphase&gt;</span>
-   <span style="color:#f92672">&lt;/load&gt;</span>
-
-   <span style="color:#f92672">&lt;sessions&gt;</span>
-     <span style="color:#f92672">&lt;session</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;http-example&#34;</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;100&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;ts_http&#34;</span><span style="color:#f92672">&gt;</span>
-       <span style="color:#f92672">&lt;request&gt;</span> 
-         <span style="color:#f92672">&lt;http</span> <span style="color:#a6e22e">url=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">method=</span><span style="color:#e6db74">&#34;POST&#34;</span><span style="color:#f92672">&gt;&lt;/http&gt;</span> 
-       <span style="color:#f92672">&lt;/request&gt;</span>
-     <span style="color:#f92672">&lt;/session&gt;</span>
-   <span style="color:#f92672">&lt;/sessions&gt;</span>
- <span style="color:#f92672">&lt;/tsung&gt;</span>
- </code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;tsung</span> <span style="color:#a6e22e">loglevel=</span><span style="color:#e6db74">&#34;notice&#34;</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.0&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;clients&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;6000000&#34;</span> <span style="color:#a6e22e">use_controller_vm=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node1&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.176&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/client&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node2&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.173&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/client&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node3&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.174&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/client&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node4&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.172&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/client&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;client</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;node5&#34;</span> <span style="color:#a6e22e">weight=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">maxusers=</span><span style="color:#e6db74">&#34;600000&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;172.31.24.175&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/client&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/clients&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;servers&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;server</span> <span style="color:#a6e22e">host=</span><span style="color:#e6db74">&#34;192.168.10.10&#34;</span> <span style="color:#a6e22e">port=</span><span style="color:#e6db74">&#34;80&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;tcp&#34;</span><span style="color:#f92672">&gt;&lt;/server&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/servers&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;options&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;option</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;ts_http&#34;</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;user_agent&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;user_agent</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;80&#34;</span><span style="color:#f92672">&gt;</span>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21<span style="color:#f92672">&lt;/user_agent&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;user_agent</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;20&#34;</span><span style="color:#f92672">&gt;</span>Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4<span style="color:#f92672">&lt;/user_agent&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/option&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/options&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;load&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;arrivalphase</span> <span style="color:#a6e22e">phase=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">duration=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;minute&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;users</span> <span style="color:#a6e22e">arrivalrate=</span><span style="color:#e6db74">&#34;500&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;second&#34;</span><span style="color:#f92672">&gt;&lt;/users&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/arrivalphase&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;arrivalphase</span> <span style="color:#a6e22e">phase=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">duration=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;minute&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;users</span> <span style="color:#a6e22e">arrivalrate=</span><span style="color:#e6db74">&#34;1000&#34;</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;second&#34;</span><span style="color:#f92672">&gt;&lt;/users&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/arrivalphase&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/load&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;sessions&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;session</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;http-example&#34;</span> <span style="color:#a6e22e">probability=</span><span style="color:#e6db74">&#34;100&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;ts_http&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;request&gt;</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;http</span> <span style="color:#a6e22e">url=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">method=</span><span style="color:#e6db74">&#34;POST&#34;</span><span style="color:#f92672">&gt;&lt;/http&gt;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/request&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/session&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/sessions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/tsung&gt;</span></span></span></code></pre></td></tr></table>
 </div>
 </div></p>
 </div>
@@ -356,8 +347,7 @@ Running the load test
 <p>
  Initialize the test against another M3.large machine:</p>
 <p>
- <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> $ tsung -f tsung.xml start
- </code></pre></div></p>
+ <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ tsung -f tsung.xml start</span></span></code></pre></div></p>
 <p>
  For this start configuration we have:</p>
 <div id="outline-container-headline-5" class="outline-6">
@@ -387,12 +377,11 @@ Running the load test
 <p>
  In the second test we are going to increase the number of requests to 50</p>
 <p>
- <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">  &lt;session name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http-example&#34;</span> probability<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ts_http&#34;</span>&gt;
-    &lt;<span style="color:#66d9ef">for</span> from<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> to<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;50&#34;</span> var<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i&#34;</span>&gt;
-     &lt;request&gt; &lt;http url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GET&#34;</span> version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.1&#34;</span> &gt;&lt;/http&gt; &lt;/request&gt;
-    &lt;/for&gt;
-  &lt;/session&gt;
- </code></pre></div></p>
+ <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> &lt;session name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http-example&#34;</span> probability<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100&#34;</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ts_http&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#66d9ef">for</span> from<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> to<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;50&#34;</span> var<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;request&gt; &lt;http url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GET&#34;</span> version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.1&#34;</span> &gt;&lt;/http&gt; &lt;/request&gt;
+</span></span><span style="display:flex;"><span>   &lt;/for&gt;
+</span></span><span style="display:flex;"><span> &lt;/session&gt;</span></span></code></pre></div></p>
 <p>
  <img src="ntop.png" alt="ntop.png" title="ntop.png" /></p>
 <p>
@@ -512,7 +501,7 @@ Reference
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

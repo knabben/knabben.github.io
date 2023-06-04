@@ -6,7 +6,7 @@
     
     <title>Kubernetes Container API | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,26 +28,21 @@
     
     
     <meta property="og:title" content="Kubernetes Container API" />
-<meta property="og:description" content="Container from PodSpec   The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
- // A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes." />
+<meta property="og:description" content="Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
+// A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. Name string `json:&#34;name&#34;` // Docker image name. // More info: https://kubernetes.io/docs/concepts/containers/images Image string `json:&#34;image,omitempty&#34;` // Entrypoint array." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/kube-container/" />
+<meta property="og:url" content="https://opssec.in/posts/kube-container/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-12-28T10:00:00+00:00" />
 <meta property="article:modified_time" content="2019-12-28T10:00:00+00:00" />
 <meta itemprop="name" content="Kubernetes Container API">
-<meta itemprop="description" content="Container from PodSpec   The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
- // A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes.">
-<meta itemprop="datePublished" content="2019-12-28T10:00:00+00:00" />
+<meta itemprop="description" content="Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
+// A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. Name string `json:&#34;name&#34;` // Docker image name. // More info: https://kubernetes.io/docs/concepts/containers/images Image string `json:&#34;image,omitempty&#34;` // Entrypoint array."><meta itemprop="datePublished" content="2019-12-28T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2019-12-28T10:00:00+00:00" />
 <meta itemprop="wordCount" content="800">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubernetes Container API"/>
-<meta name="twitter:description" content="Container from PodSpec   The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
- // A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. 	Name string `json:&#34;name&#34;` // Docker image name. 	// More info: https://kubernetes."/>
+<meta name="twitter:description" content="Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
+// A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. Name string `json:&#34;name&#34;` // Docker image name. // More info: https://kubernetes.io/docs/concepts/containers/images Image string `json:&#34;image,omitempty&#34;` // Entrypoint array."/>
 
   </head>
 
@@ -162,6 +157,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Kubernetes Container API</h1>
       
       
@@ -180,59 +176,58 @@ Container from PodSpec
 The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means
 the possibility to create multiple containers in a unique Pod.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// A single application container that you want to run within a pod.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Container</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#75715e">// Name of the container specified as a DNS_LABEL.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
-
-	<span style="color:#75715e">// Docker image name.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/containers/images
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Image</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;image,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Entrypoint array.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Command</span> []<span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;command,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Arguments to the entrypoint.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Args</span> []<span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;args,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Periodic probe of container liveness. Container will be restarted if the probe fails.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">LivenessProbe</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Probe</span> <span style="color:#e6db74">`json:&#34;livenessProbe,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ReadinessProbe</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Probe</span> <span style="color:#e6db74">`json:&#34;readinessProbe,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// List of ports to expose from the container. Exposing a port here gives
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// the system additional information about the network connections a
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// container uses, but is primarily informational.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">ContainerPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// List of sources to populate environment variables in the container.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">EnvFrom</span> []<span style="color:#a6e22e">EnvFromSource</span> <span style="color:#e6db74">`json:&#34;envFrom,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// List of environment variables to set in the container.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Env</span> []<span style="color:#a6e22e">EnvVar</span> <span style="color:#e6db74">`json:&#34;env,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Compute Resources required by this container.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Resources</span> <span style="color:#a6e22e">ResourceRequirements</span> <span style="color:#e6db74">`json:&#34;resources,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Pod volumes to mount into the container&#39;s filesystem. Cannot be updated.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">VolumeMounts</span> []<span style="color:#a6e22e">VolumeMount</span> <span style="color:#e6db74">`json:&#34;volumeMounts,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Image pull policy. One of Always, Never, IfNotPresent.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#a6e22e">PullPolicy</span> <span style="color:#e6db74">`json:&#34;imagePullPolicy,omitempty&#34;`</span>
-
-	<span style="color:#75715e">// Security options the pod should run with.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/policy/security-context/
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">SecurityContext</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SecurityContext</span> <span style="color:#e6db74">`json:&#34;securityContext,omitempty&#34;`</span>
-}
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// A single application container that you want to run within a pod.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Container</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Name of the container specified as a DNS_LABEL.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Docker image name.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/containers/images
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Image</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;image,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Entrypoint array.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Command</span> []<span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;command,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Arguments to the entrypoint.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Args</span> []<span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;args,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Periodic probe of container liveness. Container will be restarted if the probe fails.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">LivenessProbe</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Probe</span> <span style="color:#e6db74">`json:&#34;livenessProbe,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ReadinessProbe</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Probe</span> <span style="color:#e6db74">`json:&#34;readinessProbe,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// List of ports to expose from the container. Exposing a port here gives
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// the system additional information about the network connections a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// container uses, but is primarily informational.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Ports</span> []<span style="color:#a6e22e">ContainerPort</span> <span style="color:#e6db74">`json:&#34;ports,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// List of sources to populate environment variables in the container.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">EnvFrom</span> []<span style="color:#a6e22e">EnvFromSource</span> <span style="color:#e6db74">`json:&#34;envFrom,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// List of environment variables to set in the container.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Env</span> []<span style="color:#a6e22e">EnvVar</span> <span style="color:#e6db74">`json:&#34;env,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Compute Resources required by this container.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Resources</span> <span style="color:#a6e22e">ResourceRequirements</span> <span style="color:#e6db74">`json:&#34;resources,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Pod volumes to mount into the container&#39;s filesystem. Cannot be updated.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">VolumeMounts</span> []<span style="color:#a6e22e">VolumeMount</span> <span style="color:#e6db74">`json:&#34;volumeMounts,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Image pull policy. One of Always, Never, IfNotPresent.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#a6e22e">PullPolicy</span> <span style="color:#e6db74">`json:&#34;imagePullPolicy,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Security options the pod should run with.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/concepts/policy/security-context/
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">SecurityContext</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SecurityContext</span> <span style="color:#e6db74">`json:&#34;securityContext,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-2" class="outline-3">
@@ -267,21 +262,20 @@ ImagePullPolicy
 <p>
 This is used to set the way the image will be pulled from the registry.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shouldPullImage returns whether we should pull an image according to
-</span><span style="color:#75715e">// the presence and pull policy of the image.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">shouldPullImage</span>(<span style="color:#a6e22e">container</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Container</span>, <span style="color:#a6e22e">imagePresent</span> <span style="color:#66d9ef">bool</span>) <span style="color:#66d9ef">bool</span> {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">PullNever</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-	}
-
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">PullAlways</span> <span style="color:#f92672">||</span>
-		(<span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">PullIfNotPresent</span> <span style="color:#f92672">&amp;&amp;</span> (!<span style="color:#a6e22e">imagePresent</span>)) {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
-	}
-
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-}
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// shouldPullImage returns whether we should pull an image according to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the presence and pull policy of the image.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">shouldPullImage</span>(<span style="color:#a6e22e">container</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Container</span>, <span style="color:#a6e22e">imagePresent</span> <span style="color:#66d9ef">bool</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">PullNever</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">PullAlways</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		(<span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">ImagePullPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">PullIfNotPresent</span> <span style="color:#f92672">&amp;&amp;</span> (!<span style="color:#a6e22e">imagePresent</span>)) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
 <p>
 On kuberuntime_container.go:startContainer -&gt; EnsureImageExists()</p>
 </div>
@@ -296,31 +290,24 @@ Multi-container
 <p>
 Container design can be split in 3 categories:</p>
 <ul>
-<li>
-<p>Sidecar pattern: extends and works with the primary container, detached.</p>
-</li>
-<li>
-<p>Ambassor/Proxy pattern: run additional services together with your main application container but it does so through a proxy.</p>
-</li>
-<li>
-<p>Adaptor pattern: transforms the output of the primary container into the output that fits the standards across apps.</p>
-<p>
-Multi-container definition example:</p>
-<p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"> <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
- <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
- <span style="color:#f92672">metadata</span>:
-   <span style="color:#f92672">labels</span>:
-     <span style="color:#f92672">app</span>: <span style="color:#ae81ff">lab1</span>
-   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
- <span style="color:#f92672">spec</span>:
-   <span style="color:#f92672">containers</span>:
-   - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
-     <span style="color:#f92672">name</span>: <span style="color:#ae81ff">main</span>
-   - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
-     <span style="color:#f92672">name</span>: <span style="color:#ae81ff">sidecar</span>
- </code></pre></div></p>
-</li>
+<li>Sidecar pattern: extends and works with the primary container, detached.</li>
+<li>Ambassor/Proxy pattern: run additional services together with your main application container but it does so through a proxy.</li>
+<li>Adaptor pattern: transforms the output of the primary container into the output that fits the standards across apps.
+
+Multi-container definition example:
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">lab1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">busybox</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">main</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">sidecar</span></span></span></code></pre></div></li>
 </ul>
 </div>
 </div>
@@ -339,13 +326,13 @@ Indicates whether the Container is ready to service requests. If the readiness p
 removes the Pod’s IP address from the endpoints of all Services that match the Pod. The default state of readiness
  before the initial delay is Failure. If a Container does not provide a readiness probe, the default state is Success.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">readinessProbe</span>:
-  <span style="color:#f92672">exec</span>:
-    <span style="color:#f92672">command</span>:
-      - <span style="color:#ae81ff">cat</span>
-      - <span style="color:#ae81ff">/tmp/health</span>
-  <span style="color:#f92672">initialDelaySeconds</span>: <span style="color:#ae81ff">5</span>
-  <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">5</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">readinessProbe</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">exec</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">command</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">cat</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/tmp/health</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">initialDelaySeconds</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">5</span></span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-9" class="outline-4">
@@ -357,17 +344,17 @@ Ports and livenessProbe
 Setting the port by name and value, this can be used to test the container via a liveness 
 probe uses an HTTP GET request.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  <span style="color:#f92672">ports</span>:
-  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">liveness-port</span>
-    <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">8080</span>
-    <span style="color:#f92672">hostPort</span>: <span style="color:#ae81ff">8080</span>
-
-  <span style="color:#f92672">livenessProbe</span>:
-    <span style="color:#f92672">httpGet</span>:
-      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/healthz</span>
-      <span style="color:#f92672">port</span>: <span style="color:#ae81ff">liveness-port</span>
-    <span style="color:#f92672">failureThreshold</span>: <span style="color:#ae81ff">1</span>
-    <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">10</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">liveness-port</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hostPort</span>: <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">livenessProbe</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">httpGet</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/healthz</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">port</span>: <span style="color:#ae81ff">liveness-port</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">failureThreshold</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">10</span></span></span></code></pre></div></p>
 </div>
 </div>
 </div>
@@ -394,32 +381,32 @@ ConfigMaps
 <p>
 Set the configMapRef, for a regular environment variable is possible to use env: - name, value.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">dapi-test-pod</span>
-<span style="color:#f92672">spec</span>:
-  <span style="color:#f92672">containers</span>:
-    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">test-container</span>
-      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">k8s.gcr.io/busybox</span>
-      <span style="color:#f92672">command</span>: [ <span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;env&#34;</span> ]
-      <span style="color:#f92672">envFrom</span>:
-      - <span style="color:#f92672">configMapRef</span>:
-          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">special-config</span>
-  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
-<span style="color:#ae81ff">kubectl logs pod</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">dapi-test-pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">test-container</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">k8s.gcr.io/busybox</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">command</span>: [ <span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;env&#34;</span> ]
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">envFrom</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">configMapRef</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">special-config</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">kubectl logs pod</span></span></span></code></pre></div></p>
 <p>
 Create the configmap and run the pod.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl create configmap special-config --from-literal<span style="color:#f92672">=</span>var<span style="color:#f92672">=</span>value
-$ kubectl create -f pod.yaml
-$ kubectl logs dapi-test-pod
-KUBERNETES_PORT<span style="color:#f92672">=</span>tcp://10.96.0.1:443
-KUBERNETES_SERVICE_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span>
-HOSTNAME<span style="color:#f92672">=</span>dapi-test-pod
-SHLVL<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-HOME<span style="color:#f92672">=</span>/root
-var<span style="color:#f92672">=</span>value</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl create configmap special-config --from-literal<span style="color:#f92672">=</span>var<span style="color:#f92672">=</span>value
+</span></span><span style="display:flex;"><span>$ kubectl create -f pod.yaml
+</span></span><span style="display:flex;"><span>$ kubectl logs dapi-test-pod
+</span></span><span style="display:flex;"><span>KUBERNETES_PORT<span style="color:#f92672">=</span>tcp://10.96.0.1:443
+</span></span><span style="display:flex;"><span>KUBERNETES_SERVICE_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>HOSTNAME<span style="color:#f92672">=</span>dapi-test-pod
+</span></span><span style="display:flex;"><span>SHLVL<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>HOME<span style="color:#f92672">=</span>/root
+</span></span><span style="display:flex;"><span>var<span style="color:#f92672">=</span>value</span></span></code></pre></div></p>
 </div>
 </div>
 </div>
@@ -432,53 +419,41 @@ var<span style="color:#f92672">=</span>value</code></pre></div></p>
 <p>
 Each container of a pod can specify one or more of the following:</p>
 <ul>
-<li>
-<p>spec.containers[].resources.limits.cpu</p>
-</li>
-<li>
-<p>spec.containers[].resources.limits.memory</p>
-</li>
-<li>
-<p>spec.containers[].resources.limits.hugepages-&lt;size&gt;</p>
-</li>
-<li>
-<p>spec.containers[].resources.requests.cpu</p>
-</li>
-<li>
-<p>spec.containers[].resources.requests.memory</p>
-</li>
-<li>
-<p>spec.containers[].resources.requests.hugepages-&lt;size&gt;</p>
-</li>
+<li>spec.containers[].resources.limits.cpu</li>
+<li>spec.containers[].resources.limits.memory</li>
+<li>spec.containers[].resources.limits.hugepages-&lt;size&gt;</li>
+<li>spec.containers[].resources.requests.cpu</li>
+<li>spec.containers[].resources.requests.memory</li>
+<li>spec.containers[].resources.requests.hugepages-&lt;size&gt;</li>
 </ul>
 <p>Creating a test pod with correct limits for CPU.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
-<span style="color:#f92672">metadata</span>:
-  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cpu-demo</span>
-  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">cpu-example</span>
-<span style="color:#f92672">spec</span>:
-  <span style="color:#f92672">containers</span>:
-  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cpu-demo-ctr</span>
-    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">vish/stress</span>
-    <span style="color:#f92672">resources</span>:
-      <span style="color:#f92672">limits</span>:
-        <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;1&#34;</span>
-      <span style="color:#f92672">requests</span>:
-        <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;0.5&#34;</span>
-    <span style="color:#f92672">args</span>:
-    - -<span style="color:#ae81ff">cpus</span>
-    - <span style="color:#e6db74">&#34;2&#34;</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cpu-demo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">cpu-example</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cpu-demo-ctr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">vish/stress</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">resources</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">limits</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;1&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">requests</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">cpu</span>: <span style="color:#e6db74">&#34;0.5&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">args</span>:
+</span></span><span style="display:flex;"><span>    - -<span style="color:#ae81ff">cpus</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#34;2&#34;</span></span></span></code></pre></div></p>
 <p>
 Check the consume of the resource in the node.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl describe node
-Non-terminated Pods:         <span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> in total<span style="color:#f92672">)</span>
-  Namespace                  Name                                          CPU Requests  CPU Limits  Memory Requests  Memory Limits  AGE
-  ---------                  ----                                          ------------  ----------  ---------------  -------------  ---
-  default                    busybox                                       <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>      <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>           <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>         30m
-  default                    cpu-demo                                      500m <span style="color:#f92672">(</span>12%<span style="color:#f92672">)</span>    <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>25%<span style="color:#f92672">)</span>     <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>           <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>         45s</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl describe node
+</span></span><span style="display:flex;"><span>Non-terminated Pods:         <span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> in total<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  Namespace                  Name                                          CPU Requests  CPU Limits  Memory Requests  Memory Limits  AGE
+</span></span><span style="display:flex;"><span>  ---------                  ----                                          ------------  ----------  ---------------  -------------  ---
+</span></span><span style="display:flex;"><span>  default                    busybox                                       <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>      <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>           <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>         30m
+</span></span><span style="display:flex;"><span>  default                    cpu-demo                                      500m <span style="color:#f92672">(</span>12%<span style="color:#f92672">)</span>    <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>25%<span style="color:#f92672">)</span>     <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>           <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>         45s</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-14" class="outline-3">
@@ -538,7 +513,7 @@ Listening
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

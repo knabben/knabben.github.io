@@ -6,7 +6,7 @@
     
     <title>Golang vs. Python | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -28,26 +28,21 @@
     
     
     <meta property="og:title" content="Golang vs. Python" />
-<meta property="og:description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
- For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang." />
+<meta property="og:description" content="Introduction Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
+For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang. It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/gopython/" />
+<meta property="og:url" content="https://opssec.in/posts/gopython/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2016-01-23T00:00:00+00:00" />
 <meta property="article:modified_time" content="2016-01-23T00:00:00+00:00" />
 <meta itemprop="name" content="Golang vs. Python">
-<meta itemprop="description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
- For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang.">
-<meta itemprop="datePublished" content="2016-01-23T00:00:00+00:00" />
+<meta itemprop="description" content="Introduction Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
+For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang. It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files."><meta itemprop="datePublished" content="2016-01-23T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2016-01-23T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1245">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang vs. Python"/>
-<meta name="twitter:description" content="Introduction   Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
- For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang."/>
+<meta name="twitter:description" content="Introduction Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
+For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang. It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files."/>
 
   </head>
 
@@ -162,6 +157,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Golang vs. Python</h1>
       
       
@@ -193,81 +189,80 @@ Main and Parameters
 Python have the argparse library, the first positional parameter csv is opened in a stream and passed to the DictReader class, 
 this guy will iterate by the lines with a dict output.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> csv
-<span style="color:#f92672">import</span> argparse
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">parse_lines</span>(csv):
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> csv:
-        <span style="color:#66d9ef">print</span>(i)
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-    <span style="color:#66d9ef">try</span>:
-        parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Parse input CSV file&#34;</span>)
-        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;csv&#39;</span>, nargs<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;?&#34;</span>, type<span style="color:#f92672">=</span>open, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;CSV Filepath&#34;</span>)
-        args <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
-
-        reader <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>DictReader(args<span style="color:#f92672">.</span>csv)
-        parse_lines(reader)
-
-    <span style="color:#66d9ef">except</span> FileNotFoundError:
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;File not found&#34;</span>)
-
-    args<span style="color:#f92672">.</span>csv<span style="color:#f92672">.</span>close()
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    main()</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> csv
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> argparse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">parse_lines</span>(csv):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> csv:
+</span></span><span style="display:flex;"><span>        print(i)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Parse input CSV file&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;csv&#39;</span>, nargs<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;?&#34;</span>, type<span style="color:#f92672">=</span>open, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;CSV Filepath&#34;</span>)
+</span></span><span style="display:flex;"><span>        args <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        reader <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>DictReader(args<span style="color:#f92672">.</span>csv)
+</span></span><span style="display:flex;"><span>        parse_lines(reader)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">FileNotFoundError</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;File not found&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    args<span style="color:#f92672">.</span>csv<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    main()</span></span></code></pre></div></p>
 <p>
 Lets try the similar stuff on Go, first thing to notice is the lack of built-in complex features, looks like ppl run on DIY mode, so, theres no default &#34;dictreader&#34;. You run through the csv file populate some structs and you have a list of maps in the end.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-    <span style="color:#e6db74">&#34;flag&#34;</span>
-    <span style="color:#e6db74">&#34;encoding/csv&#34;</span>
-    <span style="color:#e6db74">&#34;io&#34;</span>
-    <span style="color:#e6db74">&#34;os&#34;</span>
-    <span style="color:#e6db74">&#34;fmt&#34;</span>
-    <span style="color:#e6db74">&#34;bufio&#34;</span>
-)
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Ranges</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">source</span> <span style="color:#66d9ef">string</span>
-    <span style="color:#a6e22e">destination</span> <span style="color:#66d9ef">string</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">read_csv</span>(<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">Reader</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ranges</span> []<span style="color:#a6e22e">Ranges</span>
-
-    <span style="color:#66d9ef">for</span> {
-        <span style="color:#a6e22e">record</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Read</span>()
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
-            <span style="color:#66d9ef">break</span>
-        }
-        <span style="color:#a6e22e">ranges</span> = append(<span style="color:#a6e22e">ranges</span>, <span style="color:#a6e22e">Ranges</span>{<span style="color:#a6e22e">source</span>: <span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">destination</span>: <span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">1</span>]})
-    }
-
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">ranges</span> {
-        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">ranges</span>[<span style="color:#a6e22e">r</span>].<span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">ranges</span>[<span style="color:#a6e22e">r</span>].<span style="color:#a6e22e">destination</span>)
-    }
-}
-
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">csv_arg</span> = <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;csv&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;CSV filepath&#34;</span>)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
-
-    <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">csv_arg</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error:&#34;</span>, <span style="color:#a6e22e">err</span>)
-        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
-    }
-
-    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
-
-    <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">file</span>))
-    <span style="color:#a6e22e">read_csv</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">r</span>)
-}
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;flag&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;encoding/csv&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Ranges</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">source</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">destination</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">read_csv</span>(<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">Reader</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ranges</span> []<span style="color:#a6e22e">Ranges</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">record</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Read</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ranges</span> = append(<span style="color:#a6e22e">ranges</span>, <span style="color:#a6e22e">Ranges</span>{<span style="color:#a6e22e">source</span>: <span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">destination</span>: <span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">1</span>]})
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">ranges</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">ranges</span>[<span style="color:#a6e22e">r</span>].<span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">ranges</span>[<span style="color:#a6e22e">r</span>].<span style="color:#a6e22e">destination</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">csv_arg</span> = <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;csv&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;CSV filepath&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">csv_arg</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error:&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">file</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">read_csv</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">r</span>)
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
 <p>
 Now that we have our POST parameters lets make the request.</p>
 </div>
@@ -279,46 +274,45 @@ HTTP Clients and stats
 <div id="outline-text-headline-3" class="outline-text-3">
 <p>For this test lets create a synchronous app, so it will not use Goroutines or loop reactors for async i/o.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_stats</span>(timing):
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Mean: {}&#34;</span><span style="color:#f92672">.</span>format(sum(timing, datetime<span style="color:#f92672">.</span>timedelta())<span style="color:#f92672">/</span>len(timing)))
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_connects</span>(csv):
-    timing <span style="color:#f92672">=</span> list()
-    <span style="color:#66d9ef">for</span> i, line <span style="color:#f92672">in</span> enumerate(csv):
-        start_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
-
-        conn <span style="color:#f92672">=</span> http<span style="color:#f92672">.</span>client<span style="color:#f92672">.</span>HTTPConnection(URL)
-        conn<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;/{}/{}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;source&#39;</span>), i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;destination&#39;</span>)))
-        conn<span style="color:#f92672">.</span>close()
-
-        end_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
-        timing<span style="color:#f92672">.</span>append(start_time <span style="color:#f92672">-</span> end_time)
-
-    calculate_stats(timing)</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_stats</span>(timing):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Mean: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(sum(timing, datetime<span style="color:#f92672">.</span>timedelta())<span style="color:#f92672">/</span>len(timing)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_connects</span>(csv):
+</span></span><span style="display:flex;"><span>    timing <span style="color:#f92672">=</span> list()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, line <span style="color:#f92672">in</span> enumerate(csv):
+</span></span><span style="display:flex;"><span>        start_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        conn <span style="color:#f92672">=</span> http<span style="color:#f92672">.</span>client<span style="color:#f92672">.</span>HTTPConnection(URL)
+</span></span><span style="display:flex;"><span>        conn<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;source&#39;</span>), i<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;destination&#39;</span>)))
+</span></span><span style="display:flex;"><span>        conn<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        end_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
+</span></span><span style="display:flex;"><span>        timing<span style="color:#f92672">.</span>append(start_time <span style="color:#f92672">-</span> end_time)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    calculate_stats(timing)</span></span></code></pre></div></p>
 <p>
 In go we have the same methods</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">duration</span> []<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
-    <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">0</span>)
-
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">dur</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">duration</span> {
-        <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">dur</span>
-    }
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Mean: &#34;</span>, <span style="color:#a6e22e">sum_duration</span><span style="color:#f92672">/</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(len(<span style="color:#a6e22e">duration</span>)))
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">do_connects</span>(<span style="color:#a6e22e">csv_ranges</span> []<span style="color:#a6e22e">Ranges</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">duration</span> []<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
-
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">csv_ranges</span> {
-        <span style="color:#a6e22e">start_time</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
-        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Post</span>(<span style="color:#a6e22e">url</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">source</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">destination</span>, <span style="color:#e6db74">&#34;application/json&#34;</span>, <span style="color:#66d9ef">nil</span>)
-        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>))
-        <span style="color:#a6e22e">duration</span> = append(<span style="color:#a6e22e">duration</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>))
-    }
-    <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">duration</span>)
-}
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">duration</span> []<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">dur</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">duration</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">dur</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Mean: &#34;</span>, <span style="color:#a6e22e">sum_duration</span><span style="color:#f92672">/</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(len(<span style="color:#a6e22e">duration</span>)))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">do_connects</span>(<span style="color:#a6e22e">csv_ranges</span> []<span style="color:#a6e22e">Ranges</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">duration</span> []<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">csv_ranges</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">start_time</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Post</span>(<span style="color:#a6e22e">url</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">source</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">destination</span>, <span style="color:#e6db74">&#34;application/json&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">duration</span> = append(<span style="color:#a6e22e">duration</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">duration</span>)
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-4" class="outline-3">
@@ -329,21 +323,21 @@ Measures
 <p>
 On a local webserver 127.0.0.1</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  measure  python3.5 latency.py input.csv
-<span style="color:#ae81ff">0</span> 0:00:00.008750
-<span style="color:#ae81ff">1</span> 0:00:00.002667
-<span style="color:#ae81ff">2</span> 0:00:00.002517
-<span style="color:#ae81ff">3</span> 0:00:00.002474
-<span style="color:#ae81ff">4</span> 0:00:00.002458
-Mean: 0:00:00.003773</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>➜  measure  python3.5 latency.py input.csv
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> 0:00:00.008750
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> 0:00:00.002667
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> 0:00:00.002517
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span> 0:00:00.002474
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> 0:00:00.002458
+</span></span><span style="display:flex;"><span>Mean: 0:00:00.003773</span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  measure  go run latency.go --csv input.csv
-<span style="color:#ae81ff">0</span> 2.806206ms
-<span style="color:#ae81ff">1</span> 2.150794ms
-<span style="color:#ae81ff">2</span> 2.35518ms
-<span style="color:#ae81ff">3</span> 2.047501ms
-<span style="color:#ae81ff">4</span> 1.974195ms
-Mean:  2.378299ms</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>➜  measure  go run latency.go --csv input.csv
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> 2.806206ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> 2.150794ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> 2.35518ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span> 2.047501ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> 1.974195ms
+</span></span><span style="display:flex;"><span>Mean:  2.378299ms</span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-5" class="outline-3">
@@ -356,10 +350,9 @@ Lets continue with our analysis of both language, as we can see for scripting bo
 <p>
 Now lets say we need to test it on a Windows x86 environment, you will need to install Python 3.5, all the dependencies used on the project, maybe create a virtualenv, thats a lot of work for a simple task. In Go 1.5 we have built-in cross compilation:</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">GOOS</span>=<span style="color:#a6e22e">windows</span> <span style="color:#a6e22e">GOARCH</span>=<span style="color:#ae81ff">386</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">v</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span>
-<span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">file</span> <span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>
-<span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>: <span style="color:#a6e22e">PE32</span> <span style="color:#a6e22e">executable</span> (<span style="color:#a6e22e">console</span>) <span style="color:#a6e22e">Intel</span> <span style="color:#ae81ff">80386</span> (<span style="color:#a6e22e">stripped</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">external</span> <span style="color:#a6e22e">PDB</span>), <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">MS</span> <span style="color:#a6e22e">Windows</span>
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">GOOS</span>=<span style="color:#a6e22e">windows</span> <span style="color:#a6e22e">GOARCH</span>=<span style="color:#ae81ff">386</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">v</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#a6e22e">file</span> <span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">latency</span>.<span style="color:#a6e22e">exe</span>: <span style="color:#a6e22e">PE32</span> <span style="color:#a6e22e">executable</span> (<span style="color:#a6e22e">console</span>) <span style="color:#a6e22e">Intel</span> <span style="color:#ae81ff">80386</span> (<span style="color:#a6e22e">stripped</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">external</span> <span style="color:#a6e22e">PDB</span>), <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">MS</span> <span style="color:#a6e22e">Windows</span></span></span></code></pre></div></p>
 <p>
 The deployment of the code is a statically linked binary on the right folder, you can achieve something similar with Twitter PeX [1]</p>
 </div>
@@ -387,106 +380,104 @@ Concurrency
 <p>
 Python 3.5 provides I/O concurrency via the package asyncio [3], it uses coroutines and an event loop pattern. Asyncio have a good syntax. We just need to note that we are not blocking the calls here, lets say the response is getting 1 sec to get back, if we have 5 calls we will have 5s of wait with the old blocking code, now we need to wait just 1 second for all calls.</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">➜</span>  measure  time python3<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span> latency<span style="color:#f92672">.</span>py input<span style="color:#f92672">.</span>csv
-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.025869</span>
-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.020087</span>
-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019869</span>
-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019845</span>
-<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019862</span>
-Mean: <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.021106</span>
-python3<span style="color:#f92672">.</span><span style="color:#ae81ff">5</span> latency<span style="color:#f92672">.</span>py input<span style="color:#f92672">.</span>csv  <span style="color:#ae81ff">0.48</span>s user <span style="color:#ae81ff">0.02</span>s system <span style="color:#ae81ff">32</span><span style="color:#f92672">%</span> cpu <span style="color:#ae81ff">1.530</span> total</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">➜</span>  measure  time python3<span style="color:#ae81ff">.5</span> latency<span style="color:#f92672">.</span>py input<span style="color:#f92672">.</span>csv
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.025869</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.020087</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019869</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019845</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.019862</span>
+</span></span><span style="display:flex;"><span>Mean: <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">01.021106</span>
+</span></span><span style="display:flex;"><span>python3<span style="color:#ae81ff">.5</span> latency<span style="color:#f92672">.</span>py input<span style="color:#f92672">.</span>csv  <span style="color:#ae81ff">0.48</span>s user <span style="color:#ae81ff">0.02</span>s system <span style="color:#ae81ff">32</span><span style="color:#f92672">%</span> cpu <span style="color:#ae81ff">1.530</span> total</span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">async <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_connects</span>(line):
-    start_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
-    conn <span style="color:#f92672">=</span> await aiohttp<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;{}/{}/{}&#34;</span><span style="color:#f92672">.</span>format(
-        URL, line<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;source&#39;</span>), line<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;destination&#39;</span>))
-    )
-    out <span style="color:#f92672">=</span> await conn<span style="color:#f92672">.</span>read()
-    end_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
-    finish <span style="color:#f92672">=</span> end_time <span style="color:#f92672">-</span> start_time
-    <span style="color:#66d9ef">print</span>(finish)
-    time_wait<span style="color:#f92672">.</span>append(finish)
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-    <span style="color:#f92672">...</span>
-    <span style="color:#75715e"># Get the event loop from asyncio</span>
-    loop <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>get_event_loop()
-
-    <span style="color:#75715e"># Futures encapsulate the async execution of a callable</span>
-    <span style="color:#75715e"># Its like Deferred of Twisted, here we have a list of things to process</span>
-    to_do <span style="color:#f92672">=</span> [
-        asyncio<span style="color:#f92672">.</span>ensure_future(do_connects(line))
-        <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> reader
-    ]
-
-    <span style="color:#75715e"># Now we will wait the coroutines list to be completed, by event loop processing</span>
-    wait_coro <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>wait( to_do )
-    loop<span style="color:#f92672">.</span>run_until_complete(wait_coro)
-
-    calculate_stats()
-
-    loop<span style="color:#f92672">.</span>close()
-    args<span style="color:#f92672">.</span>csv<span style="color:#f92672">.</span>close()</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_connects</span>(line):
+</span></span><span style="display:flex;"><span>    start_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
+</span></span><span style="display:flex;"><span>    conn <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> aiohttp<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>        URL, line<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;source&#39;</span>), line<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;destination&#39;</span>))
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    out <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> conn<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>    end_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
+</span></span><span style="display:flex;"><span>    finish <span style="color:#f92672">=</span> end_time <span style="color:#f92672">-</span> start_time
+</span></span><span style="display:flex;"><span>    print(finish)
+</span></span><span style="display:flex;"><span>    time_wait<span style="color:#f92672">.</span>append(finish)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Get the event loop from asyncio</span>
+</span></span><span style="display:flex;"><span>    loop <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>get_event_loop()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Futures encapsulate the async execution of a callable</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Its like Deferred of Twisted, here we have a list of things to process</span>
+</span></span><span style="display:flex;"><span>    to_do <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>        asyncio<span style="color:#f92672">.</span>ensure_future(do_connects(line))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> reader
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Now we will wait the coroutines list to be completed, by event loop processing</span>
+</span></span><span style="display:flex;"><span>    wait_coro <span style="color:#f92672">=</span> asyncio<span style="color:#f92672">.</span>wait( to_do )
+</span></span><span style="display:flex;"><span>    loop<span style="color:#f92672">.</span>run_until_complete(wait_coro)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    calculate_stats()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    loop<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>    args<span style="color:#f92672">.</span>csv<span style="color:#f92672">.</span>close()</span></span></code></pre></div></p>
 <p>
 Here be dragons.</p>
 <p>
 Instead of a loop event, go have the idea of Goroutines and channels to communicate between them, it is a very interesting approach based on CSP [4].</p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">lines</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
-    <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">0</span>)
-
-    <span style="color:#75715e">// Consume the channels and calculate mean
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">lines</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-        <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">+=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
-    }
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Mean: &#34;</span>, <span style="color:#a6e22e">sum_duration</span><span style="color:#f92672">/</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">lines</span>))
-}
-
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">do_connects</span>(<span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
-    <span style="color:#a6e22e">start_time</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
-
-    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Post</span>(<span style="color:#a6e22e">url</span>, <span style="color:#e6db74">&#34;application/json&#34;</span>, <span style="color:#66d9ef">nil</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span>
-    }
-    <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-    <span style="color:#a6e22e">end_time</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>)
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">end_time</span>)
-
-    <span style="color:#75715e">// Fill the channel buffer with latency
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">end_time</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">read_csv</span>(<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">Reader</span>) {
-    <span style="color:#a6e22e">first</span>, <span style="color:#a6e22e">lines</span>, <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">true</span>, <span style="color:#ae81ff">0</span>, make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>)
-
-    <span style="color:#66d9ef">for</span> {
-        <span style="color:#a6e22e">record</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Read</span>()
-
-        <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">first</span> {
-            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
-                <span style="color:#66d9ef">break</span>
-            }
-            <span style="color:#75715e">// Launch a Goroutine passing the channel as argument
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">do_connects</span>(<span style="color:#a6e22e">url</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">1</span>], <span style="color:#a6e22e">ch</span>)
-            <span style="color:#a6e22e">lines</span><span style="color:#f92672">++</span>
-        }
-        <span style="color:#a6e22e">first</span> = <span style="color:#66d9ef">false</span>
-    }
-    <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">lines</span>, <span style="color:#a6e22e">ch</span>)
-}
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">lines</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Consume the channels and calculate mean
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">lines</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">sum_duration</span> <span style="color:#f92672">+=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Mean: &#34;</span>, <span style="color:#a6e22e">sum_duration</span><span style="color:#f92672">/</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">lines</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">do_connects</span>(<span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">start_time</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Post</span>(<span style="color:#a6e22e">url</span>, <span style="color:#e6db74">&#34;application/json&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">end_time</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start_time</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">end_time</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Fill the channel buffer with latency
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">end_time</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">read_csv</span>(<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">csv</span>.<span style="color:#a6e22e">Reader</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">first</span>, <span style="color:#a6e22e">lines</span>, <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">true</span>, <span style="color:#ae81ff">0</span>, make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">record</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Read</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">first</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Launch a Goroutine passing the channel as argument
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">do_connects</span>(<span style="color:#a6e22e">url</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">record</span>[<span style="color:#ae81ff">1</span>], <span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">lines</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">first</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">calculate_stats</span>(<span style="color:#a6e22e">lines</span>, <span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
 <p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span> <span style="color:#f92672">--</span><span style="color:#a6e22e">csv</span> <span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">csv</span>
-<span style="color:#ae81ff">1.008839797</span><span style="color:#a6e22e">s</span>
-<span style="color:#ae81ff">1.010029273</span><span style="color:#a6e22e">s</span>
-<span style="color:#ae81ff">1.010747957</span><span style="color:#a6e22e">s</span>
-<span style="color:#ae81ff">1.011410825</span><span style="color:#a6e22e">s</span>
-<span style="color:#ae81ff">1.012543644</span><span style="color:#a6e22e">s</span>
-<span style="color:#a6e22e">Mean</span>:  <span style="color:#ae81ff">1.010714299</span><span style="color:#a6e22e">s</span>
-</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">➜</span>  <span style="color:#a6e22e">measure</span>  <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">latency</span>.<span style="color:#66d9ef">go</span> <span style="color:#f92672">--</span><span style="color:#a6e22e">csv</span> <span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">csv</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.008839797</span><span style="color:#a6e22e">s</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.010029273</span><span style="color:#a6e22e">s</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.010747957</span><span style="color:#a6e22e">s</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.011410825</span><span style="color:#a6e22e">s</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.012543644</span><span style="color:#a6e22e">s</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Mean</span>:  <span style="color:#ae81ff">1.010714299</span><span style="color:#a6e22e">s</span></span></span></code></pre></div></p>
 </div>
 </div>
 <div id="outline-container-headline-8" class="outline-3">
@@ -552,7 +543,7 @@ Reference
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

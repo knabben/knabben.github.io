@@ -6,7 +6,7 @@
     
     <title>OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -36,10 +36,8 @@
 <meta property="og:description" content="HTP and others BS" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://opssec.in/posts/" />
-<meta property="og:updated_time" content="2023-04-06T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
-<meta itemprop="description" content="HTP and others BS">
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="HTP and others BS"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="HTP and others BS"/>
 
@@ -161,7 +159,7 @@ The Kubernetes community have the Windows Special Interest Group [2], focusing o
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction With the advance of Containers, the network segmentation was required at level of the isolated applications, logically it's another copy of the network stack, with it's own routes, firewall rules and net devices. By convention these named network namespaces (ns) is an object at /var/run/netns/ as we are going to see in the sequence. A few tools to manage netns at user-space level resides on [1].
+      Introduction With the advance of Containers, the network segmentation was required at level of the isolated applications, logically it&rsquo;s another copy of the network stack, with it&rsquo;s own routes, firewall rules and net devices. By convention these named network namespaces (ns) is an object at /var/run/netns/ as we are going to see in the sequence. A few tools to manage netns at user-space level resides on [1].
 A standard called CNI (Container Network Interface) was created, to formalize and create a baseline that consists of a specification and libraries for writing plugins to configure network interfaces in Linux containers, along with a number of supported plugins.
     </div>
   </div>
@@ -177,7 +175,7 @@ A standard called CNI (Container Network Interface) was created, to formalize an
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the --mode=iptables and a few debugging commands to illustrate all the packet paths and endpoints. There's a simple cluster with 3 nodes on v1.21.1 created with Kind and kindnet as CNI.
+      Introduction On this post I will bring a few details around Kube-proxy codebase and, how the rules are setup under the --mode=iptables and a few debugging commands to illustrate all the packet paths and endpoints. There&rsquo;s a simple cluster with 3 nodes on v1.21.1 created with Kind and kindnet as CNI.
 Setup These are the following ips:
 $ kubectl get nodes -A -o wide [21:42:09] NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME cluster-control-plane Ready control-plane,master 26h v1.
     </div>
@@ -248,8 +246,8 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   On Kubernetes 1.10+ a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.
- The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.
+      Introduction On Kubernetes 1.10+ a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.
+The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.
     </div>
   </div>
 </div>
@@ -264,8 +262,8 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Introduction   This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary.
-  Installing the tools  VirtualBox   Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.
+      Introduction This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&#39;re using Linux probably the vm part is not necessary.
+Installing the tools VirtualBox Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.
     </div>
   </div>
 </div>
@@ -280,48 +278,46 @@ apiVersion: v1 clusters: - cluster: certificate-authority-data: .
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Networking   The first and easiest way to access the Pod container port is via port-forward command:
- $ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;
- Take a look on the dynamic port-forwarder.
-  Service   An abstract way to expose an application running on a set of Pods as a network service.
- a Service is an abstraction which defines a logical set of Pods and a policy by which to access them .
+      Networking The first and easiest way to access the Pod container port is via port-forward command:
+$ kubectl port-forward &lt;pod_name&gt; &lt;local_port&gt;:&lt;remote_port&gt;
+Take a look on the dynamic port-forwarder.
+Service An abstract way to expose an application running on a set of Pods as a network service.
+a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector.
     </div>
   </div>
 </div>
 </div>
       
     </section>
-<ul class="pagination">
-  <li class="page-item">
-    <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/">1</a>
-  </li>
-  <li class="page-item active">
-    <a class="page-link" href="/posts/page/2/">2</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/3/">3</a>
-  </li>
-  <li class="page-item disabled">
-    <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/posts/page/6/">6</a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/3/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/posts/page/6/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-  </li>
-</ul>
-
-</article>
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/posts/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/3/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/6/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul></article>
 
     </main>
     <script type="text/javascript" async

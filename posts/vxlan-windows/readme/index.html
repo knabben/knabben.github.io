@@ -6,7 +6,7 @@
     
     <title>Windows and Calico overlay networking | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Windows and Calico overlay networking" />
 <meta property="og:description" content="Notes on Windows and Calico CNI overlay connectivity" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/vxlan-windows/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/vxlan-windows/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-09-03T00:00:00+00:00" />
 <meta property="article:modified_time" content="2021-09-03T00:00:00+00:00" />
 <meta itemprop="name" content="Windows and Calico overlay networking">
-<meta itemprop="description" content="Notes on Windows and Calico CNI overlay connectivity">
-<meta itemprop="datePublished" content="2021-09-03T00:00:00+00:00" />
+<meta itemprop="description" content="Notes on Windows and Calico CNI overlay connectivity"><meta itemprop="datePublished" content="2021-09-03T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-09-03T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1903">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Windows and Calico overlay networking"/>
 <meta name="twitter:description" content="Notes on Windows and Calico CNI overlay connectivity"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Windows and Calico overlay networking</h1>
       
       
@@ -168,28 +164,21 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="introduction">Introduction</h2>
-
 <p>Windows are nowadays a must in a lot of multi-os clusters around companies, all big providers
 support the creation of Windows server machines and the support of containers in this OS is
 getting stronger on a daily basis [1].</p>
-
 <p>The Kubernetes community have the Windows Special Interest Group [2], focusing on workloads
 and scheduling support for these Windows nodes. As support tooling and sub-projects around the main
 SIGs on K8s, a few experimentations are born like the Dev-Tools [3].</p>
-
 <p>At this point the focus of this post will be debugging an issue found in the tooling environment
 involving Calico and Vagrant setup. The content here exposes the steps followed to find
 the problem and the aggregation of posts and material used in the research of solving this particular
 problem. Keep reading, because interesting procedures and notes are about to come.</p>
-
 <h2 id="windows-vs-linux-network-namespace">Windows vs linux network namespace</h2>
-
 <p>A brief overview and mappings from the similarities between both operating systems when talking
 about containers workloads, as expected a few fundamentals differences exists, and the table below
 maps what they are:</p>
-
-<p><center></p>
-
+<!-- raw HTML omitted -->
 <table>
 <thead>
 <tr>
@@ -197,257 +186,231 @@ maps what they are:</p>
 <th>Windows</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>Network namespace</td>
 <td>TCP/IP Compartments</td>
 </tr>
-
 <tr>
 <td>Bridge / IP Routing</td>
 <td>vSwitch</td>
 </tr>
-
 <tr>
 <td>IP links</td>
 <td>vNICs / vSwitch / VFP ports</td>
 </tr>
-
 <tr>
 <td>IPVS and iptables</td>
 <td>Firewall and VFP rules</td>
 </tr>
 </tbody>
 </table>
-
-<p></center></p>
-
+<!-- raw HTML omitted -->
 <p>On my <a href="https://thefind.live/posts/cni-plugins/readme/">last post</a> I explored some network namespace tooling
 in the Linux box, if you have interest to test it.</p>
-
 <p>The debugging on this post goes to VFP and vSwitch, you can read more about it <a href="https://www.microsoft.com/en-us/research/publication/vfp-virtual-switch-platform-host-sdn-public-cloud-article-version/">here</a>.</p>
-
 <h3 id="vagrant">Vagrant</h3>
-
 <p>It is used in the dev environment and here comes the tricky part, by default it creates an internal
 interface with the IP address <code>10.0.2.15</code>, and gateway IP address <code>10.0.2.2</code>. This is true for both boxes (controlplane
 and windows host), so the chance is that most services are default listening to this interface.</p>
-
 <p>On the other side to avoid this internal networking usage, the development environment brings up another
 private network, it is using the IP address range on <code>10.20.30.0/24</code>, with last octect <code>.10</code> for the control plane
 and <code>.11</code> for the windows node.</p>
-
 <p>To summarize this post explores connectivity problems between both hosts related with them having an internal,
 and a public NIC at the same time.</p>
-
 <h3 id="overlay-networking">Overlay networking</h3>
-
 <p>A note about overlay networking and more details of this setup. the Calico CNI used in the environment is running with
 VXLAN overlay routing mode. So all nodes are communicating via tunneling on port UDP 4789.</p>
-
 <p>A few words from the Project Calico VXLAN [4]:</p>
-<pre><code>An overlay network allows network devices to communicate across an underlying network (referred to as the underlay)
+<pre tabindex="0"><code>An overlay network allows network devices to communicate across an underlying network (referred to as the underlay)
 without the underlay network having any knowledge of the devices connected to the overlay network.
 
 There are many different kinds of overlay networks that use different protocols to make this happen, 
 but in general they share the same common characteristic of taking a network packet, referred to as the inner packet,
 and encapsulating it inside an outer network packet. 
 
-In this way the underlay sees the outer packets without needing to understand how to handle the inner packets.</code></pre>
-<p>Felix must be configured for this routing mode, you can find more information of this in the official CNI
+In this way the underlay sees the outer packets without needing to understand how to handle the inner packets.
+</code></pre><p>Felix must be configured for this routing mode, you can find more information of this in the official CNI
 documentation linked here.</p>
-
 <h2 id="testing-connectivity">Testing connectivity</h2>
-
 <h3 id="control-plane-node">Control plane node</h3>
-
 <p>With all machines up the first basic connectivity test (smoke test) was starting a new Netshoot pod
 in the Linux machine and <code>curl</code> the Windows IIS IP, which is in <code>Running</code> state.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@controlplane:~$ kubectl get pods
-NAME                                  READY   STATUS    RESTARTS      AGE     IP               NODE           NOMINATED NODE   READINESS GATES
-netshoot                              1/1     Running   <span style="color:#ae81ff">0</span>             2m28s   100.244.49.69    controlplane   &lt;none&gt;           &lt;none&gt;
-nginx-deployment-76d8669c4c-mv4wh     1/1     Running   <span style="color:#ae81ff">0</span>             117m    100.244.49.68    controlplane   &lt;none&gt;           &lt;none&gt;
-windows-server-iis-769d57f976-nx7hf   1/1     Running   <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>39s ago<span style="color:#f92672">)</span>   3m3s    100.244.206.68   winw1          &lt;none&gt;           &lt;none&gt;
-
-
-vagrant@controlplane:~$ kubectl exec -it netshoot -- bash
-bash-5.1# curl 100.244.206.68</code></pre></div>
-<p>No luck here, it ended up in a timeout after some time, still in the Linux node running the <code>tshark</code>, it was
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vagrant@controlplane:~$ kubectl get pods
+</span></span><span style="display:flex;"><span>NAME                                  READY   STATUS    RESTARTS      AGE     IP               NODE           NOMINATED NODE   READINESS GATES
+</span></span><span style="display:flex;"><span>netshoot                              1/1     Running   <span style="color:#ae81ff">0</span>             2m28s   100.244.49.69    controlplane   &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>nginx-deployment-76d8669c4c-mv4wh     1/1     Running   <span style="color:#ae81ff">0</span>             117m    100.244.49.68    controlplane   &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>windows-server-iis-769d57f976-nx7hf   1/1     Running   <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>39s ago<span style="color:#f92672">)</span>   3m3s    100.244.206.68   winw1          &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vagrant@controlplane:~$ kubectl exec -it netshoot -- bash
+</span></span><span style="display:flex;"><span>bash-5.1# curl 100.244.206.68
+</span></span></code></pre></div><p>No luck here, it ended up in a timeout after some time, still in the Linux node running the <code>tshark</code>, it was
 possible to inspect the packet, without a SYN/ACK from the Windows node:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># tshark -i any</span>
-  ...
-  <span style="color:#ae81ff">1</span> 0.000000000 100.244.49.69 → 100.244.206.68 TCP <span style="color:#ae81ff">74</span> <span style="color:#ae81ff">54398</span> → <span style="color:#ae81ff">80</span> <span style="color:#f92672">[</span>SYN<span style="color:#f92672">]</span> Seq<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> Win<span style="color:#f92672">=</span><span style="color:#ae81ff">64860</span> Len<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> MSS<span style="color:#f92672">=</span><span style="color:#ae81ff">1410</span> SACK_PERM<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> TSval<span style="color:#f92672">=</span><span style="color:#ae81ff">2598139194</span> TSecr<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> WS<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>
-  <span style="color:#ae81ff">2</span> 1.008358160 100.244.49.69 → 100.244.206.68 TCP <span style="color:#ae81ff">74</span> <span style="color:#f92672">[</span>TCP Retransmission<span style="color:#f92672">]</span> <span style="color:#ae81ff">54398</span> → <span style="color:#ae81ff">80</span> <span style="color:#f92672">[</span>SYN<span style="color:#f92672">]</span> Seq<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> Win<span style="color:#f92672">=</span><span style="color:#ae81ff">64860</span> Len<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> MSS<span style="color:#f92672">=</span><span style="color:#ae81ff">1410</span> SACK_PERM<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> TSval<span style="color:#f92672">=</span><span style="color:#ae81ff">2598140202</span> TSecr<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> WS<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>
-  ...</code></pre></div>
-<p>Still in the Linux machine, the last try was to check the routes, as we can see in the last line
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># tshark -i any</span>
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">1</span> 0.000000000 100.244.49.69 → 100.244.206.68 TCP <span style="color:#ae81ff">74</span> <span style="color:#ae81ff">54398</span> → <span style="color:#ae81ff">80</span> <span style="color:#f92672">[</span>SYN<span style="color:#f92672">]</span> Seq<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> Win<span style="color:#f92672">=</span><span style="color:#ae81ff">64860</span> Len<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> MSS<span style="color:#f92672">=</span><span style="color:#ae81ff">1410</span> SACK_PERM<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> TSval<span style="color:#f92672">=</span><span style="color:#ae81ff">2598139194</span> TSecr<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> WS<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">2</span> 1.008358160 100.244.49.69 → 100.244.206.68 TCP <span style="color:#ae81ff">74</span> <span style="color:#f92672">[</span>TCP Retransmission<span style="color:#f92672">]</span> <span style="color:#ae81ff">54398</span> → <span style="color:#ae81ff">80</span> <span style="color:#f92672">[</span>SYN<span style="color:#f92672">]</span> Seq<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> Win<span style="color:#f92672">=</span><span style="color:#ae81ff">64860</span> Len<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> MSS<span style="color:#f92672">=</span><span style="color:#ae81ff">1410</span> SACK_PERM<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> TSval<span style="color:#f92672">=</span><span style="color:#ae81ff">2598140202</span> TSecr<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> WS<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></div><p>Still in the Linux machine, the last try was to check the routes, as we can see in the last line
 the next hop to handle it is <code>100.244.206.65</code> via <code>vxlan.calico</code>, or the overlay interface.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@controlplane:~$ ip route
-
-default via 10.0.2.2 dev eth0 proto dhcp src 10.0.2.15 metric <span style="color:#ae81ff">100</span>
-10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15
-10.0.2.2 dev eth0 proto dhcp scope link src 10.0.2.15 metric <span style="color:#ae81ff">100</span>
-10.20.30.0/24 dev eth1 proto kernel scope link src 10.20.30.10
-100.244.49.65 dev cali64856e06016 scope link
-100.244.49.66 dev cali4bfaac1b56f scope link
-100.244.49.67 dev cali897f6784663 scope link
-100.244.49.68 dev calide492000d53 scope link
-100.244.49.69 dev calie348bef9edc scope link
-100.244.206.64/26 via 100.244.206.65 dev vxlan.calico onlink</code></pre></div>
-<p>The question now: where is this next hop? In the last post we saw the CNI created these routing rules and normally the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vagrant@controlplane:~$ ip route
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>default via 10.0.2.2 dev eth0 proto dhcp src 10.0.2.15 metric <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15
+</span></span><span style="display:flex;"><span>10.0.2.2 dev eth0 proto dhcp scope link src 10.0.2.15 metric <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>10.20.30.0/24 dev eth1 proto kernel scope link src 10.20.30.10
+</span></span><span style="display:flex;"><span>100.244.49.65 dev cali64856e06016 scope link
+</span></span><span style="display:flex;"><span>100.244.49.66 dev cali4bfaac1b56f scope link
+</span></span><span style="display:flex;"><span>100.244.49.67 dev cali897f6784663 scope link
+</span></span><span style="display:flex;"><span>100.244.49.68 dev calide492000d53 scope link
+</span></span><span style="display:flex;"><span>100.244.49.69 dev calie348bef9edc scope link
+</span></span><span style="display:flex;"><span>100.244.206.64/26 via 100.244.206.65 dev vxlan.calico onlink
+</span></span></code></pre></div><p>The question now: where is this next hop? In the last post we saw the CNI created these routing rules and normally the
 IP CIDR destination was pointing to the node gateway owner of this CIDR, so lets take a look in the windows machine.</p>
-
 <h3 id="windows-node">Windows node</h3>
-
 <p>Starting with Calico Node logs under <code>c:\CalicoWindows\logs</code> to see if it was possible to fetch more
 information about the vxlan interface and this strange IP created, found out this piece of log:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Management IP detected on vSwitch: 10.0.2.15.</code></pre></div>
-<p>That's odd, we are not supposed to use this IP anywhere in the setup, and instead the NIC should be the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Management IP detected on vSwitch: 10.0.2.15.
+</span></span></code></pre></div><p>That&rsquo;s odd, we are not supposed to use this IP anywhere in the setup, and instead the NIC should be the
 private one under <code>10.20.30.11</code> ip address. This is where Kubelet is listening on, so Calico should be too.
 The first procedure here was to take a look in the created Overlay HNS networks with the Powershell
 function <code>Get-HNSNetwork</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">PS C:<span style="color:#ae81ff">\&gt;</span> Get-HNSNetwork
-
-ActivityId             : 20CE6C3F-97EA-4349-A4B2-3861A1B48B5E
-AdditionalParams       :
-CurrentEndpointCount   : <span style="color:#ae81ff">1</span>
-DNSServerCompartment   : <span style="color:#ae81ff">4</span>
-DrMacAddress           : 00-15-5D-64-51-0E
-Extensions             : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E7C3B2F0-F3C5-48DF-AF2B-10FED6D72E7A; IsEnabled<span style="color:#f92672">=</span>False; Name<span style="color:#f92672">=</span>Microsoft Windows Filtering Platform<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E9B59CFA-2BE1-4B21-828F-B6FBDBDDC017; IsEnabled<span style="color:#f92672">=</span>True;
-                         Name<span style="color:#f92672">=</span>Microsoft Azure VFP Switch Extension<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>EA24CD6C-D17A-4348-9190-09F0D5BE83DD; IsEnabled<span style="color:#f92672">=</span>True; Name<span style="color:#f92672">=</span>Microsoft NDIS Capture<span style="color:#f92672">}}</span>
-Flags                  : <span style="color:#ae81ff">0</span>
-Health                 : @<span style="color:#f92672">{</span>LastErrorCode<span style="color:#f92672">=</span>0; LastUpdateTime<span style="color:#f92672">=</span>132749223763450147<span style="color:#f92672">}</span>
-ID                     : 28893E01-AC8D-4BE6-85D4-7CD3A78611C1
-IPv6                   : False
-LayeredOn              : B84E00EB-D250-4433-A3DE-E2FC84C23386
-MacPools               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>EndMacAddress<span style="color:#f92672">=</span>00-15-5D-D3-3F-FF; StartMacAddress<span style="color:#f92672">=</span>00-15-5D-D3-30-00<span style="color:#f92672">}}</span>
-ManagementIP           : 10.0.2.15
-MaxConcurrentEndpoints : <span style="color:#ae81ff">1</span>
-Name                   : Calico
-Policies               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Type<span style="color:#f92672">=</span>HostRoute<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>DestinationPrefix<span style="color:#f92672">=</span>100.244.49.64/26; DistributedRouterMacAddress<span style="color:#f92672">=</span>66-a5-cc-c1-86-97; IsolationId<span style="color:#f92672">=</span>4096; ProviderAddress<span style="color:#f92672">=</span>10.20.30.10; Type<span style="color:#f92672">=</span>RemoteSubnetRoute<span style="color:#f92672">}}</span>
-Resources              : @<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AllocationOrder<span style="color:#f92672">=</span>1; Allocators<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>20CE6C3F-97EA-4349-A4B2-3861A1B48B5E; PortOperationTime<span style="color:#f92672">=</span>0; State<span style="color:#f92672">=</span>1; SwitchOperationTime<span style="color:#f92672">=</span>0;
-                         VfpOperationTime<span style="color:#f92672">=</span>0; parentId<span style="color:#f92672">=</span>FE09F4C4-1515-4AA7-AB82-A817B557DFBC<span style="color:#f92672">}</span>
-State                  : <span style="color:#ae81ff">1</span>
-Subnets                : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AddressPrefix<span style="color:#f92672">=</span>100.244.206.64/26; GatewayAddress<span style="color:#f92672">=</span>100.244.206.65; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>5E1D8701-E648-441B-87A7-3AA5347147E3; ObjectType<span style="color:#f92672">=</span>5; Policies<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>;
-                         State<span style="color:#f92672">=</span>0<span style="color:#f92672">}}</span>
-TotalEndpoints         : <span style="color:#ae81ff">1</span>
-Type                   : Overlay
-Version                : <span style="color:#ae81ff">38654705669</span></code></pre></div>
-<p>Ok, so at this point we found out the subnet on Subnets fields, and it was clear the wrong interface
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> Get-HNSNetwork
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ActivityId             : 20CE6C3F-97EA-4349-A4B2-3861A1B48B5E
+</span></span><span style="display:flex;"><span>AdditionalParams       :
+</span></span><span style="display:flex;"><span>CurrentEndpointCount   : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>DNSServerCompartment   : <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>DrMacAddress           : 00-15-5D-64-51-0E
+</span></span><span style="display:flex;"><span>Extensions             : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E7C3B2F0-F3C5-48DF-AF2B-10FED6D72E7A; IsEnabled<span style="color:#f92672">=</span>False; Name<span style="color:#f92672">=</span>Microsoft Windows Filtering Platform<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E9B59CFA-2BE1-4B21-828F-B6FBDBDDC017; IsEnabled<span style="color:#f92672">=</span>True;
+</span></span><span style="display:flex;"><span>                         Name<span style="color:#f92672">=</span>Microsoft Azure VFP Switch Extension<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>EA24CD6C-D17A-4348-9190-09F0D5BE83DD; IsEnabled<span style="color:#f92672">=</span>True; Name<span style="color:#f92672">=</span>Microsoft NDIS Capture<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>Flags                  : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Health                 : @<span style="color:#f92672">{</span>LastErrorCode<span style="color:#f92672">=</span>0; LastUpdateTime<span style="color:#f92672">=</span>132749223763450147<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>ID                     : 28893E01-AC8D-4BE6-85D4-7CD3A78611C1
+</span></span><span style="display:flex;"><span>IPv6                   : False
+</span></span><span style="display:flex;"><span>LayeredOn              : B84E00EB-D250-4433-A3DE-E2FC84C23386
+</span></span><span style="display:flex;"><span>MacPools               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>EndMacAddress<span style="color:#f92672">=</span>00-15-5D-D3-3F-FF; StartMacAddress<span style="color:#f92672">=</span>00-15-5D-D3-30-00<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>ManagementIP           : 10.0.2.15
+</span></span><span style="display:flex;"><span>MaxConcurrentEndpoints : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Name                   : Calico
+</span></span><span style="display:flex;"><span>Policies               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Type<span style="color:#f92672">=</span>HostRoute<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>DestinationPrefix<span style="color:#f92672">=</span>100.244.49.64/26; DistributedRouterMacAddress<span style="color:#f92672">=</span>66-a5-cc-c1-86-97; IsolationId<span style="color:#f92672">=</span>4096; ProviderAddress<span style="color:#f92672">=</span>10.20.30.10; Type<span style="color:#f92672">=</span>RemoteSubnetRoute<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>Resources              : @<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AllocationOrder<span style="color:#f92672">=</span>1; Allocators<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>20CE6C3F-97EA-4349-A4B2-3861A1B48B5E; PortOperationTime<span style="color:#f92672">=</span>0; State<span style="color:#f92672">=</span>1; SwitchOperationTime<span style="color:#f92672">=</span>0;
+</span></span><span style="display:flex;"><span>                         VfpOperationTime<span style="color:#f92672">=</span>0; parentId<span style="color:#f92672">=</span>FE09F4C4-1515-4AA7-AB82-A817B557DFBC<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>State                  : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Subnets                : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AddressPrefix<span style="color:#f92672">=</span>100.244.206.64/26; GatewayAddress<span style="color:#f92672">=</span>100.244.206.65; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>5E1D8701-E648-441B-87A7-3AA5347147E3; ObjectType<span style="color:#f92672">=</span>5; Policies<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>;
+</span></span><span style="display:flex;"><span>                         State<span style="color:#f92672">=</span>0<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>TotalEndpoints         : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Type                   : Overlay
+</span></span><span style="display:flex;"><span>Version                : <span style="color:#ae81ff">38654705669</span>
+</span></span></code></pre></div><p>Ok, so at this point we found out the subnet on Subnets fields, and it was clear the wrong interface
 was being used. The reason is shown in the Policies <code>Host-Route</code> item for the Linux machine,
-Linux is using the <code>10.20.30.10</code> interface to setup the VXLAN tunnel on it's side.</p>
-
+Linux is using the <code>10.20.30.10</code> interface to setup the VXLAN tunnel on it&rsquo;s side.</p>
 <p>To ensure the proper routing between both hosts the last question that remaining is:</p>
-
 <p><em>How to choose the VXLAN interface for this Windows node?</em></p>
-
 <h3 id="connectivity-tests-and-debugging">Connectivity tests and debugging</h3>
-
 <p>After looking around the <a href="https://github.com/microsoft/SDN/blob/master/Kubernetes/windows/hns.psm1#L148">New-HnsNetwork</a>
 a parameter called <code>AdapterName</code> exists. It was learned after further analysis that the function is used
 by Calico to <a href="https://github.com/projectcalico/node/blob/master/windows-packaging/CalicoWindows/node/node-service.ps1#L91">bring the Overlay interface</a>.
 It was a matter of passing the <code>-AdapterName</code> as a parameter, like:</p>
-<pre><code>if ($env:CALICO_NETWORKING_BACKEND -EQ &#34;vxlan&#34;) {
+<pre tabindex="0"><code>if ($env:CALICO_NETWORKING_BACKEND -EQ &#34;vxlan&#34;) {
     New-NetFirewallRule -Name OverlayTraffic4789UDP -Description &#34;Overlay network traffic UDP&#34; ... // firewall rule
     $result = New-HNSNetwork -Type Overlay ... -AdapterName $vxlanAdapter -Verbose
-}</code></pre>
-<p>Now it's possible to configure this adapter on <code>config.ps1</code>, this option should be available on <code>Calico v3.21.0</code>:</p>
-<pre><code>VXLAN_ADAPTER = &#34;Ethernet 2&#34;</code></pre>
-<p>Let's take a look into the Calico logs again, the private interface is now the Management IP on the vSwitch,
+}
+</code></pre><p>Now it&rsquo;s possible to configure this adapter on <code>config.ps1</code>, this option should be available on <code>Calico v3.21.0</code>:</p>
+<pre tabindex="0"><code>VXLAN_ADAPTER = &#34;Ethernet 2&#34;
+</code></pre><p>Let&rsquo;s take a look into the Calico logs again, the private interface is now the Management IP on the vSwitch,
 this is a good signal:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">...
-Management IP detected on vSwitch: 10.20.30.11
-...
-2021-08-31 17:54:59.464 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/startup_windows.go 66: Backend networking is vxlan, ensure vxlan network.
-2021-08-31 17:54:59.465 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 1895: Ensure block <span style="color:#66d9ef">for</span> host winw1, ipv4 attr &amp;<span style="color:#f92672">{</span><span style="color:#ae81ff">3</span> <span style="color:#ae81ff">1</span> windows-reserved-ipam-handle windows host rsvd<span style="color:#f92672">}</span> ipv6 attr &lt;nil&gt;
-2021-08-31 17:54:59.465 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 1966: Looking up existing affinities <span style="color:#66d9ef">for</span> host host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
-2021-08-31 17:54:59.470 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 356: Looking up existing affinities <span style="color:#66d9ef">for</span> host host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
-2021-08-31 17:54:59.473 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 439: Trying affinity <span style="color:#66d9ef">for</span> 100.244.206.64/26 host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
-2021-08-31 17:54:59.475 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 143: Attempting to load block cidr<span style="color:#f92672">=</span>100.244.206.64/26 host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
-2021-08-31 17:54:59.479 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 220: Affinity is confirmed and block has been loaded cidr<span style="color:#f92672">=</span>100.244.206.64/26 host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
-2021-08-31 17:54:59.479 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 1992: Host<span style="color:#e6db74">&#39;s block &#39;</span>100.244.206.64/26<span style="color:#960050;background-color:#1e0010">&#39;</span>  host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
-2021-08-31 17:54:59.491 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/dataplane_windows.go 357: Attempting to create HNSNetwork <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;Name&#34;</span>:<span style="color:#e6db74">&#34;Calico&#34;</span>,<span style="color:#e6db74">&#34;Type&#34;</span>:<span style="color:#e6db74">&#34;Overlay&#34;</span>,<span style="color:#e6db74">&#34;Subnets&#34;</span>:<span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;AddressPrefix&#34;</span>:<span style="color:#e6db74">&#34;100.244.206.64/26&#34;</span>,<span style="color:#e6db74">&#34;GatewayAddress&#34;</span>:<span style="color:#e6db74">&#34;1
-</span><span style="color:#e6db74">00.244.206.65&#34;</span>,<span style="color:#e6db74">&#34;Policies&#34;</span>:<span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;Type&#34;</span>:<span style="color:#e6db74">&#34;VSID&#34;</span>,<span style="color:#e6db74">&#34;VSID&#34;</span>:4096<span style="color:#f92672">}]}]}</span> subnet<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.206.64/26&#34;</span></code></pre></div>
-<p>Checking the Overlay Network again, looks promising:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">PS C:<span style="color:#ae81ff">\&gt;</span> Get-HNSNetwork
-
-ActivityId             : DE451C81-5986-4BF9-B720-2611F5DEE310
-AdditionalParams       :
-CurrentEndpointCount   : <span style="color:#ae81ff">1</span>
-DNSServerCompartment   : <span style="color:#ae81ff">4</span>
-DrMacAddress           : 00-15-5D-B9-70-84
-Extensions             : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E7C3B2F0-F3C5-48DF-AF2B-10FED6D72E7A; IsEnabled<span style="color:#f92672">=</span>False; Name<span style="color:#f92672">=</span>Microsoft Windows Filtering Platform<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E9B59CFA-2BE1-4B21-828F-B6FBDBDDC017; IsEnabled<span style="color:#f92672">=</span>True;
-Name<span style="color:#f92672">=</span>Microsoft Azure VFP Switch Extension<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>EA24CD6C-D17A-4348-9190-09F0D5BE83DD; IsEnabled<span style="color:#f92672">=</span>True; Name<span style="color:#f92672">=</span>Microsoft NDIS Capture<span style="color:#f92672">}}</span>
-Flags                  : <span style="color:#ae81ff">0</span>
-Health                 : @<span style="color:#f92672">{</span>LastErrorCode<span style="color:#f92672">=</span>0; LastUpdateTime<span style="color:#f92672">=</span>132749312994946529<span style="color:#f92672">}</span>
-ID                     : FAD80830-616C-4BC2-8758-BA64AEA8F627
-IPv6                   : False
-LayeredOn              : F1F2F14B-64E9-4F6A-B7E7-2E528EBEA406
-MacPools               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>EndMacAddress<span style="color:#f92672">=</span>00-15-5D-74-EF-FF; StartMacAddress<span style="color:#f92672">=</span>00-15-5D-74-E0-00<span style="color:#f92672">}}</span>
-ManagementIP           : 10.20.30.11
-MaxConcurrentEndpoints : <span style="color:#ae81ff">1</span>
-Name                   : Calico
-Policies               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Type<span style="color:#f92672">=</span>HostRoute<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>DestinationPrefix<span style="color:#f92672">=</span>100.244.49.64/26; DistributedRouterMacAddress<span style="color:#f92672">=</span>66-a5-cc-c1-86-97; IsolationId<span style="color:#f92672">=</span>4096; ProviderAddress<span style="color:#f92672">=</span>10.20.30.10; Type<span style="color:#f92672">=</span>RemoteSubnetRoute<span style="color:#f92672">}}</span>
-Resources              : @<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AllocationOrder<span style="color:#f92672">=</span>1; Allocators<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>DE451C81-5986-4BF9-B720-2611F5DEE310; PortOperationTime<span style="color:#f92672">=</span>0; State<span style="color:#f92672">=</span>1; SwitchOperationTime<span style="color:#f92672">=</span>0;
-VfpOperationTime<span style="color:#f92672">=</span>0; parentId<span style="color:#f92672">=</span>6C549FF2-89EA-4D7E-B5C2-704140569CFB<span style="color:#f92672">}</span>
-State                  : <span style="color:#ae81ff">1</span>
-Subnets                : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AddressPrefix<span style="color:#f92672">=</span>100.244.206.64/26; GatewayAddress<span style="color:#f92672">=</span>100.244.206.65; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>D521D64F-8B6E-4E3D-837B-1385B350248B; ObjectType<span style="color:#f92672">=</span>5; Policies<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>;
-State<span style="color:#f92672">=</span>0<span style="color:#f92672">}}</span>
-TotalEndpoints         : <span style="color:#ae81ff">1</span>
-Type                   : Overlay
-Version                : <span style="color:#ae81ff">38654705669</span></code></pre></div>
-<p>For the final smoke test, we hit the another IIS pod on <code>100.244.206.67</code> this time:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bash-5.1# curl 100.244.206.67
-&lt;!DOCTYPE html PUBLIC <span style="color:#e6db74">&#34;-//W3C//DTD XHTML 1.0 Strict//EN&#34;</span> <span style="color:#e6db74">&#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&#34;</span>&gt;
-&lt;html xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/1999/xhtml&#34;</span>&gt;
-&lt;head&gt;
-&lt;meta http-equiv<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Content-Type&#34;</span> content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/html; charset=iso-8859-1&#34;</span> /&gt;
-&lt;title&gt;IIS Windows Server&lt;/title&gt;
-&lt;style type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span>&gt;
-&lt;!--
-body <span style="color:#f92672">{</span>
-	color:#000000;
-	background-color:#0072C6;
-	margin:0;
-<span style="color:#f92672">}</span>
-
-<span style="color:#75715e">#container {</span>
-	margin-left:auto;
-	margin-right:auto;
-	text-align:center;
-	<span style="color:#f92672">}</span>
-
-a img <span style="color:#f92672">{</span>
-	border:none;
-<span style="color:#f92672">}</span>
-
---&gt;
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
-&lt;a href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://go.microsoft.com/fwlink/?linkid=66138&amp;amp;clcid=0x409&#34;</span>&gt;&lt;img src<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;iisstart.png&#34;</span> alt<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IIS&#34;</span> width<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;960&#34;</span> height<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;600&#34;</span> /&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;/body&gt;</code></pre></div>
-<p>Here is a summarization of the Node traffic output:</p>
-<pre><code>vagrant@controlplane:~$ tshark -i any
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Management IP detected on vSwitch: 10.20.30.11
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.464 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/startup_windows.go 66: Backend networking is vxlan, ensure vxlan network.
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.465 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 1895: Ensure block <span style="color:#66d9ef">for</span> host winw1, ipv4 attr &amp;<span style="color:#f92672">{</span><span style="color:#ae81ff">3</span> <span style="color:#ae81ff">1</span> windows-reserved-ipam-handle windows host rsvd<span style="color:#f92672">}</span> ipv6 attr &lt;nil&gt;
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.465 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 1966: Looking up existing affinities <span style="color:#66d9ef">for</span> host host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.470 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 356: Looking up existing affinities <span style="color:#66d9ef">for</span> host host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.473 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 439: Trying affinity <span style="color:#66d9ef">for</span> 100.244.206.64/26 host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.475 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 143: Attempting to load block cidr<span style="color:#f92672">=</span>100.244.206.64/26 host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.479 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 220: Affinity is confirmed and block has been loaded cidr<span style="color:#f92672">=</span>100.244.206.64/26 host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.479 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/ipam.go 1992: Host<span style="color:#e6db74">&#39;s block &#39;</span>100.244.206.64/26<span style="color:#960050;background-color:#1e0010">&#39;</span>  host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;winw1&#34;</span>
+</span></span><span style="display:flex;"><span>2021-08-31 17:54:59.491 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">][</span>5524<span style="color:#f92672">]</span> startup/dataplane_windows.go 357: Attempting to create HNSNetwork <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;Name&#34;</span>:<span style="color:#e6db74">&#34;Calico&#34;</span>,<span style="color:#e6db74">&#34;Type&#34;</span>:<span style="color:#e6db74">&#34;Overlay&#34;</span>,<span style="color:#e6db74">&#34;Subnets&#34;</span>:<span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;AddressPrefix&#34;</span>:<span style="color:#e6db74">&#34;100.244.206.64/26&#34;</span>,<span style="color:#e6db74">&#34;GatewayAddress&#34;</span>:<span style="color:#e6db74">&#34;1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">00.244.206.65&#34;</span>,<span style="color:#e6db74">&#34;Policies&#34;</span>:<span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;Type&#34;</span>:<span style="color:#e6db74">&#34;VSID&#34;</span>,<span style="color:#e6db74">&#34;VSID&#34;</span>:4096<span style="color:#f92672">}]}]}</span> subnet<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.206.64/26&#34;</span>
+</span></span></code></pre></div><p>Checking the Overlay Network again, looks promising:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> Get-HNSNetwork
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ActivityId             : DE451C81-5986-4BF9-B720-2611F5DEE310
+</span></span><span style="display:flex;"><span>AdditionalParams       :
+</span></span><span style="display:flex;"><span>CurrentEndpointCount   : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>DNSServerCompartment   : <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>DrMacAddress           : 00-15-5D-B9-70-84
+</span></span><span style="display:flex;"><span>Extensions             : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E7C3B2F0-F3C5-48DF-AF2B-10FED6D72E7A; IsEnabled<span style="color:#f92672">=</span>False; Name<span style="color:#f92672">=</span>Microsoft Windows Filtering Platform<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>E9B59CFA-2BE1-4B21-828F-B6FBDBDDC017; IsEnabled<span style="color:#f92672">=</span>True;
+</span></span><span style="display:flex;"><span>Name<span style="color:#f92672">=</span>Microsoft Azure VFP Switch Extension<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>Id<span style="color:#f92672">=</span>EA24CD6C-D17A-4348-9190-09F0D5BE83DD; IsEnabled<span style="color:#f92672">=</span>True; Name<span style="color:#f92672">=</span>Microsoft NDIS Capture<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>Flags                  : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Health                 : @<span style="color:#f92672">{</span>LastErrorCode<span style="color:#f92672">=</span>0; LastUpdateTime<span style="color:#f92672">=</span>132749312994946529<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>ID                     : FAD80830-616C-4BC2-8758-BA64AEA8F627
+</span></span><span style="display:flex;"><span>IPv6                   : False
+</span></span><span style="display:flex;"><span>LayeredOn              : F1F2F14B-64E9-4F6A-B7E7-2E528EBEA406
+</span></span><span style="display:flex;"><span>MacPools               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>EndMacAddress<span style="color:#f92672">=</span>00-15-5D-74-EF-FF; StartMacAddress<span style="color:#f92672">=</span>00-15-5D-74-E0-00<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>ManagementIP           : 10.20.30.11
+</span></span><span style="display:flex;"><span>MaxConcurrentEndpoints : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Name                   : Calico
+</span></span><span style="display:flex;"><span>Policies               : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>Type<span style="color:#f92672">=</span>HostRoute<span style="color:#f92672">}</span>, @<span style="color:#f92672">{</span>DestinationPrefix<span style="color:#f92672">=</span>100.244.49.64/26; DistributedRouterMacAddress<span style="color:#f92672">=</span>66-a5-cc-c1-86-97; IsolationId<span style="color:#f92672">=</span>4096; ProviderAddress<span style="color:#f92672">=</span>10.20.30.10; Type<span style="color:#f92672">=</span>RemoteSubnetRoute<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>Resources              : @<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AllocationOrder<span style="color:#f92672">=</span>1; Allocators<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>DE451C81-5986-4BF9-B720-2611F5DEE310; PortOperationTime<span style="color:#f92672">=</span>0; State<span style="color:#f92672">=</span>1; SwitchOperationTime<span style="color:#f92672">=</span>0;
+</span></span><span style="display:flex;"><span>VfpOperationTime<span style="color:#f92672">=</span>0; parentId<span style="color:#f92672">=</span>6C549FF2-89EA-4D7E-B5C2-704140569CFB<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>State                  : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Subnets                : <span style="color:#f92672">{</span>@<span style="color:#f92672">{</span>AdditionalParams<span style="color:#f92672">=</span>; AddressPrefix<span style="color:#f92672">=</span>100.244.206.64/26; GatewayAddress<span style="color:#f92672">=</span>100.244.206.65; Health<span style="color:#f92672">=</span>; ID<span style="color:#f92672">=</span>D521D64F-8B6E-4E3D-837B-1385B350248B; ObjectType<span style="color:#f92672">=</span>5; Policies<span style="color:#f92672">=</span>System.Object<span style="color:#f92672">[]</span>;
+</span></span><span style="display:flex;"><span>State<span style="color:#f92672">=</span>0<span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>TotalEndpoints         : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Type                   : Overlay
+</span></span><span style="display:flex;"><span>Version                : <span style="color:#ae81ff">38654705669</span>
+</span></span></code></pre></div><p>For the final smoke test, we hit the another IIS pod on <code>100.244.206.67</code> this time:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bash-5.1# curl 100.244.206.67
+</span></span><span style="display:flex;"><span>&lt;!DOCTYPE html PUBLIC <span style="color:#e6db74">&#34;-//W3C//DTD XHTML 1.0 Strict//EN&#34;</span> <span style="color:#e6db74">&#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;html xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/1999/xhtml&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;head&gt;
+</span></span><span style="display:flex;"><span>&lt;meta http-equiv<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Content-Type&#34;</span> content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/html; charset=iso-8859-1&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;title&gt;IIS Windows Server&lt;/title&gt;
+</span></span><span style="display:flex;"><span>&lt;style type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;!--
+</span></span><span style="display:flex;"><span>body <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	color:#000000;
+</span></span><span style="display:flex;"><span>	background-color:#0072C6;
+</span></span><span style="display:flex;"><span>	margin:0;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#container {</span>
+</span></span><span style="display:flex;"><span>	margin-left:auto;
+</span></span><span style="display:flex;"><span>	margin-right:auto;
+</span></span><span style="display:flex;"><span>	text-align:center;
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a img <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	border:none;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--&gt;
+</span></span><span style="display:flex;"><span>&lt;/style&gt;
+</span></span><span style="display:flex;"><span>&lt;/head&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;div id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;a href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://go.microsoft.com/fwlink/?linkid=66138&amp;amp;clcid=0x409&#34;</span>&gt;&lt;img src<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;iisstart.png&#34;</span> alt<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IIS&#34;</span> width<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;960&#34;</span> height<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;600&#34;</span> /&gt;&lt;/a&gt;
+</span></span><span style="display:flex;"><span>&lt;/div&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span></code></pre></div><p>Here is a summarization of the Node traffic output:</p>
+<pre tabindex="0"><code>vagrant@controlplane:~$ tshark -i any
    ...
    1 7.592594949 100.244.49.69 → 100.244.206.67 TCP 76 44836 → 80 [SYN] Seq=0 Win=64860 Len=0 MSS=1410 SACK_PERM=1 TSval=2685085784 TSecr=0 WS=128
    2 7.593072350 100.244.206.67 → 100.244.49.69 TCP 68 80 → 44836 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=1410 WS=256 SACK_PERM=1
    3 7.593126368 100.244.49.69 → 100.244.206.67 TCP 56 44836 → 80 [ACK] Seq=1 Ack=1 Win=64896 Len=0
-   4 7.593211096 100.244.49.69 → 100.244.206.67 HTTP 134 GET / HTTP/1.1</code></pre>
-<h3 id="digging-deeper">Digging deeper</h3>
-
+   4 7.593211096 100.244.49.69 → 100.244.206.67 HTTP 134 GET / HTTP/1.1
+</code></pre><h3 id="digging-deeper">Digging deeper</h3>
 <p>Luckily the issue was clear with a few basic powershell functions, sometimes it is required to dig deeper to
 find the root cause, this reference [4] provides a very good step by step flow of debugging, and
 to illustrate, lets bring an interesting example.</p>
-
 <p>Each container has a virtual network adapter (vNIC) which is connected to a Hyper-V virtual switch (vSwitch).
 These endpoints can be listed using the <a href="https://github.com/microsoft/SDN/blob/master/Kubernetes/windows/debug/collectlogs.ps1">collectlogs.ps1</a>
 script. Logs and data gathering will be dumped in a few txt files, it was possible to solve our issue
 in the HNS network layer, but lets analyze what exists inside the container configuration, from the <code>endpoint.txt</code> file
 it is possible to find:</p>
-
 <ol>
 <li>DNS configuration</li>
 <li>gateway route configuration</li>
@@ -455,71 +418,60 @@ it is possible to find:</p>
 <li>IP and MAC addresss</li>
 <li>The policies for this endpoint, No NAT between pods, vxlan encapsulation for services, etc.</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;ActivityId&#34;</span>:  <span style="color:#e6db74">&#34;05E5FC25-2E70-4B8E-A80C-5C1DE2F3CC18&#34;</span>,
-    ...
-    <span style="color:#e6db74">&#34;DNSServerList&#34;</span>:  <span style="color:#e6db74">&#34;10.96.0.10&#34;</span>,
-    <span style="color:#e6db74">&#34;DNSSuffix&#34;</span>:  <span style="color:#e6db74">&#34;default.svc.cluster.local,svc.cluster.local,cluster.local&#34;</span>,
-    ...
-    <span style="color:#e6db74">&#34;EncapOverhead&#34;</span>:  50,
-    <span style="color:#e6db74">&#34;GatewayAddress&#34;</span>:  <span style="color:#e6db74">&#34;100.244.206.65&#34;</span>,
-    <span style="color:#e6db74">&#34;Health&#34;</span>:  <span style="color:#f92672">{</span>
-      <span style="color:#e6db74">&#34;LastErrorCode&#34;</span>:  0,
-      <span style="color:#e6db74">&#34;LastUpdateTime&#34;</span>:  <span style="color:#ae81ff">132749313131273390</span>
-    <span style="color:#f92672">}</span>,
-    <span style="color:#e6db74">&#34;ID&#34;</span>:  <span style="color:#e6db74">&#34;26DCB6EE-F66B-4AB8-98D2-8223F769894A&#34;</span>,
-    <span style="color:#e6db74">&#34;IPAddress&#34;</span>:  <span style="color:#e6db74">&#34;100.244.206.67&#34;</span>,
-    <span style="color:#e6db74">&#34;MacAddress&#34;</span>:  <span style="color:#e6db74">&#34;0E-2A-64-f4-ce-43&#34;</span>,
-    <span style="color:#e6db74">&#34;Name&#34;</span>:  <span style="color:#e6db74">&#34;a85b1b1b99600bf50f265b595b64ea6d3f952c3449e03565066b3fddda1b8052_Calico&#34;</span>,
-    <span style="color:#e6db74">&#34;Namespace&#34;</span>:  <span style="color:#f92672">{</span>
-      <span style="color:#e6db74">&#34;ID&#34;</span>:  <span style="color:#e6db74">&#34;08191D89-ACE1-4E50-AACA-7A2F1D539171&#34;</span>,
-      <span style="color:#e6db74">&#34;IsDefault&#34;</span>:  false
-    <span style="color:#f92672">}</span>,
-    <span style="color:#e6db74">&#34;Policies&#34;</span>:  <span style="color:#f92672">[</span>
-      <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#34;ExceptionList&#34;</span>:  <span style="color:#f92672">[</span>
-          <span style="color:#e6db74">&#34;10.96.0.0/12&#34;</span>,
-          <span style="color:#e6db74">&#34;100.244.0.0/16&#34;</span>                       
-        <span style="color:#f92672">]</span>,
-        <span style="color:#e6db74">&#34;Type&#34;</span>:  <span style="color:#e6db74">&#34;OutBoundNAT&#34;</span>
-      <span style="color:#f92672">}</span>,
-      <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#34;DestinationPrefix&#34;</span>:  <span style="color:#e6db74">&#34;10.96.0.0/12&#34;</span>,
-        <span style="color:#e6db74">&#34;NeedEncap&#34;</span>:  true,
-        <span style="color:#e6db74">&#34;Type&#34;</span>:  <span style="color:#e6db74">&#34;ROUTE&#34;</span>
-      <span style="color:#f92672">}</span>,
-    ...
-    <span style="color:#f92672">]</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>Other inspections can be made in VFP rules with <code>vfpctrl</code>, or using <code>startpacketcapture.cmd</code> to extract
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ActivityId&#34;</span>:  <span style="color:#e6db74">&#34;05E5FC25-2E70-4B8E-A80C-5C1DE2F3CC18&#34;</span>,
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;DNSServerList&#34;</span>:  <span style="color:#e6db74">&#34;10.96.0.10&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;DNSSuffix&#34;</span>:  <span style="color:#e6db74">&#34;default.svc.cluster.local,svc.cluster.local,cluster.local&#34;</span>,
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;EncapOverhead&#34;</span>:  50,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;GatewayAddress&#34;</span>:  <span style="color:#e6db74">&#34;100.244.206.65&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Health&#34;</span>:  <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;LastErrorCode&#34;</span>:  0,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;LastUpdateTime&#34;</span>:  <span style="color:#ae81ff">132749313131273390</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ID&#34;</span>:  <span style="color:#e6db74">&#34;26DCB6EE-F66B-4AB8-98D2-8223F769894A&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;IPAddress&#34;</span>:  <span style="color:#e6db74">&#34;100.244.206.67&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;MacAddress&#34;</span>:  <span style="color:#e6db74">&#34;0E-2A-64-f4-ce-43&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Name&#34;</span>:  <span style="color:#e6db74">&#34;a85b1b1b99600bf50f265b595b64ea6d3f952c3449e03565066b3fddda1b8052_Calico&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Namespace&#34;</span>:  <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;ID&#34;</span>:  <span style="color:#e6db74">&#34;08191D89-ACE1-4E50-AACA-7A2F1D539171&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;IsDefault&#34;</span>:  false
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Policies&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ExceptionList&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;10.96.0.0/12&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;100.244.0.0/16&#34;</span>                       
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Type&#34;</span>:  <span style="color:#e6db74">&#34;OutBoundNAT&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;DestinationPrefix&#34;</span>:  <span style="color:#e6db74">&#34;10.96.0.0/12&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;NeedEncap&#34;</span>:  true,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Type&#34;</span>:  <span style="color:#e6db74">&#34;ROUTE&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Other inspections can be made in VFP rules with <code>vfpctrl</code>, or using <code>startpacketcapture.cmd</code> to extract
 and analyze the traffic with <code>Message Analyzer</code>:</p>
-
 <img src="/posts/vxlan-windows/sniff-ok.png" alt="" class="" style="width: 100%; ">
 
-
 <h2 id="help-needed">Help needed</h2>
-
 <p>Are you interested to help enhance the development environment? Here goes a list of some open issues:</p>
-
 <ul>
 <li><a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/issues/80">Add full Antrea CNI support</a></li>
 <li><a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/issues/81">Explore VMware workstation as alternative</a></li>
 <li><a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/issues/3">Use containerd as default controlplane runtime</a></li>
 <li><a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/issues/76">Environment health check</a></li>
 </ul>
-
 <h2 id="references">References</h2>
-
 <p>[1] <a href="https://github.com/microsoft/Windows-Containers/projects/1">https://github.com/microsoft/Windows-Containers/projects/1</a></p>
-
 <p>[2] <a href="https://github.com/kubernetes/community/tree/master/sig-windows">https://github.com/kubernetes/community/tree/master/sig-windows</a></p>
-
 <p>[3] <a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/">https://github.com/kubernetes-sigs/sig-windows-dev-tools/</a></p>
-
 <p>[4] <a href="https://docs.projectcalico.org/networking/vxlan-ipip">https://docs.projectcalico.org/networking/vxlan-ipip</a></p>
-
 <p>[5] <a href="https://argonsys.com/microsoft-cloud/library/troubleshooting-kubernetes-networking-on-windows-part-1/">https://argonsys.com/microsoft-cloud/library/troubleshooting-kubernetes-networking-on-windows-part-1/</a></p>
-
 <p>[6] <a href="https://www.youtube.com/watch?v=BkBgR2uxFCk&amp;t=1912s">https://www.youtube.com/watch?v=BkBgR2uxFCk&amp;t=1912s</a></p>
 <ul class="pa0">
   
@@ -528,7 +480,7 @@ and analyze the traffic with <code>Message Analyzer</code>:</p>
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

@@ -6,7 +6,7 @@
     
     <title>Cluster API Provider for AWS (CAPA) | OPSSEC.in</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.112.7">
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,19 +30,14 @@
     <meta property="og:title" content="Cluster API Provider for AWS (CAPA)" />
 <meta property="og:description" content="Breaking a bunch of controllers on a saturday" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://opssec.in/posts/capa/readme/" />
+<meta property="og:url" content="https://opssec.in/posts/capa/readme/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-12T00:00:00+00:00" />
 <meta property="article:modified_time" content="2022-07-12T00:00:00+00:00" />
 <meta itemprop="name" content="Cluster API Provider for AWS (CAPA)">
-<meta itemprop="description" content="Breaking a bunch of controllers on a saturday">
-<meta itemprop="datePublished" content="2022-07-12T00:00:00+00:00" />
+<meta itemprop="description" content="Breaking a bunch of controllers on a saturday"><meta itemprop="datePublished" content="2022-07-12T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-07-12T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1131">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="wordCount" content="1158">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cluster API Provider for AWS (CAPA)"/>
 <meta name="twitter:description" content="Breaking a bunch of controllers on a saturday"/>
 
@@ -159,6 +154,7 @@
     </a>
   </div>
 
+
       <h1 class="f1 athelas mt3 mb1">Cluster API Provider for AWS (CAPA)</h1>
       
       
@@ -168,169 +164,110 @@
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray w-l" style="width: 100%;"><h2 id="introduction">Introduction</h2>
-
 <p>The Cluster API is a Kubernetes project to bring declarative, Kubernetes-style APIs to cluster creation, configuration, and management.
 You can create new workload clusters from a management cluster in a descritive way, the ClusterAPI controllers provide the initial management cluster
-setup and a tool called <em>clusterctl</em> to manage them. Workloads clusters are specilized controllers on separated projects called providers. Each cloud provider will have it's own controllers and ways to build the workload cluster obeying the rules and logic defined in the spec and workflow diagrams here [2].</p>
-
+setup and a tool called <em>clusterctl</em> to manage them. Workloads clusters are specilized controllers on separated projects called providers. Each cloud provider will have it&rsquo;s own controllers and ways to build the workload cluster obeying the rules and logic defined in the spec and workflow diagrams here [2].</p>
 <p>This post in particular will help in a mental mode creation of the Cluster Infrastructure object [3], for the sake of curiosity lets try to find
 out all networking, ELB, SG and firewall rules are created by the cluster controller and understand how external requests go through the apiserver in the cp.</p>
-
 <h2 id="management-cluster">Management Cluster</h2>
-
 <p>From the official CAPI docs - The cluster where one or more Infrastructure Providers run, and where resources (e.g. Machines) are stored.
 Typically referred to when you are provisioning multiple workload clusters. To create the management cluster you need to use your credentials
 and indicate the infrastructure type as an argument.</p>
-
 <p>The management cluster is required to create new clusters and store the configuration of them, think like a main cluster, for the workload clusters.
 This cluster will contain all controllers and objects (Machines, Clusters, KubeadmTemplates) to setup the workload clusters.</p>
-
 <h3 id="managed-vs-unmanaged-clusters">Managed vs Unmanaged clusters</h3>
-
 <p>A quick note about both types of clusters provided by CAPI.</p>
-
-<p>Managed clusters are cloud providers services offerings like GKE, EKS and AKS. You don't have access to the control plane and don't need to worry with
+<p>Managed clusters are cloud providers services offerings like GKE, EKS and AKS. You don&rsquo;t have access to the control plane and don&rsquo;t need to worry with
 the underlying management of the cluster, the cloud provider manages it for you, you are still responsible to managed things like node pools and initial setup,
 on this post we are going to take a look in particular in the EKS and CAPA managed support. Cloud providers on this mode use their own CNI [4]
- that's integrated with their cloud services (VPC).</p>
-
+that&rsquo;s integrated with their cloud services (VPC).</p>
 <p>Unmanaged clusters as you have guessed are clusters where the customer setup by themselves normally with kubeadm, and you have the total control
 of the cp and nodes. CAPI has support for it as well is all providers, on AWS it setup the nodes using EC2 directly, the mode is defined
 in the specs.</p>
-
 <h3 id="creating-a-new-management-cluster">Creating a new management cluster</h3>
-
 <p>After downloading the clusterctl, set the shell variables used by clusterctl to initialize your assets.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">export CLUSTER_TOPOLOGY<span style="color:#f92672">=</span>true
-export AWS_REGION<span style="color:#f92672">=</span>us-east-1 <span style="color:#75715e"># This is used to help encode your environment variables</span>
-export AWS_ACCESS_KEY_ID<span style="color:#f92672">=</span>&lt;your-access-key&gt;
-export AWS_SECRET_ACCESS_KEY<span style="color:#f92672">=</span>&lt;your-secret-access-key&gt;
-export AWS_SESSION_TOKEN<span style="color:#f92672">=</span>&lt;session-token&gt; <span style="color:#75715e"># If you are using Multi-Factor Auth.</span>
-
-$ clusterawsadm bootstrap iam create-cloudformation-stack</code></pre></div>
-<p>On this phase Attempting to create AWS CloudFormation stack <code>cluster-api-provider-aws-sigs-k8s-io</code>, following resources are in the stack:</p>
-
-<table>
-<thead>
-</thead>
-
-<tbody>
-<tr>
-<td><p>Resource</p>
-</td>
-<td><p>Type</p>
-</td>
-<td><p>Status</p>
-</td>
-</tr>
-
-<tr>
-<td><p>AWS::IAM::InstanceProfile
-AWS::IAM::InstanceProfile
-AWS::IAM::InstanceProfile
-AWS::IAM::ManagedPolicy
-AWS::IAM::ManagedPolicy
-AWS::IAM::ManagedPolicy
-AWS::IAM::ManagedPolicy
-AWS::IAM::Role
-AWS::IAM::Role
-AWS::IAM::Role
-AWS::IAM::Role</p>
-</td>
-<td><p>control-plane.cluster-api-provider-aws.sigs.k8s.io
-controllers.cluster-api-provider-aws.sigs.k8s.io
-nodes.cluster-api-provider-aws.sigs.k8s.io
-arn:aws:iam::139642426024:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
-arn:aws:iam::139642426024:policy/nodes.cluster-api-provider-aws.sigs.k8s.io
-arn:aws:iam::139642426024:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
-arn:aws:iam::139642426024:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
-control-plane.cluster-api-provider-aws.sigs.k8s.io
-controllers.cluster-api-provider-aws.sigs.k8s.io
-eks-controlplane.cluster-api-provider-aws.sigs.k8s.io
-nodes.cluster-api-provider-aws.sigs.k8s.io</p>
-</td>
-<td><p>CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE
-CREATE_COMPLETE</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">export AWS_B64ENCODED_CREDENTIALS<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>clusterawsadm bootstrap credentials encode-as-profile<span style="color:#66d9ef">)</span>
-$ cslusterctl init --infrastructure aws</code></pre></div>
-<p>At this point you have a management cluster with the following pods and namespaces:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">❯ kubectl get pods -A
-NAMESPACE                           NAME                                                             READY   STATUS    RESTARTS        AGE
-capa-system                         capa-controller-manager-6cd466656-plgbg                          1/1     Running   <span style="color:#ae81ff">0</span>               5h8m
-capi-kubeadm-bootstrap-system       capi-kubeadm-bootstrap-controller-manager-7dcd76b574-7kshh       1/1     Running   <span style="color:#ae81ff">0</span>               5h8m
-capi-kubeadm-control-plane-system   capi-kubeadm-control-plane-controller-manager-654cbff89f-z84sr   1/1     Running   <span style="color:#ae81ff">0</span>               5h8m
-capi-system                         capi-controller-manager-7bbc6f959-k7l7m                          1/1     Running   <span style="color:#ae81ff">0</span>               5h8m</code></pre></div>
-<p>CAPA controller is responsible to match the infrastructure and a few bootstrap group resources through the <code>capa-controller-manager</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">eksconfigs                        eksc         bootstrap.cluster.x-k8s.io/v1beta1        true         EKSConfig
-eksconfigtemplates                eksct        bootstrap.cluster.x-k8s.io/v1beta1        true         EKSConfigTemplate
-awsmanagedcontrolplanes           awsmcp       controlplane.cluster.x-k8s.io/v1beta1     true         AWSManagedControlPlane
-awsclustercontrolleridentities    awsci        infrastructure.cluster.x-k8s.io/v1beta1   false        AWSClusterControllerIdentity
-awsclusterroleidentities          awsri        infrastructure.cluster.x-k8s.io/v1beta1   false        AWSClusterRoleIdentity
-awsclusters                       awsc         infrastructure.cluster.x-k8s.io/v1beta1   true         AWSCluster
-awsclusterstaticidentities        awssi        infrastructure.cluster.x-k8s.io/v1beta1   false        AWSClusterStaticIdentity
-awsclustertemplates               awsct        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSClusterTemplate
-awsfargateprofiles                awsfp        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSFargateProfile
-awsmachinepools                   awsmp        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSMachinePool
-awsmachines                       awsm         infrastructure.cluster.x-k8s.io/v1beta1   true         AWSMachine
-awsmachinetemplates               awsmt        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSMachineTemplate
-awsmanagedmachinepools            awsmmp       infrastructure.cluster.x-k8s.io/v1beta1   true         AWSManagedMachinePool</code></pre></div>
-<h3 id="capa-controller-aws-services">CAPA Controller AWS services</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>export CLUSTER_TOPOLOGY<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>export AWS_REGION<span style="color:#f92672">=</span>us-east-1 <span style="color:#75715e"># This is used to help encode your environment variables</span>
+</span></span><span style="display:flex;"><span>export AWS_ACCESS_KEY_ID<span style="color:#f92672">=</span>&lt;your-access-key&gt;
+</span></span><span style="display:flex;"><span>export AWS_SECRET_ACCESS_KEY<span style="color:#f92672">=</span>&lt;your-secret-access-key&gt;
+</span></span><span style="display:flex;"><span>export AWS_SESSION_TOKEN<span style="color:#f92672">=</span>&lt;session-token&gt; <span style="color:#75715e"># If you are using Multi-Factor Auth.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ clusterawsadm bootstrap iam create-cloudformation-stack
+</span></span></code></pre></div><p>On this phase Attempting to create AWS CloudFormation stack <code>cluster-api-provider-aws-sigs-k8s-io</code>, following resources are in the stack:</p>
+<p>+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;-|
+| Resource                  |Type                                                                                  |Status          |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;-|
+| AWS::IAM::InstanceProfile |control-plane.cluster-api-provider-aws.sigs.k8s.io                                    |CREATE_COMPLETE |
+| AWS::IAM::InstanceProfile |controllers.cluster-api-provider-aws.sigs.k8s.io                                      |CREATE_COMPLETE |
+| AWS::IAM::InstanceProfile |nodes.cluster-api-provider-aws.sigs.k8s.io                                            |CREATE_COMPLETE |
+| AWS::IAM::ManagedPolicy   |arn:aws:iam::139642426024:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io   |CREATE_COMPLETE |
+| AWS::IAM::ManagedPolicy   |arn:aws:iam::139642426024:policy/nodes.cluster-api-provider-aws.sigs.k8s.io           |CREATE_COMPLETE |
+| AWS::IAM::ManagedPolicy   |arn:aws:iam::139642426024:policy/controllers.cluster-api-provider-aws.sigs.k8s.io     |CREATE_COMPLETE |
+| AWS::IAM::ManagedPolicy   |arn:aws:iam::139642426024:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io |CREATE_COMPLETE |
+| AWS::IAM::Role            |control-plane.cluster-api-provider-aws.sigs.k8s.io                                    |CREATE_COMPLETE |
+| AWS::IAM::Role            |controllers.cluster-api-provider-aws.sigs.k8s.io                                      |CREATE_COMPLETE |
+| AWS::IAM::Role            |eks-controlplane.cluster-api-provider-aws.sigs.k8s.io                                 |CREATE_COMPLETE |
+| AWS::IAM::Role            |nodes.cluster-api-provider-aws.sigs.k8s.io                                            |CREATE_COMPLETE |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;-|</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>export AWS_B64ENCODED_CREDENTIALS<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>clusterawsadm bootstrap credentials encode-as-profile<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>$ cslusterctl init --infrastructure aws
+</span></span></code></pre></div><p>At this point you have a management cluster with the following pods and namespaces:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ kubectl get pods -A
+</span></span><span style="display:flex;"><span>NAMESPACE                           NAME                                                             READY   STATUS    RESTARTS        AGE
+</span></span><span style="display:flex;"><span>capa-system                         capa-controller-manager-6cd466656-plgbg                          1/1     Running   <span style="color:#ae81ff">0</span>               5h8m
+</span></span><span style="display:flex;"><span>capi-kubeadm-bootstrap-system       capi-kubeadm-bootstrap-controller-manager-7dcd76b574-7kshh       1/1     Running   <span style="color:#ae81ff">0</span>               5h8m
+</span></span><span style="display:flex;"><span>capi-kubeadm-control-plane-system   capi-kubeadm-control-plane-controller-manager-654cbff89f-z84sr   1/1     Running   <span style="color:#ae81ff">0</span>               5h8m
+</span></span><span style="display:flex;"><span>capi-system                         capi-controller-manager-7bbc6f959-k7l7m                          1/1     Running   <span style="color:#ae81ff">0</span>               5h8m
+</span></span></code></pre></div><p>CAPA controller is responsible to match the infrastructure and a few bootstrap group resources through the <code>capa-controller-manager</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>eksconfigs                        eksc         bootstrap.cluster.x-k8s.io/v1beta1        true         EKSConfig
+</span></span><span style="display:flex;"><span>eksconfigtemplates                eksct        bootstrap.cluster.x-k8s.io/v1beta1        true         EKSConfigTemplate
+</span></span><span style="display:flex;"><span>awsmanagedcontrolplanes           awsmcp       controlplane.cluster.x-k8s.io/v1beta1     true         AWSManagedControlPlane
+</span></span><span style="display:flex;"><span>awsclustercontrolleridentities    awsci        infrastructure.cluster.x-k8s.io/v1beta1   false        AWSClusterControllerIdentity
+</span></span><span style="display:flex;"><span>awsclusterroleidentities          awsri        infrastructure.cluster.x-k8s.io/v1beta1   false        AWSClusterRoleIdentity
+</span></span><span style="display:flex;"><span>awsclusters                       awsc         infrastructure.cluster.x-k8s.io/v1beta1   true         AWSCluster
+</span></span><span style="display:flex;"><span>awsclusterstaticidentities        awssi        infrastructure.cluster.x-k8s.io/v1beta1   false        AWSClusterStaticIdentity
+</span></span><span style="display:flex;"><span>awsclustertemplates               awsct        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSClusterTemplate
+</span></span><span style="display:flex;"><span>awsfargateprofiles                awsfp        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSFargateProfile
+</span></span><span style="display:flex;"><span>awsmachinepools                   awsmp        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSMachinePool
+</span></span><span style="display:flex;"><span>awsmachines                       awsm         infrastructure.cluster.x-k8s.io/v1beta1   true         AWSMachine
+</span></span><span style="display:flex;"><span>awsmachinetemplates               awsmt        infrastructure.cluster.x-k8s.io/v1beta1   true         AWSMachineTemplate
+</span></span><span style="display:flex;"><span>awsmanagedmachinepools            awsmmp       infrastructure.cluster.x-k8s.io/v1beta1   true         AWSManagedMachinePool
+</span></span></code></pre></div><h3 id="capa-controller-aws-services">CAPA Controller AWS services</h3>
 <p>Cluster objects on a managed cluster EKS have <code>AWSManagedControlPlane</code> objects for both controlplaneRef and infrastructureRef</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
-<span style="color:#f92672">spec</span>:
-  <span style="color:#f92672">controlPlaneRef</span>:
-    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">controlplane.cluster.x-k8s.io/v1beta1</span>
-    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSManagedControlPlane</span>
-    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-eks-control-plane</span>
-  <span style="color:#f92672">infrastructureRef</span>:
-    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">controlplane.cluster.x-k8s.io/v1beta1</span>
-    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSManagedControlPlane</span>
-    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-eks-control-plane</span></code></pre></div>
-<p>For an unmanaged cluster the controlplaneref object is a <code>KubeadmControlPlane</code> and the infrastructure is <code>AWSCluster</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
-<span style="color:#f92672">spec</span>:
-
-  <span style="color:#f92672">controlPlaneRef</span>:
-    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">controlplane.cluster.x-k8s.io/v1beta1</span>
-    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmControlPlane</span>
-    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-quickstart-control-plane</span>
-  <span style="color:#f92672">infrastructureRef</span>:
-    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
-    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSCluster</span>
-    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-quickstart</span></code></pre></div>
-<p>Here there's a sequence diagram for the <code>AWSManagedControlPlane</code> controller and how it setups the cluster:</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">controlPlaneRef</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">controlplane.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSManagedControlPlane</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-eks-control-plane</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">infrastructureRef</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">controlplane.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSManagedControlPlane</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-eks-control-plane</span>
+</span></span></code></pre></div><p>For an unmanaged cluster the controlplaneref object is a <code>KubeadmControlPlane</code> and the infrastructure is <code>AWSCluster</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">controlPlaneRef</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">controlplane.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmControlPlane</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-quickstart-control-plane</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">infrastructureRef</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSCluster</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capi-quickstart</span>
+</span></span></code></pre></div><p>Here there&rsquo;s a sequence diagram for the <code>AWSManagedControlPlane</code> controller and how it setups the cluster:</p>
 <img src="/posts/capa/diagram1.png" alt="" class="" style="width: 100%; ">
 
-
 <h3 id="network-assets">Network assets</h3>
-
 <p>This diagram shows the created assets in the cloud.</p>
-
 <img src="/posts/capa/diagram2.jpg" alt="" class="" style="width: 95%; ">
 
-
 <h2 id="aws-eks-workload-cluster">AWS EKS Workload Cluster</h2>
-
 <p>Your machine deployment is based in the generated <code>AWSMachineTemplate</code> and this will create the EC2 machines of your choice
 and use them as nodes for your EKS cluster.</p>
-
 <p>To create a new workload cluster run the clusterctl command and apply the final YAML.</p>
-<pre><code>$ clusterctl generate cluster capi-eks-quickstart --kubernetes-version v1.22.9 --worker-machine-count=3 &gt; capi-quickstart.yaml
+<pre tabindex="0"><code>$ clusterctl generate cluster capi-eks-quickstart --kubernetes-version v1.22.9 --worker-machine-count=3 &gt; capi-quickstart.yaml
 $ kubectl apply -f capi-quickstart.yaml
 
 $ clusterctl get kubeconfig capi-eks-quickstart &gt; config.yaml
@@ -345,64 +282,47 @@ kube-system   coredns-7f5998f4c-6mj58   1/1     Running   0          6h21m   10.
 kube-system   coredns-7f5998f4c-v4fbz   1/1     Running   0          6h21m   10.0.90.36    ip-10-0-92-67.ec2.internal    &lt;none&gt;           &lt;none&gt;
 kube-system   kube-proxy-blp6m          1/1     Running   0          6h11m   10.0.92.67    ip-10-0-92-67.ec2.internal    &lt;none&gt;           &lt;none&gt;
 kube-system   kube-proxy-rwg69          1/1     Running   0          6h11m   10.0.124.60   ip-10-0-124-60.ec2.internal   &lt;none&gt;           &lt;none&gt;
-kube-system   kube-proxy-xsgrl          1/1     Running   0          6h10m   10.0.75.156   ip-10-0-75-156.ec2.internal   &lt;none&gt;           &lt;none&gt;</code></pre>
-<p>You can see the CNI, CoreDNS and Kube-Proxy running in the workload cluster. We have 16382 IP addresses on subnet at AZ <code>us-east-1a</code> and they
+kube-system   kube-proxy-xsgrl          1/1     Running   0          6h10m   10.0.75.156   ip-10-0-75-156.ec2.internal   &lt;none&gt;           &lt;none&gt;
+</code></pre><p>You can see the CNI, CoreDNS and Kube-Proxy running in the workload cluster. We have 16382 IP addresses on subnet at AZ <code>us-east-1a</code> and they
 are allocated to the pods, the AWS CNI uses jumbo frames with 9001 MTU.</p>
-
 <h3 id="running-tilt">Running tilt</h3>
-
 <p>In the development mode the process is similar to running normally [5] the only difference is that we are running the pods with Tilt,
 it will help to reload changes in the kind cluster faster. Create a <code>tilt-provider.json</code> file in the cluster-api folder on your GOPATH,
 pointing to the CAPA repository. Enable debug on 30000.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#f92672">&#34;enable_providers&#34;</span>: [<span style="color:#e6db74">&#34;aws&#34;</span>,<span style="color:#e6db74">&#34;kubeadm-bootstrap&#34;</span>, <span style="color:#e6db74">&#34;kubeadm-control-plane&#34;</span>],
-  <span style="color:#f92672">&#34;provider_repos&#34;</span>: [<span style="color:#e6db74">&#34;../cluster-api-provider-aws&#34;</span>],
-  <span style="color:#f92672">&#34;default_registry&#34;</span>: <span style="color:#e6db74">&#34;gcr.io/aws-bucket&#34;</span>,
-  <span style="color:#f92672">&#34;debug&#34;</span>: { <span style="color:#f92672">&#34;core&#34;</span>:  {<span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">30000</span> } },
- <span style="color:#960050;background-color:#1e0010">...</span>
-}</code></pre></div>
-<p>Uninstall the controllers initialized in the cluster and run tilt.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl delete cluster capi-eks-quickstart
-$ clusterctl  delete --all 
-$ tilt up -v</code></pre></div>
-<p>This is the CAPA controller running through TILT.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;enable_providers&#34;</span>: [<span style="color:#e6db74">&#34;aws&#34;</span>,<span style="color:#e6db74">&#34;kubeadm-bootstrap&#34;</span>, <span style="color:#e6db74">&#34;kubeadm-control-plane&#34;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;provider_repos&#34;</span>: [<span style="color:#e6db74">&#34;../cluster-api-provider-aws&#34;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;default_registry&#34;</span>: <span style="color:#e6db74">&#34;gcr.io/aws-bucket&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;debug&#34;</span>: { <span style="color:#f92672">&#34;core&#34;</span>:  {<span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">30000</span> } },
+</span></span><span style="display:flex;"><span> <span style="color:#960050;background-color:#1e0010">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Uninstall the controllers initialized in the cluster and run tilt.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl delete cluster capi-eks-quickstart
+</span></span><span style="display:flex;"><span>$ clusterctl  delete --all 
+</span></span><span style="display:flex;"><span>$ tilt up -v
+</span></span></code></pre></div><p>This is the CAPA controller running through TILT.</p>
 <img src="/posts/capa/tilt.png" alt="" class="" style="width: 100%; ">
 
-
 <p>Try to apply the cluster again and connect a remote delve from your Goland instance. [6]</p>
-
 <img src="/posts/capa/goland.png" alt="" class="" style="width: 100%; ">
 
-
 <h3 id="conclusion">Conclusion</h3>
-
 <p>Managed clusters and multi-cloud are the present, and ClusterAPI is powerful enough to provide the enduser and devops engineer
 all the tools and controllers to use it, this post is only the tip of the iceberg, if you are interested in the project
 check [7] for in deep sessions in the code base.</p>
-
 <h3 id="listening">Listening</h3>
-
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/08Vt4VkDH4A" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-
 <h2 id="references">References</h2>
-
 <p>[1] <a href="https://kubernetes.io/blog/2020/04/21/cluster-api-v1alpha3-delivers-new-features-and-an-improved-user-experience/">https://kubernetes.io/blog/2020/04/21/cluster-api-v1alpha3-delivers-new-features-and-an-improved-user-experience/</a></p>
-
 <p>[2] <a href="https://cluster-api.sigs.k8s.io/developer/providers/implementers.html">https://cluster-api.sigs.k8s.io/developer/providers/implementers.html</a></p>
-
 <p>[3] <a href="https://cluster-api.sigs.k8s.io/developer/providers/cluster-infrastructure.html">https://cluster-api.sigs.k8s.io/developer/providers/cluster-infrastructure.html</a></p>
-
 <p>[4] <a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html">https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html</a></p>
-
 <p>[5] <a href="https://cluster-api-aws.sigs.k8s.io/development/tilt-setup.htm">https://cluster-api-aws.sigs.k8s.io/development/tilt-setup.htm</a></p>
-
 <p>[6] <a href="https://www.jetbrains.com/help/go/attach-to-running-go-processes-with-debugger.html#step-2-build-the-application">https://www.jetbrains.com/help/go/attach-to-running-go-processes-with-debugger.html#step-2-build-the-application</a></p>
-
 <p>[7] <a href="https://www.youtube.com/watch?v=78BMdEiS43E">https://www.youtube.com/watch?v=78BMdEiS43E</a></p>
 <ul class="pa0">
   
@@ -411,7 +331,7 @@ check [7] for in deep sessions in the code base.</p>
       
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
