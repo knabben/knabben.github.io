@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="KPNG windows userspace backend support">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Kube-Proxy Next Gen Windows Userspace :: Forced Brain</title>
+
+    
+    <link href="/css/nucleus.css?1686238081" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1686238081" rel="stylesheet">
+    <link href="/css/hybrid.css?1686238081" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1686238081" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1686238081" rel="stylesheet">
+    <link href="/css/auto-complete.css?1686238081" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1686238081" rel="stylesheet">
+    <link href="/css/theme.css?1686238081" rel="stylesheet">
+    <link href="/css/tabs.css?1686238081" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1686238081" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1686238081" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1686238081"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2022/0122/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS ** SEC </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1686238081"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1686238081"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1686238081"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2022/'>2022</a> > Kube-Proxy Next Gen Windows Userspace
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#compiling-kpng">Compiling KPNG</a>
+      <ul>
+        <li><a href="#kpng-core">kPNG core</a></li>
+        <li><a href="#kpng-windows-backend">kPNG windows backend</a></li>
+        <li><a href="#building-a-dockerfile">Building a Dockerfile</a></li>
+      </ul>
+    </li>
+    <li><a href="#replacing-kube-proxy">Replacing Kube-proxy</a>
+      <ul>
+        <li><a href="#nssm-non-sucking-service-manager">NSSM (Non-Sucking Service Manager)</a></li>
+        <li><a href="#hostprocesshttpsgithubcomkubernetes-sigssig-windows-toolsblobmasterhostprocesscalicokube-proxykube-proxyyml"><a href="https://github.com/kubernetes-sigs/sig-windows-tools/blob/master/hostprocess/calico/kube-proxy/kube-proxy.yml">HostProcess</a></a></li>
+        <li><a href="#smoke-testing">Smoke testing</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Kube-Proxy Next Gen Windows Userspace
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>KPNG (KubeProxy Next Generation, kproxy v2) has as a goal provide a more scalable version of service proxies
+on Kubernetes, the idea is provide a <em>core</em> system that comunicates with the API server and provides an SHIM
+interface for the backends. Backends are specialized code that implement the required steps to provide the
+load balancing for the endpoints based on the data plane technology of choice (iptables, ipvs, HCN, etc.)</p>
+<p>In this post there will an integration walkthough on the first Windows backend (userspace) port to KPNG
+and will be provided a few ways to use it on <a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/">SIG-Windows Development Tooling</a></p>
+<p>Read more about the motivations and ideas behind KPNG in the <a href="https://github.com/kubernetes/enhancements/pull/2094/">KEP</a>.</p>
+<h2 id="compiling-kpng">Compiling KPNG</h2>
+<p>First thing is to compile kpng executable and the backend as a standalone process. Clone
+the repository on your GOPATH.</p>
+<h3 id="kpng-core">kPNG core</h3>
+<p>On kpng folder, enter the cmd folder and install the windows OS version, on your <strong>GOPATH/bin</strong>
+you will find the <strong>kpng.exe</strong> binary.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kpng$ cd cmd/
+</span></span><span style="display:flex;"><span>kpng/cmd$ GOOS<span style="color:#f92672">=</span>windows go install ./kpng
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>~/go/bin$ tree
+</span></span><span style="display:flex;"><span>└── windows_amd64
+</span></span><span style="display:flex;"><span>    └── kpng.exe
+</span></span></code></pre></div><h3 id="kpng-windows-backend">kPNG windows backend</h3>
+<p>The windows userspace is in-tree but the compilation happens as a standalone binary.
+It connects to the core kpng via gRPC server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kpng$ cd backend/windows/userspace
+</span></span><span style="display:flex;"><span>kpng/backend/windows/userspace$ GOOS<span style="color:#f92672">=</span>windows go build -o winuserspace.exe ./...
+</span></span></code></pre></div><h3 id="building-a-dockerfile">Building a Dockerfile</h3>
+<p>At this point you have 2 binaries, you can run this directly in the cluster as
+a process or as a daemonset, for the later lets create the Dockerfile first.</p>
+<p>Use a Windows machine to build the image, a working version can be find on <strong><code>knabben/kpng:latest</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> mcr.microsoft.com/windows/nanoserver:1809</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;C:\Program Files\PowerShell;C:\utils;C:\Windows\system32;C:\Windows;&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./kpng.exe /kpng/kpng.exe<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./winuserspace.exe /kpng/winuserspace.exe<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENTRYPOINT</span> [<span style="color:#e6db74">&#34;PowerShell&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>Move both binaries to a folder and add this Dockerfile. You can compile with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>docker build --isolation<span style="color:#f92672">=</span>hyperv --pull -t <span style="color:#e6db74">&#34;knabben/kpng:latest&#34;</span> -f .<span style="color:#ae81ff">\D</span>ockerfile .
+</span></span></code></pre></div><h2 id="replacing-kube-proxy">Replacing Kube-proxy</h2>
+<p>At this point there&rsquo;re two ways to run it, first is adding the binaries as a service
+the second is directly on your node using <code>hostProcess</code>.</p>
+<h3 id="nssm-non-sucking-service-manager">NSSM (Non-Sucking Service Manager)</h3>
+<p>In this example we are reusing the kube-proxy configuration from the Antrea CNI installation
+in the dev environment.</p>
+<p>First we stop the Kube-proxy service (removing the dependency from Antrea-Agent), we add a new
+service called kpng with the core binary, and another service with the backend.</p>
+<p>Don&rsquo;t forget to add the log parameters.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># Remove kube-proxy dependency from antrea Agent</span>
+</span></span><span style="display:flex;"><span>nssm.exe set antrea-agent DependOnService -kube-proxy
+</span></span><span style="display:flex;"><span>nssm.exe stop kube-proxy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$KubeProxyConfig=<span style="color:#e6db74">&#34;C:/k/antrea/etc/kube-proxy.conf&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$nssm = (Get-Command nssm).Source
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install kpng.exe as a service</span>
+</span></span><span style="display:flex;"><span>&amp; nssm install kpng <span style="color:#e6db74">&#34;C:/forked/kpng.exe&#34;</span> <span style="color:#e6db74">&#34;kube to-api --kubeconfig=</span>$KubeProxyConfig<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>&amp; nssm set kpng Start SERVICE_DELAYED_AUTO_START
+</span></span><span style="display:flex;"><span>&amp; nssm set kpng AppStdout C:\var\log\kpng\kpng.INFO.log
+</span></span><span style="display:flex;"><span>&amp; nssm set kpng AppStderr C:\var\log\kpng\kpng.ERR.log
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install winuserspace.exe backend as a service</span>
+</span></span><span style="display:flex;"><span>&amp; nssm install winuserspace <span style="color:#e6db74">&#34;C:/forked/winuserspace.exe&#34;</span> <span style="color:#e6db74">&#34;-v=4&#34;</span>
+</span></span><span style="display:flex;"><span>&amp; nssm set winuserspace DependOnService kpng
+</span></span><span style="display:flex;"><span>&amp; nssm set winuserspace Start SERVICE_DELAYED_AUTO_START
+</span></span><span style="display:flex;"><span>&amp; nssm set winuserspace AppStdout C:\var\log\kpng\winuserspace.INFO.log
+</span></span><span style="display:flex;"><span>&amp; nssm set winuserspace AppStderr C:\var\log\kpng\winuserspace.ERR.log
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Starting both services</span>
+</span></span><span style="display:flex;"><span>nssm start kpng
+</span></span><span style="display:flex;"><span>nssm start winuserspace
+</span></span></code></pre></div><h3 id="hostprocesshttpsgithubcomkubernetes-sigssig-windows-toolsblobmasterhostprocesscalicokube-proxykube-proxyyml"><a href="https://github.com/kubernetes-sigs/sig-windows-tools/blob/master/hostprocess/calico/kube-proxy/kube-proxy.yml">HostProcess</a></h3>
+<p>For hostProcess you need at least containerd 1.6+ and Kubernetes&gt;=1.23 to have the feature as beta on Windows.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>NAME           STATUS   ROLES                  AGE     VERSION                         INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                                  KERNEL-VERSION     CONTAINER-RUNTIME
+</span></span><span style="display:flex;"><span>controlplane   Ready    control-plane,master   5h46m   v1.23.3-rc.0.5+eb8a499627d33c   10.20.30.10   &lt;none&gt;        Ubuntu 20.04.3 LTS                        5.4.0-81-generic   containerd://1.5.5
+</span></span><span style="display:flex;"><span>winw1          Ready    &lt;none&gt;                 5h36m   v1.23.3-rc.0.5+eb8a499627d33c   10.20.30.11   &lt;none&gt;        Windows Server <span style="color:#ae81ff">2019</span> Standard Evaluation   10.0.17763.2452    containerd://1.6.0-rc.1
+</span></span></code></pre></div><p>The following is the specification of a daemonset used in the experiment:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">DaemonSet</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s-app</span>: <span style="color:#ae81ff">kpng</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kpng-windows</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">kube-system</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">k8s-app</span>: <span style="color:#ae81ff">kpng</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">k8s-app</span>: <span style="color:#ae81ff">kpng</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">securityContext</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">windowsOptions</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">hostProcess</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">runAsUserName</span>: <span style="color:#e6db74">&#34;NT AUTHORITY\\system&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">hostNetwork</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">knabben/kpng:latest</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">args</span>: [<span style="color:#e6db74">&#34;$env:CONTAINER_SANDBOX_MOUNT_POINT/kpng/winuserspace.exe&#34;</span>, <span style="color:#e6db74">&#34;-v=4&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">workingDir</span>: <span style="color:#e6db74">&#34;$env:CONTAINER_SANDBOX_MOUNT_POINT/kpng/&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kpng-backend</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">imagePullPolicy</span>: <span style="color:#ae81ff">Always</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">NODE_NAME</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">valueFrom</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">fieldRef</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">fieldPath</span>: <span style="color:#ae81ff">spec.nodeName</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">knabben/kpng:latest</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">args</span>: [<span style="color:#e6db74">&#34;$env:CONTAINER_SANDBOX_MOUNT_POINT/kpng/kpng.exe&#34;</span>, <span style="color:#e6db74">&#34;kube to-api --kubeconfig=$env:CONTAINER_SANDBOX_MOUNT_POINT/kpng/etc/kube-proxy.conf&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">workingDir</span>: <span style="color:#e6db74">&#34;$env:CONTAINER_SANDBOX_MOUNT_POINT/kpng/&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kpng</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">imagePullPolicy</span>: <span style="color:#ae81ff">Always</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">NODE_NAME</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">valueFrom</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">fieldRef</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">fieldPath</span>: <span style="color:#ae81ff">spec.nodeName</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">c:\\kpng\\etc\\</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kube-proxy</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kube-proxy</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">hostPath</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">C:\\k\\antrea\\etc</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">type</span>: <span style="color:#ae81ff">Directory</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodeSelector</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kubernetes.io/os</span>: <span style="color:#ae81ff">windows</span>
+</span></span></code></pre></div><p>A few notes in the spec, securityContext as hostProcess and runAsUserName are required. The kpng container needs access to the kube-proxy.conf (to watch cluster objects).
+Mounting the hostPath volume from the actual kube-proxy.</p>
+<h3 id="smoke-testing">Smoke testing</h3>
+<p>The version of Antrea used on sig-windows-dev-tools is 1.4, and Kube-proxy is used for NodePort only, more details on <a href="https://www.youtube.com/watch?v=3Z0NOrETjxY">Antrea live</a>.</p>
+<p>In the example we are testing only the last hostProcess step. Showing the pods, note the IP of the pod is the same as
+the windows node and two containers are running inside of it (kpng core and kpng backend).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl -n kube-system get daemonset
+</span></span><span style="display:flex;"><span>NAMESPACE     NAME           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR              AGE
+</span></span><span style="display:flex;"><span>kube-system   antrea-agent   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           kubernetes.io/os<span style="color:#f92672">=</span>linux     5h56m
+</span></span><span style="display:flex;"><span>kube-system   kpng-windows   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           kubernetes.io/os<span style="color:#f92672">=</span>windows   3h21m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl get pods -A -o wide
+</span></span><span style="display:flex;"><span>NAMESPACE     NAME                                   READY   STATUS    RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES
+</span></span><span style="display:flex;"><span>default       netshoot                               1/1     Running   <span style="color:#ae81ff">0</span>          3h27m   100.244.0.9   controlplane   &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>default       whoami-windows-6cf6f67f56-7npz9        1/1     Running   <span style="color:#ae81ff">0</span>          3h27m   100.244.1.4   winw1          &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>kube-system   kpng-windows-pd2bs                     2/2     Running   <span style="color:#ae81ff">0</span>          3h26m   10.20.30.11   winw1          &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></div><p>To test it lets create a new service of type NodePort, pointing to the pod <code>whoami-windows-6cf6f67f56-7npz9</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get svc
+</span></span><span style="display:flex;"><span>NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>        AGE
+</span></span><span style="display:flex;"><span>whoami-windows   NodePort    10.108.182.129   &lt;none&gt;        80:31134/TCP   3h2
+</span></span></code></pre></div><p>Access from another node (10.20.30.10) -&gt; 10.20.30.11:31134:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vagrant@controlplane$ curl 10.20.30.11:31134
+</span></span><span style="display:flex;"><span>I<span style="color:#960050;background-color:#1e0010">&#39;</span>m whoami-windows-6cf6f67f56-l24gf running on windows/amd64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>IP: fe80::b1ea:1b62:be2e:6fc8
+</span></span><span style="display:flex;"><span>IP: 100.244.1.5
+</span></span><span style="display:flex;"><span>IP: ::1
+</span></span><span style="display:flex;"><span>IP: 127.0.0.1
+</span></span><span style="display:flex;"><span>ENV: ALLUSERSPROFILE<span style="color:#f92672">=</span>C:<span style="color:#ae81ff">\P</span>rogramData
+</span></span><span style="display:flex;"><span>ENV: APPDATA<span style="color:#f92672">=</span>C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>ontainerUser<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\R</span>oaming
+</span></span></code></pre></div><p>Finally, inspect the logs from the backend as follow, you will see new connections in the service being forwarded to the endpoint.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl -n kube-system logs kpng-windows-pd2bs -c kpng-backend -f
+</span></span><span style="display:flex;"><span>I0123 12:09:23.591710    <span style="color:#ae81ff">3260</span> roundrobin.go:114<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;NextEndpoint for service&#34;</span> servicePortName<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default/whoami-windows&#34;</span> address<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.20.30.10:36898&#34;</span> endpoints<span style="color:#f92672">=[</span>100.244.1.5:8080<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>I0123 12:09:23.591710    <span style="color:#ae81ff">3260</span> proxysocket.go:92<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Mapped service to endpoint&#34;</span> service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default/whoami-windows&#34;</span> endpoint<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.1.5:8080&#34;</span>
+</span></span><span style="display:flex;"><span>I0123 12:09:23.592550    <span style="color:#ae81ff">3260</span> proxysocket.go:148<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Creating proxy between remote and local addresses&#34;</span> inRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.20.30.10:36898&#34;</span> inLocalAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.20.30.11:31134&#34;</span> outLocalAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.1.1:49560&#34;</span> outRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.1.5:8080&#34;</span>
+</span></span><span style="display:flex;"><span>I0123 12:09:23.593028    <span style="color:#ae81ff">3260</span> proxysocket.go:157<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Copying remote address bytes&#34;</span> direction<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;to backend&#34;</span> sourceRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.20.30.10:36898&#34;</span> destinationRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.1.5:8080&#34;</span>
+</span></span><span style="display:flex;"><span>I0123 12:09:23.593028    <span style="color:#ae81ff">3260</span> proxysocket.go:157<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Copying remote address bytes&#34;</span> direction<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;from backend&#34;</span> sourceRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.1.5:8080&#34;</span> destinationRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.20.30.10:36898&#34;</span>
+</span></span><span style="display:flex;"><span>I0123 12:09:23.598971    <span style="color:#ae81ff">3260</span> proxysocket.go:164<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Copied remote address bytes&#34;</span> bytes<span style="color:#f92672">=</span><span style="color:#ae81ff">81</span> direction<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;to backend&#34;</span> sourceRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.20.30.10:36898&#34;</span> destinationRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.1.5:8080&#34;</span>
+</span></span><span style="display:flex;"><span>I0123 12:09:23.598971    <span style="color:#ae81ff">3260</span> proxysocket.go:164<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Copied remote address bytes&#34;</span> bytes<span style="color:#f92672">=</span><span style="color:#ae81ff">2385</span> direction<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;from backend&#34;</span> sourceRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100.244.1.5:8080&#34;</span> destinationRemoteAddress<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10.20.30.10:36898&#34;</span>
+</span></span></code></pre></div>
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2022/0320/" title="Cluster API Provider for Azure"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1686238081"></script>
+    <script src="/js/perfect-scrollbar.min.js?1686238081"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1686238081"></script>
+    <script src="/js/jquery.sticky.js?1686238081"></script>
+    <script src="/js/featherlight.min.js?1686238081"></script>
+    <script src="/js/highlight.pack.js?1686238081"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1686238081"></script>
+    <script src="/js/learn.js?1686238081"></script>
+    <script src="/js/hugo-learn.js?1686238081"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1686238081"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="still breaking things on saturday night">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Hybrid nodes with ClusterClass on Amazon Web Service :: Forced Brain</title>
+
+    
+    <link href="/css/nucleus.css?1686238081" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1686238081" rel="stylesheet">
+    <link href="/css/hybrid.css?1686238081" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1686238081" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1686238081" rel="stylesheet">
+    <link href="/css/auto-complete.css?1686238081" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1686238081" rel="stylesheet">
+    <link href="/css/theme.css?1686238081" rel="stylesheet">
+    <link href="/css/tabs.css?1686238081" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1686238081" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1686238081" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1686238081"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2022/0712/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS ** SEC </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1686238081"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1686238081"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1686238081"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2022/'>2022</a> > Hybrid nodes with ClusterClass on Amazon Web Service
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#shaping-the-cluster">Shaping the cluster</a>
+      <ul>
+        <li><a href="#regular-capi-spec">Regular CAPI spec</a></li>
+        <li><a href="#clusterclass-capi-spec">ClusterClass CAPI spec</a></li>
+        <li><a href="#generating-the-spec">Generating the spec</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Hybrid nodes with ClusterClass on Amazon Web Service
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>This post will be quick one to show how build a hybrid cluster using ClusterClass.</p>
+<p>The idea behind ClusterClass is simple: define the shape of your cluster once, and reuse it many times,
+abstracting the complexities and the internals of a Kubernetes cluster <a href=".https://kubernetes.io/blog/2021/10/08/capi-clusterclass-and-managed-topologies/">away</a>.</p>
+<p>From the original CAEP: Cluster API does not expose a native way to provision multiple clusters of the same configuration.
+The ClusterClass object is supposed to act as a collection of template references which can be used to create managed topologies.
+Today, the Cluster object is a logical grouping of components which describe an underlying cluster.
+The user experience to create a cluster requires the user to create a bunch of underlying resources such as KCP
+(control plane provider), MachineDeployments, and infrastructure or bootstrap templates for those resources which
+logically end up representing the cluster. Since the cluster configuration is spread around multiple components, upgrading
+the cluster version is hard as it requires changes to different fields in different resources to perform an upgrade.
+The ClusterClass object aims at reducing this complexity by delegating the responsibility of lifecycle managing
+these underlying resources to the Cluster controller.</p>
+<h2 id="shaping-the-cluster">Shaping the cluster</h2>
+<h3 id="regular-capi-spec">Regular CAPI spec</h3>
+<p>In the normal spec you define a Cluster and AWSCluster objects.</p>
+<p><img src="./images/reg-cluster.png" alt="reg cluster" title="cluster"></p>
+<p>The KCP points to the infrastructure being it an AWSMachineTemplate and definitions of the join.</p>
+<p><img src="./images/reg-kubeadmcp.png" alt="reg-kubeadm" title="kubeadm"></p>
+<p>The last piece and it&rsquo;s kind of detached from the cluster are the machinedeployments, what here
+can be created as different objects, and the node-pool is lost when translate for the cli.</p>
+<p><img src="./images/reg-md.png" alt="reg-md" title="reg-mdd"></p>
+<p>One other bad issue, is the lack of reuse of these MD objects on different clusters.</p>
+<h3 id="clusterclass-capi-spec">ClusterClass CAPI spec</h3>
+<p>Looking the objects modeling it&rsquo;s very clear how beneficial these setups can be.</p>
+<p>The ClusterClass object allow you to define a workers with a few machineDeployments specs,
+meaning a CC can have as many MD definitions as you want, and as you can see not necessary
+be used on your cluster.</p>
+<p><img src="./images/cc-cc.png" alt="cc" title="cc"></p>
+<p>Managed topologies let you start the ClusterClass, so it&rsquo;s possible to have as many cluster with the similar
+topology using a few reusable templates.</p>
+<p><img src="./images/cc-cluster.png" alt="ccc" title="ccc">
+NOTE: The API is still in alpha.</p>
+<h3 id="generating-the-spec">Generating the spec</h3>
+<p>Right now clusterctl generate yaml can be used with a few templates available, you can pass the values
+as environment variables and envsubst will replace the values there.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ CLUSTER_NAME<span style="color:#f92672">=</span>capa <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>CNI_RESOURCES<span style="color:#f92672">=</span>cni <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>CONTROL_PLANE_MACHINE_COUNT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>KUBERNETES_VERSION<span style="color:#f92672">=</span>1.22.10 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>WORKER_MACHINE_COUNT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>clusterctl generate yaml <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--from https://github.com/kubernetes-sigs/cluster-api-provider-aws/blob/main/templates/cluster-template-simple-clusterclass.yaml &gt; cluster.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl apply -f cluster.yaml
+</span></span></code></pre></div><p>Inside the specs you start with the Cluster object that is defined as follows,
+topology has a class (ClusterClass reference), a controlPlane and worker fields.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capa</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">clusterNetwork</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">pods</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">cidrBlocks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">192.168.0.0</span><span style="color:#ae81ff">/16</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">topology</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">class</span>: <span style="color:#ae81ff">quick-start</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">controlPlane</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">version</span>: <span style="color:#ae81ff">1.22.10</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">workers</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">machineDeployments</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">default-worker</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>The CC definition is a little longer and as you can see follows the same controlPlane, infrastructure and
+workers references for templates.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterClass</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">quick-start</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">controlPlane</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">machineInfrastructure</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">ref</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSMachineTemplate</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ref</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmControlPlaneTemplate</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">infrastructure</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ref</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSClusterTemplate</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workers</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">machineDeployments</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">default-worker</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">bootstrap</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ref</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmConfigTemplate</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">infrastructure</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ref</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSMachineTemplate</span>
+</span></span></code></pre></div><p>It&rsquo;s possible to dry run the objects that are going to be created or modified, the output</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ clusterctl alpha topology plan -f cluster.yaml -o out
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Changes <span style="color:#66d9ef">for</span> Cluster <span style="color:#e6db74">&#34;default/capa&#34;</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  NAMESPACE  KIND                   NAME                       ACTION
+</span></span><span style="display:flex;"><span>  default    AWSCluster             capa-9p2lh                 created
+</span></span><span style="display:flex;"><span>  default    AWSMachineTemplate     capa-control-plane-p8xvx   created
+</span></span><span style="display:flex;"><span>  default    AWSMachineTemplate     capa-md-0-infra-n7nm7      created
+</span></span><span style="display:flex;"><span>  default    KubeadmConfigTemplate  capa-md-0-bootstrap-92gp5  created
+</span></span><span style="display:flex;"><span>  default    KubeadmControlPlane    capa-wlc2n                 created
+</span></span><span style="display:flex;"><span>  default    MachineDeployment      capa-md-0-8k6c8            created
+</span></span><span style="display:flex;"><span>  default    Secret                 capa-shim                  created
+</span></span><span style="display:flex;"><span>  default    Cluster                capa                       modified
+</span></span></code></pre></div><h4 id="variables-and-patches">Variables and patches</h4>
+<p>When these specs are generated you can find a few variables in the cluster <a href="https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/write-clusterclass.html#clusterclass-with-patches">here</a>.
+The variable can then be used in a patch to set a field on a template referenced in the ClusterClass.
+The selector specifies on which template the patch should be applied. jsonPatches specifies which JSON patches should
+be applied to that template.</p>
+<p>In this case we set the <code>spec.template.spec.region</code> field of the AWSClusterTemplate to the value of the variable <code>region</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#75715e"># cluster.yaml</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">variables</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">region</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">value</span>: <span style="color:#ae81ff">us-east-1</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># cluster-class.yaml</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">patches</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">definitions</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">jsonPatches</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">op</span>: <span style="color:#ae81ff">add</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/spec/template/spec/region</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">valueFrom</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">variable</span>: <span style="color:#ae81ff">region</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSClusterTemplate</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">matchResources</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">infrastructureCluster</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">region</span>
+</span></span></code></pre></div><h4 id="install-the-cni">Install the CNI</h4>
+<p>The CNI can be installed via ClusterResourceSet, as the template generated, in this example I installed
+manually.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ clusterctl get kubeconfig capa &gt; capa.config
+</span></span><span style="display:flex;"><span>kubectl --kubeconfig<span style="color:#f92672">=</span>capa.config apply -f https://docs.projectcalico.org/v3.21/manifests/calico.yaml
+</span></span></code></pre></div><p>Now you are running a full unmanaged AWS workload cluster setup in less than 5 minutes.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>The evolution of the CAPI project and providers are impressive, as <a href="https://www.youtube.com/watch?v=KzYV-fJ_wH0">noted</a> things are only starting, and
+features like CC brings more powerful to these controllers. Multi cloud centric management is a must on 2022,
+CAPI is one of the projects that definitely will help on it.</p>
+<p>If you want to learn more about the feature watch the <a href="https://www.youtube.com/watch?v=U9CDND0nzRI">TGIK 178: ClusterAPI - ClusterClass &amp; Managed Topologies</a></p>
+<p>If you are interested on multi-OS in general check out this <a href="https://www.youtube.com/watch?v=Z_1dI-yR_Fw">Antrea Live</a> and send a DM.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2022/" title="2022"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1686238081"></script>
+    <script src="/js/perfect-scrollbar.min.js?1686238081"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1686238081"></script>
+    <script src="/js/jquery.sticky.js?1686238081"></script>
+    <script src="/js/featherlight.min.js?1686238081"></script>
+    <script src="/js/highlight.pack.js?1686238081"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1686238081"></script>
+    <script src="/js/learn.js?1686238081"></script>
+    <script src="/js/hugo-learn.js?1686238081"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1686238081"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
