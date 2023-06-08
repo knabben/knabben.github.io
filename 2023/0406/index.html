@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Killer CNI Tracing">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Windows CNI tracing and deep dive :: another forced brain</title>
+
+    
+    <link href="/css/nucleus.css?1686240130" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1686240130" rel="stylesheet">
+    <link href="/css/hybrid.css?1686240130" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1686240130" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1686240130" rel="stylesheet">
+    <link href="/css/auto-complete.css?1686240130" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1686240130" rel="stylesheet">
+    <link href="/css/theme.css?1686240130" rel="stylesheet">
+    <link href="/css/tabs.css?1686240130" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1686240130" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1686240130" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1686240130"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2023/0406/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1686240130"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1686240130"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1686240130"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Windows CNI tracing and deep dive
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#containerd-tracing">Containerd Tracing</a></li>
+        <li><a href="#debugging-the-cni-plugin">Debugging the CNI plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Windows CNI tracing and deep dive
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>I have spent some time debugging a very interesting issue that was noticed in one Windows cluster, the network initialization
+of this cluster was having a delay of a few seconds before the external world communication starts. This post will explain the steps
+taken and the deep dive executed to find the root cause of the problem. A clear solution is not presented, but this can
+post can guide on debuggability of similar issues.</p>
+<h3 id="containerd-tracing">Containerd Tracing</h3>
+<p>First thing is to make sure there&rsquo;s Jaeger installed and accessible by the nodes of the cluster.
+Take a look in the <a href="https://www.jaegertracing.io/docs/1.43/operator/">Jaeger operator</a>, it can be installed with a few specs apply in the cluster. You
+will need an ingress controller to provide it an IP address and external access. For the jaeger-query and frontend, probably kubectl port-forward can do the trick.
+The second step is to configure ContainerD to send the samples directly to the agent. The containerd
+section will need the tracing plugin and OpenTelemtry <a href="https://github.com/containerd/containerd/blob/main/docs/tracing.md">configuration</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">root = &#34;C:\\ProgramData\\containerd\\root&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">state = &#34;C:\\ProgramData\\containerd\\state&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">version = 2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">imports = [&#34;C:\\Program Files\\\\containerd\\conf.d\\*.toml&#34;]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">grpc]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">address = &#34;\\\\.\\pipe\\containerd-containerd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">plugins]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.internal.v1.tracing&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">sampling_ratio = 1.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">service_name = &#34;containerd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.tracing.processor.v1.otlp&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">endpoint = &#34;http://10.0.0.5:30841&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">sandbox_image = &#34;projects-stg.registry.vmware.com/tkg/pause:3.8-windows-amd64&#34;</span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;.cni]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">bin_dir = &#34;C:/opt/cni/bin&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">conf_dir = &#34;C:/etc/cni/net.d&#34;</span>
+</span></span></code></pre></div><p>Notice the endpoint where I&rsquo;m using a NodePort for the agent service. The last thing is to set
+debug level in the containerd process so you can see more information in the trace. Other
+interesting thing is to enable the logging in the service installed in the node.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sc.exe config containerd binPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;c:\Program Files\containerd\containerd.exe \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --run-service --log-file=c:\tmp\containerd.log -l debug&#34;</span>
+</span></span></code></pre></div><p>After a restarting the service, and creating the pod again, it possible to notice RunPodSandbox trace:</p>
+<p><img src="./images/trace.png" alt="trace" title="trace"></p>
+<p>There&rsquo;re 2 interesting events, first <code>51.65ms</code> called <code>begin cni setup</code>, and 5 seconds later the result <code>cni result</code>.
+Ok, it seems the issue is inside the CNI plugin used, the plugin for this CNI in particular talks with the agent
+via gRPC passing commands like <code>CmdAdd</code> and <code>CmdDel</code>, every time a pod is created or deleted.</p>
+<h3 id="debugging-the-cni-plugin">Debugging the CNI plugin</h3>
+<p>After deducing the error is in the CNI, I increased the log level of the agent that&rsquo;s receiving the request:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>10:15:26.814722    <span style="color:#ae81ff">3620</span> server.go:425<span style="color:#f92672">]</span> Received CmdAdd request cni_args:<span style="color:#f92672">{</span>container_id:<span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> netns:<span style="color:#e6db74">&#34;786877ce-0bdc-4ff7-a58a-0ba3a62b2a5d&#34;</span> ifname:<span style="color:#e6db74">&#34;eth0&#34;</span> args:<span style="color:#e6db74">&#34;K8S_POD_UID=ed06be31-28f0-44e8-b03e-be36a8e24afa;IgnoreUnknown=1;K8S_POD_NAMESPACE=default;K8S_POD_NAME=db-6cqff;K8S_POD_INFRA_CONTAINER_ID=5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> path:<span style="color:#e6db74">&#34;C:/opt/cni/bin&#34;</span> network_configuration:<span style="color:#e6db74">&#34;{\&#34;capabilities\&#34;:{\&#34;dns\&#34;:true},\&#34;cniVersion\&#34;:\&#34;0.3.0\&#34;,\&#34;ipam\&#34;:{\&#34;type\&#34;:\&#34;host-local\&#34;},\&#34;name\&#34;:\&#34;cni\&#34;,\&#34;runtimeConfig\&#34;:{\&#34;dns\&#34;:{\&#34;Servers\&#34;:[\&#34;100.0.0.10\&#34;],\&#34;Searches\&#34;:[\&#34;default.svc.cluster.local\&#34;,\&#34;svc.cluster.local\&#34;,\&#34;cluster.local\&#34;],\&#34;Options\&#34;:[\&#34;ndots:5\&#34;]}},\&#34;type\&#34;:\&#34;cni\&#34;}&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>10:15:26.888326    <span style="color:#ae81ff">3620</span> server.go:495<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Allocated IP addresses&#34;</span> container<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> result<span style="color:#f92672">=</span>&amp;<span style="color:#f92672">{</span>Result:<span style="color:#f92672">{</span>CNIVersion:0.4.0 Interfaces:<span style="color:#f92672">[]</span> IPs:<span style="color:#f92672">[{</span>Version:4 Interface:&lt;nil&gt; Address:<span style="color:#f92672">{</span>IP:100.96.3.22 Mask:ffffff00<span style="color:#f92672">}</span> Gateway:100.96.3.1<span style="color:#f92672">}]</span> Routes:<span style="color:#f92672">[]</span> DNS:<span style="color:#f92672">{</span>Nameservers:<span style="color:#f92672">[]</span> Domain: Search:<span style="color:#f92672">[]</span> Options:<span style="color:#f92672">[]}}</span> VLANID:0<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>10:15:26.889584    <span style="color:#ae81ff">3620</span> server_windows.go:42<span style="color:#f92672">]</span> Got runtime DNS configuration: <span style="color:#f92672">{[</span>100.64.0.10<span style="color:#f92672">]</span>  <span style="color:#f92672">[</span>default.svc.cluster.local svc.cluster.local cluster.local<span style="color:#f92672">]</span> <span style="color:#f92672">[]}</span>
+</span></span><span style="display:flex;"><span>10:15:26.891166    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:136<span style="color:#f92672">]</span> Configuring IP address <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
+</span></span><span style="display:flex;"><span>10:15:29.386133    <span style="color:#ae81ff">3620</span> pod_configuration_windows.go:97<span style="color:#f92672">]</span> Adding OVS port db-6cqff-568022 <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
+</span></span><span style="display:flex;"><span>10:15:30.354081    <span style="color:#ae81ff">3620</span> agent.go:531<span style="color:#f92672">]</span> Deleting stale flows from previous round <span style="color:#66d9ef">if</span> any
+</span></span><span style="display:flex;"><span>10:15:30.354788    <span style="color:#ae81ff">3620</span> agent.go:463<span style="color:#f92672">]</span> Persisting round number <span style="color:#ae81ff">12</span> to OVSDB
+</span></span><span style="display:flex;"><span>10:15:30.363033    <span style="color:#ae81ff">3620</span> agent.go:468<span style="color:#f92672">]</span> Round number <span style="color:#ae81ff">12</span> was persisted to OVSDB
+</span></span><span style="display:flex;"><span>10:15:31.772203    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:260<span style="color:#f92672">]</span> Send gratuitous ARP from container interface is not supported on Windows, <span style="color:#66d9ef">return</span> nil
+</span></span><span style="display:flex;"><span>10:15:31.772867    <span style="color:#ae81ff">3620</span> pod_configuration.go:268<span style="color:#f92672">]</span> Configured interfaces <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
+</span></span><span style="display:flex;"><span>10:15:31.772867    <span style="color:#ae81ff">3620</span> server.go:522<span style="color:#f92672">]</span> CmdAdd <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418 succeeded
+</span></span></code></pre></div><p>And start measuring how long the stack call was between them, if you notice we have around ~5 seconds of the event receive and the
+complete success.</p>
+<p><img src="./images/data.jpg" alt="data" title="data"></p>
+<p>There some other process to find these bottlenecks like <code>go pprof</code> that can build a call tree and measure it.
+Or its possible to add <code>klog.Info</code> statements between the calls and continue measuring them until you find the
+bottleneck, when the pprof interface is not open.</p>
+<p>Without detailing much about the issue in the CNI, was found that <code>Get-NetAdapter</code> calls were being used to
+verify the existence of the Container interface, those direct powershell calls are very slow and costly.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The usage of external command calls (mainly scripts) to execute tasks with the kernel can become a problem, powershell
+is very complete and useful but it will slow down your application, this can be perceived when your service is under pressure.</p>
+<p>Windows syscalls on Golang are available, the coverage of functionality can be lower or missing required information for
+a particular data structure can <a href="https://golang.google.cn/pkg/syscall/?GOOS=windows&amp;GOARCH=amd64">happen</a>, MS provides a good library HCMSHIM that covers a few Network and processing
+<a href="https://github.com/microsoft/hcsshim">functionalities</a>.</p>
+<p>In summary a higher level and faster API built-in on Golang could come by default, so the usage of powershell commandlets can be
+replaced.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2023/" title="2023"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/0330/" title="Windows Containers and .NET apps" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1686240130"></script>
+    <script src="/js/perfect-scrollbar.min.js?1686240130"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1686240130"></script>
+    <script src="/js/jquery.sticky.js?1686240130"></script>
+    <script src="/js/featherlight.min.js?1686240130"></script>
+    <script src="/js/highlight.pack.js?1686240130"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1686240130"></script>
+    <script src="/js/learn.js?1686240130"></script>
+    <script src="/js/hugo-learn.js?1686240130"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1686240130"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>

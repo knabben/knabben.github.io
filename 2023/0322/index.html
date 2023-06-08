@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.112.7">
-    <meta name="description" content="Diagram and CRDs for CAPZ">
+    <meta name="description" content="Detail Windows clusters on Tanzu Kubernetes Grid vSphere with Multi-AZ support">
 
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Cluster API Provider for Azure :: another forced brain</title>
+    <title>Multi AZ on Kubernetes and vSphere :: another forced brain</title>
 
     
     <link href="/css/nucleus.css?1686240130" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/2022/0320/">
+  <body class="" data-url="/2023/0322/">
     <nav id="sidebar" class="">
 
 
@@ -83,7 +83,7 @@
   
     
     <li data-nav-id="/2023/" title="2023" class="dd-item
-        
+        parent
         
         
         ">
@@ -165,7 +165,7 @@
     
     <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
         
-        
+        active
         
         ">
       <a href="/2023/0322/">
@@ -197,7 +197,7 @@
   
     
     <li data-nav-id="/2022/" title="2022" class="dd-item
-        parent
+        
         
         
         ">
@@ -279,7 +279,7 @@
     
     <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
         
-        active
+        
         
         ">
       <a href="/2022/0320/">
@@ -383,7 +383,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2022/'>2022</a> > Cluster API Provider for Azure
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Multi AZ on Kubernetes and vSphere
           
         
           
@@ -399,11 +399,11 @@
 <nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#target-cluster-diagram">Target Cluster Diagram</a></li>
-    <li><a href="#separation-of-concerns">Separation of concerns</a>
+    <li><a href="#initial-concepts">Initial concepts</a>
       <ul>
-        <li><a href="#networking">Networking</a></li>
-        <li><a href="#scaling-the-vms">Scaling the VMs</a></li>
+        <li><a href="#practice">Practice</a></li>
+        <li><a href="#running-with-failure-domain">Running with failure domain</a></li>
+        <li><a href="#creating-the-cluster">Creating the cluster</a></li>
       </ul>
     </li>
   </ul>
@@ -423,7 +423,7 @@
           
             <h1>
               
-              Cluster API Provider for Azure
+              Multi AZ on Kubernetes and vSphere
             </h1>
           
 
@@ -432,47 +432,77 @@
 
 
 	<h2 id="introduction">Introduction</h2>
-<p>From the official <a href="https://capz.sigs.k8s.io/">documentation</a> we have the original definition of Cluster API, it brings a declarative,
-Kubernetes-style APIs to cluster creation, configuration and management. The API itself is shared across multiple
-cloud providers allowing for true Azure hybrid deployments of Kubernetes.</p>
-<h2 id="target-cluster-diagram">Target Cluster Diagram</h2>
-<p>This cluster was generated using the <code> make create-workload-cluster</code> from the CAPZ repository.</p>
-<p>The diagram describes the <a href="https://cluster-api.sigs.k8s.io/developer/crd-relationships.html">CRDs</a> and objects created related to this Workload cluster inside Azure.</p>
-<p><img src="./images/capz.png" alt="CAPZ schema" title="CAPZ"></p>
-<p>It&rsquo;s possible to list the objects inside the management cluster.</p>
-<p><img src="./images/screen1.png" alt="CAPZ schema" title="Screenshot"></p>
-<p>List the resources from both the Cluster API and Azure provider groups.</p>
-<p><img src="./images/screen2.png" alt="CAPZ schema" title="Screenshot"></p>
-<h2 id="separation-of-concerns">Separation of concerns</h2>
-<p>CAPZ will manage through the controllers the assets created inside Azure. First is created a Resource Group with
-your cluster name on it.</p>
-<p><img src="./images/resource1.png" alt="CAPZ schema" title="CAPZ"></p>
-<h3 id="networking">Networking</h3>
-<p>Looking the vNET and subnets created on it.</p>
-<p><img src="./images/resource2.png" alt="CAPZ schema" title="CAPZ"></p>
-<p>As seen on <a href="https://capz.sigs.k8s.io/topics/custom-vnet.html#pre-existing-vnet-and-subnets">CAPZ docs</a>. When providing a vnet, it is required to also provide the two subnets that should be used for control planes and nodes.</p>
-<p>The control-plane (apiserver) is accessible externally by a public IP load balancer by default, it&rsquo;s required a few tweaks to
-make it private!</p>
-<p><img src="./images/azurecluster.png" alt="CAPZ schema" title="CAPZ"></p>
-<p>On the target node, check the nodes IPs, they MUST match the ones in the vnet subnets, NotReady because the cluster
-has no CNI installed by default!</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ kubectl get nodes -o wide
-</span></span><span style="display:flex;"><span>NAME                          STATUS     ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-</span></span><span style="display:flex;"><span>azhack1-control-plane-tm5hq   NotReady   control-plane,master   31h   v1.23.4   10.0.0.4      &lt;none&gt;        Ubuntu 20.04.3 LTS   5.11.0-1028-azure   containerd://1.6.0
-</span></span><span style="display:flex;"><span>azhack1-md-0-tm2fh            NotReady   &lt;none&gt;                 31h   v1.23.4   10.1.0.4      &lt;none&gt;        Ubuntu 20.04.3 LTS   5.11.0-1028-azure   containerd://1.6.0
-</span></span></code></pre></div><h3 id="scaling-the-vms">Scaling the VMs</h3>
-<p>The machine deployments works the same way as a Deployment object on the <code>scale</code> usage. New VMs are being (de)allocated
-when scaled.</p>
-<pre tabindex="0"><code>❯ kubectl scale machinedeployment azhack1-md-0 --replicas=3
-machinedeployment.cluster.x-k8s.io/azhack1-md-0 scaled
+<p>Multi-AZ is a concept very well known on public clouds, its a technique used to provide high availability for services. On AWS they are distinct locations within an AWS region that re engineered to be isolated from failures in other AZ. On vSphere and on-premises, the datacenter is normally on one building only, and the AZ can be defined by server racks instead for exmaple. On this blog post I will cover a few notes on how to use ClusterAPI vSphere and setup a Kubernetes cluster on a segmented infrastructure on vCenter.</p>
+<h2 id="initial-concepts">Initial concepts</h2>
+<p>To provide integration with the underlying infrastructure, Kubernetes implements the Cloud Provider Interface, it decouple the Controller manager
+control loops regarding the infra, a few interfaces that can be implemented in the CPI are Node, route, service and custom control loops.
+The CPI can also apply zones and region labels to the nodes. It can be enabled by tagging VMs on vSphere with the desired labels.
+You can check the spread on <a href="https://github.com/kubernetes/cloud-provider-vsphere/blob/master/docs/book/cloud_provider_interface.md#node-zonesregions-topology">node labels</a> <code>failure-domain.kubernetes.io/zone</code> and <code>failure-domain.kubernetes.io/region</code></p>
+<p>Accordingly to the ClusterAPI vSphere failure domain proposal, vSphere DOES NOT support native region/zone concept,
+to utilize the k8s failure domain feature which relies on nodes with region/zones labels, vsphere CPI added support for region/zone
+deployment options, using tags to configure the topology. It gives users full flexibility to configure arbitrary region and <a href="https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/proposal/20201103-failure-domain.md">zone definitions</a></p>
+<h3 id="practice">Practice</h3>
+<p>For this example we going to spread the nodes across multiple compute clusters in the same Datacenter, this diagram was taken from the <a href="https://cloud-provider-vsphere.sigs.k8s.io/tutorials/deploying_cpi_with_multi_dc_vc_aka_zones.html">CPI website</a>.</p>
+<p><img src="./images/clusterbased.png" alt="clusterbased" title="clusterbased"></p>
+<p>Create 2 categories called k8s-zone and k8s-region, clusters must be tagged as zones and your DC is tagged as region, on this example the region <code>us-east-1</code>, has 3 zones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-region us-east-1 /dc0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-zone us-east-1a /dc0/host/cluster0
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-zone us-east-1b /dc0/host/cluster1
+</span></span><span style="display:flex;"><span>$ govc tags.attach -c k8s-zone us-east-1c /dc0/host/cluster2
+</span></span></code></pre></div><p>Create 3 clusters in the datacenter and add a resourcePool on each, make sure DRS is enabled for the constraint update.</p>
+<h3 id="running-with-failure-domain">Running with failure domain</h3>
+<p>Create the failure domain and zone deployment objects like the example for all 3 zones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VSphereFailureDomain</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">region</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">Datacenter</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">tagCategory</span>: <span style="color:#ae81ff">k8s-region</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">zone</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">ComputeCluster</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">tagCategory</span>: <span style="color:#ae81ff">k8s-zone</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">topology</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">datacenter</span>: <span style="color:#ae81ff">dc0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">computeCluster</span>: <span style="color:#ae81ff">cluster0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">datastore</span>: <span style="color:#ae81ff">sharedVmfs-0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>   - <span style="color:#ae81ff">VM Network</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VSphereDeploymentZone</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">name</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">server</span>: <span style="color:#ae81ff">10.180.0.1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">placementConstraint</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">folder</span>: <span style="color:#ae81ff">folder0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">resourcePool</span>: <span style="color:#ae81ff">rp0</span>
+</span></span></code></pre></div><p>Make sure your Cluster object machine deployment has the correct <code>failureDomain</code> set.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>    <span style="color:#f92672">workers</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">machineDeployments</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1a</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1b</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">worker</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">failureDomain</span>: <span style="color:#ae81ff">us-east-1c</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h3 id="creating-the-cluster">Creating the cluster</h3>
+<p>You will get some balanced node spread across the vSphere clusters like, this applies for both workloads and control planen nodes.</p>
+<p><img src="./images/cluster.png" alt="cluster" title="cluster"></p>
 
-❯ kubectl get machines
-NAME                            CLUSTER   NODENAME                      PROVIDERID                                                                                                                                                   PHASE     AGE   VERSION
-azhack1-control-plane-xgtpl     azhack1   azhack1-control-plane-tm5hq   azure:///subscriptions/a34749a5-7a5d-470a-88c1-c1154b402a8a/resourceGroups/azhack1/providers/Microsoft.Compute/virtualMachines/azhack1-control-plane-tm5hq   Running   31h   v1.23.4
-azhack1-md-0-77cb8bfbbc-bczmw   azhack1                                                                                                                                                                                              pending   12s   v1.23.4
-azhack1-md-0-77cb8bfbbc-lhgkt   azhack1   azhack1-md-0-tm2fh            azure:///subscriptions/a34749a5-7a5d-470a-88c1-c1154b402a8a/resourceGroups/azhack1/providers/Microsoft.Compute/virtualMachines/azhack1-md-0-tm2fh            Running   31h   v1.23.4
-azhack1-md-0-77cb8bfbbc-zmrc5   azhack1                                                                                                                                                                                              pending   12s   v1.23.4
-</code></pre>
 
 
 
@@ -512,75 +542,6 @@ azhack1-md-0-77cb8bfbbc-zmrc5   azhack1                                         
             
                 
                     
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                     
                 
                 
@@ -644,6 +605,9 @@ azhack1-md-0-77cb8bfbbc-zmrc5   azhack1                                         
             
         
                     
+            
+        
+                    
                         
             
             
@@ -651,6 +615,69 @@ azhack1-md-0-77cb8bfbbc-zmrc5   azhack1                                         
                     
                         
                         
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
                     
                 
                 
@@ -675,10 +702,10 @@ azhack1-md-0-77cb8bfbbc-zmrc5   azhack1                                         
 	 
 	 
 		
-			<a class="nav nav-prev" href="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/2023/0330/" title="Windows Containers and .NET apps"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/2022/" title="2022" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

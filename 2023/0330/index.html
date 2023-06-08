@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="How to run Windows workload">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Windows Containers and .NET apps :: another forced brain</title>
+
+    
+    <link href="/css/nucleus.css?1686240130" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1686240130" rel="stylesheet">
+    <link href="/css/hybrid.css?1686240130" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1686240130" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1686240130" rel="stylesheet">
+    <link href="/css/auto-complete.css?1686240130" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1686240130" rel="stylesheet">
+    <link href="/css/theme.css?1686240130" rel="stylesheet">
+    <link href="/css/tabs.css?1686240130" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1686240130" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1686240130" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1686240130"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2023/0330/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1686240130"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1686240130"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1686240130"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Windows Containers and .NET apps
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#net-framework">.NET framework</a></li>
+        <li><a href="#net-app">.NET app</a></li>
+        <li><a href="#golang-mssql">Golang MSSQL</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Windows Containers and .NET apps
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>That&rsquo;s a common question, what kind of workloads can you run on Windows clusters? In this post we are going to check the possibilities and how to build and run these services on a Windows cluster. There&rsquo;s a plenty of examples on all languages and build process spread over the Internet. This document intends to enumerate and list them for a quick review and reference.</p>
+<p>To do your choice a few topics that can compare both technologies. <a href="https://learn.microsoft.com/en-us/dotnet/standard/choosing-core-framework-server">Use</a> .NET for your server application when:</p>
+<ul>
+<li>You have cross-platform needs.</li>
+<li>You&rsquo;re targeting microservices.</li>
+<li>You&rsquo;re using Docker containers.</li>
+<li>You need high-performance and scalable systems.</li>
+<li>You need side-by-side .NET versions per application.</li>
+</ul>
+<p>Use .NET Framework for your server application when:</p>
+<ul>
+<li>Your app currently uses .NET Framework (recommendation is to extend instead of migrating).</li>
+<li>Your app uses third-party libraries or NuGet packages not available for .NET.</li>
+<li>Your app uses .NET Framework technologies that aren&rsquo;t available for .NET.</li>
+<li>Your app uses a platform that doesn&rsquo;t support .NET.</li>
+</ul>
+<h3 id="net-framework">.NET framework</h3>
+<p>MS announced .NET in 2000, being the platform for Windows API development. In this architecture at the time .NET framework was the first platform for development, the last released version is 4.8 and the project was discontinued in 2022. The most common case of usage is to run your current application that was no migrated aka legacy workloads. A few technologies like ASP.NET Web Forms Applications are supported only in .NET framework.</p>
+<p>Apps are written in C#, F# or Visual Basic and compiled for Common Intermediary Language (CIL). The main resources are the Common Lanuage Runtime (CRL) and the .NET framework class library. The program only runs on Windows machines. Lets start with the <a href="https://hub.docker.com/_/microsoft-dotnet-framework-samples/">examples</a>. If you notice only the WindowsServerCore SDK and Runtime are available, meaning the final container OCI image will have 4Gb of size, so be patient in the downloading.</p>
+<p>The first step is to build the image from a Dockerfile, check its split on 2 phase containers, the first part builds the binary with the SDK, the second one is responsible to run your ASP.NET application.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /app</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy csproj and restore as distinct layers</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY *.sln .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/*.csproj ./aspnetapp/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/*.config ./aspnetapp/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN nuget restore</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy everything else and build app</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/. ./aspnetapp/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /app/aspnetapp</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN msbuild /p:Configuration=Release -r:False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8 AS runtime</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /inetpub/wwwroot</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY --from=build /app/aspnetapp/. ./</span>
+</span></span></code></pre></div><p>First thing to notice is you need a Windows machine with Docker to build the image for windows/amd64 architecture, with these images I could not build using <a href="https://fossies.org/linux/kubernetes/test/images/README.md#windows-test-images-considerations">buildx</a>,
+but probably there&rsquo;s a way. Expose the service and port 8000:80 will be available for requests.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodeSelector</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kubernetes.io/os</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mcr.microsoft.com/dotnet/framework/samples:aspnetapp</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">aspdotnet</span>
+</span></span></code></pre></div><p><img src="./dotnetfw.png" alt="dotn" title="dotn"></p>
+<h3 id="net-app">.NET app</h3>
+<p>Its a free, cross-platform, open source developer platform for builiding many kinds of apps. Its divided in two parts:</p>
+<ul>
+<li>.NET SDK: Set of tools, libraries, and runtimes for development, building, and testing apps.</li>
+<li>.NET Runtimes: Set of runtimes and libraries, for running apps.</li>
+</ul>
+<p>Again the SDK is used to build the image and the runtime to run your workload.
+The steps are different though in the <a href="https://github.com/dotnet/dotnet-docker">sample</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /source</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy csproj and restore as distinct layers</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/*.csproj .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN dotnet restore --use-current-runtime</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copy everything else and build app</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY aspnetapp/. .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained false --no-restore</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># final stage/image</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">FROM mcr.microsoft.com/dotnet/aspnet:7.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">WORKDIR /app</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">COPY --from=build /app .</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">ENTRYPOINT [&#34;dotnet&#34;, &#34;aspnetapp.dll&#34;]</span>
+</span></span></code></pre></div><p>The <code>dotnet</code> CLI is available to build the project and run the final .dll. With the <code>SqlConnection</code>
+is possible to connect on a MSSQL server, the cool part is that it can run on <a href="https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup">Windows</a>.</p>
+<h3 id="golang-mssql">Golang MSSQL</h3>
+<p>It&rsquo;s possible to compile a Golang app and run on Windows as well, you need two things:</p>
+<ol>
+<li>Compile a Windows compatible PE32 binary with GOOS=windows GOARCH=amd64</li>
+<li>and build a Windows compatible base image <code>FROM mcr.microsoft.com/windows/nanoserver:1809</code></li>
+</ol>
+<p>Copy the binary and run it. The one can test for example the connection to a MSSQL database with this example code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Build connection string
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">connString</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;server=%s;user id=%s;password=%s;port=%d;database=%s;&#34;</span>, <span style="color:#a6e22e">server</span>, <span style="color:#a6e22e">user</span>, <span style="color:#a6e22e">password</span>, <span style="color:#a6e22e">port</span>, <span style="color:#a6e22e">database</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Create connection pool
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">db</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#e6db74">&#34;mssql&#34;</span>, <span style="color:#a6e22e">connString</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;Error creating connection pool: &#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">appSignal</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">appSignal</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">appSignal</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">stop</span>()
+</span></span><span style="display:flex;"><span>        }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Ping</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>.NET workload is a very specialized one, and the framework is deprecated, still there&rsquo;s a lot of legacy workload and only Windows nodes can run it.
+For new apps is encouraged to use .NET or a more modern platform that can be used cross OS.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2023/0406/" title="Windows CNI tracing and deep dive"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1686240130"></script>
+    <script src="/js/perfect-scrollbar.min.js?1686240130"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1686240130"></script>
+    <script src="/js/jquery.sticky.js?1686240130"></script>
+    <script src="/js/featherlight.min.js?1686240130"></script>
+    <script src="/js/highlight.pack.js?1686240130"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1686240130"></script>
+    <script src="/js/learn.js?1686240130"></script>
+    <script src="/js/hugo-learn.js?1686240130"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1686240130"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
