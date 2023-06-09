@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.112.7">
-    <meta name="description" content="Hacking golang gRPC services and mTLS setup">
+    <meta name="description" content="Setting up golang gRPC services and mTLS authentication">
 
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
@@ -12,22 +12,22 @@
     <title>Secure gRPC services with mTLS :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1686345737" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1686345737" rel="stylesheet">
-    <link href="/css/hybrid.css?1686345737" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1686345737" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1686345737" rel="stylesheet">
-    <link href="/css/auto-complete.css?1686345737" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1686345737" rel="stylesheet">
-    <link href="/css/theme.css?1686345737" rel="stylesheet">
-    <link href="/css/tabs.css?1686345737" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1686345737" rel="stylesheet">
+    <link href="/css/nucleus.css?1686349897" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1686349897" rel="stylesheet">
+    <link href="/css/hybrid.css?1686349897" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1686349897" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1686349897" rel="stylesheet">
+    <link href="/css/auto-complete.css?1686349897" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1686349897" rel="stylesheet">
+    <link href="/css/theme.css?1686349897" rel="stylesheet">
+    <link href="/css/tabs.css?1686349897" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1686349897" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1686345737" rel="stylesheet">
+    <link href="/css/theme-blue.css?1686349897" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1686345737"></script>
+    <script src="/js/jquery-3.3.1.min.js?1686349897"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -56,14 +56,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1686345737"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1686345737"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1686349897"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1686349897"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1686345737"></script>
+<script type="text/javascript" src="/js/search.js?1686349897"></script>
 
     
   </div>
@@ -470,9 +470,8 @@ multi tenant modern system, the usage of gRPC as a channel of communication for 
 to enable built-in mechanisms capable to not only secure the traffic via TLS encryption but to enable authentication
 using SSL/TLS X.509 certificates.</p>
 <p>This post will detail and demonstrate a client/server implementation that uses gRPC as a protocol of communication
-and uses these TLS certificates for channels credentials.</p>
-<p>The last part introduces <code>cert-manager</code> another CNCF project for PKI management inside Kubernetes clusters,
-and its going to move the application to containers and use automatic generated certs instead.</p>
+and uses these TLS certificates for channels credentials. Projects like <code>cert-manager</code>, a CNCF project, can be used for PKI management
+inside Kubernetes clusters if you are using container workload in production.</p>
 <h2 id="tls-and-ssl">TLS and SSL</h2>
 <p>Starting with SSL (Secure Socket Layer), its a standard/deprecated technology used for establish an encrypted link
 between server/clients, is 2015 it was deprecated in favor of TLS (now on 1.3) version.</p>
@@ -732,7 +731,8 @@ to allow the user connect without any encryption, or force him to send the certi
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+</span></span></code></pre></div><p>Full code examples can be find in <a href="https://github.com/knabben/tutorial-istio-sec/tree/main/1-grpc/grpc">this repo</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
 <p>PKI management is challenging on a microservice environment, the gRPC support for authentication with mTLS is pretty basic,
 a few other libraries and more robust and complete projects like SPIFFE can take care of the actual Service Identity management
 on a dynamic environment like Kubernetes. The real burden of managing the certificates (expiration, CN, lifecycle maintainence)
@@ -964,19 +964,19 @@ must be automated in conjunction with the microservice that is going to use it.<
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1686345737"></script>
-    <script src="/js/perfect-scrollbar.min.js?1686345737"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1686345737"></script>
-    <script src="/js/jquery.sticky.js?1686345737"></script>
-    <script src="/js/featherlight.min.js?1686345737"></script>
-    <script src="/js/highlight.pack.js?1686345737"></script>
+    <script src="/js/clipboard.min.js?1686349897"></script>
+    <script src="/js/perfect-scrollbar.min.js?1686349897"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1686349897"></script>
+    <script src="/js/jquery.sticky.js?1686349897"></script>
+    <script src="/js/featherlight.min.js?1686349897"></script>
+    <script src="/js/highlight.pack.js?1686349897"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1686345737"></script>
-    <script src="/js/learn.js?1686345737"></script>
-    <script src="/js/hugo-learn.js?1686345737"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1686349897"></script>
+    <script src="/js/learn.js?1686349897"></script>
+    <script src="/js/hugo-learn.js?1686349897"></script>
     
         
-            <script src="/mermaid/mermaid.js?1686345737"></script>
+            <script src="/mermaid/mermaid.js?1686349897"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
