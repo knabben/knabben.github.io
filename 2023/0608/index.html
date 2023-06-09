@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Hacking golang gRPC services and mTLS setup">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Secure gRPC services with mTLS :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1686345714" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1686345714" rel="stylesheet">
+    <link href="/css/hybrid.css?1686345714" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1686345714" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1686345714" rel="stylesheet">
+    <link href="/css/auto-complete.css?1686345714" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1686345714" rel="stylesheet">
+    <link href="/css/theme.css?1686345714" rel="stylesheet">
+    <link href="/css/tabs.css?1686345714" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1686345714" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1686345714" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1686345714"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2023/0608/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1686345714"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1686345714"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1686345714"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Secure gRPC services with mTLS
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#tls-and-ssl">TLS and SSL</a>
+      <ul>
+        <li><a href="#public-key-infrastructure">Public Key Infrastructure</a></li>
+        <li><a href="#tls-handshake">TLS Handshake</a></li>
+        <li><a href="#x509-certificate">X.509 certificate</a></li>
+        <li><a href="#generating-certificates">Generating certificates</a></li>
+      </ul>
+    </li>
+    <li><a href="#grpc">gRPC</a>
+      <ul>
+        <li><a href="#mutual-tls">Mutual TLS</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Secure gRPC services with mTLS
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>Authentication is part of the AAA (Authn, Authz, Audit) security framework, and a basic functionality for each
+multi tenant modern system, the usage of gRPC as a channel of communication for east-west trafic allow the developer
+to enable built-in mechanisms capable to not only secure the traffic via TLS encryption but to enable authentication
+using SSL/TLS X.509 certificates.</p>
+<p>This post will detail and demonstrate a client/server implementation that uses gRPC as a protocol of communication
+and uses these TLS certificates for channels credentials.</p>
+<p>The last part introduces <code>cert-manager</code> another CNCF project for PKI management inside Kubernetes clusters,
+and its going to move the application to containers and use automatic generated certs instead.</p>
+<h2 id="tls-and-ssl">TLS and SSL</h2>
+<p>Starting with SSL (Secure Socket Layer), its a standard/deprecated technology used for establish an encrypted link
+between server/clients, is 2015 it was deprecated in favor of TLS (now on 1.3) version.</p>
+<p><a href="https://www.packtpub.com/product/demystifying-cryptography-with-openssl-30/9781800560345">Demystifing Cryptography w/ OpenSSL 3.0</a>
+is a very good book in the topic and brings details in the difference of Symmetric cryptography ciphers used
+for strong message digests, message authentication codes, and generating symmetric cryptograpic keys from password. On the
+other hand there&rsquo;re asymmetric ciphers used to generate public/private encryption keys, digital signature, verification and
+x509, there&rsquo;ll be another subsection explaining how these ciphers are agreed, communicated and used in TLS.</p>
+<h3 id="public-key-infrastructure">Public Key Infrastructure</h3>
+<p>The goal of PKI (Public Key Infrastructure) is the management of public keys and digital certificates
+on a specific company infrastructure with the intent of identification and access management of the
+individuals on a secure network.</p>
+<p>The common components of this infrastructure are:</p>
+<ul>
+<li>Public/Private key pair</li>
+<li>Registration Authority</li>
+<li>Certificate Authority (CA)</li>
+<li>Certificate Store</li>
+<li>Certificate Revocation List (CRL)</li>
+</ul>
+<p>Registration authority is defined as an entity responsible for one or more of the following
+functions: the identification and authentication of the certificate participants. RA DO not
+sign or issue certificates. Certificates here are data structures used for identify presentation and verification, X.509
+are the format and the core for TLS-based protocols (including software signing and VPN)</p>
+<p>The public key system relies on asymmetric cryptography, which consist of a public/private key pair.
+The CA certifies the ownership of the key pairs through the binding of the public key with the respective
+identity of the entity. This binding is established thourgh a process of registration and inssuance of
+certificates at an by the CA. When you sign your own certificate, the certificate is said to be self-signed.
+self signed.</p>
+<p>Browsers for example are developed with a built-in list of trusted roots
+(called certificate/trust store, operating systems and apps maintain their own list)
+on a new request they iterate through all certificates in the path (chain of trust) starting with the trust
+anchor, validating each certificate&rsquo;s basic information and critical extensions.</p>
+<p>The Browsers verifies the certificate&rsquo;s integrity signature using public-key cryptography, it verifies the
+validity period time interval, and the Certificate Revocation Lists (CRL) periodically created by the CA.
+Some other fields like the Issuer and Subject (DNS based) are checked.</p>
+<p><img src="./images/pki.jpg?width=800" alt="pki" title="pki"></p>
+<h3 id="tls-handshake">TLS Handshake</h3>
+
+<div class="mermaid" align="center">
+sequenceDiagram
+    participant 192.168.0.11
+    participant 185.199.109.133
+
+    192.168.0.11->>185.199.109.133: ClientHello (cipher suite/extensions)
+    185.199.109.133-->>192.168.0.11: ack
+    185.199.109.133->>192.168.0.11: ServerHello (send encrypted cert/done)
+    192.168.0.11-->>185.199.109.133: ack
+    192.168.0.11->>185.199.109.133: Change Cipher Spec
+    192.168.0.11->>185.199.109.133: Application Data (HTTP/1.1)
+</div>
+
+<p>The client starts with a ClientHello, negotiating the cipher and extensions avaiable, the server
+chooses the highest protocol version and TLS cipher, the server sends its X.509 certificate, with
+other certs in the chain, server verifies if the client has a certification to send as well.
+The server signs a small amount of data received from the client with its own private key (the
+private pair from the public one in the cert), this way the server proves that it owns the
+certificate.</p>
+<p>At this step the client can send his own certificate for server authentication this is known as <a href="#mutual-tls">mutual tls</a>.</p>
+<p>The change cipher spec protocol is used to alter the secret sent between the server and the client
+and let the other party know that it has generated the session key and is going to switch to
+encrypted communication.</p>
+<p><img src="./images/handshake.png" alt="tlsh" title="tlsh"></p>
+<h3 id="x509-certificate">X.509 certificate</h3>
+<ul>
+<li>Signature Algorithm: crypto hash functions and digital signature algo used to sigining.</li>
+<li>Issuer: The entity that signed the current certificate. DN format.</li>
+<li>Subject: The entity that the certificate identifies. DN format.</li>
+<li>Public-Key (2048 bit): The server public key.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ openssl x509 -in opssec.in -noout -text
+</span></span><span style="display:flex;"><span>Certificate:
+</span></span><span style="display:flex;"><span>    Data:
+</span></span><span style="display:flex;"><span>        Version: <span style="color:#ae81ff">3</span> <span style="color:#f92672">(</span>0x2<span style="color:#f92672">)</span>                                                                                                               
+</span></span><span style="display:flex;"><span>        Serial Number:                                             
+</span></span><span style="display:flex;"><span>            03:9e:ec:17:c8:06:7f:8e:1f:5e:ee:99:0a:d0:b0:e7:ab:63                                                                      
+</span></span><span style="display:flex;"><span>        Signature Algorithm: sha256WithRSAEncryption                                                                                   
+</span></span><span style="display:flex;"><span>        Issuer: C <span style="color:#f92672">=</span> US, O <span style="color:#f92672">=</span> Lets Encrypt, CN <span style="color:#f92672">=</span> R3                                                                                     
+</span></span><span style="display:flex;"><span>        Validity                                                                                                                       
+</span></span><span style="display:flex;"><span>            Not Before: May <span style="color:#ae81ff">13</span> 13:03:08 <span style="color:#ae81ff">2023</span> GMT                                                                                       
+</span></span><span style="display:flex;"><span>            Not After : Aug <span style="color:#ae81ff">11</span> 13:03:07 <span style="color:#ae81ff">2023</span> GMT                                                                                       
+</span></span><span style="display:flex;"><span>        Subject: CN <span style="color:#f92672">=</span> opssec.in                                                                                                        
+</span></span><span style="display:flex;"><span>        Subject Public Key Info:                                   
+</span></span><span style="display:flex;"><span>            Public Key Algorithm: rsaEncryption                                                                                        
+</span></span><span style="display:flex;"><span>                Public-Key: <span style="color:#f92672">(</span><span style="color:#ae81ff">2048</span> bit<span style="color:#f92672">)</span>                                                                                                 
+</span></span><span style="display:flex;"><span>                Modulus:                                                                                                               
+</span></span><span style="display:flex;"><span>                ...
+</span></span><span style="display:flex;"><span>                Exponent: <span style="color:#ae81ff">65537</span> <span style="color:#f92672">(</span>0x10001<span style="color:#f92672">)</span>                          
+</span></span><span style="display:flex;"><span>        X509v3 extensions:                                         
+</span></span><span style="display:flex;"><span>            X509v3 Subject Key Identifier:                         
+</span></span><span style="display:flex;"><span>                63:4E:15:85:56:5A:A4:94:02:C2:16:42:A4:A5:97:9A:38:02:57:97                                                            
+</span></span><span style="display:flex;"><span>            X509v3 Authority Key Identifier:                       
+</span></span><span style="display:flex;"><span>                14:2E:B3:17:B7:58:56:CB:AE:50:09:40:E6:1F:AF:9D:8B:14:C2:C6                                                            
+</span></span><span style="display:flex;"><span>            X509v3 Subject Alternative Name:                       
+</span></span><span style="display:flex;"><span>                DNS:opssec.in, DNS:www.opssec.in                                                                                       
+</span></span><span style="display:flex;"><span>            CT Precertificate SCTs:                                
+</span></span><span style="display:flex;"><span>                Signed Certificate Timestamp:                      
+</span></span><span style="display:flex;"><span>                    Version   : v1 <span style="color:#f92672">(</span>0x0<span style="color:#f92672">)</span>                           
+</span></span><span style="display:flex;"><span>                    Log ID    : B7:3E:FB:24:DF:9C:4D:BA:75:F2:39:C5:BA:58:F4:6C:                                                       
+</span></span><span style="display:flex;"><span>                                5D:FC:42:CF:7A:9F:35:C4:9E:1D:09:81:25:ED:B4:99                                                        
+</span></span><span style="display:flex;"><span>                    Timestamp : May <span style="color:#ae81ff">13</span> 14:03:08.122 <span style="color:#ae81ff">2023</span> GMT                                                                           
+</span></span><span style="display:flex;"><span>                    Extensions: none                               
+</span></span><span style="display:flex;"><span>                    Signature : ecdsa-with-SHA256                                                                                      
+</span></span><span style="display:flex;"><span>                                30:45:02:21:00:C2:B1:43:FB:E6:F4:2B:43:B9:16:A5:                                                       
+</span></span><span style="display:flex;"><span>                                ...
+</span></span></code></pre></div><p>The chain of trust is an ordered collection of certificates, where they are signed, for this certificate
+in particular Lets Encrypt is has an Intermediate CA (R3) that signs the opssec.in, and is signed by a Root CA (ISRG Root X1).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ openssl verify -verbose -show_chain -trusted ./Builtin<span style="color:#ae81ff">\ </span>Object<span style="color:#ae81ff">\ </span>Token_ISRG<span style="color:#ae81ff">\ </span>Root<span style="color:#ae81ff">\ </span>X1 -trusted ./R3 ./opssec.in
+</span></span><span style="display:flex;"><span>opssec.in: OK
+</span></span><span style="display:flex;"><span>Chain:
+</span></span><span style="display:flex;"><span>depth<span style="color:#f92672">=</span>0: CN <span style="color:#f92672">=</span> opssec.in <span style="color:#f92672">(</span>untrusted<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>depth<span style="color:#f92672">=</span>1: C <span style="color:#f92672">=</span> US, O <span style="color:#f92672">=</span> Lets Encrypt, CN <span style="color:#f92672">=</span> R3
+</span></span><span style="display:flex;"><span>depth<span style="color:#f92672">=</span>2: C <span style="color:#f92672">=</span> US, O <span style="color:#f92672">=</span> Internet Security Research Group, CN <span style="color:#f92672">=</span> ISRG Root X1
+</span></span></code></pre></div><h3 id="generating-certificates">Generating certificates</h3>
+<p>The most well known client tool for this task is <code>openssl</code>, these SSL/TLS toolkits are very used
+in the CLI for management of keys and certificates, other tools exists like <a href="https://github.com/cloudflare/cfssl">Cloudfare&rsquo;s PKI and TLS toolkit</a>.</p>
+<p>First step is to create the CA certificate, this command generates the private key at the same time.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ openssl req <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -x509 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -nodes <span style="color:#ae81ff">\ </span>
+</span></span><span style="display:flex;"><span>    -newkey rsa:4096 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -days <span style="color:#ae81ff">365</span> <span style="color:#ae81ff">\ </span>
+</span></span><span style="display:flex;"><span>    -keyout tls/certs/root-keypair.pem <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -out tls/certs/root-cert.pem <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -subj <span style="color:#e6db74">&#34;/CN=Root CA&#34;</span> <span style="color:#ae81ff">\
+</span></span></span></code></pre></div><p>Final Root CA is on <code>tls/certs/root-cert.pem</code>.
+You can use mage file and check this project with the target <code>mage tls:genRootCA</code> from <a href="https://github.com/knabben/tutorial-istio-sec/tree/main/1-grpc">knabben/tutorial-istio-sec/1-grpc</a></p>
+<p>Generate the client CSR and certificate under <code>tls/certs/client-cert.pem</code> and <code>tls/certs/client-keypair.pem</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Client certificate using the CA to sign in</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ openssl req <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -nodes <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -newkey rsa:4096 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -keyout <span style="color:#e6db74">&#34;tls/certs/client-keypair.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -out <span style="color:#e6db74">&#34;tls/certs/client-csr.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -subj <span style="color:#e6db74">&#34;/OU=client,CN=localhost&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ openssl x509 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -req <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -in <span style="color:#e6db74">&#34;tls/certs/client-csr.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -days <span style="color:#ae81ff">60</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -CAcreateserial <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -CA <span style="color:#e6db74">&#34;tls/certs/root-cert.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -CAkey <span style="color:#e6db74">&#34;tls/certs/root-keypair.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -out <span style="color:#e6db74">&#34;tls/certs/client-cert.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -extfile <span style="color:#e6db74">&#34;./tls/ext.conf&#34;</span>
+</span></span></code></pre></div><p>Generate the server CSR and certificate under <code>tls/certs/server-cert.pem</code> and <code>tls/certs/server-keypair.pem</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Server CSR </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ openssl req <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -nodes <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -newkey <span style="color:#e6db74">&#34;rsa:4096&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -keyout <span style="color:#e6db74">&#34;tls/certs/server-keypair.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -out <span style="color:#e6db74">&#34;tls/certs/server-csr.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -subj <span style="color:#e6db74">&#34;/OU=server,CN=localhost&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Server certificate using the CA as well</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ openssl x509 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -req -in tls/certs/server-csr.pem<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -days <span style="color:#ae81ff">365</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -CAcreateserial <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -CA <span style="color:#e6db74">&#34;tls/certs/root-cert.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -CAkey <span style="color:#e6db74">&#34;tls/certs/root-keypair.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -out <span style="color:#e6db74">&#34;tls/certs/server-cert.pem&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -extfile<span style="color:#e6db74">&#34; &#34;</span>./tls/ext.conf<span style="color:#e6db74">&#34;
+</span></span></span></code></pre></div>
+<div class="notices info" ><p>The <code>ext.conf</code> contains an subjectAltName extension for communication since CN hostname check is deprecated
+Let the IP as <code>0.0.0.0</code> with the content being: <code>subjectAltName=DNS:localhost,IP:0.0.0.0</code></p>
+</div>
+
+<p>You can use mage file and check this project with the target <code>mage tls:genClientCert || tls:genServerCert</code> from <a href="https://github.com/knabben/tutorial-istio-sec/tree/main/1-grpc">knabben/tutorial-istio-sec/1-grpc</a></p>
+<h2 id="grpc">gRPC</h2>
+<p>It is a modern high performance Remote Procedure Call (RPC) framework with multiples language support
+has a simple definition of schema normally made with Protocol Buffers, and uses HTTP/2 as a communication
+protocol being a good improvement of the HTTP allowing multiplexing requests over a single connection,
+streaming interations, etc. <a href="https://grpc.io">gRPC</a> is a CNCF accepted project on Inbucation level, and
+its widely used by CNCF projects.</p>
+<p>For this example lets use <a href="https://protobuf.dev">Protobuf</a> as the schema and underlaying message interchange format between the
+services, from the official FAQ gRPC largely follows HTTP semantics over HTTP/2 but we explicitly allow for full-duplex streaming.
+We diverge from typical REST conventions as we use static paths for performance reasons during call dispatch as parsing call parameters from paths,
+query parameters and payload body adds latency and complexity. We have also formalized a set of errors that we believe are more
+directly applicable to API use cases than the HTTP status codes.</p>
+<h3 id="mutual-tls">Mutual TLS</h3>
+<p>gRPC has SSL/TLs integration and proposes the use of TLS to authenticate the server and to encrypt all data
+exchange between the client and server. <a href="https://medium.com/@mertkimyonsen/securing-grpc-connection-with-ssl-tls-certificate-using-go-db3852fe89dd">This</a> is a good post about the topic.</p>
+<p>For the client side we need to start a new pool of certificates and append the Root CA cert on it,
+this is used later in the configuration of the client request. Load the X509 key pair and client certificate
+this is passed in the <code>tls.Config</code>, and will be provided to the server as soon it send its own.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rootCA</span>  = <span style="color:#e6db74">&#34;./tls/certs/root-cert.pem&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cert</span>    = <span style="color:#e6db74">&#34;./tls/certs/client-cert.pem&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">keypair</span> = <span style="color:#e6db74">&#34;./tls/certs/client-keypair.pem&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">pool</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x509</span>.<span style="color:#a6e22e">NewCertPool</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rootBytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#a6e22e">rootCA</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">AppendCertsFromPEM</span>(<span style="color:#a6e22e">rootBytes</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">certificate</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">LoadX509KeyPair</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">cert</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">keypair</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">trsnportCred</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">credentials</span>.<span style="color:#a6e22e">NewTLS</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">Config</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Certificates</span>: []<span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">Certificate</span>{<span style="color:#a6e22e">certificate</span>},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">RootCAs</span>:      <span style="color:#a6e22e">pool</span>,
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Dial</span>(<span style="color:#e6db74">&#34;localhost:50051&#34;</span>, <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">WithTransportCredentials</span>(<span style="color:#a6e22e">transportCred</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>The use of <code>grpc.WithTransportCredentials</code>, makes the connection aware of the client cert and the pool of cert created
+when dialing to the server.</p>
+<p>For the server side, the setup is pretty similar, one important option though is the <code>config.ClientAuth</code> settings, its possible
+to allow the user connect without any encryption, or force him to send the certificate with: <code>tls.RequireAndVerifyClientCert</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rootCA</span> = <span style="color:#e6db74">&#34;./tls/certs/root-cert.pem&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cert</span> = <span style="color:#e6db74">&#34;./tls/certs/server-cert.pem&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">keypair</span> = <span style="color:#e6db74">&#34;./tls/certs/server-keypair.pem&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pool</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x509</span>.<span style="color:#a6e22e">NewCertPool</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rootBytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">rootCA</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">AppendCertsFromPEM</span>(<span style="color:#a6e22e">rootBytes</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">certificate</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">LoadX509KeyPair</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">cert</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">keypair</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// configuration of the certificate what we want to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">transportCred</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">credentials</span>.<span style="color:#a6e22e">NewTLS</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">Config</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Certificates</span>: []<span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">Certificate</span>{<span style="color:#a6e22e">certificate</span>},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ClientAuth</span>:   <span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">RequireAndVerifyClientCert</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ClientCAs</span>:    <span style="color:#a6e22e">pool</span>,
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">server</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">NewServer</span>(<span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Creds</span>(<span style="color:#a6e22e">transportCred</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>PKI management is challenging on a microservice environment, the gRPC support for authentication with mTLS is pretty basic,
+a few other libraries and more robust and complete projects like SPIFFE can take care of the actual Service Identity management
+on a dynamic environment like Kubernetes. The real burden of managing the certificates (expiration, CN, lifecycle maintainence)
+must be automated in conjunction with the microservice that is going to use it.</p>
+<p>What do you use? and how is your approach to manage Service Identity?</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2023/" title="2023"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/0406/" title="Windows CNI tracing and deep dive" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1686345714"></script>
+    <script src="/js/perfect-scrollbar.min.js?1686345714"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1686345714"></script>
+    <script src="/js/jquery.sticky.js?1686345714"></script>
+    <script src="/js/featherlight.min.js?1686345714"></script>
+    <script src="/js/highlight.pack.js?1686345714"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1686345714"></script>
+    <script src="/js/learn.js?1686345714"></script>
+    <script src="/js/hugo-learn.js?1686345714"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1686345714"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
