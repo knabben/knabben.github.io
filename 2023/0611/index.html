@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Strong authn and authz with go-spiffe">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>SPIFFE/SPIRE for gRPC authz :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1686525146" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1686525146" rel="stylesheet">
+    <link href="/css/hybrid.css?1686525146" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1686525146" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1686525146" rel="stylesheet">
+    <link href="/css/auto-complete.css?1686525146" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1686525146" rel="stylesheet">
+    <link href="/css/theme.css?1686525146" rel="stylesheet">
+    <link href="/css/tabs.css?1686525146" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1686525146" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1686525146" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1686525146"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2023/0611/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1686525146"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1686525146"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1686525146"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2023/'>2023</a> > SPIFFE/SPIRE for gRPC authz
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#spiffe-secure-production-identity-framework-for-everyone">SPIFFE (Secure Production Identity Framework For Everyone)</a>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+      </ul>
+    </li>
+    <li><a href="#go-spiffe">go-spiffe</a>
+      <ul>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              SPIFFE/SPIRE for gRPC authz
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>The Zero trust security model has a motto: &ldquo;never trust, always verify&rdquo;. As notices in the last post
+verification of x509 in a gRPC scenario without much libraries are dangerous, the lack of a good
+identification of the service can be a problem for authorization and authentication of the party
+trying to access a particular service. On this post lets continue the testing and validation
+of a few cloud native security technologies offered for Golang related to service identification.</p>
+<h2 id="spiffe-secure-production-identity-framework-for-everyone">SPIFFE (Secure Production Identity Framework For Everyone)</h2>
+<p><a href="https://spiffe.io">SPIFFE</a> and SPIRE aim to strengthen the identification of software components
+ina a common way that can be leveraged across distributed systems by anyone, anywhere.</p>
+<p>Environment growth and services dynamics can help to make the service identification a challenge,
+policy enforcement and lifecycle management of the PKI, services IDs and other traits become hard.</p>
+<p>The key for this is a trustworthy identity that can in a solid and identifiable way represent a workload
+that claims for this identity. In this framework this identity is called SPIFFE ID, and as the format
+<code>spiffe://&lt;domain&gt;/&lt;workload&gt;</code>, other important part is the SPIFFE verifiable identity document (SVID).
+it supports both X509 and JWT, for the first the SPIFFEID will exist as a URI in the Subject Alternative
+Name (SAN) extension.</p>
+<h3 id="architecture">Architecture</h3>
+
+<div class="mermaid" align="center">
+flowchart LR
+    agent_1 --> Server_API
+    agent_2 --> Server_API
+
+    subgraph agent_1
+    workload_api_1
+    end
+
+    workload_1 --> workload_api_1
+
+    subgraph agent_2
+    workload_api_2
+    end
+
+    workload_2 --> workload_api_2
+</div>
+
+<p>Server API manages and issues identities in a SPIFFE trust domain, hold information
+about its agents and workloads. Uses registration entites for Agents and Workloads</p>
+<p>Workload API, provides the following</p>
+<ul>
+<li>Its identity, described as a SPIFFE ID.</li>
+<li>A private key tied to that ID that can be used to sign data on behalf of the workload.</li>
+<li>A corresponding short-lived X.509 certificate is also created, the X509-SVID. This can be used to establish TLS or otherwise authenticate to other workloads.</li>
+<li>A set of certificates – known as a trust bundle – that a workload can use to verify an X.509-SVID presented by another workload</li>
+</ul>
+<p>Agents runs on each node, they request SVID from the server and cache until workload requests its SVID,
+exposing the SPIFFE workload API to workloads on a node and attests the identity of the workload. And
+finally they provide identified workload with their SVIDs.</p>
+<p>In the official docs the following <a href="https://spiffe.io/docs/latest/spire-about/spire-concepts/">sequece</a> exists for the lifecycle of the SVID:</p>
+
+<div class="mermaid" align="center">
+sequenceDiagram
+    participant Workload
+    participant Agent
+    participant Server 
+    participant Cloud
+
+    Agent->>Server: Performs node attestation (via TLS)
+    Server->>Cloud: Node resolution to verify additional properties
+    Cloud-->>Server: ACK
+    Server->>Agent: Issues an SVID. 
+    Agent-->>Server: Obtain the registration entries it is authorized for.
+    Agent->>Agent: Completes mTLS handshake and auth the server with bundle
+    Agent->>Server: Agent sends the workload CSR
+    activate Server
+    Server-->>Agent: Returns the workload SVID to the client
+    deactivate Server
+    Workload->>Agent: Request a SVID
+    activate Agent
+    Agent-->>Workload: Returns the SVID (JWT/X509)
+    deactivate Agent
+</div>
+
+<h2 id="go-spiffe">go-spiffe</h2>
+<p>All the code exists on <a href="https://github.com/knabben/tutorial-istio-sec/tree/main/2-spiffe">Tutorial SPIFEE</a>. If
+you are interested in installing Kind and giving a try in the specs the requirement is installing the
+<a href="https://github.com/spiffe/spire-tutorials/tree/main/k8s/quickstart">the server</a>, agent pods first.</p>
+<p>For this example it was created 2 ServiceAccounts, one for the <code>client</code> and other for the <code>server</code>, this
+will allow us to create a different SPIFFE ID for each in the format <code>spiffe://opssec.in/ns/spire/sa/default/client||server</code></p>
+<p>The codebase for the client is similar to the normal mTLS, the difference here is the transport credentials
+now receive a ACL for Server SPIFFE ID authorization, the <code>allowID</code> must have the correct SPIFFEID
+otherwise some odd TLS error like <code>tls: bad certificate</code> can happen.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">workloadapi</span>.<span style="color:#a6e22e">NewX509Source</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">workloadapi</span>.<span style="color:#a6e22e">WithClientOptions</span>(<span style="color:#a6e22e">workloadapi</span>.<span style="color:#a6e22e">WithAddr</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">sockPath</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;unable to create X509Source: %w&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Allowed SERVER SPIFFE ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">serverID</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">spiffeid</span>.<span style="color:#a6e22e">RequireFromString</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">allowID</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Dial the server with credentials that do mTLS and verify that presented certificate has SPIFFE ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">DialContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">host</span>, <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">WithTransportCredentials</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">grpccredentials</span>.<span style="color:#a6e22e">MTLSClientCredentials</span>(<span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">tlsconfig</span>.<span style="color:#a6e22e">AuthorizeID</span>(<span style="color:#a6e22e">serverID</span>)),
+</span></span><span style="display:flex;"><span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to dial: %w&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>For the server the same mTLS authorization ACL is required, now with the <code>client</code> credentials.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">workloadapi</span>.<span style="color:#a6e22e">NewX509Source</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">workloadapi</span>.<span style="color:#a6e22e">WithClientOptions</span>(<span style="color:#a6e22e">workloadapi</span>.<span style="color:#a6e22e">WithAddr</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">sockPath</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;unable to create X509Source: %w&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Allowed CLIENT SPIFFE ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">clientID</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">spiffeid</span>.<span style="color:#a6e22e">RequireFromString</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">allowID</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Create a server with credentials that do mTLS and verify that the presented certificate has SPIFFE ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">NewServer</span>(<span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Creds</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">grpccredentials</span>.<span style="color:#a6e22e">MTLSServerCredentials</span>(<span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">tlsconfig</span>.<span style="color:#a6e22e">AuthorizeID</span>(<span style="color:#a6e22e">clientID</span>)),
+</span></span><span style="display:flex;"><span>))
+</span></span></code></pre></div><p>The first workloadapi connection do the workload attestation using as a selector the serviceaccount created
+for each service. For this we need to ensure a registration entry is created in the API server, for each
+service account used and the node.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl exec -n spire spire-server-0 -- <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    /opt/spire/bin/spire-server entry create <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -spiffeID spiffe://opssec.in/ns/default/sa/client<span style="color:#f92672">||</span>server <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	-parentID spiffe://opssec.in/ns/spire/sa/spire-agent <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	-selector k8s:ns:default <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	-selector k8s:sa:client<span style="color:#f92672">||</span>server
+</span></span></code></pre></div><h3 id="conclusion">Conclusion</h3>
+<p><img src="./images/opa.png?width=1024" alt="opa" title="opa"></p>
+<p>Things start to get more interesting when complex implementation and integration of the technologies happen,
+This is an example of the <a href="https://spiffe.io/docs/latest/microservices/envoy-opa/readme/">Envoy+OPA</a> application
+the tutorial shows how to configure Envoy SDS (Secret Discovery Service) for automatic retrieve of these secrets
+TLS certificated, trusted CA etcs, the SPIRE agent can be configured as an SDS provider for Envoy, allowing it
+to directly provide Envoy with the key material it needs to provide TLS auth. Having this layer decoupled
+of the codebase is a good first steps on the separation of concerns and well defined boundaries when
+developing microservices in the cloud.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2023/" title="2023"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/0608/" title="Secure gRPC services with mTLS" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1686525146"></script>
+    <script src="/js/perfect-scrollbar.min.js?1686525146"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1686525146"></script>
+    <script src="/js/jquery.sticky.js?1686525146"></script>
+    <script src="/js/featherlight.min.js?1686525146"></script>
+    <script src="/js/highlight.pack.js?1686525146"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1686525146"></script>
+    <script src="/js/learn.js?1686525146"></script>
+    <script src="/js/hugo-learn.js?1686525146"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1686525146"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
