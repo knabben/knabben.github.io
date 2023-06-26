@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Istio Ambient Service Mesh on compulsory thinking</title>
+    <title>Istio Ambient Service Mesh Demo on compulsory thinking</title>
     <link>https://opssec.in/2023/0622/</link>
-    <description>Recent content in Istio Ambient Service Mesh on compulsory thinking</description>
+    <description>Recent content in Istio Ambient Service Mesh Demo on compulsory thinking</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/2023/0622/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/2023/0622/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

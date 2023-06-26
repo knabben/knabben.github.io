@@ -4,30 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.112.7">
-    <meta name="description" content="Walking through around Istio Service Mesh on Ambient mode">
+    <meta name="description" content="Gateway API demo for Istio Service Mesh on Ambient mode">
 
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Istio Ambient Service Mesh :: compulsory thinking</title>
+    <title>Istio Ambient Service Mesh Demo :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1687737819" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1687737819" rel="stylesheet">
-    <link href="/css/hybrid.css?1687737819" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1687737819" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1687737819" rel="stylesheet">
-    <link href="/css/auto-complete.css?1687737819" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1687737819" rel="stylesheet">
-    <link href="/css/theme.css?1687737819" rel="stylesheet">
-    <link href="/css/tabs.css?1687737819" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1687737819" rel="stylesheet">
+    <link href="/css/nucleus.css?1687742147" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1687742147" rel="stylesheet">
+    <link href="/css/hybrid.css?1687742147" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1687742147" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1687742147" rel="stylesheet">
+    <link href="/css/auto-complete.css?1687742147" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1687742147" rel="stylesheet">
+    <link href="/css/theme.css?1687742147" rel="stylesheet">
+    <link href="/css/tabs.css?1687742147" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1687742147" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1687737819" rel="stylesheet">
+    <link href="/css/theme-blue.css?1687742147" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1687737819"></script>
+    <script src="/js/jquery-3.3.1.min.js?1687742147"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1687737819"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1687737819"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1687742147"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1687742147"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1687737819"></script>
+<script type="text/javascript" src="/js/search.js?1687742147"></script>
 
     
   </div>
@@ -124,13 +124,13 @@
  
   
     
-    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh" class="dd-item
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
         
         active
         
         ">
       <a href="/2023/0622/">
-          Istio Ambient Service Mesh
+          Istio Ambient Service Mesh Demo
           
       </a>
       
@@ -474,7 +474,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2023/'>2023</a> > Istio Ambient Service Mesh
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Istio Ambient Service Mesh Demo
           
         
           
@@ -492,9 +492,9 @@
     <li><a href="#introduction">Introduction</a>
       <ul>
         <li><a href="#installing">Installing</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#testing-cni-iptables-rules">Testing CNI iptables rules</a></li>
-        <li><a href="#debugging-mtls">Debugging mTLS</a></li>
+        <li><a href="#the-application">The application</a></li>
+        <li><a href="#virtualservice-and-traffic-control">VirtualService and traffic control</a></li>
+        <li><a href="#authorization-l7">Authorization L7</a></li>
         <li><a href="#conclusion">Conclusion</a></li>
       </ul>
     </li>
@@ -515,7 +515,7 @@
           
             <h1>
               
-              Istio Ambient Service Mesh
+              Istio Ambient Service Mesh Demo
             </h1>
           
 
@@ -524,39 +524,228 @@
 
 
 	<h2 id="introduction">Introduction</h2>
-<p>In this post will discourse about the new Istio Service Mesh architecture, without sidecar, the approach
-the problem is solved is very interesting and deep diving in these pieces can help out understand the
+<p>In this post I will discourse about the new Istio Service Mesh architecture, without sidecar, the problem is solved
+with a very interesting approach a deep diving in these pieces can help out understand the
 underlying connections and design of each component and inner workings.</p>
-<p>Ambient mesh is still in ALPHA, so breaking changes are expected.</p>
-<h3 id="installing">Installing</h3>
-<p>operator
-helm
-istioctl</p>
-<h4 id="custom-mode-installation">Custom mode installation</h4>
-<h3 id="architecture">Architecture</h3>
+<p>All the code is stored <a href="https://github.com/knabben/tutorial-istio-sec/tree/main/3-istio-gw">here</a> as magefile target, PR are welcomed.</p>
+<p>The following architecture defines this example, having 2 services, <code>appA</code> and <code>appB</code>,
+where <code>appB</code> will be accessed from both the Gateway API and from <code>appA</code>. A Waypoint is added
+with <code>appB</code> service account, and <code>ztunnel</code> is reponsible to handle all the Layer 4 traffic.</p>
+<p>Istio-CNI component (daemonset) running on each Kubernetes worker node is responsible for
+redirecting application traffic to the zero-trust tunnel (ztunnel).</p>
 
 <div class="mermaid" align="center">
-flowchart LR
-    agent_1 --> Server_API
-    agent_2 --> Server_API
+graph LR;
+  LoadBalancer-->gateway
+  gateway([gateway api])-->waypoint
 
-    subgraph agent_1
-    workload_api_1
-    end
+  subgraph node 1
+  appa([App A])-->istio-cni-->ztunnel1[ztunnel]
+  end
 
-    workload_1 --> workload_api_1
+  subgraph node 2
+  ztunnel2[ztunnel]-->istio-cni2[istio-cni]-->svcb([Service B])
+  svcb-->appb([App B])
+  end
 
-    subgraph agent_2
-    workload_api_2
-    end
+  waypoint[Waypoint Proxy - SA B]-->ztunnel2
+  ztunnel1-->waypoint
 
-    workload_2 --> workload_api_2
+  ztunnel1.->istiod
+  ztunnel2.->istiod
+  waypoint.->istiod
+
+  istiod
+
+  classDef ctrl fill:#1568ca,color:white,stroke-width:1px,stroke:#dbffff
+  classDef normal fill:#007cff,color:white,stroke-width:1px,stroke:#fff
+  classDef normal1 fill:#f0f0f0,color:black,stroke-width:1px,stroke:#f0f0f5
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+
+  class appa,appb,appc,svcb ctrl;
+  class istio-cni,istio-cni2 cluster; 
+  class waypoint,gateway normal;
+  class LoadBalancer,ztunnel1,ztunnel2,istiod normal1;
+
 </div>
 
-<h3 id="testing-cni-iptables-rules">Testing CNI iptables rules</h3>
-<h3 id="debugging-mtls">Debugging mTLS</h3>
+<h3 id="installing">Installing</h3>
+<p>The first step is to install Kind and Istio on it, targets install the available
+addons as well (prometheus, grafana, jaeger, kiali). It&rsquo;s required to increase fs.inotify parameters in the
+kernel on Kind, otherwise the waypoint wont come up. The steps are documented as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ INSTALL_KIND<span style="color:#f92672">=</span>y mage sm:install
+</span></span></code></pre></div><p>The following steps are codified automatically in the <code>sm:install</code> target, and work for
+documentation propose.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kind create cluster --name ambient --config tutorial-istio-sec/3-istio-gw/specs/kind.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ docker exec ambient-worker2 sysctl -w fs.inotify.max_user_instances<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span>$ docker exec ambient-worker2 sysctl -w fs.inotify.max_user_watches<span style="color:#f92672">=</span><span style="color:#ae81ff">1048576</span>
+</span></span><span style="display:flex;"><span>$ docker exec ambient-control-plane sysctl -w fs.inotify.max_user_instances<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span>$ docker exec ambient-control-plane sysctl -w fs.inotify.max_user_watches<span style="color:#f92672">=</span><span style="color:#ae81ff">1048576</span>
+</span></span><span style="display:flex;"><span>$ docker exec ambient-worker sysctl -w fs.inotify.max_user_instances<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span>$ docker exec ambient-worker sysctl -w fs.inotify.max_user_watches<span style="color:#f92672">=</span><span style="color:#ae81ff">1048576</span>
+</span></span></code></pre></div><p>The target install MetalLB for Gateway API access.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
+</span></span><span style="display:flex;"><span>$ kubectl apply -f tutorial-istio-sec/3-istio-gw/specs/metallb_cr.yaml
+</span></span><span style="display:flex;"><span>ipaddresspool.metallb.io/docker created
+</span></span><span style="display:flex;"><span>l2advertisement.metallb.io/empty created
+</span></span></code></pre></div><p>Install Gateway API CRDs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl kustomize github.com/kubernetes-sigs/gateway-api/config/crd?ref<span style="color:#f92672">=</span>v0.6.2 -o /tmp/kustomized
+</span></span><span style="display:flex;"><span>$ kubectl apply -f /tmp/kustomized
+</span></span><span style="display:flex;"><span>customresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io created
+</span></span><span style="display:flex;"><span>customresourcedefinition.apiextensions.k8s.io/gateways.gateway.networking.k8s.io created
+</span></span><span style="display:flex;"><span>customresourcedefinition.apiextensions.k8s.io/httproutes.gateway.networking.k8s.io created
+</span></span></code></pre></div><p>Finally setup Istio ambient mode with debug flag enabled</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ istioctl install -y --set values.global.proxy.logLevel<span style="color:#f92672">=</span>debug -f tutorial-istio-sec/3-istio-gw/specs/istio.yaml
+</span></span><span style="display:flex;"><span>$ kubectl label namespace default istio.io/dataplane-mode<span style="color:#f92672">=</span>ambient
+</span></span><span style="display:flex;"><span>namespace/default labeled
+</span></span></code></pre></div><p>As a last step install the otel addons</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl apply -f tutorial-istio-sec/3-istio-gw/specs/otel
+</span></span></code></pre></div><h3 id="the-application">The application</h3>
+<p>The application with <code>appA</code> and <code>appB</code> are common <code>httpbin</code> Dockerfile.</p>
+<p>![snap](./images/snap.png snap)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl apply -n default -f tutorial-istio-sec/3-istio-gw/specs/apps
+</span></span><span style="display:flex;"><span>serviceaccount/appa created
+</span></span><span style="display:flex;"><span>service/appa created
+</span></span><span style="display:flex;"><span>deployment.apps/appa created
+</span></span><span style="display:flex;"><span>serviceaccount/appb created
+</span></span><span style="display:flex;"><span>service/appb created
+</span></span><span style="display:flex;"><span>deployment.apps/appb created
+</span></span></code></pre></div><p>Create a new global Gateway API and HTTP Route:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">gateway.networking.k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Gateway</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">gateway</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">gatewayClassName</span>: <span style="color:#ae81ff">istio</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">listeners</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hostname</span>: <span style="color:#e6db74">&#34;*.opssec.in&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">HTTP</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">allowedRoutes</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">namespaces</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">from</span>: <span style="color:#ae81ff">All</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">gateway.networking.k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">HTTPRoute</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">parentRefs</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">gateway</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hostnames</span>: [<span style="color:#e6db74">&#34;appb.opssec.in&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">rules</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">matches</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">path</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">type</span>: <span style="color:#ae81ff">PathPrefix</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">value</span>: <span style="color:#ae81ff">/</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">backendRefs</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">appb</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8000</span>
+</span></span></code></pre></div><p>Apply the waypoint configuration only for the <code>appB</code> service account.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ istioctl x -n default waypoint apply --service-account appb
+</span></span></code></pre></div><p>Test the proxy-config listener configuration for and route.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ istioctl proxy-config listener deploy/gateway-istio
+</span></span><span style="display:flex;"><span>ADDRESS PORT  MATCH DESTINATION
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">0</span>     ALL   Cluster: connect_originate
+</span></span><span style="display:flex;"><span>0.0.0.0 <span style="color:#ae81ff">80</span>    ALL   Route: http.80
+</span></span><span style="display:flex;"><span>0.0.0.0 <span style="color:#ae81ff">15021</span> ALL   Inline Route: /healthz/ready*
+</span></span><span style="display:flex;"><span>0.0.0.0 <span style="color:#ae81ff">15090</span> ALL   Inline Route: /stats/prometheus*
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ istioctl proxy-config route deploy/gateway-istio
+</span></span><span style="display:flex;"><span>NAME        VHOST NAME                    DOMAINS                    MATCH                  VIRTUAL SERVICE
+</span></span><span style="display:flex;"><span>http.80     appb.apifloripa.com.br:80     appb.opssec.in             /*                     http-0-istio-autogenerated-k8s-gateway.default
+</span></span><span style="display:flex;"><span>            backend                       *                          /stats/prometheus*
+</span></span><span style="display:flex;"><span>            backend                       *                          /healthz/ready*
+</span></span></code></pre></div><p>Looking on Kiali IstioConfig it will be possible to see a few objects, converted as VirtualService and Istio Gateway autogenerated.
+The other option is to remove the Gateway from ambient and point to services inside of it.</p>
+<p><img src="./images/gw.png" alt="gw" title="gw"></p>
+<h3 id="virtualservice-and-traffic-control">VirtualService and traffic control</h3>
+<p>Create a new VirtualService adding a delay of 2s for .5 percent in the traffic.</p>
+<pre tabindex="0"><code>apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: appb
+spec:
+  hosts:
+  - appb
+  http:
+  - fault:
+      delay:
+        percentage:
+          value: 50.0
+        fixedDelay: 2s
+    match:
+    - uri:
+        prefix: &#34;/headers&#34;
+    route:
+    - destination:
+        host: appb
+  - route:
+    - destination:
+        host: appb
+</code></pre><p>Start requesting appb from <code>appA</code> and observe the latency introduced on half of
+the requests.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ <span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> curl http://appb:8000/headers -s -o /dev/null -w <span style="color:#e6db74">&#34;%{http_code}\n&#34;</span>; date; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:01:38 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:01:40 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:01:42 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:01:42 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:01:44 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:01:44 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:02:01 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:02:03 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:02:03 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:02:05 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:02:05 UTC <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Mon Jun <span style="color:#ae81ff">26</span> 01:02:05 UTC <span style="color:#ae81ff">2023</span>
+</span></span></code></pre></div><h3 id="authorization-l7">Authorization L7</h3>
+<p>As a last exercise create a AuthorizationPolicy for the <code>appB</code> allowing only
+<code>appA</code> and the <code>gateway-istio</code> service account, perceive this is being binded
+in the waypoint proxy.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">security.istio.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AuthorizationPolicy</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">authz-appb</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">istio.io/gateway-name</span>: <span style="color:#ae81ff">appb</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">action</span>: <span style="color:#ae81ff">ALLOW</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">rules</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">from</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">source</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">principals</span>:
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">cluster.local/ns/default/sa/appa</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">cluster.local/ns/default/sa/gateway-istio</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">to</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">operation</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">methods</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">GET</span>
+</span></span></code></pre></div><p>To test the authorization change remove SPIFFE ID <code>cluster.local/ns/default/sa/appa</code></p>
+<p>Observe the graph for east-west traffic on Kiali, filtering by TCP is possible to
+see throughput of L4 requests and L7 metrics with HTTP status 403 in red the connection.</p>
+<p><img src="./images/req.png" alt="req" title="req"></p>
 <h3 id="conclusion">Conclusion</h3>
-<p>bla bla no sidecar here</p>
+
+<div class="notices warning" ><p>Ambient mesh is still in ALPHA, so breaking changes are expected. Gateway API API is v1beta1.
+Kiali dashboard support is still WIP.</p>
+</div>
+
+<p>The fact ztunnel with a decoupled proxy for Layer 7 is introduced on Ambient provide a service mesh
+setup with a much cleaner interface and components, giving less resource consumption and stable
+rules, excited to follow in the next steps and integrations provided by this procedure.</p>
+<p>One of the great work being done is the replacement of iptables istio-cni rules to <a href="https://www.solo.io/blog/ebpf-for-service-mesh/">eBFP upstream</a>
+what can definitely close this story with a golden key, and bump up this architecture to
+another level, maybe with 1.19?</p>
 
 
 
@@ -815,19 +1004,19 @@ flowchart LR
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1687737819"></script>
-    <script src="/js/perfect-scrollbar.min.js?1687737819"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1687737819"></script>
-    <script src="/js/jquery.sticky.js?1687737819"></script>
-    <script src="/js/featherlight.min.js?1687737819"></script>
-    <script src="/js/highlight.pack.js?1687737819"></script>
+    <script src="/js/clipboard.min.js?1687742147"></script>
+    <script src="/js/perfect-scrollbar.min.js?1687742147"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1687742147"></script>
+    <script src="/js/jquery.sticky.js?1687742147"></script>
+    <script src="/js/featherlight.min.js?1687742147"></script>
+    <script src="/js/highlight.pack.js?1687742147"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1687737819"></script>
-    <script src="/js/learn.js?1687737819"></script>
-    <script src="/js/hugo-learn.js?1687737819"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1687742147"></script>
+    <script src="/js/learn.js?1687742147"></script>
+    <script src="/js/hugo-learn.js?1687742147"></script>
     
         
-            <script src="/mermaid/mermaid.js?1687737819"></script>
+            <script src="/mermaid/mermaid.js?1687742147"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
