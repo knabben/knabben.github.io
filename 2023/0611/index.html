@@ -12,22 +12,31 @@
     <title>SPIFFE/SPIRE for gRPC authz :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1687735999" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1687735999" rel="stylesheet">
-    <link href="/css/hybrid.css?1687735999" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1687735999" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1687735999" rel="stylesheet">
-    <link href="/css/auto-complete.css?1687735999" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1687735999" rel="stylesheet">
-    <link href="/css/theme.css?1687735999" rel="stylesheet">
-    <link href="/css/tabs.css?1687735999" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1687735999" rel="stylesheet">
+    <link href="/css/nucleus.css?1687737819" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1687737819" rel="stylesheet">
+    <link href="/css/hybrid.css?1687737819" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1687737819" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1687737819" rel="stylesheet">
+    <link href="/css/auto-complete.css?1687737819" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1687737819" rel="stylesheet">
+    <link href="/css/theme.css?1687737819" rel="stylesheet">
+    <link href="/css/tabs.css?1687737819" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1687737819" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1687735999" rel="stylesheet">
+    <link href="/css/theme-blue.css?1687737819" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1687735999"></script>
+    <script src="/js/jquery-3.3.1.min.js?1687737819"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
     <script>
     if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
       location.protocol = "https:";
@@ -60,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1687735999"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1687735999"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1687737819"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1687737819"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1687735999"></script>
+<script type="text/javascript" src="/js/search.js?1687737819"></script>
 
     
   </div>
@@ -536,20 +545,31 @@ Name (SAN) extension.</p>
 
 <div class="mermaid" align="center">
 flowchart LR
-    agent_1 --> Server_API
-    agent_2 --> Server_API
+    agent_1-->Server_API
+    agent_2-->Server_API
 
-    subgraph agent_1
-    workload_api_1
+    subgraph agent_1[Agent]
+      workloadapi1
     end
 
-    workload_1 --> workload_api_1
+    workload1[Workload] --> workloadapi1[API]
 
-    subgraph agent_2
-    workload_api_2
+    subgraph agent_2[Agent]
+      workloadapi2
     end
 
-    workload_2 --> workload_api_2
+    workload2[Workload] --> workloadapi2[API]
+
+        
+    classDef ctrl fill:#1568ca,color:white,stroke-width:1px,stroke:#dbffff;
+    classDef normal fill:#007cff,color:white,stroke-width:1px,stroke:#dbfff;
+    classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+
+    class agent_1,agent_2 normal;
+    class Server_API normal;
+    class workload1,workload2 normal;
+    class workloadapi1,workloadapi2 ctrl;
+
 </div>
 
 <p>Server API manages and issues identities in a SPIFFE trust domain, hold information
@@ -907,19 +927,19 @@ developing microservices in the cloud.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1687735999"></script>
-    <script src="/js/perfect-scrollbar.min.js?1687735999"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1687735999"></script>
-    <script src="/js/jquery.sticky.js?1687735999"></script>
-    <script src="/js/featherlight.min.js?1687735999"></script>
-    <script src="/js/highlight.pack.js?1687735999"></script>
+    <script src="/js/clipboard.min.js?1687737819"></script>
+    <script src="/js/perfect-scrollbar.min.js?1687737819"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1687737819"></script>
+    <script src="/js/jquery.sticky.js?1687737819"></script>
+    <script src="/js/featherlight.min.js?1687737819"></script>
+    <script src="/js/highlight.pack.js?1687737819"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1687735999"></script>
-    <script src="/js/learn.js?1687735999"></script>
-    <script src="/js/hugo-learn.js?1687735999"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1687737819"></script>
+    <script src="/js/learn.js?1687737819"></script>
+    <script src="/js/hugo-learn.js?1687737819"></script>
     
         
-            <script src="/mermaid/mermaid.js?1687735999"></script>
+            <script src="/mermaid/mermaid.js?1687737819"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
