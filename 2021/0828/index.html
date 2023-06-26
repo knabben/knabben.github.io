@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Walkthrough of CNI plugins, IPs and routing created by kindnet">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>CNI plugins and kindnet :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1687745479" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1687745479" rel="stylesheet">
+    <link href="/css/hybrid.css?1687745479" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1687745479" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1687745479" rel="stylesheet">
+    <link href="/css/auto-complete.css?1687745479" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1687745479" rel="stylesheet">
+    <link href="/css/theme.css?1687745479" rel="stylesheet">
+    <link href="/css/tabs.css?1687745479" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1687745479" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1687745479" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1687745479"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2021/0828/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1687745479"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1687745479"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1687745479"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2021/'>2021</a> > CNI plugins and kindnet
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#network-namespace">Network namespace</a></li>
+    <li><a href="#kindnet">Kindnet</a>
+      <ul>
+        <li><a href="#cni-plugins-and-routing">CNI plugins and routing</a></li>
+        <li><a href="#containerd-cri-and-cni">Containerd CRI and CNI</a></li>
+        <li><a href="#debugging-with-cnitool">Debugging with CNITool</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              CNI plugins and kindnet
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>With the advance of Containers, the network segmentation was required at level of the isolated applications,
+logically  it&rsquo;s another copy of the network stack, with it&rsquo;s own routes, firewall rules and net devices.
+By convention these named network namespaces (ns) is an object at  /var/run/netns/<!-- raw HTML omitted --> as we are going
+to see in the sequence. A few tools to manage netns at user-space level resides on [1].</p>
+<p>A standard called CNI (Container Network Interface) was created, to formalize and create a baseline that
+consists of a specification and libraries for writing plugins to configure network interfaces in Linux containers,
+along with a number of supported plugins. CNI concerns itself only with network connectivity of containers and
+removing allocated resources when the container is deleted. Because of this focus, CNI has a wide
+range of support and the specification is simple to implement.</p>
+<p>In the post will be examined Kindnet the CNI implementation of Kind [3] with the goal to understand the
+main flows and show a few tools to debug it.</p>
+<h2 id="network-namespace">Network namespace</h2>
+<p>This blog post resumes pretty well the concept used on network namespace. [4]</p>
+<p>Generally speaking, an installation of Linux shares a single set of network interfaces and routing table entries.
+&hellip;
+With network namespaces, you can have different and separate instances of network interfaces and routing
+tables that operate independent of each other.</p>
+<p>So, based on [5], we can have a sequence of commands to create a two network namespace called <code>ns1</code> and <code>ns2</code>
+for illustation propose. Create a virtual ethernet PAIR (veth), think of this as a ethernet cable between
+the host machine and the namespace application. Important to note that to link ALL namespaces we need
+a new device called BRIDGE, this device has an IP and work as a new gateway.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Create two namespaces: ns1 and ns2</span>
+</span></span><span style="display:flex;"><span>$ ip netns add ns1
+</span></span><span style="display:flex;"><span>$ ip netns add ns2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the veth pairs for namespace and for host </span>
+</span></span><span style="display:flex;"><span>$ ip link add veth10 type veth peer name veth11  <span style="color:#75715e"># host -&gt; ns1</span>
+</span></span><span style="display:flex;"><span>$ ip link add veth20 type veth peer name veth21  <span style="color:#75715e"># host -&gt; ns2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add the veth pairs to the namespaces</span>
+</span></span><span style="display:flex;"><span>$ ip link set veth11 netns ns1
+</span></span><span style="display:flex;"><span>$ ip link set veth21 netns ns2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configure the interfaces in the network namespaces with IP address</span>
+</span></span><span style="display:flex;"><span>$ ip netns exec ns1 ip addr add 172.16.0.2/24 dev veth11  <span style="color:#75715e"># add ip addr on ns1</span>
+</span></span><span style="display:flex;"><span>$ ip netns exec ns2 ip addr add 172.16.0.3/24 dev veth21  <span style="color:#75715e"># add ip addr on ns2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enabling the interfaces inside the network namespaces</span>
+</span></span><span style="display:flex;"><span>$ ip netns exec ns1 ip link set dev veth11 up
+</span></span><span style="display:flex;"><span>$ ip netns exec ns2 ip link set dev veth21 up
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the bridge</span>
+</span></span><span style="display:flex;"><span>$ ip link add name br0 type bridge
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add the network namespaces interfaces to the bridge</span>
+</span></span><span style="display:flex;"><span>$ ip link set dev veth10 master br0
+</span></span><span style="display:flex;"><span>$ ip link set dev veth20 master br0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Assigning the IP address to the bridge</span>
+</span></span><span style="display:flex;"><span>$ ip addr add 172.16.0.1/24 dev br0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enabling the bridge and interfaces connected to the bridge</span>
+</span></span><span style="display:flex;"><span>$ ip link set dev br0 up
+</span></span><span style="display:flex;"><span>$ ip link set dev veth10 up
+</span></span><span style="display:flex;"><span>$ ip link set dev veth20 up
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#34;Setting the loopback interfaces in the network namespaces&#34;</span>
+</span></span><span style="display:flex;"><span>$ ip netns exec ns1 ip link set lo up
+</span></span><span style="display:flex;"><span>$ ip netns exec ns2 ip link set lo up
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Setting the default route in the network namespaces via bridge IP</span>
+</span></span><span style="display:flex;"><span>$ ip netns exec ns1 ip route add default via 172.16.0.1 dev veth11
+</span></span><span style="display:flex;"><span>$ ip netns exec ns2 ip route add default via 172.16.0.1 dev veth21
+</span></span></code></pre></div><p>It&rsquo;s possible to test connectivity between the hosts with <code>ip netns exec ns1 ping -c 1 172.16.0.3</code></p>
+<h2 id="kindnet">Kindnet</h2>
+<p>Now there&rsquo;s a better understand on how it&rsquo;s setup behind the scenes, this is an example
+diagram of a default kind setup installation. The CNI main responsability is to automatize
+this network container life cycle, executing a list of CNI plugins pre-registered, the
+ADD/DELETE/CHECK commands are available for each plugin.</p>
+<p><img src="./images/scheme1.png?width=1024px" alt="scheme" title="scheme1"></p>
+<p>This is totally configurable via a sequence of plugins but must follow the actual
+specification format to be parseable by the CRI runtime.</p>
+<h3 id="cni-plugins-and-routing">CNI plugins and routing</h3>
+<p>As we can see in the image, for Kind a simplistic approach is used with only 3 plugins
+and no bridge is involved. Seeing the configuration example for the <code>kind-worker</code>,
+the explanation of the plugins will come in the next session:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@kind-worker:/# cat /etc/cni/net.d/10-kindnet.conflist
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;cniVersion&#34;</span>: <span style="color:#e6db74">&#34;0.3.1&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;kindnet&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;plugins&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;ptp&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;ipMasq&#34;</span>: false,
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;ipam&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;host-local&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;dataDir&#34;</span>: <span style="color:#e6db74">&#34;/run/cni-ipam-state&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;routes&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;dst&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span> <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;ranges&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">[</span> <span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;subnet&#34;</span>: <span style="color:#e6db74">&#34;10.244.2.0/24&#34;</span> <span style="color:#f92672">}</span> <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>		,
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;mtu&#34;</span>: <span style="color:#ae81ff">1500</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;portmap&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;capabilities&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;portMappings&#34;</span>: true
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>For now note that a new container brings it&rsquo;s pair of virtual interfaces and routing entries with the
+namespace IP are configured as part of the CNI setup. Another interesting route here is the CIDR using the
+other node as gateway.</p>
+<p>Basically Kindnet reconcile the nodes at each 10 seconds, for the local node it dumps the configuration
+below, otherwise it adds the CIDR routes as cited if it&rsquo;s not present.</p>
+<h4 id="ptp---point-to-point-6">PTP - Point To Point [6]</h4>
+<p>The ptp plugin creates a point-to-point link between a container and the host by using a veth device.
+One end of the veth pair is placed inside a container and the other end resides on the host.
+The host-local IPAM plugin can be used to allocate an IP address to the container.
+The traffic of the container interface will be routed through the interface of the host.</p>
+<p>In the ADD command of PTP plugin we have the following sequence of events:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// run the IPAM plugin and get back the config to apply
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ipam</span>.<span style="color:#a6e22e">ExecAdd</span>(<span style="color:#a6e22e">conf</span>.<span style="color:#a6e22e">IPAM</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">args</span>.<span style="color:#a6e22e">StdinData</span>)
+</span></span></code></pre></div><p>IPAM (IP Address Management) loads the <code>host-local</code> [7]</p>
+<p>Host-local IPAM allocates IPv4 and IPv6 addresses out of a specified address range.
+Optionally, it can include a DNS configuration from a resolv.conf file on the host. It allocates ip
+addresses out of a set of address ranges and it stores the state locally on the host filesystem,
+therefore ensuring uniqueness of IP addresses on a single host.</p>
+<p>After allocating the IP via IPAM host-local, ptp will enable ip forward for the IP version and:</p>
+<ol>
+<li>setupContainerVeth</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a6e22e">hostVeth</span>, <span style="color:#a6e22e">contVeth0</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ip</span>.<span style="color:#a6e22e">SetupVeth</span>(<span style="color:#a6e22e">ifName</span>, <span style="color:#a6e22e">mtu</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">hostNS</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">contVeth</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">InterfaceByName</span>(<span style="color:#a6e22e">ifName</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// clean default route and add the local routing to the container in the ns
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> []<span style="color:#a6e22e">netlink</span>.<span style="color:#a6e22e">Route</span>{
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">LinkIndex</span>: <span style="color:#a6e22e">contVeth</span>.<span style="color:#a6e22e">Index</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Dst</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">IPNet</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">IP</span>:   <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Gateway</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Mask</span>: <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">CIDRMask</span>(<span style="color:#a6e22e">addrBits</span>, <span style="color:#a6e22e">addrBits</span>),
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Scope</span>: <span style="color:#a6e22e">netlink</span>.<span style="color:#a6e22e">SCOPE_LINK</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Src</span>:   <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Address</span>.<span style="color:#a6e22e">IP</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">LinkIndex</span>: <span style="color:#a6e22e">contVeth</span>.<span style="color:#a6e22e">Index</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Dst</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">IPNet</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">IP</span>:   <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Address</span>.<span style="color:#a6e22e">IP</span>.<span style="color:#a6e22e">Mask</span>(<span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Address</span>.<span style="color:#a6e22e">Mask</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Mask</span>: <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Address</span>.<span style="color:#a6e22e">Mask</span>,
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Scope</span>: <span style="color:#a6e22e">netlink</span>.<span style="color:#a6e22e">SCOPE_UNIVERSE</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Gw</span>:    <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Gateway</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Src</span>:   <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Address</span>.<span style="color:#a6e22e">IP</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  } {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">netlink</span>.<span style="color:#a6e22e">RouteAdd</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">r</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to add route %v: %v&#34;</span>, <span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>setupHostVeth - set the address to the veth pair of the host:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a6e22e">veth</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">netlink</span>.<span style="color:#a6e22e">LinkByName</span>(<span style="color:#a6e22e">vethName</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ipn</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">IPNet</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">IP</span>:   <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Gateway</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Mask</span>: <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">CIDRMask</span>(<span style="color:#a6e22e">maskLen</span>, <span style="color:#a6e22e">maskLen</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">addr</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">netlink</span>.<span style="color:#a6e22e">Addr</span>{<span style="color:#a6e22e">IPNet</span>: <span style="color:#a6e22e">ipn</span>, <span style="color:#a6e22e">Label</span>: <span style="color:#e6db74">&#34;&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">netlink</span>.<span style="color:#a6e22e">AddrAdd</span>(<span style="color:#a6e22e">veth</span>, <span style="color:#a6e22e">addr</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to add IP addr (%#v) to veth: %v&#34;</span>, <span style="color:#a6e22e">ipn</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ipn</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">IPNet</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">IP</span>:   <span style="color:#a6e22e">ipc</span>.<span style="color:#a6e22e">Address</span>.<span style="color:#a6e22e">IP</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Mask</span>: <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">CIDRMask</span>(<span style="color:#a6e22e">maskLen</span>, <span style="color:#a6e22e">maskLen</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">ip</span>.<span style="color:#a6e22e">AddHostRoute</span>(<span style="color:#a6e22e">ipn</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">veth</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> !<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">IsExist</span>(<span style="color:#a6e22e">err</span>)<span style="color:#f92672">...</span>
+</span></span></code></pre></div><ol start="3">
+<li>dnsConfSet to overwrite DNS settings</li>
+</ol>
+<h4 id="portmap">Portmap</h4>
+<p>This is a post-setup plugin that establishes port forwarding - using iptables,
+from the host&rsquo;s network interface(s) to a pod&rsquo;s network interface.</p>
+<p>It is intended to be used as a chained CNI plugin, and determines the container
+IP from the previous result. If the result includes an IPv6 address, it will
+also be configured. (IPTables will not forward cross-family).</p>
+<h3 id="containerd-cri-and-cni">Containerd CRI and CNI</h3>
+<p>The network plugin is now setup in the container runtime via the CRI,
+so the ADD/DELETE happens when a new container is bring to life or is killed.</p>
+<p>As detailed in the official architecture diagram of Containerd, you can see
+the CNI as part of this process, the configuration and binaries are mounted by the CNI
+that must exist in the same node.</p>
+<p><img src="./images/containerd.png?width=1024px" alt="containerd" title="containerd"></p>
+<p>On dockershim, this responsability existed on Kubelet in the past, it&rsquo;s not true anymore
+with deprecation of the dockershim and remote CRI configuration.</p>
+<h3 id="debugging-with-cnitool">Debugging with CNITool</h3>
+<p>To finalize lets use cnitool [8] to debug the CNI configuration, in this example a new network
+namespace <code>nstest</code> is created, and we add the kindnet into the namespace.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@kind-worker2:/# cnitool
+</span></span><span style="display:flex;"><span>cnitool: Add, check, or remove network interfaces from a network namespace
+</span></span><span style="display:flex;"><span>  cnitool add   &lt;net&gt; &lt;netns&gt;
+</span></span><span style="display:flex;"><span>  cnitool check &lt;net&gt; &lt;netns&gt;
+</span></span><span style="display:flex;"><span>  cnitool del   &lt;net&gt; &lt;netns&gt;
+</span></span><span style="display:flex;"><span>root@kind-worker2:/# ip netns add nstest
+</span></span><span style="display:flex;"><span>root@kind-worker2:/# ls /var/run/netns/
+</span></span><span style="display:flex;"><span>cni-5e28f5d1-3a6d-9f79-8708-da18aff121c3  cni-d58e75e1-060b-4476-aa3e-89c3d2c00742  nstest
+</span></span><span style="display:flex;"><span>root@kind-worker2:/# CNI_PATH<span style="color:#f92672">=</span>/opt/cni/bin cnitool add kindnet /var/run/netns/nstest
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;cniVersion&#34;</span>: <span style="color:#e6db74">&#34;0.3.1&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;interfaces&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;veth93960e3a&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;mac&#34;</span>: <span style="color:#e6db74">&#34;b2:d7:0a:52:e5:b7&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;eth0&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;mac&#34;</span>: <span style="color:#e6db74">&#34;0e:83:a9:f9:5d:2c&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;sandbox&#34;</span>: <span style="color:#e6db74">&#34;/var/run/netns/nstest&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ips&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;4&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;interface&#34;</span>: 1,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;address&#34;</span>: <span style="color:#e6db74">&#34;10.244.1.7/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;gateway&#34;</span>: <span style="color:#e6db74">&#34;10.244.1.1&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;routes&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;dst&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;dns&#34;</span>: <span style="color:#f92672">{}</span>
+</span></span></code></pre></div><p>As noted in the example a new veth was created with the proper routing, we can test a traceroute to a
+<code>kind-worker</code> container from the <code>nstest</code> with something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@kind-worker2:/# ip netns exec nstest traceroute 10.244.2.2
+</span></span><span style="display:flex;"><span>traceroute to 10.244.2.2 <span style="color:#f92672">(</span>10.244.2.2<span style="color:#f92672">)</span>, <span style="color:#ae81ff">30</span> hops max, <span style="color:#ae81ff">60</span> byte packets
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">1</span>  10.244.1.1 <span style="color:#f92672">(</span>10.244.1.1<span style="color:#f92672">)</span>  0.025 ms  0.006 ms *
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">2</span>  kind-worker.kind <span style="color:#f92672">(</span>172.18.0.3<span style="color:#f92672">)</span>  0.045 ms  0.019 ms *
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">3</span>  10.244.2.2 <span style="color:#f92672">(</span>10.244.2.2<span style="color:#f92672">)</span>  0.027 ms * *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root@kind-worker:/# tshark -i veth8dae5680  <span style="color:#75715e"># from a regular ping</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">25</span> 12.362370462   10.244.1.7 ? 10.244.2.2   ICMP <span style="color:#ae81ff">98</span> Echo <span style="color:#f92672">(</span>ping<span style="color:#f92672">)</span> request  id<span style="color:#f92672">=</span>0x576e, seq<span style="color:#f92672">=</span>5/1280, ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">62</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">26</span> 12.362400792   10.244.2.2 ? 10.244.1.7   ICMP <span style="color:#ae81ff">98</span> Echo <span style="color:#f92672">(</span>ping<span style="color:#f92672">)</span> reply    id<span style="color:#f92672">=</span>0x576e, seq<span style="color:#f92672">=</span>5/1280, ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> <span style="color:#f92672">(</span>request in 25<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="references">References</h2>
+<p>[1] <a href="https://man7.org/linux/man-pages/man8/ip-netns.8.html">https://man7.org/linux/man-pages/man8/ip-netns.8.html</a></p>
+<p>[2] <a href="https://www.cni.dev/">https://www.cni.dev/</a></p>
+<p>[3] <a href="https://kind.sigs.k8s.io/">https://kind.sigs.k8s.io/</a></p>
+<p>[4] <a href="https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/">https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/</a></p>
+<p>[5] <a href="https://github.com/kristenjacobs/container-networking/tree/master/1-network-namespace">https://github.com/kristenjacobs/container-networking/tree/master/1-network-namespace</a></p>
+<p>[6] <a href="https://www.cni.dev/plugins/current/main/ptp/">https://www.cni.dev/plugins/current/main/ptp/</a></p>
+<p>[7] <a href="https://www.cni.dev/plugins/current/ipam/host-local/">https://www.cni.dev/plugins/current/ipam/host-local/</a></p>
+<p>[8] <a href="https://www.cni.dev/docs/cnitool/">https://www.cni.dev/docs/cnitool/</a></p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2021/1017/" title="Kube-proxy Winuserspace Mode"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2021/0614/" title="Kube-proxy ClusterIP" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1687745479"></script>
+    <script src="/js/perfect-scrollbar.min.js?1687745479"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1687745479"></script>
+    <script src="/js/jquery.sticky.js?1687745479"></script>
+    <script src="/js/featherlight.min.js?1687745479"></script>
+    <script src="/js/highlight.pack.js?1687745479"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1687745479"></script>
+    <script src="/js/learn.js?1687745479"></script>
+    <script src="/js/hugo-learn.js?1687745479"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1687745479"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>

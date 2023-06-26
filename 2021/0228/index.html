@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.112.7">
-    <meta name="description" content="Killer CNI Tracing">
+    <meta name="description" content="µsoft windows kubernetes playground">
 
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Windows CNI tracing and deep dive :: compulsory thinking</title>
+    <title>Kubernetes Windows Nodes :: compulsory thinking</title>
 
     
     <link href="/css/nucleus.css?1687745479" rel="stylesheet">
@@ -50,7 +50,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/2023/0406/">
+  <body class="" data-url="/2021/0228/">
     <nav id="sidebar" class="">
 
 
@@ -96,7 +96,7 @@
   
     
     <li data-nav-id="/2023/" title="2023" class="dd-item
-        parent
+        
         
         
         ">
@@ -204,7 +204,7 @@
     
     <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
         
-        active
+        
         
         ">
       <a href="/2023/0406/">
@@ -428,7 +428,7 @@
   
     
     <li data-nav-id="/2021/" title="2021" class="dd-item
-        
+        parent
         
         
         ">
@@ -588,7 +588,7 @@
     
     <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
         
-        
+        active
         
         ">
       <a href="/2021/0228/">
@@ -666,7 +666,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2023/'>2023</a> > Windows CNI tracing and deep dive
+            <a href='/'></a> > <a href='/2021/'>2021</a> > Kubernetes Windows Nodes
           
         
           
@@ -681,13 +681,15 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#introduction">Introduction</a>
+    <li>
       <ul>
-        <li><a href="#containerd-tracing">Containerd Tracing</a></li>
-        <li><a href="#debugging-the-cni-plugin">Debugging the CNI plugin</a></li>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#setting-up-the-cluster">Setting up the cluster</a></li>
+        <li><a href="#bringing-up-the-windows-node">Bringing up the Windows node</a></li>
+        <li><a href="#trying-calico-on-eks">Trying Calico on EKS</a></li>
+        <li><a href="#initial-netpol-on-win">Initial netpol on Win</a></li>
       </ul>
     </li>
-    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -705,7 +707,7 @@
           
             <h1>
               
-              Windows CNI tracing and deep dive
+              Kubernetes Windows Nodes
             </h1>
           
 
@@ -713,79 +715,99 @@
 
 
 
-	<h2 id="introduction">Introduction</h2>
-<p>I have spent some time debugging a very interesting issue that was noticed in one Windows cluster, the network initialization
-of this cluster was having a delay of a few seconds before the external world communication starts. This post will explain the steps
-taken and the deep dive executed to find the root cause of the problem. A clear solution is not presented, but this can
-post can guide on debuggability of similar issues.</p>
-<h3 id="containerd-tracing">Containerd Tracing</h3>
-<p>First thing is to make sure there&rsquo;s Jaeger installed and accessible by the nodes of the cluster.
-Take a look in the <a href="https://www.jaegertracing.io/docs/1.43/operator/">Jaeger operator</a>, it can be installed with a few specs apply in the cluster. You
-will need an ingress controller to provide it an IP address and external access. For the jaeger-query and frontend, probably kubectl port-forward can do the trick.
-The second step is to configure ContainerD to send the samples directly to the agent. The containerd
-section will need the tracing plugin and OpenTelemtry <a href="https://github.com/containerd/containerd/blob/main/docs/tracing.md">configuration</a>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">root = &#34;C:\\ProgramData\\containerd\\root&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">state = &#34;C:\\ProgramData\\containerd\\state&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">version = 2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">imports = [&#34;C:\\Program Files\\\\containerd\\conf.d\\*.toml&#34;]</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">grpc]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">address = &#34;\\\\.\\pipe\\containerd-containerd&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">plugins]</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.internal.v1.tracing&#34;]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">sampling_ratio = 1.0</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">service_name = &#34;containerd&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.tracing.processor.v1.otlp&#34;]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">endpoint = &#34;http://10.0.0.5:30841&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">sandbox_image = &#34;projects-stg.registry.vmware.com/tkg/pause:3.8-windows-amd64&#34;</span>
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">plugins.&#34;io.containerd.grpc.v1.cri&#34;.cni]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">bin_dir = &#34;C:/opt/cni/bin&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">conf_dir = &#34;C:/etc/cni/net.d&#34;</span>
-</span></span></code></pre></div><p>Notice the endpoint where I&rsquo;m using a NodePort for the agent service. The last thing is to set
-debug level in the containerd process so you can see more information in the trace. Other
-interesting thing is to enable the logging in the service installed in the node.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sc.exe config containerd binPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;c:\Program Files\containerd\containerd.exe \
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --run-service --log-file=c:\tmp\containerd.log -l debug&#34;</span>
-</span></span></code></pre></div><p>After a restarting the service, and creating the pod again, it possible to notice RunPodSandbox trace:</p>
-<p><img src="./images/trace.png" alt="trace" title="trace"></p>
-<p>There&rsquo;re 2 interesting events, first <code>51.65ms</code> called <code>begin cni setup</code>, and 5 seconds later the result <code>cni result</code>.
-Ok, it seems the issue is inside the CNI plugin used, the plugin for this CNI in particular talks with the agent
-via gRPC passing commands like <code>CmdAdd</code> and <code>CmdDel</code>, every time a pod is created or deleted.</p>
-<h3 id="debugging-the-cni-plugin">Debugging the CNI plugin</h3>
-<p>After deducing the error is in the CNI, I increased the log level of the agent that&rsquo;s receiving the request:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>10:15:26.814722    <span style="color:#ae81ff">3620</span> server.go:425<span style="color:#f92672">]</span> Received CmdAdd request cni_args:<span style="color:#f92672">{</span>container_id:<span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> netns:<span style="color:#e6db74">&#34;786877ce-0bdc-4ff7-a58a-0ba3a62b2a5d&#34;</span> ifname:<span style="color:#e6db74">&#34;eth0&#34;</span> args:<span style="color:#e6db74">&#34;K8S_POD_UID=ed06be31-28f0-44e8-b03e-be36a8e24afa;IgnoreUnknown=1;K8S_POD_NAMESPACE=default;K8S_POD_NAME=db-6cqff;K8S_POD_INFRA_CONTAINER_ID=5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> path:<span style="color:#e6db74">&#34;C:/opt/cni/bin&#34;</span> network_configuration:<span style="color:#e6db74">&#34;{\&#34;capabilities\&#34;:{\&#34;dns\&#34;:true},\&#34;cniVersion\&#34;:\&#34;0.3.0\&#34;,\&#34;ipam\&#34;:{\&#34;type\&#34;:\&#34;host-local\&#34;},\&#34;name\&#34;:\&#34;cni\&#34;,\&#34;runtimeConfig\&#34;:{\&#34;dns\&#34;:{\&#34;Servers\&#34;:[\&#34;100.0.0.10\&#34;],\&#34;Searches\&#34;:[\&#34;default.svc.cluster.local\&#34;,\&#34;svc.cluster.local\&#34;,\&#34;cluster.local\&#34;],\&#34;Options\&#34;:[\&#34;ndots:5\&#34;]}},\&#34;type\&#34;:\&#34;cni\&#34;}&#34;</span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>10:15:26.888326    <span style="color:#ae81ff">3620</span> server.go:495<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Allocated IP addresses&#34;</span> container<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418&#34;</span> result<span style="color:#f92672">=</span>&amp;<span style="color:#f92672">{</span>Result:<span style="color:#f92672">{</span>CNIVersion:0.4.0 Interfaces:<span style="color:#f92672">[]</span> IPs:<span style="color:#f92672">[{</span>Version:4 Interface:&lt;nil&gt; Address:<span style="color:#f92672">{</span>IP:100.96.3.22 Mask:ffffff00<span style="color:#f92672">}</span> Gateway:100.96.3.1<span style="color:#f92672">}]</span> Routes:<span style="color:#f92672">[]</span> DNS:<span style="color:#f92672">{</span>Nameservers:<span style="color:#f92672">[]</span> Domain: Search:<span style="color:#f92672">[]</span> Options:<span style="color:#f92672">[]}}</span> VLANID:0<span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>10:15:26.889584    <span style="color:#ae81ff">3620</span> server_windows.go:42<span style="color:#f92672">]</span> Got runtime DNS configuration: <span style="color:#f92672">{[</span>100.64.0.10<span style="color:#f92672">]</span>  <span style="color:#f92672">[</span>default.svc.cluster.local svc.cluster.local cluster.local<span style="color:#f92672">]</span> <span style="color:#f92672">[]}</span>
-</span></span><span style="display:flex;"><span>10:15:26.891166    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:136<span style="color:#f92672">]</span> Configuring IP address <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
-</span></span><span style="display:flex;"><span>10:15:29.386133    <span style="color:#ae81ff">3620</span> pod_configuration_windows.go:97<span style="color:#f92672">]</span> Adding OVS port db-6cqff-568022 <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
-</span></span><span style="display:flex;"><span>10:15:30.354081    <span style="color:#ae81ff">3620</span> agent.go:531<span style="color:#f92672">]</span> Deleting stale flows from previous round <span style="color:#66d9ef">if</span> any
-</span></span><span style="display:flex;"><span>10:15:30.354788    <span style="color:#ae81ff">3620</span> agent.go:463<span style="color:#f92672">]</span> Persisting round number <span style="color:#ae81ff">12</span> to OVSDB
-</span></span><span style="display:flex;"><span>10:15:30.363033    <span style="color:#ae81ff">3620</span> agent.go:468<span style="color:#f92672">]</span> Round number <span style="color:#ae81ff">12</span> was persisted to OVSDB
-</span></span><span style="display:flex;"><span>10:15:31.772203    <span style="color:#ae81ff">3620</span> interface_configuration_windows.go:260<span style="color:#f92672">]</span> Send gratuitous ARP from container interface is not supported on Windows, <span style="color:#66d9ef">return</span> nil
-</span></span><span style="display:flex;"><span>10:15:31.772867    <span style="color:#ae81ff">3620</span> pod_configuration.go:268<span style="color:#f92672">]</span> Configured interfaces <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418
-</span></span><span style="display:flex;"><span>10:15:31.772867    <span style="color:#ae81ff">3620</span> server.go:522<span style="color:#f92672">]</span> CmdAdd <span style="color:#66d9ef">for</span> container 5b2919415cea791dd4ddff000f46e4ada5386e0c3147ae17ac5eebb82e008418 succeeded
-</span></span></code></pre></div><p>And start measuring how long the stack call was between them, if you notice we have around ~5 seconds of the event receive and the
-complete success.</p>
-<p><img src="./images/data.jpg?width=500px" alt="data" title="data"></p>
-<p>There some other process to find these bottlenecks like <code>go pprof</code> that can build a call tree and measure it.
-Or its possible to add <code>klog.Info</code> statements between the calls and continue measuring them until you find the
-bottleneck, when the pprof interface is not open.</p>
-<p>Without detailing much about the issue in the CNI, was found that <code>Get-NetAdapter</code> calls were being used to
-verify the existence of the Container interface, those direct powershell calls are very slow and costly.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>The usage of external command calls (mainly scripts) to execute tasks with the kernel can become a problem, powershell
-is very complete and useful but it will slow down your application, this can be perceived when your service is under pressure.</p>
-<p>Windows syscalls on Golang are available, the coverage of functionality can be lower or missing required information for
-a particular data structure can <a href="https://golang.google.cn/pkg/syscall/?GOOS=windows&amp;GOARCH=amd64">happen</a>, MS provides a good library HCMSHIM that covers a few Network and processing
-<a href="https://github.com/microsoft/hcsshim">functionalities</a>.</p>
-<p>In summary a higher level and faster API built-in on Golang could come by default, so the usage of powershell commandlets can be
-replaced.</p>
+	<h3 id="introduction">Introduction</h3>
+<p>This post is a walkthrough on using a Windows node to run network policies with
+agnhost:2.26 mappings in order to understand how suitable the netpol suite is ready for it.</p>
+<p><a href="https://github.com/kubernetes/kubernetes/tree/master/test/e2e/network/netpol">https://github.com/kubernetes/kubernetes/tree/master/test/e2e/network/netpol</a></p>
+<h3 id="setting-up-the-cluster">Setting up the cluster</h3>
+<p><img src="./images/gcp_config.png" alt="gcp_config" title="gpc"></p>
+<p>Our master needs to be on Linux, so a GCP Vm with COS is being used, following
+up the quickstart on this node:</p>
+<p><a href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart">https://docs.projectcalico.org/getting-started/kubernetes/quickstart</a></p>
+<p>Start the cluster in the following subnet with Kubeadm:</p>
+<pre tabindex="0"><code>sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre><p>Install Calico operator and CRDs:</p>
+<pre tabindex="0"><code>kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+</code></pre><p>Check if the pods are running:</p>
+<pre tabindex="0"><code>kubectl get pods -A
+calico-system     calico-kube-controllers-6797d7cc89-xmvwv   1/1     Running   0          79m
+calico-system     calico-node-hckk5                          1/1     Running   0          79m
+calico-system     calico-typha-7f598c987d-x2l7m              1/1     Running   0          79m
+kube-system       coredns-74ff55c5b-pwn6f                    1/1     Running   0          103m
+kube-system       coredns-74ff55c5b-xhv7m                    1/1     Running   0          103m
+kube-system       etcd-hackbox                               1/1     Running   0          103m
+kube-system       kube-apiserver-hackbox                     1/1     Running   0          103m
+kube-system       kube-controller-manager-hackbox            1/1     Running   0          103m
+kube-system       kube-proxy-nvfj4                           1/1     Running   0          103m
+kube-system       kube-scheduler-hackbox                     1/1     Running   0          103m
+tigera-operator   tigera-operator-549bf46b5c-kw6ng           1/1     Running   0          79m
+</code></pre><h3 id="bringing-up-the-windows-node">Bringing up the Windows node</h3>
+<p><img src="./images/netpol-win.png" alt="netpol" title="netpol"></p>
+<p>It&rsquo;s required to have at least:</p>
+<ul>
+<li><code>Windows Server 1909 (AKA 19H2 build 18362.1049 or greater), with Docker service enabled</code></li>
+</ul>
+<p>So we are using the <code>windows-server-1909-dc-core-for-containers-v20210212</code> machine, connect with RDP:</p>
+<p>So you will be able to run ommand as Administrator using powershell. Magically following the instructions
+on ProjectCalico tutorial will add the node on your cluster:</p>
+<p><a href="https://docs.projectcalico.org/getting-started/windows-calico/quickstart">https://docs.projectcalico.org/getting-started/windows-calico/quickstart</a></p>
+<pre tabindex="0"><code>calicoctl ipam configure --strictaffinity=true  # this is important
+kubectl patch installation default --type=merge -p &#39;{&#34;spec&#34;: {&#34;calicoNetwork&#34;: {&#34;bgp&#34;: &#34;Disabled&#34;}}}&#39;
+</code></pre><p>Copy the config from the cluster to the windows machine (from ~/.kube/config), and run the installation</p>
+<pre tabindex="0"><code>$  c:\install-calico-windows.ps1 -KubeVersion 1.20.1
+C:\CalicoWindows\kubernetes\install-kube-services.ps1
+
+Downloading CNI binaries
+[DownloadFile] File c:\k\cni\host-local.exe already exists.
+Downloading Windows Kubernetes scripts
+[DownloadFile] File c:\k\hns.psm1 already exists.
+[DownloadFile] File c:\k\InstallImages.ps1 already exists.
+[DownloadFile] File c:\k\Dockerfile already exists.
+WARNING: The names of some imported commands from the module &#39;hns&#39; include unapproved verbs that might make them less
+discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose
+parameter. For a list of approved verbs, type Get-Verb.
+Downloaded [https://dl.k8s.io/v1.20.4/kubernetes-node-windows-amd64.tar.gz] =&gt; [C:\Users\amim_knabben\AppData\Local\Temp\2\tmp7111.tar.gz]
+...
+* Starting Calico...
+This may take several seconds if the vSwitch needs to be created.
+Waiting for Calico initialisation to finish...
+Waiting for Calico initialisation to finish...StoredLastBootTime , CurrentLastBootTime 20210301012833.499350+000
+</code></pre><h4 id="check-the-node-is-ready">Check the node is ready</h4>
+<pre tabindex="0"><code>NAME                                           STATUS   ROLES                  AGE   VERSION
+devbox                                         Ready    control-plane,master   23h   v1.20.1
+windows-1.us-east1-b.c.kflow-294915.internal   Ready    &lt;none&gt;                 21h   v1.20.4
+</code></pre><p>** Found some DNS ISSUES, didn&rsquo;t waste much time on it. **</p>
+<h3 id="trying-calico-on-eks">Trying Calico on EKS</h3>
+<p>Instead, give another try using EKS as the following guide exemplifies:</p>
+<p><a href="https://github.com/tigera-solutions/install-calico-for-windows">https://github.com/tigera-solutions/install-calico-for-windows</a></p>
+<p>A few comments here, default Network Policy does not works as <code>amiFamily: WindowsServer2019FullContainer</code>, check the correct
+AMI set below. The simpler method is to go without EKS and eksctl managed hosts:</p>
+<p><a href="https://aws.amazon.com/blogs/containers/open-source-calico-for-windows-containers-on-amazon-eks/">https://aws.amazon.com/blogs/containers/open-source-calico-for-windows-containers-on-amazon-eks/</a></p>
+<p>This Calico version CNI on v1.7.8 works fine</p>
+<p><a href="https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/c1658d5c5d401ad271c4fe6c8fbd96ba4a01d638/config/v1.7/calico.yaml">https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/c1658d5c5d401ad271c4fe6c8fbd96ba4a01d638/config/v1.7/calico.yaml</a></p>
+<p>Just make sure you have the correct architecture binary from:</p>
+<ul>
+<li><code>curl -LO https://dl.k8s.io/release/v1.20.0/bin/windows/amd64/kubectl.exe</code></li>
+</ul>
+<h3 id="initial-netpol-on-win">Initial netpol on Win</h3>
+<p>The nodeSelector with <code>windows</code> needs to be explicit in the pod creation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>  thePod <span style="color:#f92672">:=</span> pod<span style="color:#f92672">.</span>KubePod()
+</span></span><span style="display:flex;"><span>  thePod<span style="color:#f92672">.</span>Spec<span style="color:#f92672">.</span>NodeSelector <span style="color:#f92672">=</span> map[string]string{
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;kubernetes.io/os&#34;</span>: <span style="color:#e6db74">&#34;windows&#34;</span>,
+</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
+<p>Otherwise this the Pod will be on Pending status with:</p>
+<ul>
+<li><code>pod does not have label vpc.amazonaws.com/PrivateIPv4Address</code></li>
+</ul>
+<p>Some other examples on Windows:
+<a href="https://docs.projectcalico.org/getting-started/windows-calico/demo">https://docs.projectcalico.org/getting-started/windows-calico/demo</a></p>
+<p>If you wanna dig deeper in the topic:</p>
+<p>TGIK 144 - Exploring the State of K8s on Windows
+<a href="https://www.youtube.com/watch?v=WnXnO97tsNo">https://www.youtube.com/watch?v=WnXnO97tsNo</a></p>
 
 
 
@@ -826,6 +848,8 @@ replaced.</p>
             
                 
                     
+                        
+                        
                     
                 
                 
@@ -836,25 +860,6 @@ replaced.</p>
                     
                     
 
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
                     
                         
             
@@ -893,7 +898,6 @@ replaced.</p>
             
                 
                     
-                    
                 
                 
 
@@ -910,8 +914,21 @@ replaced.</p>
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
                         
-                        
+            
+            
+                
                     
                 
                 
@@ -1030,6 +1047,7 @@ replaced.</p>
             
                 
                     
+                    
                 
                 
 
@@ -1044,6 +1062,9 @@ replaced.</p>
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1124,6 +1145,7 @@ replaced.</p>
             
             
                 
+                    
                     
                 
                 
@@ -1148,10 +1170,10 @@ replaced.</p>
 	 
 	 
 		
-			<a class="nav nav-prev" href="/2023/0608/" title="Secure gRPC services with mTLS"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/2021/0614/" title="Kube-proxy ClusterIP"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/2023/0330/" title="Windows Containers and .NET apps" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

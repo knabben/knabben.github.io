@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="kube-proxy userspace mode observability">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Kube-proxy Linux Userspace Mode :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1687745479" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1687745479" rel="stylesheet">
+    <link href="/css/hybrid.css?1687745479" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1687745479" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1687745479" rel="stylesheet">
+    <link href="/css/auto-complete.css?1687745479" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1687745479" rel="stylesheet">
+    <link href="/css/theme.css?1687745479" rel="stylesheet">
+    <link href="/css/tabs.css?1687745479" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1687745479" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1687745479" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1687745479"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2021/1127/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1687745479"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1687745479"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1687745479"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2021/'>2021</a> > Kube-proxy Linux Userspace Mode
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#services">Services</a></li>
+      </ul>
+    </li>
+    <li><a href="#endpoints">Endpoints</a>
+      <ul>
+        <li><a href="#usermode-linux-and-windows">Usermode Linux and Windows</a></li>
+      </ul>
+    </li>
+    <li><a href="#tracing-userspace">Tracing userspace</a>
+      <ul>
+        <li><a href="#custom-kube-proxy">Custom kube-proxy</a></li>
+        <li><a href="#first-plot-on-jaeger">First plot on Jaeger</a></li>
+        <li><a href="#starting-the-proxy">Starting the proxy</a></li>
+        <li><a href="#syncproxyrules-the-first-run">syncProxyRules the first run</a></li>
+        <li><a href="#connecting-to-the-service">Connecting to the service</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Kube-proxy Linux Userspace Mode
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>The following post continues a deep dive into kube-proxy modes, taking another approach to tackle the complexity
+that lies on this kind of system, loop diagrams are an interesting one, and we have used this to analyze
+the information flow in the Windows userspace mode. To have another holistic view of the entire mode and
+understand how these parts are interconnected can be a hard task in distributed systems, this is true
+not only for systems running on different machines, but for ones with parallel and concurrent mechanisms
+as well.</p>
+<p>Let&rsquo;s use the observability in our favor and trace all methods and functions related to the main path of
+creating an ClusterIP and deleting it later. Analyzing the tracing on Jaeger [1] can give us the understanding
+of the stack trace with the complement of important metadata added to span. As more support to document
+and explain it, we can supplement with time-based graphs like sequence diagrams.</p>
+<p>I recommend give a read in the other Windows userspace mode, the idea is pretty similar, and the flow
+graph present there provides a nice big picture of what is going on. All the code is under <code>pkg/proxy/userspace</code>.</p>
+<h3 id="services">Services</h3>
+<p>Starting with some notes in the informers and caches for both services and endpoints. These are the most
+important Kubernetes objects that kube-proxy reacts to when actions like Add/Delete/Update happens.
+The informer provides a reflector and caches to any object on kubernetes, the signature for these methods
+are under <code>pkg/proxy/config/config</code>, and each mode implements a Service handler called by these <code>handle*Service</code>
+functions.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// NewServiceConfig creates a new ServiceConfig.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewServiceConfig</span>(<span style="color:#a6e22e">serviceInformer</span> <span style="color:#a6e22e">coreinformers</span>.<span style="color:#a6e22e">ServiceInformer</span>, <span style="color:#a6e22e">resyncPeriod</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">ServiceConfig</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">ServiceConfig</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">listerSynced</span>: <span style="color:#a6e22e">serviceInformer</span>.<span style="color:#a6e22e">Informer</span>().<span style="color:#a6e22e">HasSynced</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">serviceInformer</span>.<span style="color:#a6e22e">Informer</span>().<span style="color:#a6e22e">AddEventHandlerWithResyncPeriod</span>(
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">cache</span>.<span style="color:#a6e22e">ResourceEventHandlerFuncs</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">AddFunc</span>:    <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">handleAddService</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">UpdateFunc</span>: <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">handleUpdateService</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">DeleteFunc</span>: <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">handleDeleteService</span>,
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">resyncPeriod</span>,
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This is the <code>glue</code> of Kubernetes API and the business logic implemented on each mode. Taking a look closer
+on how them react to each event.</p>
+<h4 id="winkernel-iptables-ipvs">Winkernel, Iptables, IPVS</h4>
+<p>These modes use the internal cache for tracking changes in both endpoints and services, and the
+signature is the same. It will not be detailed right now.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceAdd</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">OnServiceUpdate</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">service</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceUpdate</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">serviceChanges</span>.<span style="color:#a6e22e">Update</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">service</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">isInitialized</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">Sync</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceDelete</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">OnServiceUpdate</span>(<span style="color:#a6e22e">service</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceSynced</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Lock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">servicesSynced</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">setInitialized</span>(<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">endpointSlicesSynced</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Unlock</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Sync unconditionally - this is called once per lifetime.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">syncProxyRules</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="userspace">Userspace</h4>
+<p>This mode instead uses a parallel tracking struct and implements the <code>serviceChange</code> method in the proxy
+to save data on them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">serviceChange</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">current</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">previous</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">serviceChanges</span>:  make(<span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">NamespacedName</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">serviceChange</span>), <span style="color:#75715e">// datastruct to keep a serviceChangeTracker
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceAdd</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">serviceChange</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">service</span>, <span style="color:#e6db74">&#34;OnServiceAdd&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceUpdate</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">serviceChange</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">service</span>, <span style="color:#e6db74">&#34;OnServiceUpdate&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceDelete</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">serviceChange</span>(<span style="color:#a6e22e">service</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#e6db74">&#34;OnServiceDelete&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceSynced</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">syncProxyRules</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="winuserspace">Winuserspace</h4>
+<p>Curiously windows userspace is simpler than the other methods, basically it does not guarantee the sync of
+services via a background goroutine, instead it only cleans up the UDP stale connection on this
+loop as was documented in the last post. The other difference is the mergeService and unmergeService
+call made directly, other modes use the serviceChange data structure and keep an internal cache of
+changes with ServiceChangeTracker and EndpointChangeTracker.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceAdd</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">mergeService</span>(<span style="color:#a6e22e">service</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceUpdate</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">existingPortPortals</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">mergeService</span>(<span style="color:#a6e22e">service</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">unmergeService</span>(<span style="color:#a6e22e">oldService</span>, <span style="color:#a6e22e">existingPortPortals</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceDelete</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">unmergeService</span>(<span style="color:#a6e22e">service</span>, <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">ServicePortPortalName</span>]<span style="color:#66d9ef">bool</span>{})
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnServiceSynced</span>() {
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The cool thing here is to see how them got evolved during time, and the emergence of the design across the
+modes. Services running the cluster test:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ kubectl get services -A                                                                                                                                                                                                           <span style="color:#f92672">[</span>21:36:29<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>NAMESPACE     NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>                  AGE
+</span></span><span style="display:flex;"><span>default       kubernetes         ClusterIP   10.96.0.1      &lt;none&gt;        443/TCP                  4d3h
+</span></span><span style="display:flex;"><span>default       nginx-deployment   ClusterIP   10.96.232.82   &lt;none&gt;        80/TCP                   83m
+</span></span><span style="display:flex;"><span>kube-system   kube-dns           ClusterIP   10.96.0.10     &lt;none&gt;        53/UDP,53/TCP,9153/TCP   4d3h
+</span></span></code></pre></div><h2 id="endpoints">Endpoints</h2>
+<p>Giving a quick overview in the endpoint signatures, Windows kernel, IPtables and IPVS listen for
+endpointslices [2] instead of endpoints.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointSliceAdd</span>(<span style="color:#a6e22e">endpointSlice</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">discovery</span>.<span style="color:#a6e22e">EndpointSlice</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">endpointsChanges</span>.<span style="color:#a6e22e">EndpointSliceUpdate</span>(<span style="color:#a6e22e">endpointSlice</span>, <span style="color:#66d9ef">false</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">isInitialized</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">Sync</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointSliceUpdate</span>(<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">endpointSlice</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">discovery</span>.<span style="color:#a6e22e">EndpointSlice</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">endpointsChanges</span>.<span style="color:#a6e22e">EndpointSliceUpdate</span>(<span style="color:#a6e22e">endpointSlice</span>, <span style="color:#66d9ef">false</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">isInitialized</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">Sync</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointSliceDelete</span>(<span style="color:#a6e22e">endpointSlice</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">discovery</span>.<span style="color:#a6e22e">EndpointSlice</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">endpointsChanges</span>.<span style="color:#a6e22e">EndpointSliceUpdate</span>(<span style="color:#a6e22e">endpointSlice</span>, <span style="color:#66d9ef">true</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">isInitialized</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">Sync</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointSlicesSynced</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">syncProxyRules</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="usermode-linux-and-windows">Usermode Linux and Windows</h3>
+<p>As detailed before the round-robing interface gives us a Load balancer for endpoints
+binded to a service on both cases this is implemented as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointsAdd</span>(<span style="color:#a6e22e">endpoints</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Endpoints</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">loadBalancer</span>.<span style="color:#a6e22e">OnEndpointsAdd</span>(<span style="color:#a6e22e">endpoints</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointsUpdate</span>(<span style="color:#a6e22e">oldEndpoints</span>, <span style="color:#a6e22e">endpoints</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Endpoints</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">loadBalancer</span>.<span style="color:#a6e22e">OnEndpointsUpdate</span>(<span style="color:#a6e22e">oldEndpoints</span>, <span style="color:#a6e22e">endpoints</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">OnEndpointsDelete</span>(<span style="color:#a6e22e">endpoints</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Endpoints</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">loadBalancer</span>.<span style="color:#a6e22e">OnEndpointsDelete</span>(<span style="color:#a6e22e">endpoints</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Endpoints existent in the test cluster:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ kubectl get endpoints -A                                                                                                                                                                                                          <span style="color:#f92672">[</span>21:43:55<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>NAMESPACE            NAME                    ENDPOINTS                                               AGE
+</span></span><span style="display:flex;"><span>default              kubernetes              172.18.0.2:6443                                         4d3h
+</span></span><span style="display:flex;"><span>default              nginx-deployment        10.244.0.24:80,10.244.0.3:80                            84m
+</span></span><span style="display:flex;"><span>kube-system          kube-dns                10.244.0.4:53,10.244.0.5:53,10.244.0.4:53 + <span style="color:#ae81ff">3</span> more...   4d3h
+</span></span><span style="display:flex;"><span>local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h
+</span></span></code></pre></div><p>Userspace modes DO NOT support Dual stack.</p>
+<h2 id="tracing-userspace">Tracing userspace</h2>
+<p>It&rsquo;s clear they are different as this point, the spans were inserted across the mais functions on <code>pkg/proxy/userspace</code>,
+starting in the main method of proxier = <code>syncProxyRules</code>. You can consider these <code>OnService*</code> and <code>OnEndpoints*</code> methods
+entry points that will change the internal tracking data struct with the values sent via the API. The real
+deal happens when the user CONNECTS to the ClusterIP (the ones on 10.96.0.0/12), this will be clear later.</p>
+<h3 id="custom-kube-proxy">Custom kube-proxy</h3>
+<p>After having a local binary compiled with <code>make WHAT=cmd/kube-proxy</code>, I overwrite this binary
+in the default image on kproxy like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>FROM k8s.gcr.io/kube-proxy:v1.21.1
+</span></span><span style="display:flex;"><span>COPY ./kube-proxy /usr/local/bin/kube-proxy
+</span></span></code></pre></div><p>Compile and push&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>docker build -t kube-proxy . --no-cache
+</span></span><span style="display:flex;"><span>docker tag kube-proxy:latest knabben/kube-proxy:latest
+</span></span><span style="display:flex;"><span>docker push <span style="color:#75715e"># knabben/kube-proxy...</span>
+</span></span></code></pre></div><p>On your Kind cluster you can first edit the configuration and change <code>mode: userspace</code> in the configmap,
+there&rsquo;s a bug where flags are being ignored when the config file exists, so change the config file only.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl edit -n kube-system configmap kube-proxy
+</span></span><span style="display:flex;"><span>kubectl edit -n kube-system daemonset kube-proxy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>image: knabben/kube-proxy
+</span></span></code></pre></div><p>This will restart kube-proxy with the new image, just make sure you can access your Jaeger server, in my
+case the report server is accessible on Kind via docker network (172.17.0.1:6831).</p>
+<h3 id="first-plot-on-jaeger">First plot on Jaeger</h3>
+<p><img src="./images/screen1.png" alt="screen1" title="screen1"></p>
+<p>The Y is the duration in ms of each method call, the span was created in the beginning of the method and closed in
+the end, attributes were added in the middle and when there&rsquo;s a span hierarchy a parent span is propagated down the
+stack. The X axis the time passing. Two continuous events are happening in different frequencies, there&rsquo;s something
+to be investigated here. there&rsquo;s an uncommon event on Endpoints update going on each 2 seconds, this can be seen
+on endpoint watcher, since it can require some debugging of the controller, lets ignore for now and continue
+with the kube-proxy analysis in this post, yeah I know. If you went to this path send me an email, and I will
+put your updates here.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>I1129 00:27:12.940632       <span style="color:#ae81ff">1</span> config.go:171<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Calling handler.OnEndpointsUpdate&#34;</span>
+</span></span><span style="display:flex;"><span>I1129 00:27:12.940712       <span style="color:#ae81ff">1</span> log.go:184<span style="color:#f92672">]</span> Reporting span 3f6423af672e92fc:3f6423af672e92fc:0000000000000000:1
+</span></span><span style="display:flex;"><span>I1129 00:27:12.940729       <span style="color:#ae81ff">1</span> log.go:184<span style="color:#f92672">]</span> Reporting span 10b4c5990e470261:10b4c5990e470261:0000000000000000:1
+</span></span><span style="display:flex;"><span>I1129 00:27:14.946938       <span style="color:#ae81ff">1</span> config.go:171<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Calling handler.OnEndpointsUpdate&#34;</span>
+</span></span><span style="display:flex;"><span>I1129 00:27:14.947036       <span style="color:#ae81ff">1</span> log.go:184<span style="color:#f92672">]</span> Reporting span 61893aa75f27cb1f:61893aa75f27cb1f:0000000000000000:1
+</span></span><span style="display:flex;"><span>I1129 00:27:14.947051       <span style="color:#ae81ff">1</span> log.go:184<span style="color:#f92672">]</span> Reporting span 608f53a74cd73869:608f53a74cd73869:0000000000000000:1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ kubectl get endpoints -A -w -o wide                                                                                                                                                                                               <span style="color:#f92672">[</span>21:27:47<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>NAMESPACE            NAME                    ENDPOINTS                                               AGE
+</span></span><span style="display:flex;"><span>default              kubernetes              172.18.0.2:6443                                         4d3h
+</span></span><span style="display:flex;"><span>default              nginx-deployment        10.244.0.24:80,10.244.0.3:80                            67m
+</span></span><span style="display:flex;"><span>kube-system          kube-dns                10.244.0.4:53,10.244.0.5:53,10.244.0.4:53 + <span style="color:#ae81ff">3</span> more...   4d3h
+</span></span><span style="display:flex;"><span>local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h
+</span></span><span style="display:flex;"><span>local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h
+</span></span><span style="display:flex;"><span>local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h
+</span></span><span style="display:flex;"><span>local-path-storage   rancher.io-local-path   &lt;none&gt;                                                  4d3h
+</span></span></code></pre></div><p>UPDATE: <code>@jayunit100</code> had filled an issue - <code>https://github.com/kubernetes-sigs/kind/issues/2453</code></p>
+<p>The big upper circle is the <code>syncProxyRules</code>, and it is what matters for this post.</p>
+<h3 id="starting-the-proxy">Starting the proxy</h3>
+<p><img src="./images/screen3.png" alt="screen3" title="screen3"></p>
+<p><code>createProxier</code> returns the main Proxier object and starts the <code>initIptables</code> before, this method ensure
+the principal iptables chains exists and the infrastructure we use is set up. From the
+comments, this method is idempotent and can be called multiple times (it happens in the sync).</p>
+<pre tabindex="0"><code>	// We match portal rules first, then NodePort rules.  For NodePort rules, we filter primarily on --dst-type LOCAL,
+	// because we want to listen on all local addresses, but don&#39;t match internet traffic with the same dst port number.
+</code></pre><p><img src="./images/screen5.png" alt="screen5" title="screen5"></p>
+<p>Following, can be noted <code>serviceAdd</code> and <code>EndpointsAdd</code> events. The informers do not only react to new changes but for
+things that already exist in the cluster, so the current state is reflected in the controller when they
+bootstrap.</p>
+<p><img src="./images/screen6.png" alt="screen6" title="screen6"></p>
+<p>At this point we can confirm the OnServiceAdd using OnServiceUpdate for the service <code>default/nginx-deployment</code>.
+Simple but still useful to track these events in real time.</p>
+<h3 id="syncproxyrules-the-first-run">syncProxyRules the first run</h3>
+<p><img src="./images/screen2.png" alt="screen2" title="screen2"></p>
+<p>Lets cheat here and go to the first <code>syncProxyRules</code> call, the first run will provide details we are interested,
+since all others are just reconciling existent things. There are three services added in the <code>proxy.serviceChanges</code>
+by the <code>OnServiceAdd</code> calls.</p>
+<p>Looks a lot of different things but they are just marking similar events in the loop,
+to simplify lets focus in the nginx-deployment.</p>
+<p><img src="./images/screen7.png" alt="screen7" title="screen7"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">syncProxyRules</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">iptablesInit</span>()
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// iterate and merge/unmerge them
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">change</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">proxer</span>.<span style="color:#a6e22e">serviceChange</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">existingPorts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">mergeService</span>(<span style="color:#a6e22e">change</span>.<span style="color:#a6e22e">current</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">unmergeService</span>(<span style="color:#a6e22e">change</span>.<span style="color:#a6e22e">previous</span>, <span style="color:#a6e22e">existingPorts</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">ensurePortals</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">cleanupStaleStickySessions</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As noted the current has the service object and previous is nil for <code>nginx-deployment</code> service:</p>
+<p><img src="./images/screen8.png" alt="screen8" title="screen8"></p>
+<p>Getting into the <code>mergeService</code> a lot of things are happening, the main span is still <code>createProxier</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">proxier</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Proxier</span>) <span style="color:#a6e22e">mergeService</span>(<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Service</span>) <span style="color:#a6e22e">sets</span>.<span style="color:#a6e22e">String</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">svcName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">NamespacedName</span>{<span style="color:#a6e22e">Namespace</span>: <span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">Namespace</span>, <span style="color:#a6e22e">Name</span>: <span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">Name</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">Ports</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">servicePort</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">Ports</span>[<span style="color:#a6e22e">i</span>]
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">serviceName</span> = <span style="color:#a6e22e">proxy</span>.<span style="color:#a6e22e">ServicePortName</span>{<span style="color:#a6e22e">NamespacedName</span>: <span style="color:#a6e22e">svcName</span>, <span style="color:#a6e22e">Port</span>: <span style="color:#a6e22e">servicePort</span>.<span style="color:#a6e22e">Name</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxyPort</span> = <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">proxyPorts</span>.<span style="color:#a6e22e">AllocateNext</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">serviceIP</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">netutils</span>.<span style="color:#a6e22e">ParseIPSloppy</span>(<span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">ClusterIP</span>)
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">addServiceOnPortInternal</span>(<span style="color:#a6e22e">serviceName</span>, <span style="color:#a6e22e">servicePort</span>.<span style="color:#a6e22e">Protocol</span>, <span style="color:#a6e22e">proxyPort</span>, <span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">udpIdleTimeout</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">openPortal</span>(<span style="color:#a6e22e">serviceName</span>, <span style="color:#a6e22e">info</span>)
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// creates a new load balancer -&gt; service
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">proxier</span>.<span style="color:#a6e22e">loadBalancer</span>.<span style="color:#a6e22e">NewService</span>(<span style="color:#a6e22e">serviceName</span>, <span style="color:#a6e22e">info</span>.<span style="color:#a6e22e">sessionAffinityType</span>, <span style="color:#a6e22e">info</span>.<span style="color:#a6e22e">stickyMaxAgeSeconds</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>The <code>addServiceOnPortInternal</code> method starts listening on an internal port (33059 on this random example), dispatching a goroutine to handle
+the real connections in the service IP.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">HandleCrash</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">sock</span>.<span style="color:#a6e22e">ProxyLoop</span>(<span style="color:#a6e22e">service</span>, <span style="color:#a6e22e">si</span>, <span style="color:#a6e22e">proxier</span>)
+</span></span><span style="display:flex;"><span>	}()
+</span></span></code></pre></div><p>For the <code>openPortal</code> -&gt; <code>openOnePortal</code>:</p>
+<p><img src="./images/screen9.png" alt="screen9" title="screen9"></p>
+<p>The one can see iptables rules redirecting the service to the internal port in the node IP. Allowing traffic
+coming from nodes and from containers with these rules. The last functions are not relevant here, they are
+ensuring the portals are open and cleaning up the stale connections from the cache.</p>
+<h3 id="connecting-to-the-service">Connecting to the service</h3>
+<p>At this point we should have in the node a listen socket for kube-proxy, forwarding the request to the clusterIP
+and being load balanced to the endpoint list (pods IPs).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@kind-control-plane:/# lsof -nP -iTCP:33059 -sTCP:LISTEN <span style="color:#f92672">&amp;&amp;</span> iptables-save | grep nginx-deployment <span style="color:#f92672">&amp;&amp;</span>  curl 10.96.232.82
+</span></span><span style="display:flex;"><span>COMMAND       PID USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME
+</span></span><span style="display:flex;"><span>kube-prox <span style="color:#ae81ff">2060619</span> root   20u  IPv6 <span style="color:#ae81ff">38627113</span>      0t0  TCP *:33059 <span style="color:#f92672">(</span>LISTEN<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>-A KUBE-PORTALS-CONTAINER -d 10.96.232.82/32 -p tcp -m comment --comment <span style="color:#e6db74">&#34;default/nginx-deployment&#34;</span> -m tcp --dport <span style="color:#ae81ff">80</span> -j REDIRECT --to-ports <span style="color:#ae81ff">33059</span>
+</span></span><span style="display:flex;"><span>-A KUBE-PORTALS-HOST -d 10.96.232.82/32 -p tcp -m comment --comment <span style="color:#e6db74">&#34;default/nginx-deployment&#34;</span> -m tcp --dport <span style="color:#ae81ff">80</span> -j DNAT --to-destination 172.18.0.2:33059
+</span></span><span style="display:flex;"><span>&lt;!DOCTYPE html&gt;
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;head&gt;
+</span></span><span style="display:flex;"><span>&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+</span></span><span style="display:flex;"><span>&lt;style&gt;
+</span></span><span style="display:flex;"><span>    body <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        width: 35em;
+</span></span><span style="display:flex;"><span>        margin: <span style="color:#ae81ff">0</span> auto;
+</span></span><span style="display:flex;"><span>        font-family: Tahoma, Verdana, Arial, sans-serif;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>&lt;/style&gt;
+</span></span><span style="display:flex;"><span>&lt;/head&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
+</span></span><span style="display:flex;"><span>&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+</span></span><span style="display:flex;"><span>working. Further configuration is required.&lt;/p&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;p&gt;For online documentation and support please refer to
+</span></span><span style="display:flex;"><span>&lt;a href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://nginx.org/&#34;</span>&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
+</span></span><span style="display:flex;"><span>Commercial support is available at
+</span></span><span style="display:flex;"><span>&lt;a href<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://nginx.com/&#34;</span>&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;p&gt;&lt;em&gt;Thank you <span style="color:#66d9ef">for</span> using nginx.&lt;/em&gt;&lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span></code></pre></div><p>Not cool enough? Hitting the service from <code>10.244.0.25/24</code> pod ip, gives us the byte copy tracing&hellip;</p>
+<p><img src="./images/screen10.png" alt="screen10" title="screen10"></p>
+<h3 id="reference">Reference</h3>
+<p>[1] <a href="https://www.jaegertracing.io/">https://www.jaegertracing.io/</a></p>
+<p>[2] <a href="https://kubernetes.io/blog/2020/09/02/scaling-kubernetes-networking-with-endpointslices/">https://kubernetes.io/blog/2020/09/02/scaling-kubernetes-networking-with-endpointslices/</a></p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2021/1017/" title="Kube-proxy Winuserspace Mode" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1687745479"></script>
+    <script src="/js/perfect-scrollbar.min.js?1687745479"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1687745479"></script>
+    <script src="/js/jquery.sticky.js?1687745479"></script>
+    <script src="/js/featherlight.min.js?1687745479"></script>
+    <script src="/js/highlight.pack.js?1687745479"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1687745479"></script>
+    <script src="/js/learn.js?1687745479"></script>
+    <script src="/js/hugo-learn.js?1687745479"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1687745479"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
