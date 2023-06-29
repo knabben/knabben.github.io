@@ -12,22 +12,22 @@
     <title>Istio CNI on Ambient Mesh :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1687996209" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1687996209" rel="stylesheet">
-    <link href="/css/hybrid.css?1687996209" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1687996209" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1687996209" rel="stylesheet">
-    <link href="/css/auto-complete.css?1687996209" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1687996209" rel="stylesheet">
-    <link href="/css/theme.css?1687996209" rel="stylesheet">
-    <link href="/css/tabs.css?1687996209" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1687996209" rel="stylesheet">
+    <link href="/css/nucleus.css?1687998506" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1687998506" rel="stylesheet">
+    <link href="/css/hybrid.css?1687998506" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1687998506" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1687998506" rel="stylesheet">
+    <link href="/css/auto-complete.css?1687998506" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1687998506" rel="stylesheet">
+    <link href="/css/theme.css?1687998506" rel="stylesheet">
+    <link href="/css/tabs.css?1687998506" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1687998506" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1687996209" rel="stylesheet">
+    <link href="/css/theme-blue.css?1687998506" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1687996209"></script>
+    <script src="/js/jquery-3.3.1.min.js?1687998506"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1687996209"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1687996209"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1687998506"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1687998506"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1687996209"></script>
+<script type="text/javascript" src="/js/search.js?1687998506"></script>
 
     
   </div>
@@ -883,8 +883,24 @@ event will be an <code>type=add</code>, to collect debugging logs edit the daemo
 </span></span><span style="display:flex;"><span>-A ztunnel-POSTROUTING -m mark --mark 0x100/0x100 -j ACCEPT
 </span></span><span style="display:flex;"><span>-A ztunnel-PREROUTING -m mark --mark 0x100/0x100 -j ACCEPT
 </span></span></code></pre></div><p>The first <code>cleanupNode</code> will fail because there will be no rules created, the commands can be seen bellow.
-<code>CreateRulesOnNode</code> initializes the routing, firewall and ipset rules on the node, besides that
-it creates a Geneve tunnel from the node to the the ztunnel pod:</p>
+<code>CreateRulesOnNode</code> initializes the routing, firewall and ipset rules on the node, this ipset is used to
+save a list of IPs of pods in the node and in the ambient mesh.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Try <span style="color:#e6db74">`</span>ipset help<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#66d9ef">for</span> more information.
+</span></span><span style="display:flex;"><span>root@ambient-worker2:/# ipset list
+</span></span><span style="display:flex;"><span>Name: ztunnel-pods-ips
+</span></span><span style="display:flex;"><span>Type: hash:ip
+</span></span><span style="display:flex;"><span>Revision: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Header: family inet hashsize <span style="color:#ae81ff">1024</span> maxelem <span style="color:#ae81ff">65536</span>
+</span></span><span style="display:flex;"><span>Size in memory: <span style="color:#ae81ff">280</span>
+</span></span><span style="display:flex;"><span>References: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Number of entries: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Members:
+</span></span><span style="display:flex;"><span>10.244.1.7
+</span></span></code></pre></div><p>As stated in the list the match-set mark the packets as 0x100.
+It creates a Geneve tunnel from the node to the the ztunnel pod, and the requiring table and routes.
+The table 101 for example foward all the traffic to 192.168.127.2 (the geneve endpoint of the ztunnel)
+and rules 101 do for all the packets marked as 0x100 (all the pods in the mesh).</p>
+<p>This flow is well explained on <a href="https://www.youtube.com/watch?v=WOq4pxEHkwg">this</a> video series.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>2023-06-28T20:44:57.644303Z     debug   ambient CreateRulesOnNode: ztunnelVeth<span style="color:#f92672">=</span>veth87a7244e, ztunnelIP<span style="color:#f92672">=</span>10.244.1.5
 </span></span><span style="display:flex;"><span>...
 </span></span><span style="display:flex;"><span>2023-06-28T20:44:57.679304Z     debug   ambient Building inbound tunnel: &amp;<span style="color:#f92672">{</span>LinkAttrs:<span style="color:#f92672">{</span>Index:0 MTU:0 TxQLen:0 Name:istioin HardwareAddr: Flags:0 RawFlags:0 ParentIndex:0 MasterIndex:0 Namespace:&lt;nil&gt; Alias: Statistics:&lt;nil&gt; Promisc:0 Allmulti:0 Multi:0 Xdp:&lt;nil&gt; EncapType: Protinfo:&lt;nil&gt; OperState:unknown PhysSwitchID:0 NetNsID:0 NumTxQueues:0 NumRxQueues:0 GSOMaxSize:0 GSOMaxSegs:0 Vfs:<span style="color:#f92672">[]</span> Group:0 Slave:&lt;nil&gt;<span style="color:#f92672">}</span> ID:1000 Remote:10.244.1.5 Ttl:0 Tos:0 Dport:0 UdpCsum:0 UdpZeroCsum6Tx:0 UdpZeroCsum6Rx:0 Link:0 FlowBased:false<span style="color:#f92672">}</span>
@@ -1404,19 +1420,19 @@ and the HBONE connection setup on ztunnel.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1687996209"></script>
-    <script src="/js/perfect-scrollbar.min.js?1687996209"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1687996209"></script>
-    <script src="/js/jquery.sticky.js?1687996209"></script>
-    <script src="/js/featherlight.min.js?1687996209"></script>
-    <script src="/js/highlight.pack.js?1687996209"></script>
+    <script src="/js/clipboard.min.js?1687998506"></script>
+    <script src="/js/perfect-scrollbar.min.js?1687998506"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1687998506"></script>
+    <script src="/js/jquery.sticky.js?1687998506"></script>
+    <script src="/js/featherlight.min.js?1687998506"></script>
+    <script src="/js/highlight.pack.js?1687998506"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1687996209"></script>
-    <script src="/js/learn.js?1687996209"></script>
-    <script src="/js/hugo-learn.js?1687996209"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1687998506"></script>
+    <script src="/js/learn.js?1687998506"></script>
+    <script src="/js/hugo-learn.js?1687998506"></script>
     
         
-            <script src="/mermaid/mermaid.js?1687996209"></script>
+            <script src="/mermaid/mermaid.js?1687998506"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
