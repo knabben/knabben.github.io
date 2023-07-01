@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Debugging Ztunnel on Ambient mesh">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Ztunnel on Ambient Mesh :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1688178428" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1688178428" rel="stylesheet">
+    <link href="/css/hybrid.css?1688178428" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1688178428" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1688178428" rel="stylesheet">
+    <link href="/css/auto-complete.css?1688178428" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1688178428" rel="stylesheet">
+    <link href="/css/theme.css?1688178428" rel="stylesheet">
+    <link href="/css/tabs.css?1688178428" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1688178428" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1688178428" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1688178428"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2023/0630/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1688178428"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1688178428"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1688178428"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Ztunnel on Ambient Mesh
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#xds-configuration">xDS configuration</a></li>
+        <li><a href="#testing-locally">Testing locally</a></li>
+        <li><a href="#logging-and-metrics">Logging and metrics</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Ztunnel on Ambient Mesh
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>There was rewrite of the Layer 4 processing of Istio in <a href="https://istio.io/latest/blog/2023/rust-based-ztunnel/">rust</a>
+This simplification in conjuntion with <code>Waypoint</code> Layer 7 made possible to decouple both capabilities
+allowing a more robust and straightfoward and faster implementation of a reverse proxy for
+sidecar removal, it is called ztunnel, and that&rsquo;s the proxy, that offer a basic authorization
+layer 4 based on SPIFFEID node identification and encryption across services on a very transparent way.</p>
+<p>After setting the ambient label in the default and listing the workloads:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl label ns default istio.io/dataplane-mode<span style="color:#f92672">=</span>ambient
+</span></span><span style="display:flex;"><span>$ kubectl get pods
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>appa-bf7c45dcb-lmtg2                  1/1     Running   <span style="color:#ae81ff">0</span>          4m29s   10.244.1.8    ambient-worker    &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>appb-76b56f7cb4-qkjl7                 1/1     Running   <span style="color:#ae81ff">0</span>          4m29s   10.244.2.4    ambient-worker2   &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>appb-istio-waypoint-6f8dfd8d4-565jx   1/1     Running   <span style="color:#ae81ff">0</span>          3m58s   10.244.1.10   ambient-worker    &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></div><h3 id="architecture">Architecture</h3>
+
+<div class="mermaid" align="center">
+flowchart LR;
+    subgraph nodea[ambient-worker]
+        appa-->istioout
+        istioout-->|Geneve|15001a
+        subgraph ztunnela[ztunnel]
+        15001a[15001-pistioout]
+        end
+    end
+
+    15001a-->|HBONE mTLS|istioin
+
+    subgraph nodeb[ambient-worker2]
+        istioin-->|Geneve|15008b
+        15008b-->appb
+        subgraph ztunnelb[ztunnel]
+        15008b[15008-pistioin]
+        end
+        
+    end
+
+  classDef ctrl fill:#1568ca,color:white,stroke-width:1px,stroke:#dbffff
+  classDef normal fill:#007cff,color:white,stroke-width:1px,stroke:#
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+
+  class appa,appb ctrl;
+  class istioout,istioin cluster; 
+  class 15008b,15001a normal;
+</div>
+
+<p>This is the flow when the <code>appa</code> sends a request to <code>appb</code>.</p>
+<p>Both IP addresses are part of the <code>ztunnel-pods-ips</code>, the packets from them are mark as <code>0x100/0x100</code>
+and as seen the traffic is sent via Geneve tunnel to <code>192.168.127.2</code> via <code>101</code> table, the TPROXY
+rules captures everything on this interface of the ztunnel and TPROXY (keeping the source IP) directly
+to localhost TCP <code>15001</code> where the ztunnel is listenning.</p>
+<p>The destination is in another host where it receives the HBONE encapsuled packet on 15008 (pistioin),
+with the actual destination still being the pod in the mesh (<code>appb</code>). To read more about the <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http/upgrades#tunneling-tcp-over-http">HBONE</a> tunnel.</p>
+<p>A good overview of the flow is described <a href="https://www.solo.io/blog/traffic-ambient-mesh-ztunnel-ebpf-waypoint/">here</a>.</p>
+<p>For same node, we just access it directly rather than making a full network connection.
+We <em>could</em> apply this to all traffic, rather than just for destinations that are &ldquo;captured&rdquo;
+However, we would then get inconsistent behavior where only node-local pods have RBAC enforced.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> req.request_type <span style="color:#f92672">==</span> RequestType::DirectLocal <span style="color:#f92672">&amp;&amp;</span> can_fastpath {
+</span></span></code></pre></div><h3 id="xds-configuration">xDS configuration</h3>
+<p>Envoy discovery services and their corresponding APIs are referred to as xDS. Every configuration resource in the xDS API has a type associated with it.
+This information is transported over the xDS transport API, but uses a custom ambient-specific type.</p>
+<p>Can be fetched as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl -n istio-system exec -it ztunnel-nnd8m -- curl http://localhost:15000/config_dump | jq .workloads
+</span></span></code></pre></div><p><code>ambient-worker</code> and <code>appa</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;10.244.1.8&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;workloadIp&#34;</span>: <span style="color:#e6db74">&#34;10.244.1.8&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;waypointAddresses&#34;</span>: [],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;gatewayAddress&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;HBONE&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;appa-bf7c45dcb-lmtg2&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;namespace&#34;</span>: <span style="color:#e6db74">&#34;default&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;trustDomain&#34;</span>: <span style="color:#e6db74">&#34;cluster.local&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;serviceAccount&#34;</span>: <span style="color:#e6db74">&#34;appa&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;workloadName&#34;</span>: <span style="color:#e6db74">&#34;appa&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;workloadType&#34;</span>: <span style="color:#e6db74">&#34;deployment&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;canonicalName&#34;</span>: <span style="color:#e6db74">&#34;appa&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;canonicalRevision&#34;</span>: <span style="color:#e6db74">&#34;v1&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;node&#34;</span>: <span style="color:#e6db74">&#34;ambient-worker&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;nativeHbone&#34;</span>: <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;authorizationPolicies&#34;</span>: [],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;Healthy&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;clusterId&#34;</span>: <span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>ambient-worker2</code> and <code>appb</code> with an waypoint L7 gateway on xDS:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;10.244.2.4&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;workloadIp&#34;</span>: <span style="color:#e6db74">&#34;10.244.2.4&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;waypointAddresses&#34;</span>: [
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;10.244.1.10&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;gatewayAddress&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;HBONE&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;appb-76b56f7cb4-qkjl7&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;namespace&#34;</span>: <span style="color:#e6db74">&#34;default&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;trustDomain&#34;</span>: <span style="color:#e6db74">&#34;cluster.local&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;serviceAccount&#34;</span>: <span style="color:#e6db74">&#34;appb&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;workloadName&#34;</span>: <span style="color:#e6db74">&#34;appb&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;workloadType&#34;</span>: <span style="color:#e6db74">&#34;deployment&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;canonicalName&#34;</span>: <span style="color:#e6db74">&#34;appb&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;canonicalRevision&#34;</span>: <span style="color:#e6db74">&#34;v1&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;node&#34;</span>: <span style="color:#e6db74">&#34;ambient-worker2&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;nativeHbone&#34;</span>: <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;authorizationPolicies&#34;</span>: [],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;Healthy&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;clusterId&#34;</span>: <span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="testing-locally">Testing locally</h3>
+<p>It&rsquo;s possible to mock the xDS and start the ztunnel locally. After compiled, set the following parameters:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>source ./scripts/local.sh
+</span></span><span style="display:flex;"><span>❯ source ./scripts/local.sh
+</span></span><span style="display:flex;"><span>❯ export ZTUNNEL_REDIRECT_USER<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;iptables1&#34;</span>
+</span></span><span style="display:flex;"><span>redirect-user-setup
+</span></span><span style="display:flex;"><span>redirect-to <span style="color:#ae81ff">15001</span>
+</span></span><span style="display:flex;"><span>sudo iptables -t nat -D OUTPUT -p tcp -m owner --uid-owner <span style="color:#ae81ff">1001</span> -m comment --comment local-redirect-to -j REDIRECT --to-ports <span style="color:#ae81ff">15001</span>
+</span></span><span style="display:flex;"><span>sudo ip6tables -t nat -D OUTPUT -p tcp -m owner --uid-owner <span style="color:#ae81ff">1001</span> -m comment --comment local-redirect-to -j REDIRECT --to-ports <span style="color:#ae81ff">15001</span>
+</span></span><span style="display:flex;"><span>Redirecting calls from UID <span style="color:#ae81ff">1001</span> to <span style="color:#ae81ff">15001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Try: sudo -u iptables1 curl
+</span></span></code></pre></div><p>This will setup rules locally to redirect all traffic from the user <code>iptables1</code> to 15001 TCP, the outbound port from ztunnel, start
+the ztunnel using these parameters:</p>
+<pre tabindex="0"><code> RUST_LOG=trace XDS_ADDRESS=&#34;&#34; FAKE_CA=&#34;true&#34; LOCAL_XDS_PATH=./examples/localhost.yaml  ./out/rust/debug/ztunnel
+2023-07-01T01:59:56.788024Z  INFO ztunnel: version: version.BuildInfo{Version:&#34;ea748c65254a64dcb644f2b3aae54ed05c3ea53e-dirty&#34;, GitRevision:&#34;ea748c65254a64dcb644f2b3aae54ed05c3ea53e-dirty&#34;, RustVersion:&#34;1.65.0&#34;, BuildStatus:&#34;Modified&#34;, GitTag:&#34;1.19.0-alpha.1-2-gea748c6&#34;, IstioVersion:&#34;unknown&#34;}
+2023-07-01T01:59:56.788486Z  INFO ztunnel: running with config: window_size: 4194304
+connection_window_size: 4194304
+frame_size: 1048576
+</code></pre><p>When the pod is on a different node a HBONE HTTP Connect overlay pool is created between both nodes. With the destination being the
+istionin port of the destination node:</p>
+<p><img src="./images/outbound.png" alt="outbound" title="outbound"></p>
+<p>The following piece of code illustrate this request via tunnel on <code>src/outbound.rs</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> connection <span style="color:#f92672">=</span> self.pi.pool.connect(pool_key.clone(), connect).<span style="color:#66d9ef">await</span><span style="color:#f92672">?</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> f <span style="color:#f92672">=</span> http_types::proxies::Forwarded::new();
+</span></span><span style="display:flex;"><span>    f.add_for(remote_addr.to_string());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> request <span style="color:#f92672">=</span> hyper::Request::builder()
+</span></span><span style="display:flex;"><span>        .uri(<span style="color:#f92672">&amp;</span>req.destination.to_string())
+</span></span><span style="display:flex;"><span>        .method(hyper::Method::<span style="color:#66d9ef">CONNECT</span>)
+</span></span><span style="display:flex;"><span>        .version(hyper::Version::<span style="color:#66d9ef">HTTP_2</span>)
+</span></span><span style="display:flex;"><span>        .header(
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">BAGGAGE_HEADER</span>,
+</span></span><span style="display:flex;"><span>            baggage(<span style="color:#f92672">&amp;</span>req, self.pi.cfg.cluster_id.clone()),
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        .header(<span style="color:#66d9ef">FORWARDED</span>, f.value().unwrap())
+</span></span><span style="display:flex;"><span>        .header(<span style="color:#66d9ef">TRACEPARENT_HEADER</span>, self.id.header())
+</span></span><span style="display:flex;"><span>        .body(Empty::<span style="color:#f92672">&lt;</span>Bytes<span style="color:#f92672">&gt;</span>::new())
+</span></span><span style="display:flex;"><span>        .unwrap();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> response <span style="color:#f92672">=</span> connection.send_request(request).<span style="color:#66d9ef">await</span><span style="color:#f92672">?</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> code <span style="color:#f92672">=</span> response.status();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Err(Error::HttpStatus(code));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> upgraded <span style="color:#f92672">=</span> hyper::upgrade::on(response).<span style="color:#66d9ef">await</span><span style="color:#f92672">?</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>::copy_hbone(
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> upgraded,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> stream,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;</span>self.pi.metrics,
+</span></span><span style="display:flex;"><span>        transferred_bytes,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    .instrument(trace_span!(<span style="color:#e6db74">&#34;hbone client&#34;</span>))
+</span></span><span style="display:flex;"><span>    .<span style="color:#66d9ef">await</span>
+</span></span></code></pre></div><p>The other side receives the tunneled connection and forward to the actual pod:</p>
+<p><img src="./images/inbound.png" alt="inbound" title="inbound"></p>
+<p>For inbound (15008) the request is handled via <code>serve_connect [src/proxy/inbound.rs:249]</code> on each new connection on this port, it filters the Method:CONNECT (HBONE),
+fetch the workload with XDS, and apply any RBAC on L4 in the connection, if everything is ok <code>handle_inbound [src/proxy/inbound.rs:160]</code> starts a stream with <code>freebind_connection</code>
+and the actual destination, the stream/response is finally forwarded back through the tunnel and the caller.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>   <span style="color:#75715e">// inbound.rs : 195
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Hbone(req) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">match</span> hyper::upgrade::on(req).<span style="color:#66d9ef">await</span> {
+</span></span><span style="display:flex;"><span>        Ok(<span style="color:#66d9ef">mut</span> upgraded) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Err(e) <span style="color:#f92672">=</span> <span style="color:#66d9ef">super</span>::copy_hbone(
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> upgraded,
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> stream,
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&amp;</span>metrics,
+</span></span><span style="display:flex;"><span>                transferred_bytes,
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            .instrument(trace_span!(<span style="color:#e6db74">&#34;hbone server&#34;</span>))
+</span></span><span style="display:flex;"><span>            .<span style="color:#66d9ef">await</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                error!(dur<span style="color:#f92672">=?</span>start.elapsed(), <span style="color:#e6db74">&#34;hbone server copy: {}&#34;</span>, e);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        Err(e) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Not sure if this can even happen
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            error!(dur<span style="color:#f92672">=?</span>start.elapsed(), <span style="color:#e6db74">&#34;No upgrade {e}&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    },
+</span></span></code></pre></div><h3 id="logging-and-metrics">Logging and metrics</h3>
+<p><code>ambient-worker</code> metrics scrapping from source <code>appa</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@ztunnel-hq9lr:/# curl http://localhost:15020/metrics
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HELP istio_tcp_connections_opened The total number of TCP connections opened.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># TYPE istio_tcp_connections_opened counter</span>
+</span></span><span style="display:flex;"><span>istio_tcp_connections_opened_total<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    reporter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;source&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    source_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    source_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    request_protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tcp&#34;</span>
+</span></span><span style="display:flex;"><span>    response_flags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-&#34;</span>
+</span></span><span style="display:flex;"><span>    connection_security_policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mutual_tls&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">29</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HELP istio_tcp_received_bytes The size of total bytes received during request in case of a TCP connection.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># TYPE istio_tcp_received_bytes counter</span>
+</span></span><span style="display:flex;"><span>istio_tcp_received_bytes_total<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    reporter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;source&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    source_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    source_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    request_protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tcp&#34;</span>
+</span></span><span style="display:flex;"><span>    response_flags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-&#34;</span>
+</span></span><span style="display:flex;"><span>    connection_security_policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mutual_tls&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">2320</span>
+</span></span></code></pre></div><p>Executing curl <code>http://appb:8000</code> passing traffic through the waypoint 10.244.1.10:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>c03cd45569f64624051f3ce1229fe0e4<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: proxy to 10.96.101.203:8000 using HBONE via 10.244.1.10:15008 type ToServerWaypoint
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>c03cd45569f64624051f3ce1229fe0e4<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: complete dur<span style="color:#f92672">=</span>52.729529ms
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>d6dfd9221fcaf31e48f21f3c8ae63dcb<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: proxy to 10.96.101.203:8000 using HBONE via 10.244.1.10:15008 type ToServerWaypoint
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>d6dfd9221fcaf31e48f21f3c8ae63dcb<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: complete dur<span style="color:#f92672">=</span>4.564153ms
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>9cee33aa037814fe3e741117bb8f7128<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: proxy to 10.96.101.203:8000 using HBONE via 10.244.1.10:15008 type ToServerWaypoint
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>9cee33aa037814fe3e741117bb8f7128<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: complete dur<span style="color:#f92672">=</span>48.65811ms
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>4bc65655c588c8ae46e122c754963dfc<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: proxy to 10.96.101.203:8000 using HBONE via 10.244.1.10:15008 type ToServerWaypoint
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>4bc65655c588c8ae46e122c754963dfc<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: complete dur<span style="color:#f92672">=</span>52.020461ms
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>76faadf5ecc091584f30e6d8c9cef142<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: proxy to 10.96.101.203:8000 using HBONE via 10.244.1.10:15008 type ToServerWaypoint
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>76faadf5ecc091584f30e6d8c9cef142<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: complete dur<span style="color:#f92672">=</span>3.984971ms
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>94b826c34ce67957114b48cd54eb231d<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: proxy to 10.96.101.203:8000 using HBONE via 10.244.1.10:15008 type ToServerWaypoint
+</span></span><span style="display:flex;"><span>INFO outbound<span style="color:#f92672">{</span>id<span style="color:#f92672">=</span>94b826c34ce67957114b48cd54eb231d<span style="color:#f92672">}</span>: ztunnel::proxy::outbound: complete dur<span style="color:#f92672">=</span>46.497344ms
+</span></span></code></pre></div><p><code>ambient-worker-2</code> metrics receiving the requeset on <code>appb</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># HELP istio_tcp_connections_opened The total number of TCP connections opened.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># TYPE istio_tcp_connections_opened counter</span>
+</span></span><span style="display:flex;"><span>istio_tcp_connections_opened_total<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    reporter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;destination&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb-istio-waypoint&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb-istio-waypoint&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latest&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    source_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appb-istio-waypoint&#34;</span>
+</span></span><span style="display:flex;"><span>    source_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb-istio-waypoint&#34;</span>
+</span></span><span style="display:flex;"><span>    source_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latest&#34;</span>
+</span></span><span style="display:flex;"><span>    source_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    request_protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tcp&#34;</span>
+</span></span><span style="display:flex;"><span>    response_flags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-&#34;</span>
+</span></span><span style="display:flex;"><span>    connection_security_policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mutual_tls&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">79</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>istio_tcp_connections_opened_total<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    reporter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;destination&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    source_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    source_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    request_protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tcp&#34;</span>
+</span></span><span style="display:flex;"><span>    response_flags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-&#34;</span>
+</span></span><span style="display:flex;"><span>    connection_security_policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mutual_tls&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><p>Receiving from waypoint and forward to the pod IP:port</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>INFO inbound<span style="color:#f92672">{</span>peer_ip<span style="color:#f92672">=</span>10.244.1.10 peer_id<span style="color:#f92672">=</span>spiffe://cluster.local/ns/default/sa/appb-istio-waypoint<span style="color:#f92672">}</span>: ztunnel::proxy::inbound: got CONNECT request to 10.244.2.4:80
+</span></span><span style="display:flex;"><span>INFO inbound<span style="color:#f92672">{</span>peer_ip<span style="color:#f92672">=</span>10.244.1.10 peer_id<span style="color:#f92672">=</span>spiffe://cluster.local/ns/default/sa/appb-istio-waypoint<span style="color:#f92672">}</span>: ztunnel::proxy::inbound: got CONNECT request to 10.244.2.4:80
+</span></span><span style="display:flex;"><span>INFO inbound<span style="color:#f92672">{</span>peer_ip<span style="color:#f92672">=</span>10.244.1.10 peer_id<span style="color:#f92672">=</span>spiffe://cluster.local/ns/default/sa/appb-istio-waypoint<span style="color:#f92672">}</span>: ztunnel::proxy::inbound: got CONNECT request to 10.244.2.4:80
+</span></span><span style="display:flex;"><span>INFO inbound<span style="color:#f92672">{</span>peer_ip<span style="color:#f92672">=</span>10.244.1.10 peer_id<span style="color:#f92672">=</span>spiffe://cluster.local/ns/default/sa/appb-istio-waypoint<span style="color:#f92672">}</span>: ztunnel::proxy::inbound: got CONNECT request to 10.244.2.4:80
+</span></span><span style="display:flex;"><span>INFO inbound<span style="color:#f92672">{</span>peer_ip<span style="color:#f92672">=</span>10.244.1.10 peer_id<span style="color:#f92672">=</span>spiffe://cluster.local/ns/default/sa/appb-istio-waypoint<span style="color:#f92672">}</span>: ztunnel::proxy::inbound: got CONNECT request to 10.244.2.4:80
+</span></span><span style="display:flex;"><span>INFO inbound<span style="color:#f92672">{</span>peer_ip<span style="color:#f92672">=</span>10.244.1.10 peer_id<span style="color:#f92672">=</span>spiffe://cluster.local/ns/default/sa/appb-istio-waypoint<span style="color:#f92672">}</span>: ztunnel::proxy::inbound: got CONNECT request to 10.244.2.4:80
+</span></span><span style="display:flex;"><span>INFO inbound<span style="color:#f92672">{</span>peer_ip<span style="color:#f92672">=</span>10.244.1.10 peer_id<span style="color:#f92672">=</span>spiffe://cluster.local/ns/default/sa/appb-istio-waypoint<span style="color:#f92672">}</span>: ztunnel::proxy::inbound: got CONNECT request to 10.244.2.4:80
+</span></span></code></pre></div>
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2023/" title="2023"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/0628/" title="Istio CNI on Ambient Mesh" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1688178428"></script>
+    <script src="/js/perfect-scrollbar.min.js?1688178428"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1688178428"></script>
+    <script src="/js/jquery.sticky.js?1688178428"></script>
+    <script src="/js/featherlight.min.js?1688178428"></script>
+    <script src="/js/highlight.pack.js?1688178428"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1688178428"></script>
+    <script src="/js/learn.js?1688178428"></script>
+    <script src="/js/hugo-learn.js?1688178428"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1688178428"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
