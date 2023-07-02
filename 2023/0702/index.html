@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Handling L7 traffic with Waypoint proxy">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Waypoint Proxy for the app layer :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1688308341" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1688308341" rel="stylesheet">
+    <link href="/css/hybrid.css?1688308341" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1688308341" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1688308341" rel="stylesheet">
+    <link href="/css/auto-complete.css?1688308341" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1688308341" rel="stylesheet">
+    <link href="/css/theme.css?1688308341" rel="stylesheet">
+    <link href="/css/tabs.css?1688308341" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1688308341" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1688308341" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1688308341"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2023/0702/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1688308341"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1688308341"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1688308341"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0702/" title="Waypoint Proxy for the app layer" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2023/0702/">
+          Waypoint Proxy for the app layer
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Waypoint Proxy for the app layer
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#waypoint-on-ambient">Waypoint on Ambient</a></li>
+        <li><a href="#envoy">Envoy</a></li>
+        <li><a href="#metrics">Metrics</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Waypoint Proxy for the app layer
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p><a href="https://www.solo.io/resources/ebook/istio-ambient-mesh-explained/">The waypoint proxy</a> is a L7 proxy that
+implements application traffic management on this layer. This data plane fully parses the connection
+into requests and can apply policies based on properties like headers and credentials found in the request.
+The functionalities include HTTP/1/2/3, request routing, advanced LB, mirroring, fault injection, retries and gRPC
+treatment.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>istioctl x -n default waypoint apply --service-account appb
+</span></span><span style="display:flex;"><span>appb-76b56f7cb4-jgp6k                 1/1     Running   <span style="color:#ae81ff">0</span>          11h   10.244.1.4    ambient-worker2   &lt;none&gt;           &lt;none&gt;
+</span></span><span style="display:flex;"><span>appb-istio-waypoint-6f8dfd8d4-dh4g7   1/1     Running   <span style="color:#ae81ff">0</span>          9h    10.244.2.11   ambient-worker    &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></div><p>In ambient, all policies are enforced by the destination waypoint. In many ways, the waypoint acts as a gateway into the namespace
+(default scope) or service account. Istio enforces that all traffic coming into the namespace goes through the waypoint,
+which then enforces all policies for that namespace. Because of this, each waypoint only needs to know about configuration for its own namespace.</p>
+<p>A change in the shift of source proxy configuration to the destination proxy allowed the scaling and easy debugging besides the
+correct ownership and boundaries trust compared to the old model.</p>
+<h3 id="waypoint-on-ambient">Waypoint on Ambient</h3>
+<p>Creating a new waypoint for a specific service is made with the command above, this proxy is used for specific SA <code>appb</code>, it&rsquo;s possible
+to use one for the entire namespacea as well, the other interesting usage is the listener on port 15008 of type mesh.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">gateway.networking.k8s.io/v1beta1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Gateway</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">annotations</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">istio.io/for-service-account</span>: <span style="color:#ae81ff">appb</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">appb</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">gatewayClassName</span>: <span style="color:#ae81ff">istio-waypoint</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">listeners</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mesh</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">15008</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">HBONE</span>
+</span></span></code></pre></div><p>As seen in the ztunnel configuration of the last post the field <code>{&quot;waypointAddresses&quot;: [&quot;10.244.2.11&quot;]}</code> is present and all incoming requests must go through
+the waypoint. When the request is made from the <code>outbound</code> connection the request type <code>ToServerWaypoint</code> is used, other options as as follow in the
+connection state:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">RequestType</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/// ToServerWaypoint refers to requests targeting a server waypoint proxy
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    ToServerWaypoint,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/// Direct requests are made directly to a intended backend pod
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    Direct,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/// DirectLocal requests are made directly to an intended backend pod *on the same node*
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    DirectLocal,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/// Passthrough refers to requests with an unknown target
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    Passthrough,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This will force the traffic through the waypoint before being forwarded to the ztunnel and streamer back to the requester.</p>
+<h3 id="envoy">Envoy</h3>
+<p>Besides another name and a different bootstrap envoy is still used for the L7 capability in the mesh.
+Hardly recomment the <a href="https://www.youtube.com/watch?v=KsO4pw4tEGA">Hoot series</a> on Envoy to learn more.</p>
+<p>An important concept are the xDS APIs that discovers its various dynamic resources via the filesystem or by querying one
+or more management servers. The most used here are:</p>
+<ul>
+<li>Listener: Listener Discovery Service (LDS)</li>
+<li>RouteConfiguration: Route Discovery Service (RDS)</li>
+<li>Cluster: Cluster Discovery Service (CDS)</li>
+<li>ClusterLoadAssignment: Endpoint Discovery Service (EDS)</li>
+<li>Secret: Secret Discovery Service (SDS)</li>
+</ul>
+<p>Some interesting settings were created in the waypoint Pod by istiod, when parsing the Gateway object.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>  istio-proxy:
+</span></span><span style="display:flex;"><span>    Container ID:  containerd://0837c5641b52be5d1361bd90e4c0acfde46ffc556e8e3c7e966c1724c90ee45f
+</span></span><span style="display:flex;"><span>    Image:         docker.io/istio/proxyv2:1.18.0
+</span></span><span style="display:flex;"><span>    Image ID:      docker.io/istio/proxyv2@sha256:757d28c241009d9125607e6e02e71954b86e5f2baabdeda0537361e9be3d2579
+</span></span><span style="display:flex;"><span>    Port:          &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Host Port:     &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Args:
+</span></span><span style="display:flex;"><span>      proxy
+</span></span><span style="display:flex;"><span>      waypoint
+</span></span><span style="display:flex;"><span>      --domain
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">$(</span>POD_NAMESPACE<span style="color:#66d9ef">)</span>.svc.cluster.local
+</span></span><span style="display:flex;"><span>      --serviceCluster
+</span></span><span style="display:flex;"><span>      appb-istio-waypoint.<span style="color:#66d9ef">$(</span>POD_NAMESPACE<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>      --proxyLogLevel
+</span></span><span style="display:flex;"><span>      debug
+</span></span><span style="display:flex;"><span>      --proxyComponentLogLevel
+</span></span><span style="display:flex;"><span>      misc:error
+</span></span><span style="display:flex;"><span>      --log_output_level
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Environment:
+</span></span><span style="display:flex;"><span>      ISTIO_META_SERVICE_ACCOUNT:     <span style="color:#f92672">(</span>v1:spec.serviceAccountName<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      ISTIO_META_NODE_NAME:           <span style="color:#f92672">(</span>v1:spec.nodeName<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      JWT_POLICY:                    third-party-jwt
+</span></span><span style="display:flex;"><span>      PILOT_CERT_PROVIDER:           istiod
+</span></span><span style="display:flex;"><span>      CA_ADDR:                       istiod.istio-system.svc:15012
+</span></span><span style="display:flex;"><span>      POD_NAME:                      appb-istio-waypoint-6f8dfd8d4-dh4g7 <span style="color:#f92672">(</span>v1:metadata.name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      POD_NAMESPACE:                 default <span style="color:#f92672">(</span>v1:metadata.namespace<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      INSTANCE_IP:                    <span style="color:#f92672">(</span>v1:status.podIP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      SERVICE_ACCOUNT:                <span style="color:#f92672">(</span>v1:spec.serviceAccountName<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      HOST_IP:                        <span style="color:#f92672">(</span>v1:status.hostIP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      ISTIO_CPU_LIMIT:               <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>limits.cpu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      PROXY_CONFIG:                  <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;proxyMetadata&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;ISTIO_META_ENABLE_HBONE&#34;</span>:<span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      ISTIO_META_CLUSTER_ID:         Kubernetes
+</span></span><span style="display:flex;"><span>      ISTIO_META_INTERCEPTION_MODE:  REDIRECT
+</span></span><span style="display:flex;"><span>      ISTIO_META_WORKLOAD_NAME:      appb-istio-waypoint
+</span></span><span style="display:flex;"><span>      ISTIO_META_OWNER:              kubernetes://apis/apps/v1/namespaces/default/deployments/appb-istio-waypoint
+</span></span><span style="display:flex;"><span>      ISTIO_META_MESH_ID:            cluster.local
+</span></span></code></pre></div><h4 id="istio-agent">Istio-agent</h4>
+<p>The first intresting part of the waypoint bootstrap is the <code>istio-agent</code>, responsible to start a SDS server for Secret management and be a proxy for Istio CA.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /usr/local/bin/pilot-agent proxy waypoint --domain default.svc.cluster.local <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --serviceCluster appb-istio-waypoint.default <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --proxyLogLevel debug <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --proxyComponentLogLevel misc:error <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --log_output_level default:info
+</span></span><span style="display:flex;"><span>$ /usr/local/bin/envoy -c etc/istio/proxy/envoy-rev.json --drain-time-s <span style="color:#ae81ff">45</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --drain-strategy immediate  <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --local-address-ip-version v4 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --file-flush-interval-msec <span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --disable-hot-restart 
+</span></span><span style="display:flex;"><span>    --allow-unknown-static-fields 
+</span></span><span style="display:flex;"><span>    --log-format %Y-%m-%dT%T.%fZ.%l.envoy %n %g:%#.%v.thread<span style="color:#f92672">=</span>%t -l debug 
+</span></span><span style="display:flex;"><span>    --component-log-level misc:error 
+</span></span><span style="display:flex;"><span>    --concurrency <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>It will start envoy and generate the bootstrap configuration on <code>/etc/istio/proxy/envoy-rev.json</code> (This file has 551 lines and 15KB) that contains all the xDS settings.
+As static resources we have by default clusters and listeners:</p>
+<p>Clusters:</p>
+<ul>
+<li>prometheus_stats - 15000</li>
+<li>agent - 15020</li>
+<li>sds-grpc - /var/run/secrets/workload-spiffe-uds/socket</li>
+<li>xds-grpc - /etc/istio/proxy/XDS &lt;- socket</li>
+<li>zipkin - 9411</li>
+</ul>
+<p>Listeners:</p>
+<ul>
+<li>TCP 15090 on /stats/prometheus</li>
+<li>TCP 15021 on /healthz/ready</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;node&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;waypoint~10.244.2.11~appb-istio-waypoint-6f8dfd8d4-dh4g7.default~default.svc.cluster.local&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;cluster&#34;</span>: <span style="color:#e6db74">&#34;appb-istio-waypoint.default&#34;</span>,
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;static_resoures&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;clusters&#34;</span>: {},
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;listeners&#34;</span>: {},
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As stated on this <a href="https://istio.io/latest/blog/2023/waypoint-proxy-made-simple/">Istio post</a></p>
+<p>At this point Istiod has the waypoint registered and starts to send push, the best resource to read about the specs are the <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/intro">offical docs</a>
+its a has very rich documentation about the proxy. Envoy by default presents an eventual consistency model with xDS,
+ADS allows one or more APIs and their resources to be delivered on a single, bidirectional gRPC stream by the management server.</p>
+<p>There&rsquo;s another concept of delta updates where only resources changed are being updated instead o the full state.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># istiod logs</span>
+</span></span><span style="display:flex;"><span>2023-07-02T00:40:00.284012Z     info    ads     Incremental push, service appb.default.svc.cluster.local at shard Kubernetes/Kubernetes has no endpoints
+</span></span><span style="display:flex;"><span>2023-07-02T00:40:48.907801Z     info    ads     Full push, new service default/appb.default.svc.cluster.local
+</span></span><span style="display:flex;"><span>2023-07-02T02:50:53.542851Z     info    ads     Incremental push, service appb-istio-waypoint.default.svc.cluster.local at shard Kubernetes/Kubernetes has no endpoints
+</span></span><span style="display:flex;"><span>2023-07-02T02:50:53.643663Z     info    delta   WDS: PUSH <span style="color:#66d9ef">for</span> node:appb-istio-waypoint-6f8dfd8d4-dh4g7.default resources:1 removed:0 size:181B
+</span></span><span style="display:flex;"><span>2023-07-02T02:50:54.537988Z     info    delta   CDS: PUSH <span style="color:#66d9ef">for</span> node:appb-istio-waypoint-6f8dfd8d4-dh4g7.default resources:5 removed:0 size:2.3kB
+</span></span><span style="display:flex;"><span>2023-07-02T02:50:54.538111Z     info    delta   EDS: PUSH <span style="color:#66d9ef">for</span> node:appb-istio-waypoint-6f8dfd8d4-dh4g7.default resources:2 removed:0 size:304B empty:1 cached:0/2
+</span></span><span style="display:flex;"><span>2023-07-02T02:50:54.538426Z     info    delta   LDS: PUSH <span style="color:#66d9ef">for</span> node:appb-istio-waypoint-6f8dfd8d4-dh4g7.default resources:3 removed:0 size:7.5kB
+</span></span><span style="display:flex;"><span>2023-07-02T02:50:54.538540Z     info    delta   WDS: PUSH <span style="color:#66d9ef">for</span> node:appb-istio-waypoint-6f8dfd8d4-dh4g7.default resources:17 removed:0 size:2.6kB
+</span></span></code></pre></div><p>When the waypoint is up, it&rsquo;s possible to access the admin dashboard on 15000 localhost, to see things like metrics, configuration
+settings, etc.</p>
+<p><img src="./images/admin.png" alt="admin" title="admin"></p>
+<p>For comparision lets see whats the config looks like after the waypoint is inside the mesh <code>http://localhost:15000/config_dump</code> (with 4017 lines and 12KB),
+the interesting part are the new dynamic_resources loaded here:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;dynamic_resources&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;lds_config&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;ads&#34;</span>: <span style="color:#f92672">{}</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;initial_fetch_timeout&#34;</span>: <span style="color:#e6db74">&#34;0s&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;resource_api_version&#34;</span>: <span style="color:#e6db74">&#34;V3&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;cds_config&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;ads&#34;</span>: <span style="color:#f92672">{}</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;initial_fetch_timeout&#34;</span>: <span style="color:#e6db74">&#34;0s&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;resource_api_version&#34;</span>: <span style="color:#e6db74">&#34;V3&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ads_config&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;api_type&#34;</span>: <span style="color:#e6db74">&#34;DELTA_GRPC&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;grpc_services&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;envoy_grpc&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;cluster_name&#34;</span>: <span style="color:#e6db74">&#34;xds-grpc&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;set_node_on_first_message_only&#34;</span>: true,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;transport_api_version&#34;</span>: <span style="color:#e6db74">&#34;V3&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>It&rsquo;s now using the socket xds-grpc proxied by the agent to receive push configuration from Istiod.</p>
+<h3 id="metrics">Metrics</h3>
+<p>After doing requests from server <code>appa</code> its possible to see the metrics, there&rsquo;s a Gateway API exposed as well in the host <code>appb.example.com.br</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># TYPE istio_requests_total counter</span>
+</span></span><span style="display:flex;"><span>istio_requests_total<span style="color:#f92672">{</span>reporter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;destination&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    source_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appa&#34;</span>
+</span></span><span style="display:flex;"><span>    source_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    source_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    source_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appb-istio-waypoint&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb.default.svc.cluster.local&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    request_protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http&#34;</span>
+</span></span><span style="display:flex;"><span>    response_code<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;200&#34;</span>
+</span></span><span style="display:flex;"><span>    grpc_response_status<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    response_flags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-&#34;</span>
+</span></span><span style="display:flex;"><span>    connection_security_policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mutual_tls&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>istio_requests_total<span style="color:#f92672">{</span>reporter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;destination&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gateway-istio&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gateway-istio&#34;</span>
+</span></span><span style="display:flex;"><span>    source_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latest&#34;</span>
+</span></span><span style="display:flex;"><span>    source_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    source_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/gateway-istio&#34;</span>
+</span></span><span style="display:flex;"><span>    source_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    source_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    source_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_workload_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_principal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spiffe://cluster.local/ns/default/sa/appb-istio-waypoint&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_app<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb.example.com.br&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_service<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_canonical_revision<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unknown&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;appb.example.com.br&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_service_namespace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>    destination_cluster<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    request_protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http&#34;</span>
+</span></span><span style="display:flex;"><span>    response_code<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;200&#34;</span>
+</span></span><span style="display:flex;"><span>    grpc_response_status<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    response_flags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-&#34;</span>
+</span></span><span style="display:flex;"><span>    connection_security_policy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mutual_tls&#34;</span><span style="color:#f92672">}</span> <span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><h4 id="checking-xds-configuration">Checking xDS configuration</h4>
+<p>To start debugging, right now lets investigate the istioctl commands on our example cluster with the app topology
+created, istioctl offers a better tool to visualize your proxy config instead of the config_dump endpoint.</p>
+<p>Checking the <code>clusters</code> created in this waypoint, we are NOT checking the Gateway API:</p>
+<pre tabindex="0"><code>$ istioctl pc cluster deploy/appb-istio-waypoint
+
+SERVICE FQDN                             PORT     SUBSET     DIRECTION       TYPE             DESTINATION RULE
+appb.default.svc.cluster.local           8000     http       inbound-vip     EDS              
+connect_originate                        -        -          -               ORIGINAL_DST     
+encap                                    -        -          -               STATIC           
+kubernetes.default.svc.cluster.local     443      tcp        inbound-vip     EDS              
+main_internal                            -        -          -               STATIC           
+
+$ istioctl pc endpoints deploy/appb-istio-waypoint
+
+ENDPOINT                                                STATUS      OUTLIER CHECK     CLUSTER
+10.244.1.4:15008                                        HEALTHY     OK                connect_originate
+10.244.1.4:15008                                        HEALTHY     OK                connect_originate
+127.0.0.1:15020                                         HEALTHY     OK                agent
+envoy://connect_originate/                              HEALTHY     OK                encap
+envoy://connect_originate/10.244.1.4:80                 HEALTHY     OK                inbound-vip|8000|http|appb.default.svc.cluster.local
+envoy://main_internal/                                  HEALTHY     OK                main_internal
+unix://./etc/istio/proxy/XDS                            HEALTHY     OK                xds-grpc
+unix://./var/run/secrets/workload-spiffe-uds/socket     HEALTHY     OK                sds-grpc
+</code></pre><p>There&rsquo;re 2 upstream endpoints in the cluster from xDS API (Enpoint Discovery Service) config_dump:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;inbound-vip|8000|http|appb.default.svc.cluster.local&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;EDS&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;edsClusterConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;edsConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;ads&#34;</span>: {},
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;initialFetchTimeout&#34;</span>: <span style="color:#e6db74">&#34;0s&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;resourceApiVersion&#34;</span>: <span style="color:#e6db74">&#34;V3&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;serviceName&#34;</span>: <span style="color:#e6db74">&#34;inbound-vip|8000|http|appb.default.svc.cluster.local&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;commonLbConfig&#34;</span>: {},
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;transportSocket&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;internal_upstream&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;typedConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;@type&#34;</span>: <span style="color:#e6db74">&#34;type.googleapis.com/envoy.extensions.transport_sockets.internal_upstream.v3.InternalUpstreamTransport&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;passthroughMetadata&#34;</span>: [
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&#34;kind&#34;</span>: {
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">&#34;host&#34;</span>: {}
+</span></span><span style="display:flex;"><span>                    },
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;tunnel&#34;</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;transportSocket&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;raw_buffer&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&#34;typedConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&#34;@type&#34;</span>: <span style="color:#e6db74">&#34;type.googleapis.com/envoy.extensions.transport_sockets.raw_buffer.v3.RawBuffer&#34;</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It&rsquo;s possible to perceive the signature for this upstream service &ldquo;inbound-vip|8000|http|appb.default.svc.cluster.local&rdquo;. Now check the listeners available,
+For requests arriving the HBONE port, waypoint forwards the request to <code>main_internal</code> this way it enforces the workload policies (i.e. AuthorizationPolicy).</p>
+<p>As a last step check the listeners and routes for each one. <code>10.95.15.53</code> is the Service VIP, the direct-http/tcp on <code>10.244.1.4</code> points to the actual pod for HTTP/1.1 proto and h2c:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ istioctl pc listener deploy/appb-istio-waypoint --waypoint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>LISTENER                  CHAIN                                                     MATCH                                            DESTINATION
+</span></span><span style="display:flex;"><span>envoy://main_internal     inbound-vip|8000<span style="color:#f92672">||</span>appb.default.svc.cluster.local-http     ip<span style="color:#f92672">=</span>10.96.15.53 -&gt; port<span style="color:#f92672">=</span><span style="color:#ae81ff">8000</span>                      Cluster: inbound-vip|8000|http|appb.default.svc.cluster.local
+</span></span><span style="display:flex;"><span>envoy://main_internal     inbound-vip|443<span style="color:#f92672">||</span>kubernetes.default.svc.cluster.local-tcp ip<span style="color:#f92672">=</span>10.96.0.1 -&gt; port<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span>                         Cluster: inbound-vip|443|tcp|kubernetes.default.svc.cluster.local
+</span></span><span style="display:flex;"><span>envoy://main_internal     direct-tcp                                                ip<span style="color:#f92672">=</span>10.244.1.4 -&gt; ANY                             Cluster: encap
+</span></span><span style="display:flex;"><span>envoy://main_internal     direct-http                                               ip<span style="color:#f92672">=</span>10.244.1.4 -&gt; application-protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;h2c&#39;</span>      Cluster: encap
+</span></span><span style="display:flex;"><span>envoy://main_internal     direct-http                                               ip<span style="color:#f92672">=</span>10.244.1.4 -&gt; application-protocol<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;http/1.1&#39;</span> Cluster: encap
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ istioctl pc route deploy/appb-istio-waypoint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                                                     VHOST NAME            DOMAINS     MATCH                  VIRTUAL SERVICE
+</span></span><span style="display:flex;"><span>inbound-vip|8000|http|appb.default.svc.cluster.local     inbound|http|<span style="color:#ae81ff">8000</span>     *           /*                     
+</span></span><span style="display:flex;"><span>default                                                  default               *                                  
+</span></span><span style="display:flex;"><span>encap                                                    inbound|http|<span style="color:#ae81ff">0</span>        *           /*                     
+</span></span></code></pre></div>
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2023/" title="2023"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/0630/" title="Ztunnel on Ambient Mesh" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1688308341"></script>
+    <script src="/js/perfect-scrollbar.min.js?1688308341"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1688308341"></script>
+    <script src="/js/jquery.sticky.js?1688308341"></script>
+    <script src="/js/featherlight.min.js?1688308341"></script>
+    <script src="/js/highlight.pack.js?1688308341"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1688308341"></script>
+    <script src="/js/learn.js?1688308341"></script>
+    <script src="/js/hugo-learn.js?1688308341"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1688308341"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
