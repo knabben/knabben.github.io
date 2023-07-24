@@ -9,25 +9,25 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Istio SPIRE implementation :: compulsory thinking</title>
+    <title>Ztunnel SPIRE implementation :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1690071529" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1690071529" rel="stylesheet">
-    <link href="/css/hybrid.css?1690071529" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1690071529" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1690071529" rel="stylesheet">
-    <link href="/css/auto-complete.css?1690071529" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1690071529" rel="stylesheet">
-    <link href="/css/theme.css?1690071529" rel="stylesheet">
-    <link href="/css/tabs.css?1690071529" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1690071529" rel="stylesheet">
+    <link href="/css/nucleus.css?1690168948" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1690168948" rel="stylesheet">
+    <link href="/css/hybrid.css?1690168948" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1690168948" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1690168948" rel="stylesheet">
+    <link href="/css/auto-complete.css?1690168948" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1690168948" rel="stylesheet">
+    <link href="/css/theme.css?1690168948" rel="stylesheet">
+    <link href="/css/tabs.css?1690168948" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1690168948" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1690071529" rel="stylesheet">
+    <link href="/css/theme-blue.css?1690168948" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1690071529"></script>
+    <script src="/js/jquery-3.3.1.min.js?1690168948"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1690071529"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1690071529"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1690168948"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1690168948"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1690071529"></script>
+<script type="text/javascript" src="/js/search.js?1690168948"></script>
 
     
   </div>
@@ -124,13 +124,13 @@
  
   
     
-    <li data-nav-id="/2023/0721/" title="Istio SPIRE implementation" class="dd-item
+    <li data-nav-id="/2023/0721/" title="Ztunnel SPIRE implementation" class="dd-item
         
         active
         
         ">
       <a href="/2023/0721/">
-          Istio SPIRE implementation
+          Ztunnel SPIRE implementation
           
       </a>
       
@@ -796,7 +796,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2023/'>2023</a> > Istio SPIRE implementation
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Ztunnel SPIRE implementation
           
         
           
@@ -811,7 +811,12 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#ztunnel-connection">Ztunnel connection</a></li>
+      </ul>
+    </li>
+    <li><a href="#istiod">Istiod</a></li>
   </ul>
 </nav>
     </div>
@@ -829,7 +834,7 @@
           
             <h1>
               
-              Istio SPIRE implementation
+              Ztunnel SPIRE implementation
             </h1>
           
 
@@ -838,7 +843,252 @@
 
 
 	<h2 id="introduction">Introduction</h2>
-
+<p>The PKI/xDS workload integration and certificate generation can be complex, this is executed since forever from
+the Envoy and pilot-agent, Istio CA offers the SVID x509 certificates for workload identification. For this sidecar
+version, the pilot-agent (that bootstrap the sidecar) sends the Kubernetes API token and a CSR, istiod
+validates the token and on success signs the certifcate returning the response, the agent uses SDS to configure the
+envoy, for more details see Appendix C from <a href="https://www.amazon.com/Istio-Action-Christian-Posta/dp/1617295825">Istio In Action</a>.</p>
+<h3 id="ztunnel-connection">Ztunnel connection</h3>
+<p>The ztunnel config_dump can be achieved by curl on <em>http://localhost:15000/config_dump</em>, on this example
+the default ca_address is istiod service on <code>15012</code> port</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;config&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;ca_address&#34;</span>: <span style="color:#e6db74">&#34;https://istiod.istio-system.svc:15012&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;ca_root_cert&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;File&#34;</span>: <span style="color:#e6db74">&#34;./var/run/secrets/istio/root-cert.pem&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;xds_address&#34;</span>: <span style="color:#e6db74">&#34;https://istiod.istio-system.svc:15012&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;xds_root_cert&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;File&#34;</span>: <span style="color:#e6db74">&#34;./var/run/secrets/istio/root-cert.pem&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;xds_on_demand&#34;</span>: <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;fake_ca&#34;</span>: <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;certificates&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;identity&#34;</span>: <span style="color:#e6db74">&#34;spiffe://cluster.local/ns/istio-system/sa/default&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;state&#34;</span>: <span style="color:#e6db74">&#34;Available&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;ca_cert&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;pem&#34;</span>: <span style="color:#e6db74">&#34;-----BEGIN CERTIFICATE-----\nMIICezCCAWOgAwIBAgIRAP8JePgRMVctsN5ODWGReMkwDQYJKoZIhvcNAQELBQAw\nGDEWMBQGA1UEChMNY2x1c3Rlci5sb2NhbDAeFw0yMzA3MjMyMjUzMTlaFw0yMzA3\nMjQyMjU1MTlaMAAwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQflxE7v8JJsph9\n29t/gf7L24o3jxfXj4Zz4Im9F3k00/7pEny7FxQby8f8pJy8oM+rVRLYmRxD64vO\n0MN4isPao4GiMIGfMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcD\nAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBQVGuGZItNOyxnG\n7Xc0lT65wHhKMjA/BgNVHREBAf8ENTAzhjFzcGlmZmU6Ly9jbHVzdGVyLmxvY2Fs\nL25zL2lzdGlvLXN5c3RlbS9zYS9kZWZhdWx0MA0GCSqGSIb3DQEBCwUAA4IBAQBQ\n4/qL+tFrnuGVisi86furPxwNRmwInoweJwRBfLl/VQEalpXzCXbLCZuKLYdBrcL4\nSw2qFE1PWYmaDOGqcVN9HNx0OCY6SvHAnqV4NFDjzbdB/CVFhAhW5Sbkg7vVOlBI\nNBx96d4oMjnGVvyeXnnMoOn8HFGf/e0mtRSp8aP+agPetN2EpowKO4F/tCYImxS2\n7iq/CQwe8HkTtAM7v+AUC26NKqtRuqJbCkvmMd/JoTmxAPr7yKjw6lIP9Rf8jDeL\npvvFEY4dSFxaOBm/O7NspryGHZamKjijGnSfLXIJkdhAWh+Cc5KrfUmLNd/i87kG\nT/x9GuidXmCsZBPmXC2Q\n-----END CERTIFICATE-----\n&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;serial_number&#34;</span>: <span style="color:#e6db74">&#34;339002323139937996997990357496333695177&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;valid_from&#34;</span>: <span style="color:#e6db74">&#34;2023-07-23T22:53:19Z&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;expiration_time&#34;</span>: <span style="color:#e6db74">&#34;2023-07-24T22:55:19Z&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          ],
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;cert_chain&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;pem&#34;</span>: <span style="color:#e6db74">&#34;-----BEGIN CERTIFICATE-----\nMIIC/TCCAeWgAwIBAgIRAPfBaOGONn5h80zqgRMEooEwDQYJKoZIhvcNAQELBQAw\nGDEWMBQGA1UEChMNY2x1c3Rlci5sb2NhbDAeFw0yMzA3MjMyMjUwNDhaFw0zMzA3\nMjAyMjUwNDhaMBgxFjAUBgNVBAoTDWNsdXN0ZXIubG9jYWwwggEiMA0GCSqGSIb3\nDQEBAQUAA4IBDwAwggEKAoIBAQCSBwI43dBsthRlLeMNskGuLX0ziK1MIjJtK59h\nI5Nz23DIJcVy4mfsFOaIrLpHLhGg0SDon9guTAu50ueYwXD2u6F70ugN9pFTm4HS\n3PFFrlFoIkFFz3zMnd98AX0e5nk4all7TOK0q1Na8oh3wDhLyvdKD/MFgvhvbJJq\n5+SO2ppHIoY03JEYTkaRldCNmj3/31XDgQM8VrsL80Q7PxXd08ClUlfxtFmKMGax\nBLQOHkCVMToP6cOrBNfB+WJ/50zzrSqa4IDKQO3Wx0wPoimmk1m5tvC7/0XQ7L9Z\neYTKlv4QplMWmbtHoLqt8wL/r2XzlC3DClWjxP/XoEX+Ze1ZAgMBAAGjQjBAMA4G\nA1UdDwEB/wQEAwICBDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBQVGuGZItNO\nyxnG7Xc0lT65wHhKMjANBgkqhkiG9w0BAQsFAAOCAQEAWq5OGrCRDc5pSYJW8TtR\nfb0ke0uhEmZH8cytbRGRmTCsaMi+BQRCMP1iJqw8rLxT6FzIhaj7ggK1M0AwZ0GF\n3DZM2Kr16spcuGdLte1X/RduiTfLXs/6toGLw1ATfK87igbKsCz7QGgiVJDjDRvj\nrri5XjjIbw3ZTjlIPhTNWjvnzdNHZ/Px4s/AILnxgByoeey6vnvQ3Fb9P3vvb+P9\nvAVe7CgoHxn1fOcPhpT9ofNMr3FIk5rze9lJ2wRWj1x+iQCYKp3Atrfuv/7XmJnG\n5PXFr1PaaO2GxEGlxk9HrlpoJ735qUruaZRrvEV3ZIN/3ICypPNa2pM2eslB7Hky\nwQ==\n-----END CERTIFICATE-----\n&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;serial_number&#34;</span>: <span style="color:#e6db74">&#34;329323555493519538036679630491320885889&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;valid_from&#34;</span>: <span style="color:#e6db74">&#34;2023-07-23T22:50:48Z&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;expiration_time&#34;</span>: <span style="color:#e6db74">&#34;2033-07-20T22:50:48Z&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The first interesting to see is the CA root-cert.pem used by the XDS root cert and CA root cert.
+This is mounted from the root CA exitent on <code>istio-ca-root-cert</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Certificate:
+</span></span><span style="display:flex;"><span>    Data:
+</span></span><span style="display:flex;"><span>        Version: <span style="color:#ae81ff">3</span> <span style="color:#f92672">(</span>0x2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        Serial Number:
+</span></span><span style="display:flex;"><span>            f7:c1:68:e1:8e:36:7e:61:f3:4c:ea:81:13:04:a2:81
+</span></span><span style="display:flex;"><span>        Signature Algorithm: sha256WithRSAEncryption
+</span></span><span style="display:flex;"><span>        Issuer: O <span style="color:#f92672">=</span> cluster.local
+</span></span><span style="display:flex;"><span>        Validity
+</span></span><span style="display:flex;"><span>            Not Before: Jul <span style="color:#ae81ff">23</span> 22:50:48 <span style="color:#ae81ff">2023</span> GMT
+</span></span><span style="display:flex;"><span>            Not After : Jul <span style="color:#ae81ff">20</span> 22:50:48 <span style="color:#ae81ff">2033</span> GMT
+</span></span><span style="display:flex;"><span>        Subject: O <span style="color:#f92672">=</span> cluster.local
+</span></span><span style="display:flex;"><span>        Subject Public Key Info:
+</span></span><span style="display:flex;"><span>            Public Key Algorithm: rsaEncryption
+</span></span><span style="display:flex;"><span>                Public-Key: <span style="color:#f92672">(</span><span style="color:#ae81ff">2048</span> bit<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                Modulus:
+</span></span><span style="display:flex;"><span>                ...
+</span></span><span style="display:flex;"><span>                Exponent: <span style="color:#ae81ff">65537</span> <span style="color:#f92672">(</span>0x10001<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        X509v3 extensions:
+</span></span><span style="display:flex;"><span>            X509v3 Basic Constraints: critical
+</span></span><span style="display:flex;"><span>                CA:TRUE
+</span></span><span style="display:flex;"><span>            X509v3 Subject Key Identifier:
+</span></span><span style="display:flex;"><span>                15:1A:E1:99:22:D3:4E:CB:19:C6:ED:77:34:95:3E:B9:C0:78:4A:32
+</span></span></code></pre></div><p>The second part where the certificates exists, they are the SVID from the workload API, executing the following command from
+a ztunnel can print the actual certificate value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl -n istio-system exec -it ztunnel-5f4qm -- curl localhost:15000/config_dump | jq -r .certificates<span style="color:#ae81ff">\[</span>0<span style="color:#ae81ff">\]</span>.ca_cert<span style="color:#ae81ff">\[</span>0<span style="color:#ae81ff">\]</span>.pem | openssl x509 -text
+</span></span></code></pre></div><p>As you can note the <code>SPIFFEID</code> is <code>spiffe://cluster.local/ns/istio-system/sa/default</code> used for the default service account
+this is set on Subject Alternative Name property of the cert.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Certificate:
+</span></span><span style="display:flex;"><span>    Data:
+</span></span><span style="display:flex;"><span>        Version: <span style="color:#ae81ff">3</span> <span style="color:#f92672">(</span>0x2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        Serial Number:
+</span></span><span style="display:flex;"><span>            ff:09:78:f8:11:31:57:2d:b0:de:4e:0d:61:91:78:c9
+</span></span><span style="display:flex;"><span>        Signature Algorithm: sha256WithRSAEncryption
+</span></span><span style="display:flex;"><span>        Issuer: O <span style="color:#f92672">=</span> cluster.local
+</span></span><span style="display:flex;"><span>        Validity
+</span></span><span style="display:flex;"><span>            Not Before: Jul <span style="color:#ae81ff">23</span> 22:53:19 <span style="color:#ae81ff">2023</span> GMT
+</span></span><span style="display:flex;"><span>            Not After : Jul <span style="color:#ae81ff">24</span> 22:55:19 <span style="color:#ae81ff">2023</span> GMT
+</span></span><span style="display:flex;"><span>        Subject:
+</span></span><span style="display:flex;"><span>        Subject Public Key Info:
+</span></span><span style="display:flex;"><span>            Public Key Algorithm: id-ecPublicKey
+</span></span><span style="display:flex;"><span>                Public-Key: <span style="color:#f92672">(</span><span style="color:#ae81ff">256</span> bit<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                pub:
+</span></span><span style="display:flex;"><span>                    04:1f:97:11:3b:bf:c2:49:b2:98:7d:db:db:7f:81:
+</span></span><span style="display:flex;"><span>                    fe:cb:db:8a:37:8f:17:d7:8f:86:73:e0:89:bd:17:
+</span></span><span style="display:flex;"><span>                    79:34:d3:fe:e9:12:7c:bb:17:14:1b:cb:c7:fc:a4:
+</span></span><span style="display:flex;"><span>                    9c:bc:a0:cf:ab:55:12:d8:99:1c:43:eb:8b:ce:d0:
+</span></span><span style="display:flex;"><span>                    c3:78:8a:c3:da
+</span></span><span style="display:flex;"><span>                ASN1 OID: prime256v1
+</span></span><span style="display:flex;"><span>                NIST CURVE: P-256
+</span></span><span style="display:flex;"><span>        X509v3 extensions:
+</span></span><span style="display:flex;"><span>            X509v3 Key Usage: critical
+</span></span><span style="display:flex;"><span>                Digital Signature, Key Encipherment
+</span></span><span style="display:flex;"><span>            X509v3 Extended Key Usage:
+</span></span><span style="display:flex;"><span>                TLS Web Server Authentication, TLS Web Client Authentication
+</span></span><span style="display:flex;"><span>            X509v3 Basic Constraints: critical
+</span></span><span style="display:flex;"><span>                CA:FALSE
+</span></span><span style="display:flex;"><span>            X509v3 Authority Key Identifier:
+</span></span><span style="display:flex;"><span>                15:1A:E1:99:22:D3:4E:CB:19:C6:ED:77:34:95:3E:B9:C0:78:4A:32
+</span></span><span style="display:flex;"><span>            X509v3 Subject Alternative Name: critical
+</span></span><span style="display:flex;"><span>                URI:spiffe://cluster.local/ns/istio-system/sa/default
+</span></span></code></pre></div><p>For the configuration file setting the default istiod service for Ztunnel on port <code>15012</code> when its in-cluster</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> default_istiod_address <span style="color:#f92672">=</span> <span style="color:#66d9ef">if</span> std::env::var(<span style="color:#66d9ef">KUBERNETES_SERVICE_HOST</span>).is_ok() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;https://istiod.istio-system.svc:15012&#34;</span>.to_string()
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;https://localhost:15012&#34;</span>.to_string()
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> xds_address <span style="color:#f92672">=</span> validate_uri(empty_to_none(
+</span></span><span style="display:flex;"><span>    parse(<span style="color:#66d9ef">XDS_ADDRESS</span>)<span style="color:#f92672">?</span>
+</span></span><span style="display:flex;"><span>        .or(pc.discovery_address)
+</span></span><span style="display:flex;"><span>        .or_else(<span style="color:#f92672">||</span> Some(default_istiod_address.clone())),
+</span></span><span style="display:flex;"><span>))<span style="color:#f92672">?</span>;
+</span></span></code></pre></div><h4 id="finding-the-workloads">Finding the workloads</h4>
+<p>A WorkloadStore encapsulates all information about workloads in the mesh.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#[derive(serde::Serialize, Default, Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">WorkloadStore</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/// workloads is a map of workload network addresses to workloads
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    workloads: <span style="color:#a6e22e">HashMap</span><span style="color:#f92672">&lt;</span>NetworkAddress, Arc<span style="color:#f92672">&lt;</span>Workload<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/// workloads is a map of workload UIDs to workloads
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    workloads_by_uid: <span style="color:#a6e22e">HashMap</span><span style="color:#f92672">&lt;</span>String, Arc<span style="color:#f92672">&lt;</span>Workload<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/// policies maintains a mapping of ns/name to policy.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) policies: <span style="color:#a6e22e">HashMap</span><span style="color:#f92672">&lt;</span>String, Authorization<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// policies_by_namespace maintains a mapping of namespace (or &#34;&#34; for global) to policy names
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">pub</span>(<span style="color:#66d9ef">super</span>) policies_by_namespace: <span style="color:#a6e22e">HashMap</span><span style="color:#f92672">&lt;</span>String, HashSet<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A handler for the protobuf XdsWorkload dispatches the insert_workload on update.</p>
+<p>The <code>ProxyStateUpdater</code> updates the ProxyState from XDS events, and not only
+dispatch a prefetch_cert as we are going to see next, as it saves the workload
+in the data structure.</p>
+<p>The main thread dispatches a <code>build_with_cert</code> starting the <code>ProxyStateManager</code> triggering
+the XDS request.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Handler<span style="color:#f92672">&lt;</span>XdsWorkload<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">for</span> ProxyStateUpdater {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">handle</span>(<span style="color:#f92672">&amp;</span>self, updates: Vec<span style="color:#f92672">&lt;</span>XdsUpdate<span style="color:#f92672">&lt;</span>XdsWorkload<span style="color:#f92672">&gt;&gt;</span>) -&gt; Result<span style="color:#f92672">&lt;</span>(), Vec<span style="color:#f92672">&lt;</span>RejectedConfig<span style="color:#f92672">&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> handle <span style="color:#f92672">=</span> <span style="color:#f92672">|</span>res: <span style="color:#a6e22e">XdsUpdate</span><span style="color:#f92672">&lt;</span>XdsWorkload<span style="color:#f92672">&gt;|</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">match</span> res {
+</span></span><span style="display:flex;"><span>                XdsUpdate::Update(w) <span style="color:#f92672">=&gt;</span> self.insert_workload(w.resource)<span style="color:#f92672">?</span>,
+</span></span><span style="display:flex;"><span>                XdsUpdate::Remove(name) <span style="color:#f92672">=&gt;</span> self.remove(<span style="color:#f92672">&amp;</span>name),
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Ok(())
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>        handle_single_resource(updates, handle)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> ProxyStateUpdater {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">insert_workload</span>(<span style="color:#f92672">&amp;</span>self, w: <span style="color:#a6e22e">XdsWorkload</span>) -&gt; <span style="color:#a6e22e">anyhow</span>::Result<span style="color:#f92672">&lt;</span>()<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Convert the workload.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">let</span> workload <span style="color:#f92672">=</span> Workload::try_from(<span style="color:#f92672">&amp;</span>w)<span style="color:#f92672">?</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">..</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Prefetch the cert for the workload.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        self.cert_fetcher.prefetch_cert(<span style="color:#f92672">&amp;</span>workload);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Lock and upstate the stores.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> state <span style="color:#f92672">=</span> self.state.write().unwrap();
+</span></span><span style="display:flex;"><span>        state.workloads.insert_workload(workload)<span style="color:#f92672">?</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">let</span> Some(endpoint) <span style="color:#f92672">=</span> endpoints.pop() {
+</span></span><span style="display:flex;"><span>            state.services.insert_endpoint(endpoint);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="fetching-the-ca-certificate">Fetching the CA certificate</h4>
+<p>The call to the <code>SecretManager</code> asynchronously is made to prefetch it from istiod CA passing the identity,
+the SecretMaanger is a wrapper around CaClient.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> CertFetcher <span style="color:#66d9ef">for</span> CertFetcherImpl {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">prefetch_cert</span>(<span style="color:#f92672">&amp;</span>self, w: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Workload</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self.should_prefetch_certificate(w) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Err(e) <span style="color:#f92672">=</span> self.tx.try_send(w.identity()) {
+</span></span><span style="display:flex;"><span>                info!(<span style="color:#e6db74">&#34;couldn&#39;t prefetch: {:?}&#34;</span>, e)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Workload {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">identity</span>(<span style="color:#f92672">&amp;</span>self) -&gt; <span style="color:#a6e22e">Identity</span> {
+</span></span><span style="display:flex;"><span>        Identity::Spiffe {
+</span></span><span style="display:flex;"><span>            trust_domain: <span style="color:#a6e22e">self</span>.trust_domain.to_string(),
+</span></span><span style="display:flex;"><span>            namespace: <span style="color:#a6e22e">self</span>.namespace.clone(),
+</span></span><span style="display:flex;"><span>            service_account: <span style="color:#a6e22e">self</span>.service_account.clone(),
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>cert_manager(SecretManager).fetch_certificate_pri</code> trigger the start_fetch when instantiated,
+to actually post the request.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> CertFetcherImpl {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">new</span>(cfg: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">config</span>::Config, cert_manager: <span style="color:#a6e22e">Arc</span><span style="color:#f92672">&lt;</span>SecretManager<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Self</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> (tx, <span style="color:#66d9ef">mut</span> rx) <span style="color:#f92672">=</span> mpsc::channel::<span style="color:#f92672">&lt;</span>Identity<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">256</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Spawn a task for handling the pre-fetch requests asynchronously.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        tokio::spawn(<span style="color:#66d9ef">async</span> <span style="color:#66d9ef">move</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">let</span> Some(workload_identity) <span style="color:#f92672">=</span> rx.recv().<span style="color:#66d9ef">await</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">match</span> cert_manager
+</span></span><span style="display:flex;"><span>                    .fetch_certificate_pri(<span style="color:#f92672">&amp;</span>workload_identity, Warmup)
+</span></span><span style="display:flex;"><span>                    .<span style="color:#66d9ef">await</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    Ok(_) <span style="color:#f92672">=&gt;</span> debug!(<span style="color:#e6db74">&#34;prefetched cert for {:?}&#34;</span>, workload_identity.to_string()),
+</span></span><span style="display:flex;"><span>                    Err(e) <span style="color:#f92672">=&gt;</span> error!(
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;unable to prefetch cert for {:?}, skipping, {:?}&#34;</span>,
+</span></span><span style="display:flex;"><span>                        workload_identity.to_string(),
+</span></span><span style="display:flex;"><span>                        e
+</span></span><span style="display:flex;"><span>                    ),
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Self {
+</span></span><span style="display:flex;"><span>            proxy_mode: <span style="color:#a6e22e">cfg</span>.proxy_mode.clone(),
+</span></span><span style="display:flex;"><span>            local_node: <span style="color:#a6e22e">cfg</span>.local_node.clone(),
+</span></span><span style="display:flex;"><span>            tx,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The loop on Worker on <code>manager.rs</code> manages the certificate updates in the list.</p>
+<h2 id="istiod">Istiod</h2>
+<p>The control plane provides a pilot-discovery interface called Controlz.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>istioctl dashboard controlz deployment/istiod.istio-system
+</span></span></code></pre></div><p>It&rsquo;s possible to analyze the number of calls and metrics for citadel</p>
+<p><img src="./images/admin.png" alt="admin" title="admin"></p>
+<p>If you want to go deeper on Istiod (out of our scope here), starting by the metrics can be a good call</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// CreateCertificate handles an incoming certificate signing request (CSR). It does
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// authentication and authorization. Upon validated, signs a certificate that:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the SAN is the identity of the caller in authentication result.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the subject public key is the public key in the CSR.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the validity duration is the ValidityDuration in request, or default value if the given duration is invalid.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// it is signed by the CA signing key.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Server</span>) <span style="color:#a6e22e">CreateCertificate</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">request</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">IstioCertificateRequest</span>) (
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">IstioCertificateResponse</span>, <span style="color:#66d9ef">error</span>,
+</span></span><span style="display:flex;"><span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">monitoring</span>.<span style="color:#a6e22e">CSR</span>.<span style="color:#a6e22e">Increment</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">am</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">security</span>.<span style="color:#a6e22e">AuthenticationManager</span>{<span style="color:#a6e22e">Authenticators</span>: <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Authenticators</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">caller</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">am</span>.<span style="color:#a6e22e">Authenticate</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">caller</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">monitoring</span>.<span style="color:#a6e22e">AuthnError</span>.<span style="color:#a6e22e">Increment</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">status</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">codes</span>.<span style="color:#a6e22e">Unauthenticated</span>, <span style="color:#e6db74">&#34;request authenticate failure&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div>
 
 
 
@@ -1290,19 +1540,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1690071529"></script>
-    <script src="/js/perfect-scrollbar.min.js?1690071529"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1690071529"></script>
-    <script src="/js/jquery.sticky.js?1690071529"></script>
-    <script src="/js/featherlight.min.js?1690071529"></script>
-    <script src="/js/highlight.pack.js?1690071529"></script>
+    <script src="/js/clipboard.min.js?1690168948"></script>
+    <script src="/js/perfect-scrollbar.min.js?1690168948"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1690168948"></script>
+    <script src="/js/jquery.sticky.js?1690168948"></script>
+    <script src="/js/featherlight.min.js?1690168948"></script>
+    <script src="/js/highlight.pack.js?1690168948"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1690071529"></script>
-    <script src="/js/learn.js?1690071529"></script>
-    <script src="/js/hugo-learn.js?1690071529"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1690168948"></script>
+    <script src="/js/learn.js?1690168948"></script>
+    <script src="/js/hugo-learn.js?1690168948"></script>
     
         
-            <script src="/mermaid/mermaid.js?1690071529"></script>
+            <script src="/mermaid/mermaid.js?1690168948"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
