@@ -12,22 +12,22 @@
     <title>Istio CNI on Ambient Mesh :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1690168948" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1690168948" rel="stylesheet">
-    <link href="/css/hybrid.css?1690168948" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1690168948" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1690168948" rel="stylesheet">
-    <link href="/css/auto-complete.css?1690168948" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1690168948" rel="stylesheet">
-    <link href="/css/theme.css?1690168948" rel="stylesheet">
-    <link href="/css/tabs.css?1690168948" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1690168948" rel="stylesheet">
+    <link href="/css/nucleus.css?1690294677" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1690294677" rel="stylesheet">
+    <link href="/css/hybrid.css?1690294677" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1690294677" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1690294677" rel="stylesheet">
+    <link href="/css/auto-complete.css?1690294677" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1690294677" rel="stylesheet">
+    <link href="/css/theme.css?1690294677" rel="stylesheet">
+    <link href="/css/tabs.css?1690294677" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1690294677" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1690168948" rel="stylesheet">
+    <link href="/css/theme-blue.css?1690294677" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1690168948"></script>
+    <script src="/js/jquery-3.3.1.min.js?1690294677"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1690168948"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1690168948"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1690294677"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1690294677"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1690168948"></script>
+<script type="text/javascript" src="/js/search.js?1690294677"></script>
 
     
   </div>
@@ -852,9 +852,9 @@ running on the node needs to handle the traffic (both incoming and outgoing). In
 ambient, the Istio CNI plug-in installs redirection rules (based on iptables/ebpf are a WIP still)
 that captures traffic for workloads considered part of the ambient mesh, and redirects to the
 ztunnel running on the node.</p>
-<p>For the version on Ambient the <code>istio-cni</code> installed on <code>/opt/cni/bin/</code> is installed on each pod
-and will setup the networking rules, instead of being injected as <code>initContainers</code> as in the old approach,
-necessary for communication encryption and interception in the mesh.</p>
+<p>For the version on Ambient the <code>istio-cni</code> installed on <code>/opt/cni/bin/</code> is installed on each node
+and will setup the networking rules, instead of being injected as <code>initContainers</code> as in the old approach.
+This is required for communication encryption and interception in the mesh.</p>
 <h3 id="architecture">Architecture</h3>
 <p>The following diagrams presents the sequence of events inside the <code>install-cni</code> container that comes up
 when <code>istioctl</code> is used. As pods are added or removed the plug-in will dynamically update the
@@ -1597,19 +1597,19 @@ and the HBONE connection setup on ztunnel.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1690168948"></script>
-    <script src="/js/perfect-scrollbar.min.js?1690168948"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1690168948"></script>
-    <script src="/js/jquery.sticky.js?1690168948"></script>
-    <script src="/js/featherlight.min.js?1690168948"></script>
-    <script src="/js/highlight.pack.js?1690168948"></script>
+    <script src="/js/clipboard.min.js?1690294677"></script>
+    <script src="/js/perfect-scrollbar.min.js?1690294677"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1690294677"></script>
+    <script src="/js/jquery.sticky.js?1690294677"></script>
+    <script src="/js/featherlight.min.js?1690294677"></script>
+    <script src="/js/highlight.pack.js?1690294677"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1690168948"></script>
-    <script src="/js/learn.js?1690168948"></script>
-    <script src="/js/hugo-learn.js?1690168948"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1690294677"></script>
+    <script src="/js/learn.js?1690294677"></script>
+    <script src="/js/hugo-learn.js?1690294677"></script>
     
         
-            <script src="/mermaid/mermaid.js?1690168948"></script>
+            <script src="/mermaid/mermaid.js?1690294677"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
