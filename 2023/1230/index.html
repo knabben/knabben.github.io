@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Challenges on running Hybrid OS clusters on local machines for development propose.">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Running Windows cluster locally :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1704047087" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1704047087" rel="stylesheet">
+    <link href="/css/hybrid.css?1704047087" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1704047087" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1704047087" rel="stylesheet">
+    <link href="/css/auto-complete.css?1704047087" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1704047087" rel="stylesheet">
+    <link href="/css/theme.css?1704047087" rel="stylesheet">
+    <link href="/css/tabs.css?1704047087" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1704047087" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1704047087" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1704047087"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2023/1230/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1704047087"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1704047087"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1704047087"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/1230/" title="Running Windows cluster locally" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2023/1230/">
+          Running Windows cluster locally
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0801/" title="sigstore policy-controller validation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0801/">
+          sigstore policy-controller validation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0721/" title="Ztunnel SPIRE implementation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0721/">
+          Ztunnel SPIRE implementation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0702/" title="Waypoint Proxy for the app layer" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0702/">
+          Waypoint Proxy for the app layer
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0903/" title="Windows and Calico overlay networking" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0903/">
+          Windows and Calico overlay networking
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Running Windows cluster locally
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#qemukvm-installations-and-windows-vms">QEMU/KVM installations and Windows VMs</a></li>
+    <li><a href="#creating-a-kind-cluster">Creating a Kind cluster</a></li>
+    <li><a href="#installing-calico">Installing Calico</a></li>
+    <li><a href="#join-the-windows-node">Join the Windows node</a></li>
+    <li><a href="#running-the-windows-e2e">Running the Windows E2E</a></li>
+    <li><a href="#thoughts-on-automation">Thoughts on automation</a></li>
+    <li><a href="#contribute">Contribute</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Running Windows cluster locally
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>Nowadays, having Hybrid OS Kubernetes clusters is a requirement for any PaaS product. Whether they are Kubernetes managed solutions or not, the capability to run multiple operating systems coexisting in the same Kuberentes cluster has been a reality for quite some time. A few years ago, an initial attempt to create a local cluster in the <a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools">SIG-Windows Dev Tools</a> subproject showed how challenging it can be due to different requirements, such as multiple host operating systems, and maintaining an immutable base image updated with each new release.</p>
+<p>This post discusses some new experiments in the field of virtualization. Qemu with KVM has been proven to be a good solution for running virtual machines with near-native performance, making it a valid technology to test and validate the hypothesis of running a lightweight setup locally. It&rsquo;s worth noting that other projects, such as <a href="https://github.com/k3s-io/k3s/pull/7259">K3s</a>, are also attempting to bring such technology locally. It&rsquo;s important to consider alternative approaches after two years and explore more native alternatives.</p>
+
+<div class="mermaid" align="center">
+sequenceDiagram
+
+    participant adm as Admin
+    participant kind as Kind
+    participant win as QEMU/Windows
+    participant calico as Calico CNI
+    
+    adm->>win: Create a new Windows 2022 VM
+    adm->>kind: Create a new Kubernetes cluster on host 
+    adm->>+calico: Install the Tigera Operator + CRD
+    calico-->>-kind: Bootstrap the daemonset and controllers 
+    
+    adm->>+win: Kubeadm join with generated token
+    win->>-kind: Joins the Windows VM in the Cluster
+    calico-->>+calico: Windows node join detected  
+    calico->>-win: Run the Windows Node Agent (pod) 
+    adm->>kind: Run the E2E test suite    
+</div>
+
+<h2 id="qemukvm-installations-and-windows-vms">QEMU/KVM installations and Windows VMs</h2>
+<p>Let&rsquo;s skip this in terms of complexity for now, in later posts there&rsquo;ll be deep dives related to the automatic installation of Windows on QEMU/KVM, on this point we part from the principle the final user already have a running version of Windows Datacenter 2019 or 2022. To enable the GUI use the Desktop Experience.</p>
+<p><img src="./images/install1.png?width=600px" alt="install1" title="install">
+<img src="./images/install2.png?width=600px" alt="install2" title="install"></p>
+<p>Check the interface with the <em>ipconfig</em> command in the node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Ethernet adapter vEthernet <span style="color:#f92672">(</span>Ethernet<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Connection-specific DNS Suffix  . :
+</span></span><span style="display:flex;"><span>Description . . . . . . . . . . . : Hyper-V Virtual Ethernet Adapter
+</span></span><span style="display:flex;"><span>   Physical Address. . . . . . . . . : 52-54-00-F5-C6-91
+</span></span><span style="display:flex;"><span>   DHCP Enabled. . . . . . . . . . . : Yes
+</span></span><span style="display:flex;"><span>   Autoconfiguration Enabled . . . . : Yes
+</span></span><span style="display:flex;"><span>   Link-local IPv6 Address . . . . . : fe80::2053:8fc5:a377:3f3c%12<span style="color:#f92672">(</span>Preferred<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   IPv4 Address. . . . . . . . . . . : 192.168.122.220<span style="color:#f92672">(</span>Preferred<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+</span></span><span style="display:flex;"><span>   Lease Obtained. . . . . . . . . . : Sunday, December 31, <span style="color:#ae81ff">2023</span> 7:56:23 AM
+</span></span><span style="display:flex;"><span>   Lease Expires . . . . . . . . . . : Sunday, December 31, <span style="color:#ae81ff">2023</span> 9:26:23 AM
+</span></span><span style="display:flex;"><span>   Default Gateway . . . . . . . . . : 192.168.122.1
+</span></span><span style="display:flex;"><span>   DHCP Server . . . . . . . . . . . : 192.168.122.1
+</span></span><span style="display:flex;"><span>   DHCPv6 IAID . . . . . . . . . . . : <span style="color:#ae81ff">206722048</span>
+</span></span><span style="display:flex;"><span>   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2D-23-83-61-52-54-00-F5-C6-91
+</span></span><span style="display:flex;"><span>   DNS Servers . . . . . . . . . . . : 192.168.122.1
+</span></span><span style="display:flex;"><span>   NetBIOS over Tcpip. . . . . . . . : Enabled
+</span></span><span style="display:flex;"><span>                                       PS C:<span style="color:#ae81ff">\&gt;</span>
+</span></span></code></pre></div><p>Dump the XML from virsh (VM) to show the gateway IP and the DHCP server range, as observed the
+current interface has <code>192.168.122.220</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>virsh <span style="color:#75715e"># net-dumpxml default</span>
+</span></span><span style="display:flex;"><span>&lt;network connections<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;1&#39;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;name&gt;default&lt;/name&gt;
+</span></span><span style="display:flex;"><span>  &lt;uuid&gt;f15a6c78-1aed-410a-bcf2-a725a9ef04df&lt;/uuid&gt;
+</span></span><span style="display:flex;"><span>  &lt;bridge name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;virbr0&#39;</span> stp<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;on&#39;</span> delay<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0&#39;</span>/&gt;
+</span></span><span style="display:flex;"><span>  &lt;mac address<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;52:54:00:b6:05:dd&#39;</span>/&gt;
+</span></span><span style="display:flex;"><span>  &lt;ip address<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;192.168.122.1&#39;</span> netmask<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;255.255.255.0&#39;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;dhcp&gt;
+</span></span><span style="display:flex;"><span>      &lt;range start<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;192.168.122.2&#39;</span> end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;192.168.122.240&#39;</span>/&gt;
+</span></span><span style="display:flex;"><span>    &lt;/dhcp&gt;
+</span></span><span style="display:flex;"><span>  &lt;/ip&gt;
+</span></span><span style="display:flex;"><span>&lt;/network&gt;
+</span></span></code></pre></div><h2 id="creating-a-kind-cluster">Creating a Kind cluster</h2>
+<p>The Control-plane (and a few Linux workers) are going to exist in the host using KIND, the APIServer uses the KVM/QMEU bridge address <em>192.168.122.1</em> to bind the Apiserver and 6443 TCP port, this way
+the Windows VM can access the API server and join the node in the cluster</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">kind.x-k8s.io/v1alpha4</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">networking</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">podSubnet</span>: <span style="color:#e6db74">&#34;192.168.0.0/19&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">disableDefaultCNI</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">apiServerAddress</span>: <span style="color:#e6db74">&#34;192.168.122.1&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">apiServerPort</span>: <span style="color:#ae81ff">6443</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">nodes</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">role</span>: <span style="color:#ae81ff">control-plane</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">role</span>: <span style="color:#ae81ff">worker</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">role</span>: <span style="color:#ae81ff">worker</span>
+</span></span></code></pre></div><p>Run <code>kind create cluster --config kind.conf</code> and wait for the command to finish, the important parameter here is the POD subnet <em>192.168.0.0/19</em> &ndash; this is going to be used by the workload to allocate the pods, instead of installing <a href="https://opssec.in/2021/0828/">KindNET</a> the default Kind CNI, Calico is going to be used.</p>
+<p>Checking the docker containers running Kubernetes on Linux nodes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ docker ps
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                          NAMES
+</span></span><span style="display:flex;"><span>fe9c2bf3f9e5   kindest/node:v1.27.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">49</span> minutes ago   Up <span style="color:#ae81ff">49</span> minutes                                  kind-worker2
+</span></span><span style="display:flex;"><span>5800a6a47917   kindest/node:v1.27.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">49</span> minutes ago   Up <span style="color:#ae81ff">49</span> minutes   192.168.122.1:6443-&gt;6443/tcp   kind-control-plane
+</span></span><span style="display:flex;"><span>2ad0a5579ce3   kindest/node:v1.27.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">49</span> minutes ago   Up <span style="color:#ae81ff">49</span> minutes                                  kind-worker
+</span></span></code></pre></div><h2 id="installing-calico">Installing Calico</h2>
+<p>All nodes are still in <em>NotReady</em> state, due the missing CNI installation, install Calico CNI using the operator, it&rsquo;s a pretty straight forward procedure, using v3.27.0, Windows is not hostProcess supported by default. Start creating the Tigera Operator YAML, and downloading the CR yaml:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/tigera-operator.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ wget https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/custom-resources.yaml
+</span></span></code></pre></div><p>Change the CR yaml with the default settings for the Kind cluster, disabling BGP and setting
+the CIDR to same Kind POD created. VXLan encapsulation is being used, but BGP is available for Windows a well:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">operator.tigera.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Installation</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">serviceCIDRs</span>: [<span style="color:#e6db74">&#34;10.96.0.0/12&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">calicoNetwork</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">bgp</span>: <span style="color:#ae81ff">Disabled</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">windowsDataplane</span>: <span style="color:#e6db74">&#34;HNS&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ipPools</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">blockSize</span>: <span style="color:#ae81ff">26</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">cidr</span>: <span style="color:#ae81ff">192.168.0.0</span><span style="color:#ae81ff">/19</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">encapsulation</span>: <span style="color:#ae81ff">VXLAN</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">natOutgoing</span>: <span style="color:#ae81ff">Enabled</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodeSelector</span>: <span style="color:#ae81ff">all()</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">operator.tigera.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">APIServer</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>: {}
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kubernetes-services-endpoint</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">tigera-operator</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">KUBERNETES_SERVICE_HOST</span>: <span style="color:#e6db74">&#34;192.168.122.1&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">KUBERNETES_SERVICE_PORT</span>: <span style="color:#e6db74">&#34;6443&#34;</span>
+</span></span></code></pre></div><p>Wait for the APIServer pod to be up, make sure you set StrictAffinity option in the IPAM Configuration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl patch ipamconfigurations default --type merge --patch<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{&#34;spec&#34;: {&#34;strictAffinity&#34;: true}}&#39;</span>
+</span></span></code></pre></div><h2 id="join-the-windows-node">Join the Windows node</h2>
+<p>The Kind Cluster is running at this point, time to bring the Windows VM joined to our cluster,
+start installing Containerd, This script is installing latest <strong>1.7.11</strong>, a restart is required
+if the Windows Container subsystem was not installed before.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> Invoke-WebRequest https://raw.githubusercontent.com/kubernetes-sigs/sig-windows-tools/master/hostprocess/Install-Containerd.ps1 
+</span></span><span style="display:flex;"><span>  -OutFile c:<span style="color:#ae81ff">\I</span>nstall-Containerd.ps1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> C:<span style="color:#ae81ff">\I</span>nstall-Containerd.ps1 -ContainerDVersion 1.7.11
+</span></span><span style="display:flex;"><span>    -skipHypervisorSupportCheck -CNIConfigPath <span style="color:#e6db74">&#34;c:/etc/cni/net.d&#34;</span> 
+</span></span><span style="display:flex;"><span>    -CNIBinPath <span style="color:#e6db74">&#34;c:/opt/cni/bin&#34;</span>
+</span></span></code></pre></div><p>Next prepare the node and install the Kubeadm, Kubelet and Kubectl tooling, a new Windows service <em>kubelet</em> will exist:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> Invoke-WebRequest https://raw.githubusercontent.com/kubernetes-sigs/sig-windows-tools/master/hostprocess/PrepareNode.ps1 -OutFile c:<span style="color:#ae81ff">\P</span>repareNode.ps1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> c:<span style="color:#ae81ff">\P</span>repareNode.ps1 -KubernetesVersion v1.27.3
+</span></span></code></pre></div><p>The last step after you have set append <code>c:\Windows\System32\drivers\etc\hosts</code> with <code>kind-control-plane 192.168.122.1</code> is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubeadm join kind-control-plane:6443 --token ejej6v... <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --discovery-token-ca-cert-hash sha256:a97b5928dd546d13359a31a4dc6fe26a1a...
+</span></span></code></pre></div><p>The Calico Windows agent must be running (check if a External HNS net exists with <em>Get-HNSNetwork</em> in the Windows host), Kube-proxy must be up as well:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>❯ kubectl get pods -A -w | grep windows
+</span></span><span style="display:flex;"><span>calico-system                    calico-node-windows-mhqt2                    2/2     Running   <span style="color:#ae81ff">0</span>               97m
+</span></span><span style="display:flex;"><span>kube-system                      kube-proxy-windows-f7975                     1/1     Running   <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>7m19s ago<span style="color:#f92672">)</span>   7m29s
+</span></span></code></pre></div><h2 id="running-the-windows-e2e">Running the Windows E2E</h2>
+<p>It&rsquo;s possible to run the test suite, compiling from the Kubernetes source if necessary:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd go/src/k8s.io/kubernetes
+</span></span><span style="display:flex;"><span>$ make WHAT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test/e2e/e2e.test&#34;</span>
+</span></span><span style="display:flex;"><span>$ ./_output/bin/e2e.test --ginkgo.trace --ginkgo.v --node-os-distro windows --kubeconfig ~/.kube/config --provider<span style="color:#f92672">=</span>local --ginkgo.focus<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;\[sig-windows\]&#34;</span>
+</span></span></code></pre></div><p><img src="./images/e2e.png?width=1024px" alt="e2e" title="e2e"></p>
+<p>Now, jf you are looking for a full test suite to ensure your cluster is ready for operations take a look in the <a href="https://github.com/kubernetes-sigs/windows-operational-readiness">Windows Operational Readiness</a> subproject!</p>
+<h2 id="thoughts-on-automation">Thoughts on automation</h2>
+<p>The initial idea is to modify the &ldquo;immutable&rdquo; node to a mutable one using the &ldquo;agent&rdquo; concept. This would allow end-users to install, modify and update software during runtime or bootstrap time. All of these operations, such as bootstrapping (installing containerd, kubelet binaries and services, changing default settings) could be automated. In projects like Image-builder, these tasks are executed as custom roles through packer provisioning, and there are several golang libraries available to wrap up Ansible and reuse these tasks.</p>
+<p>There are alternative options to achieve a similar outcome, such as using golang command lines execution with PowerShell in the node. This requires accessing the node via a pre-installed SSH server with PKI access for the administration user. Once the node is baked, the join procedure in the kind-created cluster in the Linux host takes place. At this point, Docker and KVM/Qemu are required.</p>
+<p>Two important things need to be addressed to fully automate the cluster:</p>
+<ol>
+<li>replicating the procedure for Windows Hyper-V native VMs and</li>
+<li>Automating the <a href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/automate-windows-setup">Windows installation</a> lifecycle across different hypervisors and OSs.</li>
+</ol>
+<p>It is crucial to emphasize the significance of providing a smooth experience to the final user or Kubernetes developers while utilizing these environments. This will enable them to focus on the problem they are attempting to solve rather than dealing with unexpected failures in the infrastructure setup. This can be considered one of the primary requisites of the project.</p>
+<h2 id="contribute">Contribute</h2>
+<p>Interested in contribute? Find the team on <strong>Kubernetes Slack</strong> workspace <strong>#sig-windows</strong> channel, show up and say HI!</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2023/" title="2023"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/0801/" title="sigstore policy-controller validation" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1704047087"></script>
+    <script src="/js/perfect-scrollbar.min.js?1704047087"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1704047087"></script>
+    <script src="/js/jquery.sticky.js?1704047087"></script>
+    <script src="/js/featherlight.min.js?1704047087"></script>
+    <script src="/js/highlight.pack.js?1704047087"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1704047087"></script>
+    <script src="/js/learn.js?1704047087"></script>
+    <script src="/js/hugo-learn.js?1704047087"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1704047087"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
