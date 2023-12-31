@@ -12,22 +12,22 @@
     <title>Running Windows cluster locally :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1704047087" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1704047087" rel="stylesheet">
-    <link href="/css/hybrid.css?1704047087" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1704047087" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1704047087" rel="stylesheet">
-    <link href="/css/auto-complete.css?1704047087" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1704047087" rel="stylesheet">
-    <link href="/css/theme.css?1704047087" rel="stylesheet">
-    <link href="/css/tabs.css?1704047087" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1704047087" rel="stylesheet">
+    <link href="/css/nucleus.css?1704047371" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1704047371" rel="stylesheet">
+    <link href="/css/hybrid.css?1704047371" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1704047371" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1704047371" rel="stylesheet">
+    <link href="/css/auto-complete.css?1704047371" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1704047371" rel="stylesheet">
+    <link href="/css/theme.css?1704047371" rel="stylesheet">
+    <link href="/css/tabs.css?1704047371" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1704047371" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1704047087" rel="stylesheet">
+    <link href="/css/theme-blue.css?1704047371" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1704047087"></script>
+    <script src="/js/jquery-3.3.1.min.js?1704047371"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1704047087"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1704047087"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1704047371"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1704047371"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1704047087"></script>
+<script type="text/javascript" src="/js/search.js?1704047371"></script>
 
     
   </div>
@@ -863,11 +863,14 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#qemukvm-installations-and-windows-vms">QEMU/KVM installations and Windows VMs</a></li>
-    <li><a href="#creating-a-kind-cluster">Creating a Kind cluster</a></li>
-    <li><a href="#installing-calico">Installing Calico</a></li>
-    <li><a href="#join-the-windows-node">Join the Windows node</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#qemukvm-installations-and-windows-vms">QEMU/KVM installations and Windows VMs</a></li>
+        <li><a href="#creating-a-kind-cluster">Creating a Kind cluster</a></li>
+        <li><a href="#installing-calico-with-operators">Installing Calico with Operators</a></li>
+        <li><a href="#join-the-windows-node">Join the Windows node</a></li>
+      </ul>
+    </li>
     <li><a href="#running-the-windows-e2e">Running the Windows E2E</a></li>
     <li><a href="#thoughts-on-automation">Thoughts on automation</a></li>
     <li><a href="#contribute">Contribute</a></li>
@@ -920,7 +923,7 @@ sequenceDiagram
     adm->>kind: Run the E2E test suite    
 </div>
 
-<h2 id="qemukvm-installations-and-windows-vms">QEMU/KVM installations and Windows VMs</h2>
+<h3 id="qemukvm-installations-and-windows-vms">QEMU/KVM installations and Windows VMs</h3>
 <p>Let&rsquo;s skip this in terms of complexity for now, in later posts there&rsquo;ll be deep dives related to the automatic installation of Windows on QEMU/KVM, on this point we part from the principle the final user already have a running version of Windows Datacenter 2019 or 2022. To enable the GUI use the Desktop Experience.</p>
 <p><img src="./images/install1.png?width=600px" alt="install1" title="install">
 <img src="./images/install2.png?width=600px" alt="install2" title="install"></p>
@@ -958,7 +961,7 @@ current interface has <code>192.168.122.220</code>.</p>
 </span></span><span style="display:flex;"><span>    &lt;/dhcp&gt;
 </span></span><span style="display:flex;"><span>  &lt;/ip&gt;
 </span></span><span style="display:flex;"><span>&lt;/network&gt;
-</span></span></code></pre></div><h2 id="creating-a-kind-cluster">Creating a Kind cluster</h2>
+</span></span></code></pre></div><h3 id="creating-a-kind-cluster">Creating a Kind cluster</h3>
 <p>The Control-plane (and a few Linux workers) are going to exist in the host using KIND, the APIServer uses the KVM/QMEU bridge address <em>192.168.122.1</em> to bind the Apiserver and 6443 TCP port, this way
 the Windows VM can access the API server and join the node in the cluster</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
@@ -979,7 +982,7 @@ the Windows VM can access the API server and join the node in the cluster</p>
 </span></span><span style="display:flex;"><span>fe9c2bf3f9e5   kindest/node:v1.27.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">49</span> minutes ago   Up <span style="color:#ae81ff">49</span> minutes                                  kind-worker2
 </span></span><span style="display:flex;"><span>5800a6a47917   kindest/node:v1.27.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">49</span> minutes ago   Up <span style="color:#ae81ff">49</span> minutes   192.168.122.1:6443-&gt;6443/tcp   kind-control-plane
 </span></span><span style="display:flex;"><span>2ad0a5579ce3   kindest/node:v1.27.3   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">49</span> minutes ago   Up <span style="color:#ae81ff">49</span> minutes                                  kind-worker
-</span></span></code></pre></div><h2 id="installing-calico">Installing Calico</h2>
+</span></span></code></pre></div><h3 id="installing-calico-with-operators">Installing Calico with Operators</h3>
 <p>All nodes are still in <em>NotReady</em> state, due the missing CNI installation, install Calico CNI using the operator, it&rsquo;s a pretty straight forward procedure, using v3.27.0, Windows is not hostProcess supported by default. Start creating the Tigera Operator YAML, and downloading the CR yaml:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/tigera-operator.yaml
 </span></span><span style="display:flex;"><span>
@@ -1018,7 +1021,7 @@ the CIDR to same Kind POD created. VXLan encapsulation is being used, but BGP is
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">KUBERNETES_SERVICE_PORT</span>: <span style="color:#e6db74">&#34;6443&#34;</span>
 </span></span></code></pre></div><p>Wait for the APIServer pod to be up, make sure you set StrictAffinity option in the IPAM Configuration:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl patch ipamconfigurations default --type merge --patch<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{&#34;spec&#34;: {&#34;strictAffinity&#34;: true}}&#39;</span>
-</span></span></code></pre></div><h2 id="join-the-windows-node">Join the Windows node</h2>
+</span></span></code></pre></div><h3 id="join-the-windows-node">Join the Windows node</h3>
 <p>The Kind Cluster is running at this point, time to bring the Windows VM joined to our cluster,
 start installing Containerd, This script is installing latest <strong>1.7.11</strong>, a restart is required
 if the Windows Container subsystem was not installed before.</p>
@@ -1541,19 +1544,19 @@ if the Windows Container subsystem was not installed before.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1704047087"></script>
-    <script src="/js/perfect-scrollbar.min.js?1704047087"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1704047087"></script>
-    <script src="/js/jquery.sticky.js?1704047087"></script>
-    <script src="/js/featherlight.min.js?1704047087"></script>
-    <script src="/js/highlight.pack.js?1704047087"></script>
+    <script src="/js/clipboard.min.js?1704047371"></script>
+    <script src="/js/perfect-scrollbar.min.js?1704047371"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1704047371"></script>
+    <script src="/js/jquery.sticky.js?1704047371"></script>
+    <script src="/js/featherlight.min.js?1704047371"></script>
+    <script src="/js/highlight.pack.js?1704047371"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1704047087"></script>
-    <script src="/js/learn.js?1704047087"></script>
-    <script src="/js/hugo-learn.js?1704047087"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1704047371"></script>
+    <script src="/js/learn.js?1704047371"></script>
+    <script src="/js/hugo-learn.js?1704047371"></script>
     
         
-            <script src="/mermaid/mermaid.js?1704047087"></script>
+            <script src="/mermaid/mermaid.js?1704047371"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
