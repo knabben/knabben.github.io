@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Tips and ideas on setting up a development environment for Kubernetes Windows nodes">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Day 1 - Kubernetes Windows Nodes :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1705972720" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1705972720" rel="stylesheet">
+    <link href="/css/hybrid.css?1705972720" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1705972720" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1705972720" rel="stylesheet">
+    <link href="/css/auto-complete.css?1705972720" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1705972720" rel="stylesheet">
+    <link href="/css/theme.css?1705972720" rel="stylesheet">
+    <link href="/css/tabs.css?1705972720" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1705972720" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1705972720" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1705972720"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2024/0104/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1705972720"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1705972720"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1705972720"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/" title="2024" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2024/">
+          2024
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0104/" title="Day 1 - Kubernetes Windows Nodes" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2024/0104/">
+          Day 1 - Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/1230/" title="Day 0 - Running Windows cluster locally" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/1230/">
+          Day 0 - Running Windows cluster locally
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0801/" title="sigstore policy-controller validation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0801/">
+          sigstore policy-controller validation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0721/" title="Ztunnel SPIRE implementation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0721/">
+          Ztunnel SPIRE implementation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0702/" title="Waypoint Proxy for the app layer" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0702/">
+          Waypoint Proxy for the app layer
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0903/" title="Windows and Calico overlay networking" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0903/">
+          Windows and Calico overlay networking
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2024/'>2024</a> > Day 1 - Kubernetes Windows Nodes
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+      </ul>
+    </li>
+    <li><a href="#swdt-subcommand-and-settings">SWDT subcommand and settings</a>
+      <ul>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#initial-node-setup">Initial node setup</a></li>
+        <li><a href="#kubernetes-binaries-locations-and-deployment">Kubernetes binaries locations and deployment</a></li>
+      </ul>
+    </li>
+    <li><a href="#deep-diving-on-a-real-use-case">Deep diving on a real use case</a>
+      <ul>
+        <li><a href="#cri-grpc-connections-and-api">CRI, gRPC connections and API</a></li>
+        <li><a href="#cri-api-and-cadvisor-kep">CRI API and cAdvisor KEP</a></li>
+        <li><a href="#an-interesting-containerd-metric-issue">An interesting Containerd metric issue</a></li>
+      </ul>
+    </li>
+    <li><a href="#contribute">Contribute</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Day 1 - Kubernetes Windows Nodes
+            </h1>
+          
+
+        
+
+
+
+	<h3 id="introduction">Introduction</h3>
+<p>On Day 1, after <a href="https://opssec.in/2023/1230/">stepping stones</a> and setting up a Kubernetes cluster, I was left wondering what to do next. Running mundane workloads on the cluster was definitely not the reason for setting it up in the first place. Instead, I aim to develop Kubernetes, specifically focusing on the Windows node components from this particular environment.
+In this post, I would like to share an experimental CLI tool created on SWDT (SIG Windows Dev Tools) that can assist in binary deployment and node configuration with simple syntax and standardized configurations.</p>
+<p>Additionally, I aim to provide concise development workflows that I use daily for testing and validating the newly built custom components. The idea of this toolkit is to provide developers with more robust and reusable mechanisms, as opposed to shell scripts (which are perfectly fine), for managing Windows nodes remotely.</p>
+<h2 id="swdt-subcommand-and-settings">SWDT subcommand and settings</h2>
+<p>The SWDT repository contains the <a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/tree/master/experiments/swdt">experiment/swdt</a> folder for the POC CLI.
+There&rsquo;s a great documentation provided by Mateusz Loskot, on how to setup the same Windows cluster using Hyper-V in the project, check if this fits your use case. After compiling with <code>make build</code>, the binary will provide a few subcommands. Before looking at the command options, let&rsquo;s explore the configuration format.</p>
+<h3 id="settings">Settings</h3>
+<p>The configuration file has the following fields, and the passed to swdt with the flag <code>--config</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">windows.k8s.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Node</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">sample</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">credentials</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">username</span>: <span style="color:#ae81ff">Administrator</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hostname</span>: <span style="color:#ae81ff">192.168.122.220</span>:<span style="color:#ae81ff">22</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">privateKey</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">setup</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">enableRDP</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">chocoPackages</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">vim</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">grep</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">kubernetes</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">provisioners</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#f92672">containerd</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">version</span>: <span style="color:#ae81ff">1.7.11</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">sourceURL</span>: <span style="color:#ae81ff">http://xyz/containerd.exe</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">destination</span>: <span style="color:#ae81ff">c:\Program Files\containerd\bin\containerd.exe</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">overwrite</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">kubelet</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">version</span>: <span style="color:#ae81ff">1.29.0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">sourceURL</span>: <span style="color:#ae81ff">http://xyz/kubelet.exe</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">destination</span>: <span style="color:#ae81ff">c:\k\kubelet.exe</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">overwrite</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><ul>
+<li>Credentials: support for SSH settings, it allows passing a password || privatekey path (neither is encrypted on this version)</li>
+<li>Setup: Define options for initial node bootstrap</li>
+<li>Kubernetes: Auxiliary Kubernetes binaries installation</li>
+</ul>
+<h3 id="initial-node-setup">Initial node setup</h3>
+<p>The initial setup as stated, will bootstrap the basic node settings and package installation required to help the developer to work inside the node, the functionalities right now are:</p>
+<ol>
+<li>Enable Remote Desktop Service</li>
+<li>Install Windows Choco Package Manager and a list of packages (vim, grep in the sample):</li>
+</ol>
+<p><img src="./images/setup.gif?width=1024x" alt="setup" title="setup"></p>
+<h3 id="kubernetes-binaries-locations-and-deployment">Kubernetes binaries locations and deployment</h3>
+<p>SWDT has developed the idea of <strong>provisioners</strong>, which are a list of objects used to replace specific binaries on your machine, mostly used to run against Kubernetes and Containerd services that have already been created in the Windows VM.
+This allows developers to compile a specific custom binary on their own machine, using the target architecture, and push it directly to the node. Having the Windows service automatically restarted afterward. This step significantly reduces the time required for replacing components at runtime on a Windows node while testing and developing them.</p>
+<p>In the example the <code>containerd</code> and <code>kubelet</code> were both compiled with <code>GOOS=windows</code> in the Linux both GOPATH and uploaded to the running Windows node:</p>
+<p><img src="./images/kubernetes.gif?width=1024px" alt="kubernetes" title="kubernetes"></p>
+<h4 id="bonus-enabling-tracing">BONUS: Enabling tracing</h4>
+<p>The Containerd Windows service can be changed to enable logs and tracing, for more information about it look at this <a href="https://opssec.in/2023/0406/">old post</a>.</p>
+<h2 id="deep-diving-on-a-real-use-case">Deep diving on a real use case</h2>
+<h3 id="cri-grpc-connections-and-api">CRI, gRPC connections and API</h3>
+<p>According to the <a href="https://kubernetes.io/docs/concepts/architecture/cri/">official documentation</a>, the CRI (Container Runtime Interface) is a plugin interface that allows the kubelet to utilize a wide range of container runtimes without requiring recompilation of the cluster&rsquo;s components. Each node consists of a container runtime, and the kubelet can launch pods and their containers. CRI is the primary protocol for communication between the kubelet and container runtime (containerd, cri-o, etc.). This 2016 <a href="https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/">blog post</a> states the CRI comprises of protocol buffer definitions, a gRPC API, and its own libraries. The kubelet itself is only a client and communicates with the container runtime (gRPC API server) through a Unix socket (locally bound).</p>
+<p><img src="./images/architecture.png?width=800px" alt="arch" title="arch"></p>
+<p>The Kubernetes API has two services - RuntimeService and ImageService. To set the communication socket, kubelet uses two flags: <code>--container-runtime-endpoint</code> and <code>--image-service-endpoint</code>. The Runtime service has an interface for executables, attachments and port forwarding requests. It also provides interfaces for managing the lifecycle of a pod and providing statistics. The ImageService provides Remote Procedure Calls (RPCs) to pull an image from a repository, inspect it, and remove it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// Runtime service defines the public APIs for remote container runtimes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">service</span> <span style="color:#a6e22e">RuntimeService</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">RunPodSandbox</span>(<span style="color:#a6e22e">RunPodSandboxRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">RunPodSandboxResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">StopPodSandbox</span>(<span style="color:#a6e22e">StopPodSandboxRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">StopPodSandboxResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">RemovePodSandbox</span>(<span style="color:#a6e22e">RemovePodSandboxRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">RemovePodSandboxResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">PodSandboxStatus</span>(<span style="color:#a6e22e">PodSandboxStatusRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">PodSandboxStatusResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">ListPodSandbox</span>(<span style="color:#a6e22e">ListPodSandboxRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">ListPodSandboxResponse</span>) {}
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// ImageService defines the public APIs for managing images.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">service</span> <span style="color:#a6e22e">ImageService</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">ListImages</span>(<span style="color:#a6e22e">ListImagesRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">ListImagesResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">PullImage</span>(<span style="color:#a6e22e">PullImageRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">PullImageResponse</span>) {}
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To understand the entry point of the next journey, let&rsquo;s first examine how we can practically access these endpoints. Kubelet serves as a client, so there isn&rsquo;t much to observe here except for its client implementation (which we will revisit later, but for now we can access it using kubectl).</p>
+<p><code>Containerd</code> has a second layer that provides the CRI server API. This gRPC API is accessed through the CRI plugin, which is configured under the <code>io.containerd.grpc.v1.cri</code> section in the configuration file. The <code>cri</code> plugin utilizes containerd to manage the complete lifecycle of containers and all container images. Additionally, the <code>cri</code> plugin handles pod networking using CNI. To interact with the gRPC interface, you can use the <code>crictl</code> tool. For example, <code>crictl</code> can be used to list all pods or retrieve the stats of all pods on the node.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>PS C:\Users\Administrator&gt; crictl stats  -o table
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CONTAINER           NAME                                                CPU %               MEM                 DISK                INODES
+</span></span><span style="display:flex;"><span>03f68fd87079e       cpulimittest-57aeaf8c-406e-<span style="color:#ae81ff">4568</span>-bba7-5ba86e390b04   <span style="color:#ae81ff">44.81</span>               <span style="color:#ae81ff">121.1</span>MB             <span style="color:#ae81ff">37.75</span>MB             <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>c2cdaa1334388       cpulimittest-71a8a462-bfb6-<span style="color:#ae81ff">4306</span>-a1be-176f0266ebf1   <span style="color:#ae81ff">53.41</span>               <span style="color:#ae81ff">121.5</span>MB             <span style="color:#ae81ff">37.75</span>MB             <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>To access the <code>containerd</code> directly you can still use <code>ctr</code> tool, for listing the images and sandbox pods running, it&rsquo;s possible to do something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>PS C:\Users\Administrator&gt; ctr -n k8s.io task ls
+</span></span><span style="display:flex;"><span>TASK                                                                PID      STATUS    
+</span></span><span style="display:flex;"><span>03f68fd87079e79116818242b12a9f4ba06510dae4740087f07a3adc97e207f3    <span style="color:#ae81ff">24436</span>    RUNNING
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PS C:\Users\Administrator&gt; Get-Process -Id <span style="color:#ae81ff">24436</span> | Format-table *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name    Id PriorityClass FileVersion HandleCount WorkingSet PagedMemorySize PrivateMemorySize VirtualMemorySize TotalProcessorTime SI Handles            VM      WS       PM   NPM Path                                       Company      CPU ProductVersion Description Prod
+</span></span><span style="display:flex;"><span>                                                                                                                                                                                                                                                                          uct  
+</span></span><span style="display:flex;"><span>----    -- ------------- ----------- ----------- ---------- --------------- ----------------- ----------------- ------------------ -- -------            --      --       --   --- ----                                       -------      --- -------------- ----------- ----
+</span></span><span style="display:flex;"><span>pwsh <span style="color:#ae81ff">24436</span>        Normal                     <span style="color:#ae81ff">573</span>    <span style="color:#ae81ff">3751936</span>        <span style="color:#ae81ff">40202240</span>          <span style="color:#ae81ff">40202240</span>         <span style="color:#ae81ff">613908480</span> <span style="color:#ae81ff">00</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">00</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">02.5781250</span>    <span style="color:#ae81ff">5</span>     <span style="color:#ae81ff">573</span> <span style="color:#ae81ff">2203932131328</span> <span style="color:#ae81ff">3751936</span> <span style="color:#ae81ff">40202240</span> <span style="color:#ae81ff">50872</span> C:\Program Files\PowerShell\powershell.exe         <span style="color:#ae81ff">2.578125</span>
+</span></span></code></pre></div><p>The last layer you want to access is the capability of creating a container directly in the Windows OS. The OCI provides a standard CLI tool called <code>&quot;runc&quot;</code> (used by &ldquo;containerd&rdquo; under the hood) to create the isolated process and resource-restricted process. When talking about Windows, things are different. There are no cgroups and namespaces like in Linux. Instead, Windows OSes implement the same isolation mechanisms via Job objects (cgroups) and Object Namespace (namespaces). The call happens directly on a subsystem called <a href="https://learn.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/containerd">Host Compute Service (HCS)</a>, and the CLI in this case is called <code>&quot;runhcs&quot;</code>.</p>
+
+<div class="mermaid" align="center">
+flowchart TD
+    containerd --> HCS[Host Compute Service]
+    HCS --> cg[Control Groups]
+    HCS --> ns[Object Namespace]
+    HCS --> Layer[Layer Capabilities]
+</div>
+
+<p>This example demonstrates instead the use of a native Windows tool called: <code>hcsdiag.exe</code> to access the local containers running in the machine, for reading a file and executing commands in the container and operating with same functionalities as <code>runhcs</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>PS C:\Users\Administrator&gt; hcsdiag read 03f68fd87079e79116818242b12a9f4ba06510dae4740087f07a3adc97e207f3 <span style="color:#e6db74">&#34;c:\Windows\System32\drivers\etc\hosts&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Kubernetes-managed hosts file.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">127.0</span>.0.1       localhost
+</span></span><span style="display:flex;"><span>::<span style="color:#ae81ff">1</span>     localhost ip6-localhost ip6-loopback
+</span></span><span style="display:flex;"><span>fe00::<span style="color:#ae81ff">0</span> ip6-localnet
+</span></span><span style="display:flex;"><span>fe00::<span style="color:#ae81ff">0</span> ip6-mcastprefix
+</span></span><span style="display:flex;"><span>fe00::<span style="color:#ae81ff">1</span> ip6-allnodes
+</span></span><span style="display:flex;"><span>fe00::<span style="color:#ae81ff">2</span> ip6-allrouters
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">192.168</span>.15.167  cpulimittest-57aeaf8c-406e-<span style="color:#ae81ff">4568</span>-bba7-5ba86e390b04
+</span></span><span style="display:flex;"><span>PS C:\Users\Administrator&gt; hcsdiag exec 03f68fd87079e79116818242b12a9f4ba06510dae4740087f07a3adc97e207f3 ipconfig
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Windows IP <span style="color:#66d9ef">Configuration</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ethernet adapter vEthernet (a9f5cf921ea270074c43af661312016dee9e7f5d59b949e6e21ce9a0a3846236_Calico)<span style="color:#960050;background-color:#1e0010">:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Connection-specific DNS Suffix  . <span style="color:#960050;background-color:#1e0010">:</span> cpu-resources-test-windows-<span style="color:#ae81ff">7116</span>.svc.cluster.local
+</span></span><span style="display:flex;"><span>Link-local IPv6 Address . . . . . <span style="color:#960050;background-color:#1e0010">:</span> fe80::<span style="color:#ae81ff">9055</span><span style="color:#960050;background-color:#1e0010">:</span>ad42<span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">5090</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">120f</span><span style="color:#66d9ef">%</span><span style="color:#ae81ff">45</span>
+</span></span><span style="display:flex;"><span>IPv4 Address. . . . . . . . . . . <span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">192.168</span>.15.167
+</span></span><span style="display:flex;"><span>Subnet Mask . . . . . . . . . . . <span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">255.255</span>.255.192
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Default</span> Gateway . . . . . . . . . <span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">192.168</span>.15.129
+</span></span></code></pre></div><p>If you want to see more tricks related to this stack interaction these two videos are recommended:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=3dPWD64eeBM">Kubernetes Is Not Magic III.: Kubelet, Containerd, CRI(-0) and runc</a></li>
+<li><a href="https://www.youtube.com/watch?v=f4x8Yk5rhUg">Who&rsquo;s Running My Pods? A Deep Dive into the K8s Container Runtime Interface - Phil Estes</a></li>
+</ul>
+<h3 id="cri-api-and-cadvisor-kep">CRI API and cAdvisor KEP</h3>
+<p>The CRI provides abstractions for container runtimes to integrate with Kubernetes. CRI expects the runtime to provide resource <a href="https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/cri-container-stats.md">usage statistics</a> for the containers. The cAdvisor library (an open-source project) previously provided information about CPU and memory. These exposed metrics were aggregated in the Summary API from Kubelet. With the adoption of CRI, all metrics are now aimed to be extracted from there.</p>
+<p>The CPU, memory and filesystem information are gathered via these gRPC stubs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a6e22e">service</span> <span style="color:#a6e22e">RuntimeService</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">ContainerStats</span>(<span style="color:#a6e22e">ContainerStatsRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">ContainerStatsResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">ListContainerStats</span>(<span style="color:#a6e22e">ListContainerStatsRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">ListContainerStatsResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">PodSandboxStats</span>(<span style="color:#a6e22e">PodSandboxStatsRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">PodSandboxStatsResponse</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">ListPodSandboxStats</span>(<span style="color:#a6e22e">ListPodSandboxStatsRequest</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">ListPodSandboxStatsResponse</span>) {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>From the Kubelet (using kubectl is possible to extract these metrics from a specific node):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get --raw <span style="color:#e6db74">&#34;/api/v1/nodes/kind-control-plane/proxy/stats/summary”
+</span></span></span></code></pre></div><p>There are more metrics than this sample, lets focus in the CPU for now:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&#34;pods&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;podRef&#34;</span>: {<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04&#34;</span>},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;startTime&#34;</span>: <span style="color:#e6db74">&#34;2024-01-20T22:06:16Z&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;containers&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;startTime&#34;</span>: <span style="color:#e6db74">&#34;2024-01-20T22:06:18Z&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;cpu&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;time&#34;</span>: <span style="color:#e6db74">&#34;2024-01-22T19:48:13Z&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;usageNanoCores&#34;</span>: <span style="color:#ae81ff">504720890</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;usageCoreNanoSeconds&#34;</span>: <span style="color:#ae81ff">82450187500000</span>
+</span></span><span style="display:flex;"><span>          },
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;memory&#34;</span>: {},
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;rootfs&#34;</span>: {},
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;logs&#34;</span>: {}
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;cpu&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;time&#34;</span>: <span style="color:#e6db74">&#34;2024-01-22T19:48:13Z&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;usageNanoCores&#34;</span>: <span style="color:#ae81ff">504720890</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;usageCoreNanoSeconds&#34;</span>: <span style="color:#ae81ff">82450187500000</span>
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;memory&#34;</span>: {},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;network&#34;</span>: {},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;volume&#34;</span>: []
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The primary problem we face is that the Container Runtime Interface (CRI) doesn&rsquo;t offer sufficient data that includes the necessary specifications for both endpoints. This leads to confusion when a combination of cadvisor and CRI content is merged during the request, resulting in inconsistent metrics due to the different origins. The problem can escalate when various operating systems with different code paths are used.</p>
+<p>A new KEP (Kubernetes Enhancement Proposal) was created to <a href="https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/2371-cri-pod-container-stats/README.md#summary-pod-stats-object">replace the cAdvisor</a> metrics path and exclusively use the CRI (Container Runtime Interface) path. As part of this, the <code>PodSandboxStats</code> stub was created. Currently, the usage of this feature, which relies only on CRI, is in beta. You can test it by enabling the <code>PodAndContainerStatsFromCRI</code> feature gate.</p>
+<p>When accessing the <code>/stats/summary</code> endpoint with the feature gate disabled, a request is made directly to the <code>listPodStatsPartiallyFromCRI</code> kubelet function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">criStatsProvider</span>) <span style="color:#a6e22e">listPodStats</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">updateCPUNanoCoreUsage</span> <span style="color:#66d9ef">bool</span>) ([]<span style="color:#a6e22e">statsapi</span>.<span style="color:#a6e22e">PodStats</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">podAndContainerStatsFromCRI</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">listPodStatsStrictlyFromCRI</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">updateCPUNanoCoreUsage</span>, <span style="color:#a6e22e">containerMap</span>, <span style="color:#a6e22e">podSandboxMap</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">rootFsInfo</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">listPodStatsPartiallyFromCRI</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">updateCPUNanoCoreUsage</span>, <span style="color:#a6e22e">containerMap</span>, <span style="color:#a6e22e">podSandboxMap</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">rootFsInfo</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The handler calls the <code>listPodStats</code> function on <code>pkg/kubelet/stats/cri_stats_provider.go</code>, the function calls <code>getPodAndContainerMaps</code> and uses the runtimeService to call <code>Listcontainers</code> and <code>ListPodSandbox</code></p>
+<p>The code function on <code>listPodStatsPartiallyFromCRI</code> then process the result and iterate merging the other values from cAdvisor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">criStatsProvider</span>) <span style="color:#a6e22e">listPodStatsPartiallyFromCRI</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">updateCPUNanoCoreUsage</span> <span style="color:#66d9ef">bool</span>, <span style="color:#a6e22e">containerMap</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">runtimeapi</span>.<span style="color:#a6e22e">Container</span>, <span style="color:#a6e22e">podSandboxMap</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">runtimeapi</span>.<span style="color:#a6e22e">PodSandbox</span>, <span style="color:#a6e22e">rootFsInfo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">cadvisorapiv2</span>.<span style="color:#a6e22e">FsInfo</span>) ([]<span style="color:#a6e22e">statsapi</span>.<span style="color:#a6e22e">PodStats</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">runtimeService</span>.<span style="color:#a6e22e">ListContainerStats</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">runtimeapi</span>.<span style="color:#a6e22e">ContainerStatsFilter</span>{})  <span style="color:#75715e">// ListContainerStats from CRI (containerd)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">allInfos</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">getCadvisorContainerInfo</span>(<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">cadvisor</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">caInfos</span>, <span style="color:#a6e22e">allInfos</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">getCRICadvisorStats</span>(<span style="color:#a6e22e">allInfos</span>)
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">stats</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">resp</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">addPodNetworkStats</span>(<span style="color:#a6e22e">ps</span>, <span style="color:#a6e22e">podSandboxID</span>, <span style="color:#a6e22e">caInfos</span>, <span style="color:#a6e22e">cs</span>, <span style="color:#a6e22e">containerNetworkStats</span>[<span style="color:#a6e22e">podSandboxID</span>])
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">addPodCPUMemoryStats</span>(<span style="color:#a6e22e">ps</span>, <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">UID</span>(<span style="color:#a6e22e">podSandbox</span>.<span style="color:#a6e22e">Metadata</span>.<span style="color:#a6e22e">Uid</span>), <span style="color:#a6e22e">allInfos</span>, <span style="color:#a6e22e">cs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">addSwapStats</span>(<span style="color:#a6e22e">ps</span>, <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">UID</span>(<span style="color:#a6e22e">podSandbox</span>.<span style="color:#a6e22e">Metadata</span>.<span style="color:#a6e22e">Uid</span>), <span style="color:#a6e22e">allInfos</span>, <span style="color:#a6e22e">cs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">addProcessStats</span>(<span style="color:#a6e22e">ps</span>, <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">UID</span>(<span style="color:#a6e22e">podSandbox</span>.<span style="color:#a6e22e">Metadata</span>.<span style="color:#a6e22e">Uid</span>), <span style="color:#a6e22e">allInfos</span>, <span style="color:#a6e22e">cs</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>OK, gRPC named pipes are not supported on grpcurl (the tool we are using to call the stub), lets use TCP instead in the <code>c:\Program Files\containerd\config.toml</code> configuration file, change these parameters:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">grpc</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">address</span> = <span style="color:#e6db74">&#34;\\\\.\\pipe\\containerd-containerd&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">gid</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tcp_address</span> = <span style="color:#e6db74">&#34;192.168.122.220:8888&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">plugins</span>]
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">plugins</span>.<span style="color:#e6db74">&#34;io.containerd.grpc.v1.cri&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">disable_tcp_service</span> = <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>This example shows how to directly fetch the Linux CRI endpoint using the Linux node instead on Containerd 1.7.12, using grpcurl:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ grpcurl <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -import-path ~/go/src/github.com/containerd/containerd/vendor/k8s.io/cri-api/pkg/apis/runtime/v1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -import-path ~/go/src/github.com/containerd/containerd/vendor <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -proto api.proto -plaintext 192.168.122.220:8888 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  runtime.v1.RuntimeService/ListContainerStats
+</span></span></code></pre></div><p>The ListContainerStats should return something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;stats&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;attributes&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;metadata&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;cpu&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;timestamp&#34;</span>: <span style="color:#e6db74">&#34;1705956821372245000&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;usageCoreNanoSeconds&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;84401234375000&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;usageNanoCores&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;407471100&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;memory&#34;</span>: {},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;writableLayer&#34;</span>: {}
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="an-interesting-containerd-metric-issue">An interesting Containerd metric issue</h3>
+<p>Woof! That was a long ride! At least, from this point on, there is an understanding of how to swap hot binaries on Windows nodes in Kubernetes, and a general idea of how metrics are extracted from the runtime. So, let me tell you a story :)</p>
+<p>The daily end-to-end (E2E) test, using the latest version of containerd, started encountering issues with a specific test, causing it to fail intermittently.</p>
+<p><code>[It] [sig-windows] [Feature:Windows] Cpu Resources [Serial] Container limits should not be exceeded after waiting 2 minutes</code></p>
+<p>If you examine the code base (located at k/k/test/e2e/windows/cpu_limits.go), the test begins by starting 2 pods with resource limits and a PowerShell job that will consume all available CPU for the isolated process. While the job is running, the test checks the CPU value at the <code>/stats/summary</code> endpoint. If the value is <code>0</code>, which should never happen when the PowerShell script is running, it indicates a failure. This situation, as shown in the image, occasionally occurs.</p>
+<p><img src="./images/wait.png?width=1024px" alt="wait" title="wait"></p>
+
+<div class="notices note" ><p>This only happens on Containerd 1.7 daily test. The other test running on Containerd 1.6 never failed before. This never happens on Linux.</p>
+</div>
+
+<p>First steps is to replicate locally, I will the capability to recompile the containerd initially with these two different versions (1.6 and 1.7) and
+run the same test upstream, let&rsquo;s use the <code>swdt</code> provisioner:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd ~/go/src/github.com/containerd/containerd/
+</span></span><span style="display:flex;"><span>containerd$ git checkout v1.7.12
+</span></span><span style="display:flex;"><span>containerd$ GOOS<span style="color:#f92672">=</span>windows make bin/containerd
+</span></span><span style="display:flex;"><span>containerd$ file bin/containerd
+</span></span><span style="display:flex;"><span>bin/containerd: PE32+ executable <span style="color:#f92672">(</span>console<span style="color:#f92672">)</span> x86-64, <span style="color:#66d9ef">for</span> MS Windows, <span style="color:#ae81ff">8</span> sections
+</span></span><span style="display:flex;"><span>containerd$ swdt kubernetes
+</span></span></code></pre></div><p>The  containerd service is restarted with the new binary, running the e2e.test confirms the issue. Makes sense now to emulate the test, the first thing we can do on a loop is start curling the <code>/stats/summary</code> endpoint as we did before and check the return:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ <span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> kubectl get --raw <span style="color:#e6db74">&#34;/api/v1/nodes/win-j9svr57644r/proxy/stats/summary&#34;</span>  | jq <span style="color:#e6db74">&#39;.pods[] | [ .podRef.name,.cpu.usageNanoCores ] | @csv&#39;</span>; <span style="color:#66d9ef">done</span> | grep cpulimit
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04\&#34;,439449510&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-71a8a462-bfb6-4306-a1be-176f0266ebf1\&#34;,503096265&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04\&#34;,0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-71a8a462-bfb6-4306-a1be-176f0266ebf1\&#34;,0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04\&#34;,1506845973&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-71a8a462-bfb6-4306-a1be-176f0266ebf1\&#34;,337382462&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04\&#34;,0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-71a8a462-bfb6-4306-a1be-176f0266ebf1\&#34;,0&#34;</span>
+</span></span></code></pre></div><p>Let&rsquo;s recompile and push the latest changes to this branch to confirm that this unexpected behavior does not occur on version 1.6.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>containerd$ git checkout v1.6.27
+</span></span><span style="display:flex;"><span>containerd$ GOOS<span style="color:#f92672">=</span>windows make bin/containerd
+</span></span><span style="display:flex;"><span>containerd$ swdt kubernetes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Getting the /stats/summary endpoint again</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04\&#34;,500618452&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-71a8a462-bfb6-4306-a1be-176f0266ebf1\&#34;,478772447&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-71a8a462-bfb6-4306-a1be-176f0266ebf1\&#34;,478772447&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04\&#34;,500618452&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-71a8a462-bfb6-4306-a1be-176f0266ebf1\&#34;,478772447&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\&#34;cpulimittest-57aeaf8c-406e-4568-bba7-5ba86e390b04\&#34;,500618452&#34;</span>
+</span></span></code></pre></div><p>Another way to retrieve this information directly from containerd is by using <code>crictl stats -o json</code> and confirming that the bug is not present in Kubelet. If you are curious enough (or still reading), take a look at the <code>stats[].cpu.usageNanoCores</code> on version 1.6 and note that the value is <code>null</code>. Yes, the runtime does not return this value on this containerd branch version, while version 1.7 returns an integer (although not always accurate, as mentioned).</p>
+<p>If we deep dive in into the <code>container_stats_list.go</code> on containerd 1.6, there&rsquo;s the stub code response for the <code>(c *criService) ListContainerStats</code>, Microsoft provides the stats from runhcs, and gives only the <code>UsageCoreNanoSeconds: &amp;runtime.UInt64Value{Value: wstats.Processor.TotalRuntimeNS}</code>
+you can see the code <a href="github.com/Microsoft/hcsshim/cmd/containerd-shim-runhcs-v1/stats">here</a>. This returns <code>nil</code> in the <code>ListContainerStatsResponse</code> for the <code>usageCoreNano</code> field.</p>
+<p>Some progress has been made in isolating the issue.</p>
+<p>Before diving into the details, let&rsquo;s first examine how Kubelet will handle this response and how containerd 1.6 will receive a value, to have a mental model of the entire stack.</p>
+<p>To compile kubelet and add some klog for debugging and push the binary to the Windows node use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ make WHAT<span style="color:#f92672">=</span>cmd/kubelet KUBE_BUILD_PLATFORMS<span style="color:#f92672">=</span>windows/amd64
+</span></span><span style="display:flex;"><span>$ swdt kubernetes
+</span></span></code></pre></div><p>Now in the Kubelet code, we saw before the <code>listPodStatsPartiallyFromCRI</code> extracts metrics, the function <code>getAndUpdateContainerUsageNanoCores</code> on Kubelet provides the first <code>usageNanoCore</code> metric to be cached.
+This cache is stable and no matters how many requests in parallel I do, the value remains.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">criStatsProvider</span>) <span style="color:#a6e22e">makeContainerStats</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">usageNanoCores</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">updateCPUNanoCoreUsage</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">usageNanoCores</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">getAndUpdateContainerUsageNanoCores</span>(<span style="color:#a6e22e">stats</span>)
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">usageNanoCores</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">getContainerUsageNanoCores</span>(<span style="color:#a6e22e">stats</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">usageNanoCores</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">CPU</span>.<span style="color:#a6e22e">UsageNanoCores</span> = <span style="color:#a6e22e">usageNanoCores</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Coming back to the newer version (1.7.12) when I curl the <code>/stats/summary</code> endpoint, I observe throughout the Kubelet logs my path is not the same, all these functions are not accessible anymore, because we are now calculating this in the runtime and passing in the gRPC CRI response.
+On 1.7 a new function was added to calculate the <code>usageNanoCore</code> field value that did not exist before, in the ListContainerStats function we now have:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">criService</span>) <span style="color:#a6e22e">toCRIContainerStats</span>(<span style="color:#f92672">...</span>) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">cs</span>.<span style="color:#a6e22e">Cpu</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">cs</span>.<span style="color:#a6e22e">Cpu</span>.<span style="color:#a6e22e">UsageCoreNanoSeconds</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// this is a calculated value and should be computed for all OSes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">nanoUsage</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">getUsageNanoCores</span>(<span style="color:#a6e22e">cntr</span>.<span style="color:#a6e22e">Metadata</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">cs</span>.<span style="color:#a6e22e">Cpu</span>.<span style="color:#a6e22e">UsageCoreNanoSeconds</span>.<span style="color:#a6e22e">Value</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Unix</span>(<span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">cs</span>.<span style="color:#a6e22e">Cpu</span>.<span style="color:#a6e22e">Timestamp</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cs</span>.<span style="color:#a6e22e">Cpu</span>.<span style="color:#a6e22e">UsageNanoCores</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">UInt64Value</span>{<span style="color:#a6e22e">Value</span>: <span style="color:#a6e22e">nanoUsage</span>}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If we jump into the <code>getUsageNanoCore</code> there seems to be an error in the calculation of the <code>newUsageNanoCores</code> variable. This was migrated from Kubelet, and it is expected that: <code>currentUsageCoreNanoSeconds</code> will be lower than <code>oldStats.UsageCoreNanoSeconds</code>.
+However, when multiple operations are updating the <code>containerStore</code> cache concurrently, this may not be the case.</p>
+<p>The inconsistency in behavior during testing may be caused by Kubelet or containerd calling the CRI API every 10 seconds.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">criService</span>) <span style="color:#a6e22e">getUsageNanoCores</span>(<span style="color:#a6e22e">containerID</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">isSandbox</span> <span style="color:#66d9ef">bool</span>, <span style="color:#a6e22e">currentUsageCoreNanoSeconds</span> <span style="color:#66d9ef">uint64</span>, <span style="color:#a6e22e">currentTimestamp</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>) (<span style="color:#66d9ef">uint64</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// oldStats comes from a previous cached value
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">container</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">containerStore</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">containerID</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">oldStats</span> = <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">Stats</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">newUsageNanoCores</span> <span style="color:#f92672">:=</span> uint64(float64(<span style="color:#a6e22e">currentUsageCoreNanoSeconds</span><span style="color:#f92672">-</span><span style="color:#a6e22e">oldStats</span>.<span style="color:#a6e22e">UsageCoreNanoSeconds</span>) <span style="color:#f92672">/</span>
+</span></span><span style="display:flex;"><span>		float64(<span style="color:#a6e22e">nanoSeconds</span>) <span style="color:#f92672">*</span> float64(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span><span style="color:#f92672">/</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Nanosecond</span>))
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The issue is <a href="https://github.com/containerd/containerd/issues/9531">open</a>, and something is odd in the cache and its update function.</p>
+<p><strong>The saga continues&hellip;</strong></p>
+<h2 id="contribute">Contribute</h2>
+<p>Now that you have all the tools to start hacking Kubernetes, are you interested in helping out with engaging challenges like this?
+Join the team on the <strong><a href="https://communityinviter.com/apps/kubernetes/community">Kubernetes Slack</a></strong> workspace <strong>#sig-windows</strong> channel and say hello!</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2024/" title="2024"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2023/" title="2023" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1705972720"></script>
+    <script src="/js/perfect-scrollbar.min.js?1705972720"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1705972720"></script>
+    <script src="/js/jquery.sticky.js?1705972720"></script>
+    <script src="/js/featherlight.min.js?1705972720"></script>
+    <script src="/js/highlight.pack.js?1705972720"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1705972720"></script>
+    <script src="/js/learn.js?1705972720"></script>
+    <script src="/js/hugo-learn.js?1705972720"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1705972720"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>

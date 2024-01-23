@@ -9,25 +9,25 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Running Windows cluster locally :: compulsory thinking</title>
+    <title>Day 0 - Running Windows cluster locally :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1704047371" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1704047371" rel="stylesheet">
-    <link href="/css/hybrid.css?1704047371" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1704047371" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1704047371" rel="stylesheet">
-    <link href="/css/auto-complete.css?1704047371" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1704047371" rel="stylesheet">
-    <link href="/css/theme.css?1704047371" rel="stylesheet">
-    <link href="/css/tabs.css?1704047371" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1704047371" rel="stylesheet">
+    <link href="/css/nucleus.css?1705972720" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1705972720" rel="stylesheet">
+    <link href="/css/hybrid.css?1705972720" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1705972720" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1705972720" rel="stylesheet">
+    <link href="/css/auto-complete.css?1705972720" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1705972720" rel="stylesheet">
+    <link href="/css/theme.css?1705972720" rel="stylesheet">
+    <link href="/css/tabs.css?1705972720" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1705972720" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1704047371" rel="stylesheet">
+    <link href="/css/theme-blue.css?1705972720" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1704047371"></script>
+    <script src="/js/jquery-3.3.1.min.js?1705972720"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1704047371"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1704047371"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1705972720"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1705972720"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1704047371"></script>
+<script type="text/javascript" src="/js/search.js?1705972720"></script>
 
     
   </div>
@@ -86,6 +86,68 @@
     <ul class="topics">
 
         
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/" title="2024" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/">
+          2024
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0104/" title="Day 1 - Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0104/">
+          Day 1 - Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
           
           
 
@@ -124,13 +186,13 @@
  
   
     
-    <li data-nav-id="/2023/1230/" title="Running Windows cluster locally" class="dd-item
+    <li data-nav-id="/2023/1230/" title="Day 0 - Running Windows cluster locally" class="dd-item
         
         active
         
         ">
       <a href="/2023/1230/">
-          Running Windows cluster locally
+          Day 0 - Running Windows cluster locally
           
       </a>
       
@@ -848,7 +910,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2023/'>2023</a> > Running Windows cluster locally
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Day 0 - Running Windows cluster locally
           
         
           
@@ -891,7 +953,7 @@
           
             <h1>
               
-              Running Windows cluster locally
+              Day 0 - Running Windows cluster locally
             </h1>
           
 
@@ -1035,7 +1097,9 @@ if the Windows Container subsystem was not installed before.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> Invoke-WebRequest https://raw.githubusercontent.com/kubernetes-sigs/sig-windows-tools/master/hostprocess/PrepareNode.ps1 -OutFile c:<span style="color:#ae81ff">\P</span>repareNode.ps1
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\&gt;</span> c:<span style="color:#ae81ff">\P</span>repareNode.ps1 -KubernetesVersion v1.27.3
-</span></span></code></pre></div><p>The last step after you have set append <code>c:\Windows\System32\drivers\etc\hosts</code> with <code>kind-control-plane 192.168.122.1</code> is:</p>
+</span></span></code></pre></div><p>Finally, install the Kube-Proxy DaemonSet:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl -L  https://raw.githubusercontent.com/kubernetes-sigs/sig-windows-tools/master/hostprocess/calico/kube-proxy/kube-proxy.yml | sed <span style="color:#e6db74">&#34;s/KUBE_PROXY_VERSION/v1.27.3/g&#34;</span> | kubectl apply -f -
+</span></span></code></pre></div><p>The last step, is to append <code>c:\Windows\System32\drivers\etc\hosts</code> with <code>kind-control-plane 192.168.122.1</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubeadm join kind-control-plane:6443 --token ejej6v... <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --discovery-token-ca-cert-hash sha256:a97b5928dd546d13359a31a4dc6fe26a1a...
 </span></span></code></pre></div><p>The Calico Windows agent must be running (check if a External HNS net exists with <em>Get-HNSNetwork</em> in the Windows host), Kube-proxy must be up as well:</p>
@@ -1050,8 +1114,8 @@ if the Windows Container subsystem was not installed before.</p>
 </span></span></code></pre></div><p><img src="./images/e2e.png?width=1024px" alt="e2e" title="e2e"></p>
 <p>Now, jf you are looking for a full test suite to ensure your cluster is ready for operations take a look in the <a href="https://github.com/kubernetes-sigs/windows-operational-readiness">Windows Operational Readiness</a> subproject!</p>
 <h2 id="thoughts-on-automation">Thoughts on automation</h2>
-<p>The initial idea is to modify the &ldquo;immutable&rdquo; node to a mutable one using the &ldquo;agent&rdquo; concept. This would allow end-users to install, modify and update software during runtime or bootstrap time. All of these operations, such as bootstrapping (installing containerd, kubelet binaries and services, changing default settings) could be automated. In projects like Image-builder, these tasks are executed as custom roles through packer provisioning, and there are several golang libraries available to wrap up Ansible and reuse these tasks.</p>
-<p>There are alternative options to achieve a similar outcome, such as using golang command lines execution with PowerShell in the node. This requires accessing the node via a pre-installed SSH server with PKI access for the administration user. Once the node is baked, the join procedure in the kind-created cluster in the Linux host takes place. At this point, Docker and KVM/Qemu are required.</p>
+<p>The initial idea is to modify the &ldquo;immutable&rdquo; node to a mutable one using the &ldquo;agent&rdquo; concept. This would allow end-users to install, modify and update software during runtime or bootstrap time. All of these operations, such as bootstrapping (installing containerd, kubelet binaries and services, changing default settings) could be automated. In projects like Image-builder, these tasks are executed as custom roles through packer provisioning, and there are several golang libraries available to wrap up Ansible and reuse these tasks, as one possible solution.</p>
+<p>There are alternative options to achieve a similar outcome though, such as using golang command lines execution with PowerShell in the node. This requires accessing the node via a pre-installed SSH server with PKI access for the administration user. Once the node is baked, the join procedure in the kind-created cluster in the Linux host takes place. At this point, Docker and KVM/Qemu are required.</p>
 <p>Two important things need to be addressed to fully automate the cluster:</p>
 <ol>
 <li>replicating the procedure for Windows Hyper-V native VMs and</li>
@@ -1094,6 +1158,43 @@ if the Windows Container subsystem was not installed before.</p>
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
                     
                         
             
@@ -1544,19 +1645,19 @@ if the Windows Container subsystem was not installed before.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1704047371"></script>
-    <script src="/js/perfect-scrollbar.min.js?1704047371"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1704047371"></script>
-    <script src="/js/jquery.sticky.js?1704047371"></script>
-    <script src="/js/featherlight.min.js?1704047371"></script>
-    <script src="/js/highlight.pack.js?1704047371"></script>
+    <script src="/js/clipboard.min.js?1705972720"></script>
+    <script src="/js/perfect-scrollbar.min.js?1705972720"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1705972720"></script>
+    <script src="/js/jquery.sticky.js?1705972720"></script>
+    <script src="/js/featherlight.min.js?1705972720"></script>
+    <script src="/js/highlight.pack.js?1705972720"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1704047371"></script>
-    <script src="/js/learn.js?1704047371"></script>
-    <script src="/js/hugo-learn.js?1704047371"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1705972720"></script>
+    <script src="/js/learn.js?1705972720"></script>
+    <script src="/js/hugo-learn.js?1705972720"></script>
     
         
-            <script src="/mermaid/mermaid.js?1704047371"></script>
+            <script src="/mermaid/mermaid.js?1705972720"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
