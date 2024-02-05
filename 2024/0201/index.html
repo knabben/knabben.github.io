@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.112.7">
+    <meta name="description" content="Tips and ideas on setting up Kubernetes Windows nodes">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Day 2 - Kubernetes Container Storage Interface (on Windows &amp; vSphere) :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1707136591" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1707136591" rel="stylesheet">
+    <link href="/css/hybrid.css?1707136591" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1707136591" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1707136591" rel="stylesheet">
+    <link href="/css/auto-complete.css?1707136591" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1707136591" rel="stylesheet">
+    <link href="/css/theme.css?1707136591" rel="stylesheet">
+    <link href="/css/tabs.css?1707136591" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1707136591" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1707136591" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1707136591"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2024/0201/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  <div id="header-logo"> OPS [SEC] </div>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1707136591"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1707136591"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1707136591"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/" title="2024" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2024/">
+          2024
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0201/" title="Day 2 - Kubernetes Container Storage Interface (on Windows &amp; vSphere)" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/2024/0201/">
+          Day 2 - Kubernetes Container Storage Interface (on Windows &amp; vSphere)
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0104/" title="Day 1 - Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0104/">
+          Day 1 - Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/1230/" title="Day 0 - Running Windows cluster locally" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/1230/">
+          Day 0 - Running Windows cluster locally
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0801/" title="sigstore policy-controller validation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0801/">
+          sigstore policy-controller validation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0721/" title="Ztunnel SPIRE implementation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0721/">
+          Ztunnel SPIRE implementation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0702/" title="Waypoint Proxy for the app layer" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0702/">
+          Waypoint Proxy for the app layer
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0903/" title="Windows and Calico overlay networking" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0903/">
+          Windows and Calico overlay networking
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2023</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2024/'>2024</a> > Day 2 - Kubernetes Container Storage Interface (on Windows & vSphere)
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#kubernetes-volumes-objectshttpskubernetesiodocsconceptsstoragepersistent-volumes"><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Kubernetes Volumes Objects</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#csi-drivers-and-components">CSI drivers and Components</a></li>
+    <li><a href="#windows-csi-drivers">Windows CSI Drivers</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#migrating-pvc-across-storages">Migrating PVC across storages</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Day 2 - Kubernetes Container Storage Interface (on Windows &amp; vSphere)
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="introduction">Introduction</h2>
+<p>The purpose of the upcoming posts is to discuss Day 2 operations. Assuming that you have a running cluster, we will explore additional capabilities that can be added to ensure smooth operation and management. In particular, this post will focus on CSI and Storage within vSphere (and Windows), although most of the process can be applied to other clouds.</p>
+<p>The Kubernetes v1.13 release introduced the Container Storage Interface (CSI), which replaces the previous &ldquo;in-tree&rdquo; volume plugins included in k/k&rsquo;s codebase. With the old architecture, vendors were required to maintain their plugins through the entire Kubernetes release lifecycle. CSI provides a standard interface pattern (along with CNI, CRI, etc.) that allows third-party plugins to exist outside the main Kubernetes repository. The goal of CSI is to provide a standard method for exposing arbitrary block and file storage to containers, allowing these vendors to provide solutions by themselves.</p>
+<p>A CSI driver is required for the cluster to utilize underlying infrastructure resources. The vSphere CSI driver is a plugin that sits outside the Kubernetes codebase, allowing containerized workloads to access vSphere storage. This plugin offers support for different types of storage, including vSAN. The vSphere CSI driver communicates with the control plane on the vSphere server for all storage provisioning operations. On Kubernetes, the CSI driver is used with the vSphere CPI (Cloud Provider Interface). The CSI driver is shipped as a container image and must be deployed in the cluster.</p>
+<p>In this post, it is important to understand the Cloud Native Storage Server Component on vSphere, also known as the CNS control plane inside the vSphere server, and focus on the CSI and Kubernetes layers. CNS control plane is an extension of the vCenter Server management that implements provisioning and life cycle operations for container volumes. When provisioning container volumes, it interacts with the vCenter Server to create storage objects that back the volumes. The Storage Policy-Based Management functionality guarantees the required level of service to the volumes and provides monitoring and backing storage objects.</p>
+<h3 id="kubernetes-volumes-objectshttpskubernetesiodocsconceptsstoragepersistent-volumes"><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Kubernetes Volumes Objects</a></h3>
+<p>From a vSphere VSAN DataStore we can set the following objects for a RWO (per Pod mount)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ govc datastore.info
+</span></span><span style="display:flex;"><span>Name:        vsanDatastore
+</span></span><span style="display:flex;"><span>  Path:      /dc0/datastore/vsanDatastore
+</span></span><span style="display:flex;"><span>  Type:      vsan
+</span></span><span style="display:flex;"><span>  URL:       ds:///vmfs/volumes/vsan:5253520081e7f5cb-482ce3096504d5fd/
+</span></span><span style="display:flex;"><span>  Capacity:  1024.0 GB
+</span></span><span style="display:flex;"><span>  Free:      1009.4 GB
+</span></span></code></pre></div><h4 id="storageclass">StorageClass</h4>
+<p>A StorageClass sets the parameters for a particular type or class of storage that can be used to dynamically provision PersistentVolumes. StorageClasses are not associated with a specific namespace, and their name in etcd is determined by ObjectMeta.Name. In Kubernetes, there is no default StorageClass, so it must be created manually. In vSphere, the storagePolicyName parameter is crucial as it allows for the attachment of Storage Policy Based Management (SPBM) to the datastore, providing greater control over container volume granularity.</p>
+<p>From <code>kubectl get sc -o yaml vsan-sc</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">allowVolumeExpansion</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">storage.k8s.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">StorageClass</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">vsan-sc</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">provisioner</span>: <span style="color:#ae81ff">csi.vsphere.vmware.com</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">reclaimPolicy</span>: <span style="color:#ae81ff">Delete</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumeBindingMode</span>: <span style="color:#ae81ff">WaitForFirstConsumer</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">parameters</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">csi.storage.k8s.io/fstype</span>: <span style="color:#ae81ff">ext4</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">datastoreurl</span>: <span style="color:#ae81ff">ds:///vmfs/volumes/vsan:5253520081e7f5cb-482ce3096504d5fd/</span>
+</span></span></code></pre></div><h4 id="pvc-persistent-volume-claim">PVC (Persistent Volume Claim)</h4>
+<p>A <em>PersistentVolumeClaim</em> (PVC) is a request made by a user for storage space to claim for a persistent volume in the cluster for a specific Pod. It works like a Pod, but instead of consuming node resources, it consumes PV resources. While Pods can request specific levels of resources like CPU and Memory, PVCs can request specific size and access modes. These access modes determine how the PVC can be mounted, such as:</p>
+<ul>
+<li><em>ReadWriteOnce: the volume can be mounted as read-write by a single node, typically block volumes.</em></li>
+<li>ReadOnlyMany: read-only be many nodes</li>
+<li>ReadWriteMany; read-write by many nodes and Pods, typically file shares.</li>
+<li>ReadWriteOncePod: read-write by a single Pod</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolumeClaim</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">rwo-pvc</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumeMode</span>: <span style="color:#ae81ff">Block</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">accessModes</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">ReadWriteOnce</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">resources</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">requests</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">storage</span>: <span style="color:#ae81ff">15Gi</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">storageClassName</span>: <span style="color:#ae81ff">vsan-sc</span>
+</span></span></code></pre></div><p>Create the Pod with the volume pointing to the PVC, so the request can be achieved:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">test-container</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">gcr.io/google_containers/busybox:1.24</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">command</span>: [<span style="color:#e6db74">&#34;/bin/sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;while true ; do sleep 2 ; done&#34;</span>]
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeDevices</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">devicePath</span>: <span style="color:#ae81ff">/dev/xvda</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">data</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">persistentVolumeClaim</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">claimName</span>: <span style="color:#ae81ff">rwo-pvc</span>
+</span></span></code></pre></div><p>Check the PVC status, it must be set to <code>bound</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get pvc 
+</span></span><span style="display:flex;"><span>NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+</span></span><span style="display:flex;"><span>rwo-pvc   Bound    pvc-35e6c773-2b21-4408-a046-33f27b7238cb   15Gi       RWO            vsan-sc        110s
+</span></span></code></pre></div><p>The CNS on vSphere is going to provide the current mounted volumes in the datastore:</p>
+<p><img src="./images/storage.png?width=1024px" alt="wait" title="wait"></p>
+<h4 id="pv-persistent-volume">PV (Persistent Volume)</h4>
+<p>A <em>PersistentVolume</em> (PV) is a storage unit in the cluster that is provided by an administrator or dynamically provisioned through StorageClasses. It&rsquo;s a resource in the cluster similar to a node. PVs are volume plugins like Volumes but have a lifecycle that isn&rsquo;t dependent on any individual Pod that uses the PV. This API object captures the storage implementation details, such as NFS, iSCSI, or a cloud-provider-specific storage system.</p>
+<p>Persistent Volumes (PVs) can be provisioned in two ways: static and dynamic. In the static approach, the admin creates a fixed number of PVs manually, which are then available for consumption. On the other hand, in the dynamic approach, the cluster may try to provision a volume dynamically for a Persistent Volume Claim (PVC). However, this can only happen if the PVC requests a StorageClass, and the admin has previously created and configured that class for dynamic provisioning to occur. On vSphere persistent volumes map to VMDKs on the datastore, with 2 kinds: First Class Disk (FCD) and Improved Virtual Disks( IVD)</p>
+<p>From the dynamic PV the object is created after the PVC is created:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get pv
+</span></span><span style="display:flex;"><span>NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   REASON   AGE
+</span></span><span style="display:flex;"><span>pvc-35e6c773-2b21-4408-a046-33f27b7238cb   15Gi       RWO            Delete           Bound    default/rwo-pvc   vsan-sc                 114s
+</span></span></code></pre></div><p>The PV will be something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>kind: PersistentVolume
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  annotations:
+</span></span><span style="display:flex;"><span>    pv.kubernetes.io/provisioned-by: csi.vsphere.vmware.com
+</span></span><span style="display:flex;"><span>    volume.kubernetes.io/provisioner-deletion-secret-name: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    volume.kubernetes.io/provisioner-deletion-secret-namespace: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>  finalizers:
+</span></span><span style="display:flex;"><span>  - kubernetes.io/pv-protection
+</span></span><span style="display:flex;"><span>  - external-attacher/csi-vsphere-vmware-com
+</span></span><span style="display:flex;"><span>  name: pvc-35e6c773-2b21-4408-a046-33f27b7238cb
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  accessModes:
+</span></span><span style="display:flex;"><span>  - ReadWriteOnce
+</span></span><span style="display:flex;"><span>  capacity:
+</span></span><span style="display:flex;"><span>    storage: 15Gi
+</span></span><span style="display:flex;"><span>  claimRef:
+</span></span><span style="display:flex;"><span>    apiVersion: v1
+</span></span><span style="display:flex;"><span>    kind: PersistentVolumeClaim
+</span></span><span style="display:flex;"><span>    name: rwo-pvc
+</span></span><span style="display:flex;"><span>    namespace: default
+</span></span><span style="display:flex;"><span>  csi:
+</span></span><span style="display:flex;"><span>    driver: csi.vsphere.vmware.com
+</span></span><span style="display:flex;"><span>    volumeAttributes:
+</span></span><span style="display:flex;"><span>      storage.kubernetes.io/csiProvisionerIdentity: 1706894229053-8081-csi.vsphere.vmware.com
+</span></span><span style="display:flex;"><span>      type: vSphere CNS Block Volume
+</span></span><span style="display:flex;"><span>    volumeHandle: c6dd8286-e961-4bc5-bccb-21af5d454306
+</span></span><span style="display:flex;"><span>  persistentVolumeReclaimPolicy: Delete
+</span></span><span style="display:flex;"><span>  storageClassName: vsan-sc
+</span></span><span style="display:flex;"><span>  volumeMode: Block
+</span></span><span style="display:flex;"><span>status:
+</span></span><span style="display:flex;"><span>  phase: Bound
+</span></span></code></pre></div><h2 id="csi-drivers-and-components">CSI drivers and Components</h2>
+<p>In the controller pod specification, containers are responsible for managing the volume in the CNS.</p>
+<ul>
+<li><em>csi-attacher</em>: The external-attacher is a sidecar container that attaches volumes to nodes by calling <code>ControllerPublish</code> and <code>ControllerUnpublish</code> functions of CSI drivers</li>
+<li><em>csi-resizer</em>: An external resizer sidecar container implements the logic of watching the Kubernetes API for PVC edits, issuing the ControllerExpandVolume RPC call against a CSI endpoint, and updating the PersistentVolume object to reflect the new size.</li>
+<li><em>vsphere-csi-controller</em>: - Core vSphere CNS management</li>
+<li><em>vsphere-syncer</em>: The Syncer is responsible for pushing metadata of PVs, PVCs, and Pods to CNS.</li>
+<li><em>csi-provisioner</em>: Sidecar container that watches Kubernetes PersistentVolumeClaim objects and triggers CreateVolume/DeleteVolume against a CSI endpoint</li>
+<li><em>csi-snapshotter</em>: Sidecar container that watches Kubernetes Snapshot CRD objects and triggers CreateSnapshot/DeleteSnapshot against a CSI endpoint.</li>
+</ul>
+<p>On each node there’s a local host driver and driver register:</p>
+<ul>
+<li><em>node-driver-registrar</em>: Sidecar container that registers a CSI driver with the kubelet using the kubelet plugin registration mechanism</li>
+<li><em>vsphere-csi-node</em>: The CSI plugin is responsible for provisioning volumes, attaching and detaching them to VMs, mounting and formatting them, and unmounting volumes from the pod within the node.</li>
+</ul>
+<p>The vSphere Storage Controller provides an interface for the container orchestrator to manage the lifecycle of vSphere volumes. It allows the creation, expansion, and deletion of volumes and the attachment and detachment of volumes to Node VMs. The vSphere Container Storage Node allows for the formatting and mounting of volumes to the node, using bind mounts for the volumes inside the pod. Before detaching the volume, the node component helps to unmount the volume from the node. Finally, the Syncer pushes PV, VPC, and pod metadata to CVS. This data assists vSphere administrators in determining which Kubernetes clusters, apps, pods, etc. are using the volume. Full sync keeps the CNS up-to-date with Kubernetes volume metadata information.</p>
+<p>Installing the drivers on your Kubernetes cluster instructions are provided on the <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-A1982536-F741-4614-A6F2-ADEE21AA4588.html">official documentation page</a>.</p>
+<h2 id="windows-csi-drivers">Windows CSI Drivers</h2>
+<p>The Windows installation has a few subtle distinctions (as usual). After installing CSI on Linux and letting the core components run, the next step is to install the CSI-proxy on Windows. The binary is not available, it’s required to build first and push to the Windows node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git clone https://github.com/kubernetes-csi/csi-proxy
+</span></span><span style="display:flex;"><span>$ sudo make build
+</span></span><span style="display:flex;"><span>$ ls bin/
+</span></span><span style="display:flex;"><span>csi-proxy.exe
+</span></span></code></pre></div><p>To <a href="https://github.com/kubernetes-csi/csi-proxy?tab=readme-ov-file#installation">install the binary</a> as a service install it with the command (the <code>csi-proxy.exe</code> is hosted on <code>c:\etc\kubernetes\node\bin\csi.proxy.exe</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$flags <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;-windows-service -log_file=C:\etc\kubernetes\logs\csi-proxy.log -logtostderr=false&#34;</span>
+</span></span><span style="display:flex;"><span>sc.exe create csiproxy start<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;auto&#34;</span> binPath<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;C:\etc\kubernetes\node\bin\csi-proxy.exe </span>$flags<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>sc.exe failure csiproxy reset<span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> actions<span style="color:#f92672">=</span> restart/10000
+</span></span><span style="display:flex;"><span>sc.exe start csiproxy
+</span></span></code></pre></div><p>The CSI proxy is a binary responsible for exposing the gRPC APIs around local storage operations for Windows. The CSI Driver installed from the DaemonSet accesses the socket pipeline from CSI proxy and invokes the operations (a few APIs like Disk, Volume, SMB, FS are available)</p>
+<p>After the CSI proxy installation, apply the vSphere CSI Node daemonset for the Windows nodes:</p>
+<pre tabindex="0"><code>---
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: vsphere-csi-node-windows
+  namespace: vmware-system-csi
+spec:
+  selector:
+    matchLabels:
+      app: vsphere-csi-node-windows
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: vsphere-csi-node-windows
+        role: vsphere-csi-windows
+    spec:
+      priorityClassName: system-node-critical
+      nodeSelector:
+        kubernetes.io/os: windows
+      serviceAccountName: vsphere-csi-node
+      containers:
+        - name: node-driver-registrar
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
+          args:
+            - &#34;--v=5&#34;
+            - &#34;--csi-address=$(ADDRESS)&#34;
+            - &#34;--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)&#34;
+          env:
+            - name: ADDRESS
+              value: &#39;unix://C:\\csi\\csi.sock&#39;
+            - name: DRIVER_REG_SOCK_PATH
+              value: &#39;C:\\var\\lib\\kubelet\\plugins\\csi.vsphere.vmware.com\\csi.sock&#39;
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: registration-dir
+              mountPath: /registration
+          livenessProbe:
+            exec:
+              command:
+              - /csi-node-driver-registrar.exe
+              - --kubelet-registration-path=C:\\var\\lib\\kubelet\\plugins\\csi.vsphere.vmware.com\\csi.sock
+              - --mode=kubelet-registration-probe
+            initialDelaySeconds: 3
+        - name: vsphere-csi-node
+          image: gcr.io/cloud-provider-vsphere/csi/release/driver:v3.0.1
+          args:
+            - &#34;--fss-name=internal-feature-states.csi.vsphere.vmware.com&#34;
+            - &#34;--fss-namespace=$(CSI_NAMESPACE)&#34;
+          imagePullPolicy: &#34;Always&#34;
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName          
+            - name: CSI_ENDPOINT
+              value: &#39;unix://C:\\csi\\csi.sock&#39;
+            - name: MAX_VOLUMES_PER_NODE
+              value: &#34;59&#34; # Maximum number of volumes that controller can publish to the node. If value is not set or zero Kubernetes decide how many volumes can be published by the controller to the node.
+            - name: X_CSI_MODE
+              value: node
+            - name: X_CSI_SPEC_REQ_VALIDATION
+              value: &#39;false&#39;
+            - name: X_CSI_SPEC_DISABLE_LEN_CHECK
+              value: &#34;true&#34;
+            - name: LOGGER_LEVEL
+              value: &#34;PRODUCTION&#34; # Options: DEVELOPMENT, PRODUCTION
+            - name: X_CSI_LOG_LEVEL
+              value: DEBUG
+            - name: CSI_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: NODEGETINFO_WATCH_TIMEOUT_MINUTES
+              value: &#34;1&#34;
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: &#39;C:\csi&#39;
+            - name: pods-mount-dir
+              mountPath: &#39;C:\var\lib\kubelet&#39;   
+            - name: csi-proxy-volume-v1
+              mountPath: \\.\pipe\csi-proxy-volume-v1
+            - name: csi-proxy-filesystem-v1
+              mountPath: \\.\pipe\csi-proxy-filesystem-v1
+            - name: csi-proxy-disk-v1
+              mountPath: \\.\pipe\csi-proxy-disk-v1    
+            - name: csi-proxy-system-v1alpha1
+              mountPath: \\.\pipe\csi-proxy-system-v1alpha1
+          ports:
+            - name: healthz
+              containerPort: 9808
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: healthz
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+        - name: liveness-probe
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
+          args:
+            - &#34;--v=4&#34;
+            - &#34;--csi-address=/csi/csi.sock&#34;
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+      volumes:
+        - name: registration-dir
+          hostPath:
+            path: &#39;C:\var\lib\kubelet\plugins_registry\&#39;
+            type: Directory
+        - name: plugin-dir
+          hostPath:
+            path: &#39;C:\var\lib\kubelet\plugins\csi.vsphere.vmware.com\&#39;
+            type: DirectoryOrCreate
+        - name: pods-mount-dir
+          hostPath:
+            path: \var\lib\kubelet
+            type: Directory
+        - name: csi-proxy-disk-v1
+          hostPath:
+            path: \\.\pipe\csi-proxy-disk-v1
+            type: &#39;&#39;
+        - name: csi-proxy-volume-v1
+          hostPath:
+            path: \\.\pipe\csi-proxy-volume-v1
+            type: &#39;&#39;
+        - name: csi-proxy-filesystem-v1
+          hostPath:
+            path: \\.\pipe\csi-proxy-filesystem-v1
+            type: &#39;&#39;
+        - name: csi-proxy-system-v1alpha1
+          hostPath:
+            path: \\.\pipe\csi-proxy-system-v1alpha1
+            type: &#39;&#39;
+      tolerations:
+        - effect: NoExecute
+          operator: Exists
+        - effect: NoSchedule
+          operator: Exists
+</code></pre><h4 id="troubleshooting">Troubleshooting</h4>
+<p>If after installing the CSI driver, the gRPC socket is getting reset when installing the Kubelet plugin from the node-driver-registrar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>2024-02-04T05:40:54.2393408-08:00 stderr F <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;level&#34;</span>:<span style="color:#e6db74">&#34;error&#34;</span>,<span style="color:#e6db74">&#34;time&#34;</span>:<span style="color:#e6db74">&#34;2024-02-04T05:40:54.238813-08:00&#34;</span>,<span style="color:#e6db74">&#34;caller&#34;</span>:<span style="color:#e6db74">&#34;osutils/windows_os_utils.go:509&#34;</span>,<span style="color:#e6db74">&#34;msg&#34;</span>:<span style="color:#e6db74">&#34;csi plugin started on windows node without enabling feature switch&#34;</span>,<span style="color:#e6db74">&#34;TraceId&#34;</span>:<span style="color:#e6db74">&#34;a719f958-
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">b149-4d92-b432-8dc8cfb4b4a4&#34;</span>,<span style="color:#e6db74">&#34;stacktrace&#34;</span>:<span style="color:#e6db74">&#34;[sigs.k8s.io/vsphere-csi-driver/v3/pkg/csi/service/osutils.(*OsUtils](http://sigs.k8s.io/vsphere-csi-driver/v3/pkg/csi/service/osutils.(*OsUtils)).ShouldContinue\n\t/build/pkg/csi/service/osutils/windows_os_utils.go:509\[nsigs.k8s.io/vsphere-csi-driver/v3/pkg/csi/service.(*vs](http://nsigs.k8s.io/vsphere-csi-driver/v3/pkg/csi/service.(*vs)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">phereCSIDriver).NodeGetInfo\n\t/build/pkg/csi/service/node.go:340\[ngithub.com/container-storage-interface/spec/lib/go/csi._Node_NodeGetInfo_Handler\n\t/go/pkg/mod/github.com/container-storage-interface/spec@v1.7.0/lib/go/csi/csi.pb.go:6231\](http://ngithub.com/container-storage-interface/spec/lib/go/csi._Node_NodeGetInfo_Handler%5Cn%5Ct/go/pkg/mod/github.com/container-storage-interface/spec@v1.7.0/lib/go/csi/csi.pb.go:6231%5C)[ngoogle.golang.org/grpc.(*Server](http://ngoogle.golang.org/grpc.(*Server)).processUnaryRPC\n\t/go/pkg/mod/google.golang.org/grpc@v1.47.0/server.go:1283\[ngoogle.golang.org/grpc.(*Server](http://ngoogle.golang.org/grpc.(*Server)).handleStream\n\t/go/pkg/mod/google.golang.org/grpc@v1.47.0/server.go:1620\[ngoogle.golang.org/gr](http://ngoogle.golang.org/gr)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">pc.(*Server).serveStreams.func1.2\n\t/go/pkg/mod/google.golang.org/grpc@v1.47.0/server.go:922&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>The Windows feature gate must be enabled in the CSI configuration configmap: <code>internal-feature-states.csi.vsphere.vmware.com</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl edit configmap -n vmware-system-csi <span style="color:#f92672">[</span>internal-feature-states.csi.vsphere.vmware.com<span style="color:#f92672">](</span>http://internal-feature-states.csi.vsphere.vmware.com/<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data:
+</span></span><span style="display:flex;"><span>  csi-windows-support: <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span></code></pre></div><h4 id="using-a-smb-driver">Using a SMB Driver</h4>
+<p>For SMB installation and usage check Jaime Gonzales <a href="https://github.com/jaimegag/tkg-zone/tree/main/smb-csi">documentation and nodes repository</a>, great source of Windows content!</p>
+<h2 id="migrating-pvc-across-storages">Migrating PVC across storages</h2>
+<p>The first open source tool around to migrate PVCs (and not related to vSphere) is the <a href="https://github.com/utkuozdemir/pv-migrate">pv-migrate</a>, the usage is simple as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pv-migrate migrate <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --source-namespace default <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --dest-namespace backup <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    old-pvc new-pvc
+</span></span></code></pre></div>
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2024/" title="2024"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2024/0104/" title="Day 1 - Kubernetes Windows Nodes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1707136591"></script>
+    <script src="/js/perfect-scrollbar.min.js?1707136591"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1707136591"></script>
+    <script src="/js/jquery.sticky.js?1707136591"></script>
+    <script src="/js/featherlight.min.js?1707136591"></script>
+    <script src="/js/highlight.pack.js?1707136591"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1707136591"></script>
+    <script src="/js/learn.js?1707136591"></script>
+    <script src="/js/hugo-learn.js?1707136591"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1707136591"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
