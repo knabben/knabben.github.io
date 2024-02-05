@@ -12,22 +12,22 @@
     <title>Day 2 - Kubernetes Container Storage Interface (on Windows &amp; vSphere) :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1707136591" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1707136591" rel="stylesheet">
-    <link href="/css/hybrid.css?1707136591" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1707136591" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1707136591" rel="stylesheet">
-    <link href="/css/auto-complete.css?1707136591" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1707136591" rel="stylesheet">
-    <link href="/css/theme.css?1707136591" rel="stylesheet">
-    <link href="/css/tabs.css?1707136591" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1707136591" rel="stylesheet">
+    <link href="/css/nucleus.css?1707177285" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1707177285" rel="stylesheet">
+    <link href="/css/hybrid.css?1707177285" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1707177285" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1707177285" rel="stylesheet">
+    <link href="/css/auto-complete.css?1707177285" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1707177285" rel="stylesheet">
+    <link href="/css/theme.css?1707177285" rel="stylesheet">
+    <link href="/css/tabs.css?1707177285" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1707177285" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1707136591" rel="stylesheet">
+    <link href="/css/theme-blue.css?1707177285" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1707136591"></script>
+    <script src="/js/jquery-3.3.1.min.js?1707177285"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1707136591"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1707136591"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1707177285"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1707177285"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1707136591"></script>
+<script type="text/javascript" src="/js/search.js?1707177285"></script>
 
     
   </div>
@@ -962,7 +962,11 @@
         <li></li>
       </ul>
     </li>
-    <li><a href="#migrating-pvc-across-storages">Migrating PVC across storages</a></li>
+    <li><a href="#migrating-pvc-across-storages">Migrating PVC across storages</a>
+      <ul>
+        <li><a href="#using-volumesnapshothttpsdocsvmwarecomenvmware-vsphere-container-storage-plug-in30vmware-vsphere-csp-getting-startedguid-e0b41c69-7eeb-450f-a73d-5fd2ff39e891html">Using <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-E0B41C69-7EEB-450F-A73D-5FD2FF39E891.html">VolumeSnapshot</a></a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -1296,6 +1300,42 @@ spec:
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --source-namespace default <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --dest-namespace backup <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    old-pvc new-pvc
+</span></span></code></pre></div><h3 id="using-volumesnapshothttpsdocsvmwarecomenvmware-vsphere-container-storage-plug-in30vmware-vsphere-csp-getting-startedguid-e0b41c69-7eeb-450f-a73d-5fd2ff39e891html">Using <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-E0B41C69-7EEB-450F-A73D-5FD2FF39E891.html">VolumeSnapshot</a></h3>
+<p>The official solution is the usage of Volume Snapshot, install it using <code>bash deploy-csi-snapshot-components.sh</code>.
+After The CRD are installed it&rsquo;s possible to backup the PVC (first create VolumeSnapshotClass (for example vs-class))</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">snapshot.storage.k8s.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VolumeSnapshot</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">finalizers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">snapshot.storage.kubernetes.io/volumesnapshot-as-source-protection</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">snapshot.storage.kubernetes.io/volumesnapshot-bound-protection</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pvc-snapshot</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">source</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">persistentVolumeClaimName</span>: <span style="color:#ae81ff">windows-pvc</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumeSnapshotClassName</span>: <span style="color:#ae81ff">vs-class</span>
+</span></span></code></pre></div><p>The restore is simple, create a PVC and point the datasource to the VolumeSnapshot just created:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolumeClaim</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pvc-restore</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">storageClassName</span>: <span style="color:#ae81ff">vs-class</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">dataSource</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pvc-snapshot</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">VolumeSnapshot</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">apiGroup</span>: <span style="color:#ae81ff">snapshot.storage.k8s.io</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">accessModes</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">ReadWriteOnce</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">resources</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">requests</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">storage</span>: <span style="color:#ae81ff">5Gi</span>
+</span></span></code></pre></div><p>You will endup with another PVC with the same configuration (and content) in the new PVC created:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubo@MJvjY0ETPFqph:~$ kubectl get pvc
+</span></span><span style="display:flex;"><span>NAME                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+</span></span><span style="display:flex;"><span>windows-pvc   Bound    pvc-2916cdff-f5ca-4d0b-ae97-1abe9ae83f0f   5Gi        RWO            windows        85m
+</span></span><span style="display:flex;"><span>pvc-restore           Bound    pvc-560324d0-719a-4cb0-bc7c-5181d544bb8f   5Gi        RWO            windows        5s
 </span></span></code></pre></div>
 
 
@@ -1830,19 +1870,19 @@ spec:
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1707136591"></script>
-    <script src="/js/perfect-scrollbar.min.js?1707136591"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1707136591"></script>
-    <script src="/js/jquery.sticky.js?1707136591"></script>
-    <script src="/js/featherlight.min.js?1707136591"></script>
-    <script src="/js/highlight.pack.js?1707136591"></script>
+    <script src="/js/clipboard.min.js?1707177285"></script>
+    <script src="/js/perfect-scrollbar.min.js?1707177285"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1707177285"></script>
+    <script src="/js/jquery.sticky.js?1707177285"></script>
+    <script src="/js/featherlight.min.js?1707177285"></script>
+    <script src="/js/highlight.pack.js?1707177285"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1707136591"></script>
-    <script src="/js/learn.js?1707136591"></script>
-    <script src="/js/hugo-learn.js?1707136591"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1707177285"></script>
+    <script src="/js/learn.js?1707177285"></script>
+    <script src="/js/hugo-learn.js?1707177285"></script>
     
         
-            <script src="/mermaid/mermaid.js?1707136591"></script>
+            <script src="/mermaid/mermaid.js?1707177285"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
