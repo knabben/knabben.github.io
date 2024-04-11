@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.113.0">
-    <meta name="description" content="">
+    <meta name="description" content="How to integrate Active Directory on Kubernetes Windows clusters">
 
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>2021 :: compulsory thinking</title>
+    <title>Day 2 - Kubernetes Windows and Active Directory :: compulsory thinking</title>
 
     
     <link href="/css/nucleus.css?1712878097" rel="stylesheet">
@@ -50,7 +50,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/2021/">
+  <body class="" data-url="/2024/0415/">
     <nav id="sidebar" class="">
 
 
@@ -96,7 +96,7 @@
   
     
     <li data-nav-id="/2024/" title="2024" class="dd-item
-        
+        parent
         
         
         ">
@@ -126,7 +126,7 @@
     
     <li data-nav-id="/2024/0415/" title="Day 2 - Kubernetes Windows and Active Directory" class="dd-item
         
-        
+        active
         
         ">
       <a href="/2024/0415/">
@@ -699,7 +699,7 @@
     
     <li data-nav-id="/2021/" title="2021" class="dd-item
         
-        active
+        
         
         ">
       <a href="/2021/">
@@ -951,6 +951,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -961,7 +963,13 @@
             
           
           
-            <a href='/'></a> > 2021
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2024/'>2024</a> > Day 2 - Kubernetes Windows and Active Directory
+          
+        
           
         
           
@@ -970,6 +978,22 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#active-directory">Active Directory</a>
+      <ul>
+        <li><a href="#designing-our-domain">Designing our domain</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -977,133 +1001,49 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Day 2 - Kubernetes Windows and Active Directory
+            </h1>
           
 
         
 
 
 
-	<h1 id="year--2021">year = 2021</h1>
-
-
-
-
-
-
-
-<ul class="children children-li">
-	
-
-	
-		
-			
-		
-	
-
-	
-
-	
-		
-	
-		
-			
-				
-<li>
-<a href="/2021/1218/" >Kube-proxy Windows Kernelspace Mode</a>
-</li>
-				
-
-				
-			
-			
-		
-	
-		
-			
-				
-<li>
-<a href="/2021/1127/" >Kube-proxy Linux Userspace Mode</a>
-</li>
-				
-
-				
-			
-			
-		
-	
-		
-			
-				
-<li>
-<a href="/2021/1017/" >Kube-proxy Winuserspace Mode</a>
-</li>
-				
-
-				
-			
-			
-		
-	
-		
-			
-				
-<li>
-<a href="/2021/0903/" >Windows and Calico overlay networking</a>
-</li>
-				
-
-				
-			
-			
-		
-	
-		
-			
-				
-<li>
-<a href="/2021/0828/" >CNI plugins and kindnet</a>
-</li>
-				
-
-				
-			
-			
-		
-	
-		
-			
-				
-<li>
-<a href="/2021/0614/" >Kube-proxy ClusterIP</a>
-</li>
-				
-
-				
-			
-			
-		
-	
-		
-			
-				
-<li>
-<a href="/2021/0228/" >Kubernetes Windows Nodes</a>
-</li>
-				
-
-				
-			
-			
-		
-	
-
-	
+	<p><img src="./images/post.png?width=200px" alt="tainha" title="tainha"></p>
+<h2 id="active-directory">Active Directory</h2>
+<p>Access management is crucial in various parts of the infrastructure to ensure security and verify the identities of system users. Modern access management, often called Identity and Access Management (IdM), uses the concept of identity to solve computer and user management problems. Identities can be assigned to services or individuals within an organization and are later used for authentication, confirming the service is as it claims. They are also used for authorization, determining if the service has permission to access the requested resource.</p>
+<p>The systems implementing these concepts need to be:</p>
+<ol>
+<li>A directory that stores user identity data</li>
+<li>A set of tools to provision, modify, and delete user and privileges</li>
+<li>A service to regular access to privileges using policies and workflows</li>
+<li>A system for auditing and reporting</li>
+</ol>
+<p>A well-known implementation solution is Microsoft Active Directory. Developed by Microsoft for Windows domain networks, this product has been around for about 24 years, first released in the Windows 2000 Server Edition. Although Active Directory is not a full Identity Access Management (IAM) system, it has strong IAM characteristics.</p>
+<p>A directory is a hierarchical structure that holds information about objects on a network. Directory services store this data and make it accessible to network users and administrators. In Active Directory&rsquo;s logic structure concepts, we have &ldquo;forests,&rdquo; which comprise one or more domains and domain trees. Each domain has its unique characteristics, boundaries, and allocated resources. The creation of the first domain initiates a forest, known as the forest root domain.</p>
+<p>Domains contain the logical components to achieve administrative goals in the organization; by default, the domain becomes the security boundary for the objects inside it. The security rules defined also control objects in the domain. A domain tree is a collection of domains that reflects the organization’s structure. The child domain is also called a subdomain. One important concept is the domain controller, a server that responds to security authentication requests within the Windows domain.</p>
+<p>Organizational Units (OU) are subgroups or sub-organizations within a domain, similar to a business unit. When deploying a domain controller, it creates a default OU structure to segment the most common object types, such as users, computers, and domain controllers. Globally unique identifiers such as GUID and security identifiers such as SID are set for each new object created.</p>
+<p>Some other components are important, like the Distinguished names (DN) that are used to define a unique path for an object. In the AD schema, there are a lot of attributes to set into the tree in order to segment, organize, and model the actual organization; for example, the commonName attribute is used to represent a name,  domainComponent is the naming attribute for Domain and DNS objects.</p>
+<p>example: of the thing being created</p>
+<p>These are the server roles attached to Active Directory</p>
+<ul>
+<li>Active Directory Domain Services</li>
+<li>Active Directory Federation Services</li>
+<li>Active Directory Lightweight Directory Services</li>
+<li>Active Directory Rights Management Services</li>
+<li>Active Directory Certificate Services</li>
 </ul>
-
-
+<p><img src="./images/adinstall.png?width=800px" alt="adinstall" title="adinstall"></p>
+<p>The AD is a very long topic, and this post does not aim to provide an extensive introduction to it. Check this book for full coverage.</p>
+<h3 id="designing-our-domain">Designing our domain</h3>
+<p>add a bunch of users for tests
+add computers</p>
+<p>defining a group managed Services\</p>
+<h2 id="conclusion">Conclusion</h2>
 
 
 
@@ -1113,8 +1053,6 @@
 	
 </footer>
 
-        
-            </div> 
         
         </div>
         
@@ -1146,8 +1084,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -1163,6 +1099,26 @@
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -1191,22 +1147,6 @@
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
             
         
                     
@@ -1224,54 +1164,6 @@
                     
                     
 
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
                     
                         
             
@@ -1417,6 +1309,54 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -1507,7 +1447,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1522,9 +1461,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1645,10 +1581,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/2024/" title="2024"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/2024/0201/" title="Day 2 - Kubernetes Container Storage Interface (on Windows &amp; vSphere)" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
