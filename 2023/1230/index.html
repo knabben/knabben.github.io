@@ -9,25 +9,25 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Day 0 - Running Windows cluster locally :: compulsory thinking</title>
+    <title>Running Windows cluster locally :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1712879763" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1712879763" rel="stylesheet">
-    <link href="/css/hybrid.css?1712879763" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1712879763" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1712879763" rel="stylesheet">
-    <link href="/css/auto-complete.css?1712879763" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1712879763" rel="stylesheet">
-    <link href="/css/theme.css?1712879763" rel="stylesheet">
-    <link href="/css/tabs.css?1712879763" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1712879763" rel="stylesheet">
+    <link href="/css/nucleus.css?1712926481" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1712926481" rel="stylesheet">
+    <link href="/css/hybrid.css?1712926481" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1712926481" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1712926481" rel="stylesheet">
+    <link href="/css/auto-complete.css?1712926481" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1712926481" rel="stylesheet">
+    <link href="/css/theme.css?1712926481" rel="stylesheet">
+    <link href="/css/tabs.css?1712926481" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1712926481" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1712879763" rel="stylesheet">
+    <link href="/css/theme-blue.css?1712926481" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1712879763"></script>
+    <script src="/js/jquery-3.3.1.min.js?1712926481"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1712879763"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1712879763"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1712926481"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1712926481"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1712879763"></script>
+<script type="text/javascript" src="/js/search.js?1712926481"></script>
 
     
   </div>
@@ -238,13 +238,13 @@
  
   
     
-    <li data-nav-id="/2023/1230/" title="Day 0 - Running Windows cluster locally" class="dd-item
+    <li data-nav-id="/2023/1230/" title="Running Windows cluster locally" class="dd-item
         
         active
         
         ">
       <a href="/2023/1230/">
-          Day 0 - Running Windows cluster locally
+          Running Windows cluster locally
           
       </a>
       
@@ -967,7 +967,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2023/'>2023</a> > Day 0 - Running Windows cluster locally
+            <a href='/'></a> > <a href='/2023/'>2023</a> > Running Windows cluster locally
           
         
           
@@ -1010,7 +1010,7 @@
           
             <h1>
               
-              Day 0 - Running Windows cluster locally
+              Running Windows cluster locally
             </h1>
           
 
@@ -1018,7 +1018,8 @@
 
 
 
-	<h2 id="introduction">Introduction</h2>
+	<p><img src="/images/sea/sea6.png?width=230px" alt="tainha" title="tainha"></p>
+<h2 id="introduction">Introduction</h2>
 <p>Nowadays, having Hybrid OS Kubernetes clusters is a requirement for any PaaS product. Whether they are Kubernetes managed solutions or not, the capability to run multiple operating systems coexisting in the same Kuberentes cluster has been a reality for quite some time. A few years ago, an initial attempt to create a local cluster in the <a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools">SIG-Windows Dev Tools</a> subproject showed how challenging it can be due to different requirements, such as multiple host operating systems, and maintaining an immutable base image updated with each new release.</p>
 <p>This post discusses some new experiments in the field of virtualization. Qemu with KVM has been proven to be a good solution for running virtual machines with near-native performance, making it a valid technology to test and validate the hypothesis of running a lightweight setup locally. It&rsquo;s worth noting that other projects, such as <a href="https://github.com/k3s-io/k3s/pull/7259">K3s</a>, are also attempting to bring such technology locally. It&rsquo;s important to consider alternative approaches after two years and explore more native alternatives.</p>
 
@@ -1734,19 +1735,19 @@ if the Windows Container subsystem was not installed before.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1712879763"></script>
-    <script src="/js/perfect-scrollbar.min.js?1712879763"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1712879763"></script>
-    <script src="/js/jquery.sticky.js?1712879763"></script>
-    <script src="/js/featherlight.min.js?1712879763"></script>
-    <script src="/js/highlight.pack.js?1712879763"></script>
+    <script src="/js/clipboard.min.js?1712926481"></script>
+    <script src="/js/perfect-scrollbar.min.js?1712926481"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1712926481"></script>
+    <script src="/js/jquery.sticky.js?1712926481"></script>
+    <script src="/js/featherlight.min.js?1712926481"></script>
+    <script src="/js/highlight.pack.js?1712926481"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1712879763"></script>
-    <script src="/js/learn.js?1712879763"></script>
-    <script src="/js/hugo-learn.js?1712879763"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1712926481"></script>
+    <script src="/js/learn.js?1712926481"></script>
+    <script src="/js/hugo-learn.js?1712926481"></script>
     
         
-            <script src="/mermaid/mermaid.js?1712879763"></script>
+            <script src="/mermaid/mermaid.js?1712926481"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
