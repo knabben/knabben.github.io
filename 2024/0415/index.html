@@ -12,22 +12,22 @@
     <title>Kubernetes Windows and Active Directory :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1712926481" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1712926481" rel="stylesheet">
-    <link href="/css/hybrid.css?1712926481" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1712926481" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1712926481" rel="stylesheet">
-    <link href="/css/auto-complete.css?1712926481" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1712926481" rel="stylesheet">
-    <link href="/css/theme.css?1712926481" rel="stylesheet">
-    <link href="/css/tabs.css?1712926481" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1712926481" rel="stylesheet">
+    <link href="/css/nucleus.css?1712935960" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1712935960" rel="stylesheet">
+    <link href="/css/hybrid.css?1712935960" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1712935960" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1712935960" rel="stylesheet">
+    <link href="/css/auto-complete.css?1712935960" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1712935960" rel="stylesheet">
+    <link href="/css/theme.css?1712935960" rel="stylesheet">
+    <link href="/css/tabs.css?1712935960" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1712935960" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1712926481" rel="stylesheet">
+    <link href="/css/theme-blue.css?1712935960" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1712926481"></script>
+    <script src="/js/jquery-3.3.1.min.js?1712935960"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1712926481"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1712926481"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1712935960"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1712935960"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1712926481"></script>
+<script type="text/javascript" src="/js/search.js?1712935960"></script>
 
     
   </div>
@@ -982,7 +982,13 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#kubernetes-rbac">Kubernetes RBAC</a></li>
+    <li>
+      <ul>
+        <li><a href="#kubernetes-rbac">Kubernetes RBAC</a></li>
+        <li><a href="#authentication">Authentication</a></li>
+        <li><a href="#rbac-permissions">RBAC Permissions</a></li>
+      </ul>
+    </li>
     <li><a href="#active-directory">Active Directory</a>
       <ul>
         <li><a href="#designing-our-domain">Designing our domain</a></li>
@@ -1018,26 +1024,42 @@
 
 
 	<p><img src="./images/post.png?width=200px" alt="tainha" title="tainha"></p>
-<h2 id="kubernetes-rbac">Kubernetes RBAC</h2>
-<p>Role - ClusterRole</p>
-<p>RoleBinding - ClusterRoleBinding</p>
-<p>RBAC and serviceAccounts
-Group Managed Service Accoutns</p>
-<p><strong>Permissions</strong></p>
+<h3 id="kubernetes-rbac">Kubernetes RBAC</h3>
+<h3 id="authentication">Authentication</h3>
 <p>Kubernetes clusters have two categories of users: human users who access the cluster (and the goal of this post), ServiceAccounts used for machines (or identities providers like SPIFFE), and Pods.</p>
-<p>The complicated part (when starting on Kubernetes) is the lack of a User object, so there’s no API to add one directly. Users can present (when accessing any api-server API) a certificate authenticated by the cluster CA. Kubernetes reads the subject from the cert (CN field). And uses the RBAC system to analyze the permission aspects of it. Types of authentication:</p>
-<p>List all these things - and focus on user tokens (not service accounts)</p>
-<p><a href="https://cormachogan.com/2020/11/06/creating-developer-users-and-namespaces-scripted-in-tkg-guest-clusters/">https://cormachogan.com/2020/11/06/creating-developer-users-and-namespaces-scripted-in-tkg-guest-clusters/</a></p>
-<p>x509 client certications</p>
-<p>bootstrap tokens</p>
-<p>service account tokens</p>
-<p>openID connect tokens</p>
-<p>webhook token authentcation</p>
-<p>auth proxy</p>
+<p>The complicated part (when starting on Kubernetes) is the lack of a User object, so there’s no API to add one directly. Users can present (when accessing any api-server API) a certificate authenticated by the cluster CA. Kubernetes reads the subject from the cert (CN field). And uses the RBAC system to analyze its permission aspects. A few types of authentication strategies:</p>
+<ul>
+<li>x509 client certificates - If a client certificate is presented and verified, the common name of the subject is used as the user name for the request, is necessary to create a CSR, and have it accepted and validated manually.</li>
+<li>Service account tokens - are automatically enabled and created by the apiserver. They are associated with pods running in the cluster via the Service Account Admission Controller.</li>
+<li>openID connect tokens is a flavor of Oauth2 supported by OAtuh2 providers, using JWT tokens for authentication.</li>
+<li>Authentication  proxy - can be configured to identify users from request header values.</li>
+</ul>
 <p><a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/">https://kubernetes.io/docs/reference/access-authn-authz/authentication/</a></p>
-<p><strong>Role and ClusterRole and RBAC</strong></p>
-<p>A Role sets permissions within a specific namespace, and its namespace must be specified. On the other hand, a ClusterRole is a non-namespaced resource with broader actions. These differences should be considered when using either. RoleBinding and ClusterRoleBinding grant the permissions defined in the role to a user or group of users. These subjects can be users, groups, or service accounts. Additionally, each role can hold one or more subjects.</p>
-<h2 id="active-directory">Active Directory</h2>
+<p>If you want to check how to create users on Kubernetes here is good example article.</p>
+<p><a href="https://cormachogan.com/2020/11/06/creating-developer-users-and-namespaces-scripted-in-tkg-guest-clusters/">https://cormachogan.com/2020/11/06/creating-developer-users-and-namespaces-scripted-in-tkg-guest-clusters/</a></p>
+<h3 id="rbac-permissions">RBAC Permissions</h3>
+<p>A Role sets permissions within a specific namespace, and its namespace must be specified. On the other hand, a ClusterRole is a non-namespaced resource with broader actions.
+These differences should be considered when using either. RoleBinding and ClusterRoleBinding grant the permissions defined in the role to a user or group of users.
+These subjects can be users, groups, or service accounts. Additionally, each role can hold one or more subjects.</p>
+<p>Lets see in practice:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Create a ServiceAccount called reader</span>
+</span></span><span style="display:flex;"><span>$ kubectl create serviceaccount reader
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a role allowing Pods to be get into the namespace</span>
+</span></span><span style="display:flex;"><span>$ kubectl create role podsreads --verb<span style="color:#f92672">=</span>get --resource<span style="color:#f92672">=</span>pods
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the Rolebinding between the Role and ServiceAccount</span>
+</span></span><span style="display:flex;"><span>$ kubectl create rolebinding reader-binding --role<span style="color:#f92672">=</span>podsreads --serviceaccount<span style="color:#f92672">=</span>default:reader
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check the Permission exists for the ServiceAccount</span>
+</span></span><span style="display:flex;"><span>$ kubectl who-can get pods
+</span></span><span style="display:flex;"><span>ROLEBINDING     NAMESPACE  SUBJECT  TYPE            SA-NAMESPACE
+</span></span><span style="display:flex;"><span>reader-binding  default    reader   ServiceAccount  default
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check using the default auth subcommand </span>
+</span></span><span style="display:flex;"><span>kubectl auth can-i --as<span style="color:#f92672">=</span>system:serviceaccount:default:reader get pods
+</span></span><span style="display:flex;"><span>yes
+</span></span></code></pre></div><h2 id="active-directory">Active Directory</h2>
 <p>Access management is crucial in various parts of the infrastructure to ensure security and verify the identities of system users. Modern access management, often called Identity and Access Management (IdM), uses the concept of identity to solve computer and user management problems. Identities can be assigned to services or individuals within an organization and are later used for authentication, confirming the service is as it claims. They are also used for authorization, determining if the service has permission to access the requested resource.</p>
 <p>The systems implementing these concepts need to be:</p>
 <ol>
@@ -1632,19 +1654,19 @@ defining a group managed Services</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1712926481"></script>
-    <script src="/js/perfect-scrollbar.min.js?1712926481"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1712926481"></script>
-    <script src="/js/jquery.sticky.js?1712926481"></script>
-    <script src="/js/featherlight.min.js?1712926481"></script>
-    <script src="/js/highlight.pack.js?1712926481"></script>
+    <script src="/js/clipboard.min.js?1712935960"></script>
+    <script src="/js/perfect-scrollbar.min.js?1712935960"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1712935960"></script>
+    <script src="/js/jquery.sticky.js?1712935960"></script>
+    <script src="/js/featherlight.min.js?1712935960"></script>
+    <script src="/js/highlight.pack.js?1712935960"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1712926481"></script>
-    <script src="/js/learn.js?1712926481"></script>
-    <script src="/js/hugo-learn.js?1712926481"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1712935960"></script>
+    <script src="/js/learn.js?1712935960"></script>
+    <script src="/js/hugo-learn.js?1712935960"></script>
     
         
-            <script src="/mermaid/mermaid.js?1712926481"></script>
+            <script src="/mermaid/mermaid.js?1712935960"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
