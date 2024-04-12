@@ -12,22 +12,22 @@
     <title>Kubernetes Windows Nodes :: compulsory thinking</title>
 
     
-    <link href="/css/nucleus.css?1712935960" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1712935960" rel="stylesheet">
-    <link href="/css/hybrid.css?1712935960" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1712935960" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1712935960" rel="stylesheet">
-    <link href="/css/auto-complete.css?1712935960" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1712935960" rel="stylesheet">
-    <link href="/css/theme.css?1712935960" rel="stylesheet">
-    <link href="/css/tabs.css?1712935960" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1712935960" rel="stylesheet">
+    <link href="/css/nucleus.css?1712942429" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1712942429" rel="stylesheet">
+    <link href="/css/hybrid.css?1712942429" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1712942429" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1712942429" rel="stylesheet">
+    <link href="/css/auto-complete.css?1712942429" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1712942429" rel="stylesheet">
+    <link href="/css/theme.css?1712942429" rel="stylesheet">
+    <link href="/css/tabs.css?1712942429" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1712942429" rel="stylesheet">
     
-    <link href="/css/theme-blue.css?1712935960" rel="stylesheet">
+    <link href="/css/theme-blue.css?1712942429" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1712935960"></script>
+    <script src="/js/jquery-3.3.1.min.js?1712942429"></script>
       
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
     <script>
@@ -69,14 +69,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1712935960"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1712935960"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1712942429"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1712942429"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/opssec.in\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1712935960"></script>
+<script type="text/javascript" src="/js/search.js?1712942429"></script>
 
     
   </div>
@@ -982,12 +982,8 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#introduction">Introduction</a></li>
-      </ul>
-    </li>
-    <li><a href="#swdt-subcommand-and-settings">SWDT subcommand and settings</a>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#sig-windows-development-environment">SIG Windows Development Environment</a>
       <ul>
         <li><a href="#settings">Settings</a></li>
         <li><a href="#initial-node-setup">Initial node setup</a></li>
@@ -1028,11 +1024,15 @@
 
 
 	<p><img src="/images/sea/sea1.png?width=230px" alt="tainha" title="tainha"></p>
-<h3 id="introduction">Introduction</h3>
+<h2 id="introduction">Introduction</h2>
 <p>On Day 1, after <a href="https://opssec.in/2023/1230/">stepping stones</a> and setting up a Kubernetes cluster, I was left wondering what to do next. Running mundane workloads on the cluster was definitely not the reason for setting it up in the first place. Instead, I aim to develop Kubernetes, specifically focusing on the Windows node components from this particular environment.
 In this post, I would like to share an experimental CLI tool created on SWDT (SIG Windows Dev Tools) that can assist in binary deployment and node configuration with simple syntax and standardized configurations.</p>
 <p>Additionally, I aim to provide concise development workflows that I use daily for testing and validating the newly built custom components. The idea of this toolkit is to provide developers with more robust and reusable mechanisms, as opposed to shell scripts (which are perfectly fine), for managing Windows nodes remotely.</p>
-<h2 id="swdt-subcommand-and-settings">SWDT subcommand and settings</h2>
+<h2 id="sig-windows-development-environment">SIG Windows Development Environment</h2>
+
+<div class="notices update" ><p>UPDATE: A new DEMO in pt-br can find <a href="https://www.youtube.com/watch?v=krI6Ivv7zdQ">here</a>.</p>
+</div>
+
 <p>The SWDT repository contains the <a href="https://github.com/kubernetes-sigs/sig-windows-dev-tools/tree/master/experiments/swdt">experiment/swdt</a> folder for the POC CLI.
 There&rsquo;s a great documentation provided by Mateusz Loskot, on how to setup the same Windows cluster using Hyper-V in the project, check if this fits your use case. After compiling with <code>make build</code>, the binary will provide a few subcommands. Before looking at the command options, let&rsquo;s explore the configuration format.</p>
 <h3 id="settings">Settings</h3>
@@ -1907,19 +1907,19 @@ Join the team on the <strong><a href="https://communityinviter.com/apps/kubernet
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1712935960"></script>
-    <script src="/js/perfect-scrollbar.min.js?1712935960"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1712935960"></script>
-    <script src="/js/jquery.sticky.js?1712935960"></script>
-    <script src="/js/featherlight.min.js?1712935960"></script>
-    <script src="/js/highlight.pack.js?1712935960"></script>
+    <script src="/js/clipboard.min.js?1712942429"></script>
+    <script src="/js/perfect-scrollbar.min.js?1712942429"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1712942429"></script>
+    <script src="/js/jquery.sticky.js?1712942429"></script>
+    <script src="/js/featherlight.min.js?1712942429"></script>
+    <script src="/js/highlight.pack.js?1712942429"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1712935960"></script>
-    <script src="/js/learn.js?1712935960"></script>
-    <script src="/js/hugo-learn.js?1712935960"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1712942429"></script>
+    <script src="/js/learn.js?1712942429"></script>
+    <script src="/js/hugo-learn.js?1712942429"></script>
     
         
-            <script src="/mermaid/mermaid.js?1712935960"></script>
+            <script src="/mermaid/mermaid.js?1712942429"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
