@@ -20,6 +20,27 @@ What we want here is do reduce the cycle time of the project in a reliable, secu
     </item>
     
     <item>
+      <title>Consul - Service Discovery</title>
+      <link>https://opssec.in/2015/0309/consul/</link>
+      <pubDate>Thu, 03 Sep 2015 18:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2015/0309/consul/</guid>
+      <description>Introduction Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.
+A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up?</description>
+    </item>
+    
+    <item>
+      <title>General finance formulas</title>
+      <link>https://opssec.in/2015/0908/finance/</link>
+      <pubDate>Sun, 09 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2015/0908/finance/</guid>
+      <description>Future value import numpy as np import warnings warnings.filterwarnings(&amp;#34;ignore&amp;#34;)
+Fv represents the future value of an operation in a particular time. $$Fv = Pv * (1 + i)^n$$
+def fv(pv, n, i): print(&amp;#39;{0:.2f}&amp;#39;.format(np.fv(i/100, n, 0, -pv))) fv(5000, 9, 4.5) 7430.48 fv(5000, 12, 1.5) 5978.09 fv(1000, 18, 1.25) 1250.58 fv(2800, 3, 3.5) 3104.41 fv(2000, 3, 3.5) 2217.44 fv(1000, 3, 3.5) 1108.72 fv(340, 2, 5) 374.85 fv(1000, 48, 2.2) 2842.12 fv(3000, 3*12, 0.</description>
+    </item>
+    
+    <item>
       <title>Tsung Capacity Test</title>
       <link>https://opssec.in/2015/2607/</link>
       <pubDate>Sun, 26 Jul 2015 00:00:00 +0000</pubDate>

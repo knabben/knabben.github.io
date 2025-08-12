@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.113.0">
-    <meta name="description" content="still breaking things on saturday night">
+    <meta name="description" content="">
 
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Hybrid nodes with ClusterClass on Amazon Web Service :: compulsory thinking</title>
+    <title>General finance formulas :: compulsory thinking</title>
 
     
     <link href="/css/nucleus.css?1754963732" rel="stylesheet">
@@ -50,7 +50,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/2022/0712/">
+  <body class="" data-url="/2015/0908/finance/">
     <nav id="sidebar" class="">
 
 
@@ -532,7 +532,7 @@
   
     
     <li data-nav-id="/2022/" title="2022" class="dd-item
-        parent
+        
         
         
         ">
@@ -562,7 +562,7 @@
     
     <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
         
-        active
+        
         
         ">
       <a href="/2022/0712/">
@@ -890,7 +890,7 @@
   
     
     <li data-nav-id="/2015/" title="2015" class="dd-item
-        
+        parent
         
         
         ">
@@ -937,7 +937,7 @@
  
   
     
-      <li data-nav-id="/2015/0908/finance/" title="General finance formulas" class="dd-item ">
+      <li data-nav-id="/2015/0908/finance/" title="General finance formulas" class="dd-item active">
         <a href="/2015/0908/finance/">
         General finance formulas
         
@@ -1038,7 +1038,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2022/'>2022</a> > Hybrid nodes with ClusterClass on Amazon Web Service
+            <a href='/'></a> > <a href='/2015/'>2015</a> > General finance formulas
           
         
           
@@ -1052,17 +1052,22 @@
                     <div class="progress">
     <div class="wrapper">
 <nav id="TableOfContents">
-  <ul>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#shaping-the-cluster">Shaping the cluster</a>
-      <ul>
-        <li><a href="#regular-capi-spec">Regular CAPI spec</a></li>
-        <li><a href="#clusterclass-capi-spec">ClusterClass CAPI spec</a></li>
-        <li><a href="#generating-the-spec">Generating the spec</a></li>
-        <li><a href="#conclusion">Conclusion</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li><a href="#headline-1">Future value</a>
+</li>
+<li><a href="#headline-2">Present value</a>
+</li>
+<li><a href="#headline-3">Period</a>
+</li>
+<li><a href="#headline-4">Interest rates</a>
+</li>
+<li><a href="#headline-5">Payment function</a>
+</li>
+<li><a href="#headline-6">PMT </a>
+</li>
+<li><a href="#headline-7">PPMT</a>
+</li>
+</ul>
 </nav>
     </div>
 </div>
@@ -1079,7 +1084,7 @@
           
             <h1>
               
-              Hybrid nodes with ClusterClass on Amazon Web Service
+              General finance formulas
             </h1>
           
 
@@ -1087,155 +1092,194 @@
 
 
 
-	<h2 id="introduction">Introduction</h2>
-<p>This post will be quick one to show how build a hybrid cluster using ClusterClass.</p>
-<p>The idea behind ClusterClass is simple: define the shape of your cluster once, and reuse it many times,
-abstracting the complexities and the internals of a Kubernetes cluster <a href=".https://kubernetes.io/blog/2021/10/08/capi-clusterclass-and-managed-topologies/">away</a>.</p>
-<p>From the original CAEP: Cluster API does not expose a native way to provision multiple clusters of the same configuration.
-The ClusterClass object is supposed to act as a collection of template references which can be used to create managed topologies.
-Today, the Cluster object is a logical grouping of components which describe an underlying cluster.
-The user experience to create a cluster requires the user to create a bunch of underlying resources such as KCP
-(control plane provider), MachineDeployments, and infrastructure or bootstrap templates for those resources which
-logically end up representing the cluster. Since the cluster configuration is spread around multiple components, upgrading
-the cluster version is hard as it requires changes to different fields in different resources to perform an upgrade.
-The ClusterClass object aims at reducing this complexity by delegating the responsibility of lifecycle managing
-these underlying resources to the Cluster controller.</p>
-<h2 id="shaping-the-cluster">Shaping the cluster</h2>
-<h3 id="regular-capi-spec">Regular CAPI spec</h3>
-<p>In the normal spec you define a Cluster and AWSCluster objects.</p>
-<p><img src="./images/reg-cluster.png" alt="reg cluster" title="cluster"></p>
-<p>The KCP points to the infrastructure being it an AWSMachineTemplate and definitions of the join.</p>
-<p><img src="./images/reg-kubeadmcp.png" alt="reg-kubeadm" title="kubeadm"></p>
-<p>The last piece and it&rsquo;s kind of detached from the cluster are the machinedeployments, what here
-can be created as different objects, and the node-pool is lost when translate for the cli.</p>
-<p><img src="./images/reg-md.png" alt="reg-md" title="reg-mdd"></p>
-<p>One other bad issue, is the lack of reuse of these MD objects on different clusters.</p>
-<h3 id="clusterclass-capi-spec">ClusterClass CAPI spec</h3>
-<p>Looking the objects modeling it&rsquo;s very clear how beneficial these setups can be.</p>
-<p>The ClusterClass object allow you to define a workers with a few machineDeployments specs,
-meaning a CC can have as many MD definitions as you want, and as you can see not necessary
-be used on your cluster.</p>
-<p><img src="./images/cc-cc.png" alt="cc" title="cc"></p>
-<p>Managed topologies let you start the ClusterClass, so it&rsquo;s possible to have as many cluster with the similar
-topology using a few reusable templates.</p>
-<p><img src="./images/cc-cluster.png" alt="ccc" title="ccc">
-NOTE: The API is still in alpha.</p>
-<h3 id="generating-the-spec">Generating the spec</h3>
-<p>Right now clusterctl generate yaml can be used with a few templates available, you can pass the values
-as environment variables and envsubst will replace the values there.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ CLUSTER_NAME<span style="color:#f92672">=</span>capa <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>CNI_RESOURCES<span style="color:#f92672">=</span>cni <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>CONTROL_PLANE_MACHINE_COUNT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>KUBERNETES_VERSION<span style="color:#f92672">=</span>1.22.10 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>WORKER_MACHINE_COUNT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> 
-</span></span><span style="display:flex;"><span>clusterctl generate yaml <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--from https://github.com/kubernetes-sigs/cluster-api-provider-aws/blob/main/templates/cluster-template-simple-clusterclass.yaml &gt; cluster.yaml
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Future value
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> warnings
+</span></span><span style="display:flex;"><span>warnings<span style="color:#f92672">.</span>filterwarnings(<span style="color:#e6db74">&#34;ignore&#34;</span>)</span></span></code></pre></div></p>
+<p>
+Fv represents the future value of an operation in a particular time. </p>
+<p>
+$$Fv = Pv * (1 + i)^n$$</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fv</span>(pv, n, i):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{0:.2f}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(np<span style="color:#f92672">.</span>fv(i<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span>, n, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span>pv)))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>$ kubectl apply -f cluster.yaml
-</span></span></code></pre></div><p>Inside the specs you start with the Cluster object that is defined as follows,
-topology has a class (ClusterClass reference), a controlPlane and worker fields.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">cluster.x-k8s.io/v1beta1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capa</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">clusterNetwork</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">pods</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">cidrBlocks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">192.168.0.0</span><span style="color:#ae81ff">/16</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">topology</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">class</span>: <span style="color:#ae81ff">quick-start</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">controlPlane</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">version</span>: <span style="color:#ae81ff">1.22.10</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">workers</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">machineDeployments</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">default-worker</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-</span></span></code></pre></div><p>The CC definition is a little longer and as you can see follows the same controlPlane, infrastructure and
-workers references for templates.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">cluster.x-k8s.io/v1beta1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterClass</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">quick-start</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">controlPlane</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">machineInfrastructure</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSMachineTemplate</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmControlPlaneTemplate</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">infrastructure</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSClusterTemplate</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workers</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">machineDeployments</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">default-worker</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">template</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">bootstrap</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmConfigTemplate</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">infrastructure</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSMachineTemplate</span>
-</span></span></code></pre></div><p>It&rsquo;s possible to dry run the objects that are going to be created or modified, the output</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ clusterctl alpha topology plan -f cluster.yaml -o out
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>Changes <span style="color:#66d9ef">for</span> Cluster <span style="color:#e6db74">&#34;default/capa&#34;</span>:
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">5000</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">4.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7430.48</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  NAMESPACE  KIND                   NAME                       ACTION
-</span></span><span style="display:flex;"><span>  default    AWSCluster             capa-9p2lh                 created
-</span></span><span style="display:flex;"><span>  default    AWSMachineTemplate     capa-control-plane-p8xvx   created
-</span></span><span style="display:flex;"><span>  default    AWSMachineTemplate     capa-md-0-infra-n7nm7      created
-</span></span><span style="display:flex;"><span>  default    KubeadmConfigTemplate  capa-md-0-bootstrap-92gp5  created
-</span></span><span style="display:flex;"><span>  default    KubeadmControlPlane    capa-wlc2n                 created
-</span></span><span style="display:flex;"><span>  default    MachineDeployment      capa-md-0-8k6c8            created
-</span></span><span style="display:flex;"><span>  default    Secret                 capa-shim                  created
-</span></span><span style="display:flex;"><span>  default    Cluster                capa                       modified
-</span></span></code></pre></div><h4 id="variables-and-patches">Variables and patches</h4>
-<p>When these specs are generated you can find a few variables in the cluster <a href="https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/write-clusterclass.html#clusterclass-with-patches">here</a>.
-The variable can then be used in a patch to set a field on a template referenced in the ClusterClass.
-The selector specifies on which template the patch should be applied. jsonPatches specifies which JSON patches should
-be applied to that template.</p>
-<p>In this case we set the <code>spec.template.spec.region</code> field of the AWSClusterTemplate to the value of the variable <code>region</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#75715e"># cluster.yaml</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">variables</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">region</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">value</span>: <span style="color:#ae81ff">us-east-1</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># cluster-class.yaml</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">patches</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">definitions</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">jsonPatches</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">op</span>: <span style="color:#ae81ff">add</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/spec/template/spec/region</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">valueFrom</span>:
-</span></span><span style="display:flex;"><span>              <span style="color:#f92672">variable</span>: <span style="color:#ae81ff">region</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSClusterTemplate</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">matchResources</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">infrastructureCluster</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">region</span>
-</span></span></code></pre></div><h4 id="install-the-cni">Install the CNI</h4>
-<p>The CNI can be installed via ClusterResourceSet, as the template generated, in this example I installed
-manually.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ clusterctl get kubeconfig capa &gt; capa.config
-</span></span><span style="display:flex;"><span>kubectl --kubeconfig<span style="color:#f92672">=</span>capa.config apply -f https://docs.projectcalico.org/v3.21/manifests/calico.yaml
-</span></span></code></pre></div><p>Now you are running a full unmanaged AWS workload cluster setup in less than 5 minutes.</p>
-<h3 id="conclusion">Conclusion</h3>
-<p>The evolution of the CAPI project and providers are impressive, as <a href="https://www.youtube.com/watch?v=KzYV-fJ_wH0">noted</a> things are only starting, and
-features like CC brings more powerful to these controllers. Multi cloud centric management is a must on 2022,
-CAPI is one of the projects that definitely will help on it.</p>
-<p>If you want to learn more about the feature watch the <a href="https://www.youtube.com/watch?v=U9CDND0nzRI">TGIK 178: ClusterAPI - ClusterClass &amp; Managed Topologies</a></p>
-<p>If you are interested on multi-OS in general check out this <a href="https://www.youtube.com/watch?v=Z_1dI-yR_Fw">Antrea Live</a> and send a DM</p>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">5000</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">1.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5978.09</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">1.25</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1250.58</span>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">2800</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3104.41</span>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">2000</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2217.44</span>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1108.72</span>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">340</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">374.85</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">2.2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2842.12</span>
+</span></span><span style="display:flex;"><span>fv(<span style="color:#ae81ff">3000</span>, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span><span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">0.84</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4054.18</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Present value
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+$$P = \frac{Fv}{(1 + i) ^ n}$$</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pv</span>(fv, n, i):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{0:.2f}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(np<span style="color:#f92672">.</span>pv(i<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span>, n, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span>fv)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pv(<span style="color:#ae81ff">1587</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>pv(<span style="color:#ae81ff">28224.08</span>, <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">7.5</span>)
+</span></span><span style="display:flex;"><span>pv(<span style="color:#ae81ff">9000</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">1.55</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1080.09</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11850.00</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6221.92</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Period
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+$$n = \frac{ln(\frac{Fv}{P})}{ln(1+i)}$$ </p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">nper</span>(fv, pv, rate):
+</span></span><span style="display:flex;"><span>    print(round(np<span style="color:#f92672">.</span>nper(rate<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span>pv, fv)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nper(<span style="color:#ae81ff">1610.51</span>, <span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>nper(<span style="color:#ae81ff">4236</span>, <span style="color:#ae81ff">3450</span>, <span style="color:#ae81ff">2.3067</span>)
+</span></span><span style="display:flex;"><span>nper(<span style="color:#ae81ff">600</span>, <span style="color:#ae81ff">449.80</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>nper(<span style="color:#ae81ff">1425.76</span>, <span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">9.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12.0</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Interest rates
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+$$i = (\frac{Fv}{P}) ^ \frac{1}{n}$$</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rate</span>(fv, pv, n):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{0:.2f}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(np<span style="color:#f92672">.</span>rate(n, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span>pv, fv) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rate(<span style="color:#ae81ff">1610.51</span>, <span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>rate(<span style="color:#ae81ff">700</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2150</span>, <span style="color:#ae81ff">2150</span>, <span style="color:#ae81ff">7</span>)
+</span></span><span style="display:flex;"><span>rate(<span style="color:#ae81ff">2540.35</span>, <span style="color:#ae81ff">1500</span>, <span style="color:#ae81ff">18</span>)
+</span></span><span style="display:flex;"><span>rate(<span style="color:#ae81ff">4796.06</span>, <span style="color:#ae81ff">540</span>, <span style="color:#ae81ff">18</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10.00</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4.11</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2.97</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12.90</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+Payment function
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+$$V = R.\left[\frac{(1+i)^n-1}{(1+1)^n.i}\right]$$</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pmt</span>(rate, n, pv): <span style="color:#75715e"># pv = valor a vista</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{0:.2f}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(np<span style="color:#f92672">.</span>pmt(rate<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span>, n, <span style="color:#f92672">-</span>pv)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pmt(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>pmt(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1500</span>)
+</span></span><span style="display:flex;"><span>pv <span style="color:#f92672">=</span> <span style="color:#ae81ff">16000</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3500</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pmt(<span style="color:#ae81ff">2.7214</span>, <span style="color:#ae81ff">36</span>, <span style="color:#f92672">-</span>pv)
+</span></span><span style="display:flex;"><span>pmt(<span style="color:#ae81ff">3.0</span>, <span style="color:#ae81ff">7</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1900</span>)
+</span></span><span style="display:flex;"><span>pmt(<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">120</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">110000</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">263.80</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">194.26</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">549.00</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">304.96</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">1578.18</span></span></span></code></pre></div></p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>pv(<span style="color:#ae81ff">0.10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">263.79</span>,<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>pv(<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">10</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">199.99</span> ,<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>pv(<span style="color:#ae81ff">0.03</span>, <span style="color:#ae81ff">5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span> ,<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">999.971641902</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1894.1661931</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">457.970718719</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+PMT 
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>pmt(<span style="color:#ae81ff">0.10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>pmt(<span style="color:#ae81ff">0.03</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">900</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">239.815891632</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">87.7824047822</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+PPMT
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Um amigo lhe empresta $ 1000,00 que devem ser pagos em 5 parcelas,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># utilizando o Price, monte o esquema de amortização com taxa de 10% ao mês.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>principal <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>nper <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>per <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">5</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Calculo dos juros</span>
+</span></span><span style="display:flex;"><span>ipmt <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ipmt(<span style="color:#ae81ff">0.1</span>, per, <span style="color:#ae81ff">5</span>, principal)
+</span></span><span style="display:flex;"><span>print(ipmt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Calculo do valor amortizado</span>
+</span></span><span style="display:flex;"><span>ppmt <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ppmt(<span style="color:#ae81ff">0.1</span>, per, <span style="color:#ae81ff">5</span>, principal)
+</span></span><span style="display:flex;"><span>print(ppmt)
+</span></span><span style="display:flex;"><span>print(<span style="color:#ae81ff">1000</span> <span style="color:#f92672">-</span> ppmt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Calulo da parcela</span>
+</span></span><span style="display:flex;"><span>pmt <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>pmt(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">5</span>, principal)
+</span></span><span style="display:flex;"><span>print(pmt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Juros</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#f92672">-</span><span style="color:#ae81ff">100.</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">83.62</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">65.60</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">45.78</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">23.98</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Amortização</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#f92672">-</span><span style="color:#ae81ff">163.80</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">180.18</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">198.20</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">218.01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">239.81</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parcela</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">263.797480795</span></span></span></code></pre></div></p>
+</div>
+</div>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -1533,7 +1577,6 @@ CAPI is one of the projects that definitely will help on it.</p>
             
                 
                     
-                    
                 
                 
 
@@ -1548,7 +1591,6 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
-                    
                     
                 
                 
@@ -1565,9 +1607,6 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1750,6 +1789,7 @@ CAPI is one of the projects that definitely will help on it.</p>
             
                 
                     
+                    
                 
                 
 
@@ -1762,6 +1802,9 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1779,6 +1822,7 @@ CAPI is one of the projects that definitely will help on it.</p>
             
                 
                     
+                    
                 
                 
 
@@ -1794,6 +1838,9 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1818,10 +1865,10 @@ CAPI is one of the projects that definitely will help on it.</p>
 	 
 	 
 		
-			<a class="nav nav-prev" href="/2022/" title="2022"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/2015/0309/consul/" title="Consul - Service Discovery"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/2015/2607/" title="Tsung Capacity Test" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1853,3 +1900,4 @@ CAPI is one of the projects that definitely will help on it.</p>
 
   </body>
 </html>
+

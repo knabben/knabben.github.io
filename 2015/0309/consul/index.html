@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.113.0">
-    <meta name="description" content="still breaking things on saturday night">
+    <meta name="description" content="">
 
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Hybrid nodes with ClusterClass on Amazon Web Service :: compulsory thinking</title>
+    <title>Consul - Service Discovery :: compulsory thinking</title>
 
     
     <link href="/css/nucleus.css?1754963732" rel="stylesheet">
@@ -50,7 +50,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/2022/0712/">
+  <body class="" data-url="/2015/0309/consul/">
     <nav id="sidebar" class="">
 
 
@@ -532,7 +532,7 @@
   
     
     <li data-nav-id="/2022/" title="2022" class="dd-item
-        parent
+        
         
         
         ">
@@ -562,7 +562,7 @@
     
     <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
         
-        active
+        
         
         ">
       <a href="/2022/0712/">
@@ -890,7 +890,7 @@
   
     
     <li data-nav-id="/2015/" title="2015" class="dd-item
-        
+        parent
         
         
         ">
@@ -916,7 +916,7 @@
  
   
     
-      <li data-nav-id="/2015/0309/consul/" title="Consul - Service Discovery" class="dd-item ">
+      <li data-nav-id="/2015/0309/consul/" title="Consul - Service Discovery" class="dd-item active">
         <a href="/2015/0309/consul/">
         Consul - Service Discovery
         
@@ -1038,7 +1038,7 @@
             
           
           
-            <a href='/'></a> > <a href='/2022/'>2022</a> > Hybrid nodes with ClusterClass on Amazon Web Service
+            <a href='/'></a> > <a href='/2015/'>2015</a> > Consul - Service Discovery
           
         
           
@@ -1052,17 +1052,22 @@
                     <div class="progress">
     <div class="wrapper">
 <nav id="TableOfContents">
-  <ul>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#shaping-the-cluster">Shaping the cluster</a>
-      <ul>
-        <li><a href="#regular-capi-spec">Regular CAPI spec</a></li>
-        <li><a href="#clusterclass-capi-spec">ClusterClass CAPI spec</a></li>
-        <li><a href="#generating-the-spec">Generating the spec</a></li>
-        <li><a href="#conclusion">Conclusion</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li><a href="#headline-1">Introduction</a>
+</li>
+<li><a href="#headline-2">Architecture</a>
+</li>
+<li><a href="#headline-3">Services</a>
+</li>
+<li><a href="#headline-4">Reference</a>
+<ul>
+<li><a href="#headline-5">[1] - NEWMAN, Sam. Building Microservices. O&#39;Reilly, 2005.</a>
+</li>
+<li><a href="#headline-6">[2] - TURNBULL, James. The Docker Book, 2014.</a>
+</li>
+</ul>
+</li>
+</ul>
 </nav>
     </div>
 </div>
@@ -1079,7 +1084,7 @@
           
             <h1>
               
-              Hybrid nodes with ClusterClass on Amazon Web Service
+              Consul - Service Discovery
             </h1>
           
 
@@ -1087,155 +1092,158 @@
 
 
 
-	<h2 id="introduction">Introduction</h2>
-<p>This post will be quick one to show how build a hybrid cluster using ClusterClass.</p>
-<p>The idea behind ClusterClass is simple: define the shape of your cluster once, and reuse it many times,
-abstracting the complexities and the internals of a Kubernetes cluster <a href=".https://kubernetes.io/blog/2021/10/08/capi-clusterclass-and-managed-topologies/">away</a>.</p>
-<p>From the original CAEP: Cluster API does not expose a native way to provision multiple clusters of the same configuration.
-The ClusterClass object is supposed to act as a collection of template references which can be used to create managed topologies.
-Today, the Cluster object is a logical grouping of components which describe an underlying cluster.
-The user experience to create a cluster requires the user to create a bunch of underlying resources such as KCP
-(control plane provider), MachineDeployments, and infrastructure or bootstrap templates for those resources which
-logically end up representing the cluster. Since the cluster configuration is spread around multiple components, upgrading
-the cluster version is hard as it requires changes to different fields in different resources to perform an upgrade.
-The ClusterClass object aims at reducing this complexity by delegating the responsibility of lifecycle managing
-these underlying resources to the Cluster controller.</p>
-<h2 id="shaping-the-cluster">Shaping the cluster</h2>
-<h3 id="regular-capi-spec">Regular CAPI spec</h3>
-<p>In the normal spec you define a Cluster and AWSCluster objects.</p>
-<p><img src="./images/reg-cluster.png" alt="reg cluster" title="cluster"></p>
-<p>The KCP points to the infrastructure being it an AWSMachineTemplate and definitions of the join.</p>
-<p><img src="./images/reg-kubeadmcp.png" alt="reg-kubeadm" title="kubeadm"></p>
-<p>The last piece and it&rsquo;s kind of detached from the cluster are the machinedeployments, what here
-can be created as different objects, and the node-pool is lost when translate for the cli.</p>
-<p><img src="./images/reg-md.png" alt="reg-md" title="reg-mdd"></p>
-<p>One other bad issue, is the lack of reuse of these MD objects on different clusters.</p>
-<h3 id="clusterclass-capi-spec">ClusterClass CAPI spec</h3>
-<p>Looking the objects modeling it&rsquo;s very clear how beneficial these setups can be.</p>
-<p>The ClusterClass object allow you to define a workers with a few machineDeployments specs,
-meaning a CC can have as many MD definitions as you want, and as you can see not necessary
-be used on your cluster.</p>
-<p><img src="./images/cc-cc.png" alt="cc" title="cc"></p>
-<p>Managed topologies let you start the ClusterClass, so it&rsquo;s possible to have as many cluster with the similar
-topology using a few reusable templates.</p>
-<p><img src="./images/cc-cluster.png" alt="ccc" title="ccc">
-NOTE: The API is still in alpha.</p>
-<h3 id="generating-the-spec">Generating the spec</h3>
-<p>Right now clusterctl generate yaml can be used with a few templates available, you can pass the values
-as environment variables and envsubst will replace the values there.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ CLUSTER_NAME<span style="color:#f92672">=</span>capa <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>CNI_RESOURCES<span style="color:#f92672">=</span>cni <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>CONTROL_PLANE_MACHINE_COUNT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>KUBERNETES_VERSION<span style="color:#f92672">=</span>1.22.10 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>WORKER_MACHINE_COUNT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> 
-</span></span><span style="display:flex;"><span>clusterctl generate yaml <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--from https://github.com/kubernetes-sigs/cluster-api-provider-aws/blob/main/templates/cluster-template-simple-clusterclass.yaml &gt; cluster.yaml
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Introduction
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+Consul is a Service Discovery system, on a microservice architecture for example, we have some external and internal services laying around. There is a complexity in the setup and orchestration of these services which are being setup and destroyed all the time.</p>
+<p>
+A long term solution to the problem is to use DNS, an address name resolver. It is a mature and larger used protocol, but we can find some issues nowadays: How can it know if the service is down or up? How much your client can trust your DNS TTL on his cache?</p>
+<p>
+From the universe of Dynamic Service Registries, we are going to talk about Consul, the system offers a built in DNS, Service Discovery, Health checks, a Key/Value shared storage and multiple data centers.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Architecture
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+Every node runs an agent write in Golang. It is capable to run as client or server, and can run the DNS||HTTP interface, besides that the agent is responsible for running checks and sync services.
+Lets start one server on a demo box, it comes with Consul source, the recommended number of boxes for fail-over is 3-5 boxes:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># git clone https://github.com/hashicorp/consul.git</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># cd consul/demo/vagrant-cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># vagrant up</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>$ kubectl apply -f cluster.yaml
-</span></span></code></pre></div><p>Inside the specs you start with the Cluster object that is defined as follows,
-topology has a class (ClusterClass reference), a controlPlane and worker fields.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">cluster.x-k8s.io/v1beta1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Cluster</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">capa</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">clusterNetwork</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">pods</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">cidrBlocks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">192.168.0.0</span><span style="color:#ae81ff">/16</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">topology</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">class</span>: <span style="color:#ae81ff">quick-start</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">controlPlane</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">version</span>: <span style="color:#ae81ff">1.22.10</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">workers</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">machineDeployments</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">default-worker</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">md-0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-</span></span></code></pre></div><p>The CC definition is a little longer and as you can see follows the same controlPlane, infrastructure and
-workers references for templates.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">cluster.x-k8s.io/v1beta1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ClusterClass</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">quick-start</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">controlPlane</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">machineInfrastructure</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSMachineTemplate</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmControlPlaneTemplate</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">infrastructure</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSClusterTemplate</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workers</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">machineDeployments</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">class</span>: <span style="color:#ae81ff">default-worker</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">template</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">bootstrap</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">KubeadmConfigTemplate</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">infrastructure</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ref</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSMachineTemplate</span>
-</span></span></code></pre></div><p>It&rsquo;s possible to dry run the objects that are going to be created or modified, the output</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ clusterctl alpha topology plan -f cluster.yaml -o out
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>Changes <span style="color:#66d9ef">for</span> Cluster <span style="color:#e6db74">&#34;default/capa&#34;</span>:
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># vagrant ssh n1</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  NAMESPACE  KIND                   NAME                       ACTION
-</span></span><span style="display:flex;"><span>  default    AWSCluster             capa-9p2lh                 created
-</span></span><span style="display:flex;"><span>  default    AWSMachineTemplate     capa-control-plane-p8xvx   created
-</span></span><span style="display:flex;"><span>  default    AWSMachineTemplate     capa-md-0-infra-n7nm7      created
-</span></span><span style="display:flex;"><span>  default    KubeadmConfigTemplate  capa-md-0-bootstrap-92gp5  created
-</span></span><span style="display:flex;"><span>  default    KubeadmControlPlane    capa-wlc2n                 created
-</span></span><span style="display:flex;"><span>  default    MachineDeployment      capa-md-0-8k6c8            created
-</span></span><span style="display:flex;"><span>  default    Secret                 capa-shim                  created
-</span></span><span style="display:flex;"><span>  default    Cluster                capa                       modified
-</span></span></code></pre></div><h4 id="variables-and-patches">Variables and patches</h4>
-<p>When these specs are generated you can find a few variables in the cluster <a href="https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/write-clusterclass.html#clusterclass-with-patches">here</a>.
-The variable can then be used in a patch to set a field on a template referenced in the ClusterClass.
-The selector specifies on which template the patch should be applied. jsonPatches specifies which JSON patches should
-be applied to that template.</p>
-<p>In this case we set the <code>spec.template.spec.region</code> field of the AWSClusterTemplate to the value of the variable <code>region</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#75715e"># cluster.yaml</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">variables</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">region</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">value</span>: <span style="color:#ae81ff">us-east-1</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># cluster-class.yaml</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">patches</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">definitions</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">jsonPatches</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">op</span>: <span style="color:#ae81ff">add</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/spec/template/spec/region</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">valueFrom</span>:
-</span></span><span style="display:flex;"><span>              <span style="color:#f92672">variable</span>: <span style="color:#ae81ff">region</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">infrastructure.cluster.x-k8s.io/v1beta1</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">AWSClusterTemplate</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">matchResources</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">infrastructureCluster</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">region</span>
-</span></span></code></pre></div><h4 id="install-the-cni">Install the CNI</h4>
-<p>The CNI can be installed via ClusterResourceSet, as the template generated, in this example I installed
-manually.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ clusterctl get kubeconfig capa &gt; capa.config
-</span></span><span style="display:flex;"><span>kubectl --kubeconfig<span style="color:#f92672">=</span>capa.config apply -f https://docs.projectcalico.org/v3.21/manifests/calico.yaml
-</span></span></code></pre></div><p>Now you are running a full unmanaged AWS workload cluster setup in less than 5 minutes.</p>
-<h3 id="conclusion">Conclusion</h3>
-<p>The evolution of the CAPI project and providers are impressive, as <a href="https://www.youtube.com/watch?v=KzYV-fJ_wH0">noted</a> things are only starting, and
-features like CC brings more powerful to these controllers. Multi cloud centric management is a must on 2022,
-CAPI is one of the projects that definitely will help on it.</p>
-<p>If you want to learn more about the feature watch the <a href="https://www.youtube.com/watch?v=U9CDND0nzRI">TGIK 178: ClusterAPI - ClusterClass &amp; Managed Topologies</a></p>
-<p>If you are interested on multi-OS in general check out this <a href="https://www.youtube.com/watch?v=Z_1dI-yR_Fw">Antrea Live</a> and send a DM</p>
+</span></span><span style="display:flex;"><span>vagrant@n1:/etc/consul.d$ consul agent -server -bootstrap-expect <span style="color:#ae81ff">1</span> -data-dir /etc/consul.d/ --bind<span style="color:#f92672">=</span>172.20.20.10
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; WARNING: BootstrapExpect Mode is specified as 1; this is the same as Bootstrap mode.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; WARNING: Bootstrap mode enabled! Do not enable unless necessary
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; WARNING: It is highly recommended to set GOMAXPROCS higher than 1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; Starting raft data migration...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; Starting Consul agent...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; Starting Consul agent RPC...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; Consul agent running!
+</span></span><span style="display:flex;"><span>         Node name: <span style="color:#e6db74">&#39;n1&#39;</span>
+</span></span><span style="display:flex;"><span>        Datacenter: <span style="color:#e6db74">&#39;dc1&#39;</span>
+</span></span><span style="display:flex;"><span>            Server: true <span style="color:#f92672">(</span>bootstrap: true<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>       Client Addr: 127.0.0.1 <span style="color:#f92672">(</span>HTTP: 8500, HTTPS: -1, DNS: 8600, RPC: 8400<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      Cluster Addr: 172.20.20.10 <span style="color:#f92672">(</span>LAN: 8301, WAN: 8302<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false
+</span></span><span style="display:flex;"><span>             Atlas: &lt;disabled&gt;</span></span></code></pre></div></p>
+<p>
+On the remote agent</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vagrant@n2:~$ consul agent -data-dir /tmp/consul -node<span style="color:#f92672">=</span>node2 --bind 172.20.20.11
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; WARNING: It is highly recommended to set GOMAXPROCS higher than 1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; Starting Consul agent...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; Starting Consul agent RPC...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>&gt; Consul agent running!
+</span></span><span style="display:flex;"><span>         Node name: <span style="color:#e6db74">&#39;node2&#39;</span>
+</span></span><span style="display:flex;"><span>        Datacenter: <span style="color:#e6db74">&#39;dc1&#39;</span>
+</span></span><span style="display:flex;"><span>            Server: false <span style="color:#f92672">(</span>bootstrap: false<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>       Client Addr: 127.0.0.1 <span style="color:#f92672">(</span>HTTP: 8500, HTTPS: -1, DNS: 8600, RPC: 8400<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      Cluster Addr: 172.20.20.11 <span style="color:#f92672">(</span>LAN: 8301, WAN: 8302<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false
+</span></span><span style="display:flex;"><span>             Atlas: &lt;disabled&gt;</span></span></code></pre></div></p>
+<p>
+On consul server add the remote agent on the cluster:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vagrant@n2:~$ consul members
+</span></span><span style="display:flex;"><span>Node   Address            Status  Type    Build  Protocol  DC
+</span></span><span style="display:flex;"><span>node2  172.20.20.11:8301  alive   client  0.5.2  <span style="color:#ae81ff">2</span>         dc1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vagrant@n2:~$ consul join 172.20.20.10
+</span></span><span style="display:flex;"><span>Successfully joined cluster by contacting <span style="color:#ae81ff">1</span> nodes.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vagrant@n2:~$ consul members
+</span></span><span style="display:flex;"><span>Node   Address            Status  Type    Build  Protocol  DC
+</span></span><span style="display:flex;"><span>node2  172.20.20.11:8301  alive   client  0.5.2  <span style="color:#ae81ff">2</span>         dc1
+</span></span><span style="display:flex;"><span>n1     172.20.20.10:8301  alive   server  0.5.2  <span style="color:#ae81ff">2</span>         dc1</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Services
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+Lets create two services, one on agent box, the service is monitoring HTTP port and we must use the check with a interval.</p>
+<p>
+Create the file /etc/consul.d/web.json</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;service&#34;</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;tags&#34;</span>: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;web&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;port&#34;</span>: 80,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;check&#34;</span>: <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;http&#34;</span>: <span style="color:#e6db74">&#34;http://172.20.20.11/&#34;</span>, <span style="color:#e6db74">&#34;interval&#34;</span>: <span style="color:#e6db74">&#34;10s&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span></span></span></code></pre></div></p>
+<p>
+You can specify the path of consul cfg_dir with –config-dir /etc/consul.d, on both server/client.</p>
+<p>
+We have now the service synced:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>2015/09/03 16:34:32 <span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> agent: Synced service <span style="color:#e6db74">&#39;web&#39;</span></span></span></code></pre></div></p>
+<p>
+The system provides an hierarchial REST API to access the state of the service and nodes:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl http://localhost:8500/v1/catalog/service/web
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Node&#34;</span>: <span style="color:#e6db74">&#34;node2&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Address&#34;</span>: <span style="color:#e6db74">&#34;172.20.20.11&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ServiceID&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ServiceName&#34;</span>: <span style="color:#e6db74">&#34;web&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ServiceTags&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;web&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ServiceAddress&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ServicePort&#34;</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">]</span></span></span></code></pre></div></p>
+<p>
+As a last test lets share some data between the boxes using the K/V capability:</p>
+<p>
+On consul server n1, try:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vagrant@n1:~$ curl -X PUT -d <span style="color:#e6db74">&#39;myvalue&#39;</span> http://localhost:8500/v1/kv/web/k1</span></span></code></pre></div></p>
+<p>
+On the agent box get the value, passing the key:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vagrant@n2:~$ curl http://localhost:8500/v1/kv/web/k1/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;CreateIndex&#34;</span>:74,<span style="color:#e6db74">&#34;ModifyIndex&#34;</span>:74,<span style="color:#e6db74">&#34;LockIndex&#34;</span>:0,<span style="color:#e6db74">&#34;Key&#34;</span>:<span style="color:#e6db74">&#34;web/k1/&#34;</span>,<span style="color:#e6db74">&#34;Flags&#34;</span>:0,<span style="color:#e6db74">&#34;Value&#34;</span>:<span style="color:#e6db74">&#34;bXl2YWx1ZQ==&#34;</span><span style="color:#f92672">}]</span></span></span></code></pre></div></p>
+<p>
+The value is on base64.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Reference
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<div id="outline-container-headline-5" class="outline-5">
+<h5 id="headline-5">
+[1] - NEWMAN, Sam. Building Microservices. O&#39;Reilly, 2005.
+</h5>
+</div>
+<div id="outline-container-headline-6" class="outline-5">
+<h5 id="headline-6">
+[2] - TURNBULL, James. The Docker Book, 2014.
+</h5>
+</div>
+</div>
+</div>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -1533,7 +1541,6 @@ CAPI is one of the projects that definitely will help on it.</p>
             
                 
                     
-                    
                 
                 
 
@@ -1548,7 +1555,6 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
-                    
                     
                 
                 
@@ -1565,9 +1571,6 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1750,6 +1753,7 @@ CAPI is one of the projects that definitely will help on it.</p>
             
                 
                     
+                    
                 
                 
 
@@ -1762,6 +1766,7 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
+                    
                     
                 
                 
@@ -1778,6 +1783,9 @@ CAPI is one of the projects that definitely will help on it.</p>
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1818,10 +1826,10 @@ CAPI is one of the projects that definitely will help on it.</p>
 	 
 	 
 		
-			<a class="nav nav-prev" href="/2022/" title="2022"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/2015/" title="2015"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/2015/0908/finance/" title="General finance formulas" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1853,3 +1861,4 @@ CAPI is one of the projects that definitely will help on it.</p>
 
   </body>
 </html>
+
