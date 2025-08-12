@@ -7,5 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 01 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Continuous Deployment and DEIS</title>
+      <link>https://opssec.in/2016/</link>
+      <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/</guid>
+      <description>** Introduction
+Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
+&amp;ldquo;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&amp;rdquo;
+What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback.</description>
+    </item>
+    
+    <item>
+      <title>Tsung Capacity Test</title>
+      <link>https://opssec.in/2015/2607/</link>
+      <pubDate>Sun, 26 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2015/2607/</guid>
+      <description>Introduction In this post we are going to analyze a very interesting Erlang distributed load testing tool, called Tsung [1]. The cool things about this tool is the complete HTML report of each connection made.
+NOTE If you are interested on real traffic replication, consider this project [2].
+Configuration On tsung.xml we start the test plan, you can include here the list of clients, servers, the number/load time, as other sessions definitions.</description>
+    </item>
+    
   </channel>
 </rss>
