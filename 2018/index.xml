@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2018 on compulsory thinking</title>
+    <link>https://opssec.in/2018/</link>
+    <description>Recent content in 2018 on compulsory thinking</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 07 Aug 2019 01:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/2018/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang essays (part II)</title>
+      <link>https://opssec.in/2018/08072/</link>
+      <pubDate>Wed, 07 Aug 2019 01:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/08072/</guid>
+      <description>Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
+The type *T is a pointer to a T. The operator that generates the pointer is the &amp;amp;.
+x := 1 p := &amp;amp;x // p, of type *int, points to x fmt.Println(*p) // &amp;#34;1&amp;#34; *p = 2 // dereferencing or indirecting fmt.Println(x)
+Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:</description>
+    </item>
+    
+    <item>
+      <title>Golang essays (part I)</title>
+      <link>https://opssec.in/2018/0807/</link>
+      <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/0807/</guid>
+      <description>Introduction Starting with the printed Hello World, create a main.go file with the following content:
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;math/rand&amp;#34; ) func main() { fmt.Println(&amp;#34;Hello, world\n&amp;#34;, rand.Intn(10)) }
+On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.e. math/rand, use rand.*</description>
+    </item>
+    
+    <item>
+      <title>Rust 101</title>
+      <link>https://opssec.in/2018/0704/langs2/</link>
+      <pubDate>Thu, 04 Jul 2019 08:00:00 -0400</pubDate>
+      
+      <guid>https://opssec.in/2018/0704/langs2/</guid>
+      <description>Introduction To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it:
+https://github.com/knabben/spec-lang/tree/master/go https://github.com/knabben/spec-lang/tree/master/rust Guess Tag 0.0.1 println! is used to send the value to stdout.
+let mut guess = String::new();
+For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.</description>
+    </item>
+    
+    <item>
+      <title>Hyperledger Sawtooth</title>
+      <link>https://opssec.in/2018/0602/sawtooth/</link>
+      <pubDate>Sun, 02 Jun 2019 16:50:00 -0400</pubDate>
+      
+      <guid>https://opssec.in/2018/0602/sawtooth/</guid>
+      <description>Sawtooth A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella. From the characteristics of the sawtooth we can have: distributed, immutable, secure.
+There&amp;#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.
+An application can be a native business logic or a smart contract virtual machine.</description>
+    </item>
+    
+    <item>
+      <title>Bootstraping languages</title>
+      <link>https://opssec.in/2018/0527/langs1/</link>
+      <pubDate>Mon, 27 May 2019 14:04:34 -0400</pubDate>
+      
+      <guid>https://opssec.in/2018/0527/langs1/</guid>
+      <description>Long time I don&amp;#39;t write here.
+And, as a matter to learn other languages I&amp;#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey. As a good start let&amp;#39;s grab two modern interesting languages,
+The summary bellow came from wikipedia an works as a good introduction about both:
+Summary Golang A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.</description>
+    </item>
+    
+    <item>
+      <title>Service Mesh</title>
+      <link>https://opssec.in/2018/0806/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/0806/</guid>
+      <description>Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.</description>
+    </item>
+    
+    <item>
+      <title>Technical indicators</title>
+      <link>https://opssec.in/2018/0325/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/0325/</guid>
+      <description>Introduction According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
+The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.</description>
+    </item>
+    
+  </channel>
+</rss>

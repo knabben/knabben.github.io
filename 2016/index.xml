@@ -6,7 +6,18 @@
     <description>Recent content in 2016 on compulsory thinking</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Nov 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/2016/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Dec 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/2016/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android APK hacking</title>
+      <link>https://opssec.in/2016/1216/apk/</link>
+      <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/1216/apk/</guid>
+      <description>Introduction The post today is about fun, Kali Linux and Android apps hacking. Check it out!
+Why? Because people hide your access and don&amp;#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
+Host enumeration The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary.</description>
+    </item>
+    
     <item>
       <title>Continuous Deployment and DEIS</title>
       <link>https://opssec.in/2016/1127/</link>
@@ -16,6 +27,46 @@
       <description>Introduction Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
 &amp;#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&amp;#34;
 What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback.</description>
+    </item>
+    
+    <item>
+      <title>Ecto vs. Django ORM</title>
+      <link>https://opssec.in/2016/0618/ecto/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0618/ecto/</guid>
+      <description>Introduction Django [1] is awesome, it applies a lot of design patterns in different layers. First of you have the model layer, or the abstraction layer (models), you can define models that maps to the tables of your database. We are going to see some features that the Django ORM offers.
+On the other side, Phoenix Framework [2] is a web framework written in Elixir, it applies the MVC pattern too, and have Ecto as a &amp;#34;language integrated query composition tool&amp;#34; and a database wrapper.</description>
+    </item>
+    
+    <item>
+      <title>CPython Debugging</title>
+      <link>https://opssec.in/2016/0416/cpython/</link>
+      <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0416/cpython/</guid>
+      <description>Introduction Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.
+The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?</description>
+    </item>
+    
+    <item>
+      <title>Golang vs. Python</title>
+      <link>https://opssec.in/2016/0123/</link>
+      <pubDate>Sat, 23 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0123/</guid>
+      <description>Introduction Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
+For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang. It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files.</description>
+    </item>
+    
+    <item>
+      <title>Monitoring MySQL w/ Prometheus</title>
+      <link>https://opssec.in/2016/0116/</link>
+      <pubDate>Sat, 16 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0116/</guid>
+      <description>Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.</description>
     </item>
     
   </channel>

@@ -1,0 +1,3822 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.113.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Sawtooth Cheatsheet :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1754967291" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1754967291" rel="stylesheet">
+    <link href="/css/hybrid.css?1754967291" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1754967291" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1754967291" rel="stylesheet">
+    <link href="/css/auto-complete.css?1754967291" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1754967291" rel="stylesheet">
+    <link href="/css/theme.css?1754967291" rel="stylesheet">
+    <link href="/css/tabs.css?1754967291" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1754967291" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1754967291" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1754967291"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2019/1215/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  עֹז
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1754967291"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1754967291"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1754967291"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/" title="2024" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/">
+          2024
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0201/" title="Kubernetes vSphere CSI on Windows" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0201/">
+          Kubernetes vSphere CSI on Windows
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0104/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0104/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/1230/" title="Running Windows cluster locally" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/1230/">
+          Running Windows cluster locally
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0801/" title="sigstore policy-controller validation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0801/">
+          sigstore policy-controller validation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0721/" title="Ztunnel SPIRE implementation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0721/">
+          Ztunnel SPIRE implementation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0702/" title="Waypoint Proxy for the app layer" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0702/">
+          Waypoint Proxy for the app layer
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0903/" title="Windows and Calico overlay networking" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0903/">
+          Windows and Calico overlay networking
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2020/" title="2020" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2020/">
+          2020
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/1227/" title="Network Policy E2E test suite" class="dd-item ">
+        <a href="/2020/1227/">
+        Network Policy E2E test suite
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/2405/" title="Kubelet Dynamic Configuration" class="dd-item ">
+        <a href="/2020/2405/">
+        Kubelet Dynamic Configuration
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/1005/" title="Kubelet Debugging Session" class="dd-item ">
+        <a href="/2020/1005/">
+        Kubelet Debugging Session
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2019/" title="2019" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2019/">
+          2019
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1228/" title="Kubernetes Networking 101" class="dd-item ">
+        <a href="/2019/1228/">
+        Kubernetes Networking 101
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/12282/" title="Kubernetes Deployment Workloads" class="dd-item ">
+        <a href="/2019/12282/">
+        Kubernetes Deployment Workloads
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/12283/" title="Kubernetes Container API" class="dd-item ">
+        <a href="/2019/12283/">
+        Kubernetes Container API
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1227/" title="Pod specification" class="dd-item ">
+        <a href="/2019/1227/">
+        Pod specification
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1226/" title="Kubectl Walkthrough" class="dd-item ">
+        <a href="/2019/1226/">
+        Kubectl Walkthrough
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1225/" title="Kubernetes in Docker" class="dd-item ">
+        <a href="/2019/1225/">
+        Kubernetes in Docker
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1215/" title="Sawtooth Cheatsheet" class="dd-item active">
+        <a href="/2019/1215/">
+        Sawtooth Cheatsheet
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1208/" title="Sawtooth Permissioning" class="dd-item ">
+        <a href="/2019/1208/">
+        Sawtooth Permissioning
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1127/" title="Kubernetes Audit Sink" class="dd-item ">
+        <a href="/2019/1127/">
+        Kubernetes Audit Sink
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1123/" title="Kubernetes API client" class="dd-item ">
+        <a href="/2019/1123/">
+        Kubernetes API client
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/11161/dev-poet/" title="From Dev to PoET" class="dd-item ">
+        <a href="/2019/11161/dev-poet/">
+        From Dev to PoET
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1116/" title="Sawtooth Network Monitoring" class="dd-item ">
+        <a href="/2019/1116/">
+        Sawtooth Network Monitoring
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1111/" title="Gossip networks" class="dd-item ">
+        <a href="/2019/1111/">
+        Gossip networks
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2018/" title="2018" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2018/">
+          2018
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/08072/" title="Golang essays (part II)" class="dd-item ">
+        <a href="/2018/08072/">
+        Golang essays (part II)
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0807/" title="Golang essays (part I)" class="dd-item ">
+        <a href="/2018/0807/">
+        Golang essays (part I)
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0704/langs2/" title="Rust 101" class="dd-item ">
+        <a href="/2018/0704/langs2/">
+        Rust 101
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0602/sawtooth/" title="Hyperledger Sawtooth" class="dd-item ">
+        <a href="/2018/0602/sawtooth/">
+        Hyperledger Sawtooth
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0527/langs1/" title="Bootstraping languages" class="dd-item ">
+        <a href="/2018/0527/langs1/">
+        Bootstraping languages
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0806/" title="Service Mesh" class="dd-item ">
+        <a href="/2018/0806/">
+        Service Mesh
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0325/" title="Technical indicators" class="dd-item ">
+        <a href="/2018/0325/">
+        Technical indicators
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2017/" title="2017" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2017/">
+          2017
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2017/1012/" title="More statistics and Python" class="dd-item ">
+        <a href="/2017/1012/">
+        More statistics and Python
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2017/0701/" title="Probability" class="dd-item ">
+        <a href="/2017/0701/">
+        Probability
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2017/0625/" title="Statistics and Python" class="dd-item ">
+        <a href="/2017/0625/">
+        Statistics and Python
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2016/" title="2016" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2016/">
+          2016
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/1216/apk/" title="Android APK hacking" class="dd-item ">
+        <a href="/2016/1216/apk/">
+        Android APK hacking
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/1127/" title="Continuous Deployment and DEIS" class="dd-item ">
+        <a href="/2016/1127/">
+        Continuous Deployment and DEIS
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0618/ecto/" title="Ecto vs. Django ORM" class="dd-item ">
+        <a href="/2016/0618/ecto/">
+        Ecto vs. Django ORM
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0416/cpython/" title="CPython Debugging" class="dd-item ">
+        <a href="/2016/0416/cpython/">
+        CPython Debugging
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0123/" title="Golang vs. Python" class="dd-item ">
+        <a href="/2016/0123/">
+        Golang vs. Python
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0116/" title="Monitoring MySQL w/ Prometheus" class="dd-item ">
+        <a href="/2016/0116/">
+        Monitoring MySQL w/ Prometheus
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2015/" title="2015" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2015/">
+          2015
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/0309/consul/" title="Consul - Service Discovery" class="dd-item ">
+        <a href="/2015/0309/consul/">
+        Consul - Service Discovery
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/0908/finance/" title="General finance formulas" class="dd-item ">
+        <a href="/2015/0908/finance/">
+        General finance formulas
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/2607/" title="Tsung Capacity Test" class="dd-item ">
+        <a href="/2015/2607/">
+        Tsung Capacity Test
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2024</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+  <br />
+  <br />
+
+  <a href="https://md.opssec.in">win32 API </i></a>
+
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2019/'>2019</a> > Sawtooth Cheatsheet
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">Installation</a>
+<ul>
+<li><a href="#headline-2">Ubuntu</a>
+</li>
+<li><a href="#headline-3">Docker</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-4">Starting components services</a>
+<ul>
+<li><a href="#headline-5">Ubuntu</a>
+</li>
+<li><a href="#headline-6">Docker</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-7">Generate keys</a>
+<ul>
+<li><a href="#headline-8">Validator keys</a>
+</li>
+<li><a href="#headline-9">User keys</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-10">Create a genesis block</a>
+</li>
+<li><a href="#headline-11">Register a validator</a>
+</li>
+<li><a href="#headline-12">Verify installation and fix problems</a>
+</li>
+<li><a href="#headline-13">Connect TP to a validator</a>
+</li>
+<li><a href="#headline-14">Verify system meets hardware, requirements</a>
+</li>
+<li><a href="#headline-15">Configuration</a>
+<ul>
+<li><a href="#headline-16">Configure validator peering and network</a>
+</li>
+<li><a href="#headline-17">Configure consensus (?)</a>
+</li>
+<li><a href="#headline-18">Configure logging</a>
+</li>
+<li><a href="#headline-19">Configure REST API</a>
+</li>
+<li><a href="#headline-20">Configure L3 network ports/firewall</a>
+</li>
+<li><a href="#headline-21">Configure metrics</a>
+</li>
+<li><a href="#headline-22">Configure transaction processor endpoint</a>
+</li>
+<li><a href="#headline-23">Configure systemd services</a>
+</li>
+<li><a href="#headline-24">Choose parallel/sync scheduler</a>
+</li>
+<li><a href="#headline-25">Configure storage paths</a>
+</li>
+<li><a href="#headline-26">Configure sawtooth cli</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-27">Lifecycle</a>
+<ul>
+<li><a href="#headline-28">Create new network</a>
+</li>
+<li><a href="#headline-29">Joining an existing network</a>
+</li>
+<li><a href="#headline-30">Remove validator node from the network</a>
+</li>
+<li><a href="#headline-31">Rejoin network after network failure</a>
+</li>
+<li><a href="#headline-32">Changing consensus mode</a>
+</li>
+<li><a href="#headline-33">Restart validator after crash or maintenance</a>
+</li>
+<li><a href="#headline-34">Restart component after crash or maintenance</a>
+</li>
+<li><a href="#headline-35">Add new transaction processor</a>
+</li>
+<li><a href="#headline-36">Change network configuration</a>
+</li>
+<li><a href="#headline-37">Update sawtooth software</a>
+</li>
+<li><a href="#headline-38">Update transaction processor version</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-39">Permissioning, Identity Management and Security</a>
+<ul>
+<li><a href="#headline-40">Identify network ID / system / peer ID</a>
+</li>
+<li><a href="#headline-41">Permission a transaction processor</a>
+</li>
+<li><a href="#headline-42">Policy management</a>
+</li>
+<li><a href="#headline-43">Validator registration</a>
+</li>
+<li><a href="#headline-44">System permissions</a>
+</li>
+<li><a href="#headline-45">Configure validator local policy file</a>
+</li>
+<li><a href="#headline-46">Validator key permission</a>
+</li>
+<li><a href="#headline-47">Role management: transactor roles</a>
+</li>
+<li><a href="#headline-48">Role management: network roles</a>
+</li>
+<li><a href="#headline-49">Configure transactor permissions</a>
+</li>
+<li><a href="#headline-50">Secure connections between components/validators</a>
+</li>
+<li><a href="#headline-51">Use a proxy server to authorize the REST API</a>
+</li>
+<li><a href="#headline-52">Manage validator keys and secrets</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Sawtooth Cheatsheet
+            </h1>
+          
+
+        
+
+
+
+<div id="outline-container-headline-1" class="outline-4">
+<h4 id="headline-1">
+Installation
+</h4>
+<div id="outline-text-headline-1" class="outline-text-4">
+<div id="outline-container-headline-2" class="outline-5">
+<h5 id="headline-2">
+Ubuntu
+</h5>
+<div id="outline-text-headline-2" class="outline-text-5">
+<p>
+ For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ vagrant init ubuntu/xenial64
+</span></span><span style="display:flex;"><span>$ vagrant up</span></span></code></pre></div></p>
+<p>
+ After the box is up we need to add the correct repository:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+</span></span><span style="display:flex;"><span>$ sudo add-apt-repository <span style="color:#e6db74">&#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&#39;</span>
+</span></span><span style="display:flex;"><span>$ sudo apt update</span></span></code></pre></div></p>
+<p>
+ Install the package:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo apt install -y sawtooth</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-5">
+<h5 id="headline-3">
+Docker
+</h5>
+<div id="outline-text-headline-3" class="outline-text-5">
+<p>
+ Install Docker adding key and repo:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+</span></span><span style="display:flex;"><span>$ sudo add-apt-repository <span style="color:#e6db74">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span style="color:#66d9ef">$(</span>lsb_release -cs<span style="color:#66d9ef">)</span><span style="color:#e6db74"> stable&#34;</span>
+</span></span><span style="display:flex;"><span>$ sudo apt update
+</span></span><span style="display:flex;"><span>$ sudo apt install -y docker-ce docker-compose</span></span></code></pre></div></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+Starting components services
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<div id="outline-container-headline-5" class="outline-5">
+<h5 id="headline-5">
+Ubuntu
+</h5>
+<div id="outline-text-headline-5" class="outline-text-5">
+<p>
+ Systemd is the default init system for many Linux distributions, init system is also used to manage serviecs and daemons 
+ for the server at any point while the system is running.</p>
+<p>
+ Targets on systemd are called units, resourcers that systemd knows how to manage. Units are categorized by the type of 
+ resource they represent and they are defined with files know as unit files. To list all Units files inside the system use:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl list-unit-files | grep sawtooth</span></span></code></pre></div></p>
+<p>
+ To fetch the ones running</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl list-unit</span></span></code></pre></div></p>
+<p>
+ By default they are not enabled or started by default, to start a the <strong>Sawtooth validator</strong> service:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo systemctl start sawtooth-validator.service</span></span></code></pre></div></p>
+<p>
+ To stop the Sawtooth Validator use:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo systemtl stop sawtooth-validator.service</span></span></code></pre></div></p>
+<p>
+ To start the service use enable/disable, same works for reload/restart</p>
+<p>
+ Finally to check the status:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl status sawtooth-validator.service</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-5">
+<h5 id="headline-6">
+Docker
+</h5>
+<div id="outline-text-headline-6" class="outline-text-5">
+<p>
+ Pieces can be found in docker-compose file.</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>https://sawtooth.hyperledger.org/docs/core/releases/1.0/app_developers_guide/sawtooth-default.yaml</span></span></code></pre></div></p>
+<p>
+ The images that follows are:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hyperledger/sawtooth-settings-tp:1.0
+</span></span><span style="display:flex;"><span>hyperledger/sawtooth-intkey-tp-python:1.0
+</span></span><span style="display:flex;"><span>hyperledger/sawtooth-xo-tp-python:1.0
+</span></span><span style="display:flex;"><span>hyperledger/sawtooth-validator:1.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>with the command:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> sawadm keygen <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        sawtooth keygen my_key <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        sawset genesis -k /root/.sawtooth/keys/my_key.priv <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        sawadm genesis config-genesis.batch <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        sawtooth-validator -vv <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          --endpoint tcp://validator:8800 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          --bind component:tcp://eth0:4004 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          --bind network:tcp://eth0:8800 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>
+</span></span><span style="display:flex;"><span>hyperledger/sawtooth-rest-api:1.0
+</span></span><span style="display:flex;"><span>hyperledger/sawtooth-all:1.0</span></span></code></pre></div></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+Generate keys
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<div id="outline-container-headline-8" class="outline-5">
+<h5 id="headline-8">
+Validator keys
+</h5>
+<div id="outline-text-headline-8" class="outline-text-5">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sawadm keygen 
+</span></span><span style="display:flex;"><span>/etc/validator/keys/validator.pub
+</span></span><span style="display:flex;"><span>/etc/validator/keys/validator.priv</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-5">
+<h5 id="headline-9">
+User keys
+</h5>
+<div id="outline-text-headline-9" class="outline-text-5">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sawtooth keygen
+</span></span><span style="display:flex;"><span>~/.sawtooth/keys/</span></span></code></pre></div></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+Create a genesis block
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>
+ Create the genesis blocks</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sawset genesis -k /root/.sawtooth/my_priv.key
+</span></span><span style="display:flex;"><span>config-genesis.batch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ sawadm genesis config-gensis.batch
+</span></span><span style="display:flex;"><span>/var/lib/sawtooth/genesis.batch</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+Register a validator
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<p>
+ After creating the genesis.batch:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl start sawtooth-validator.services</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-4">
+<h4 id="headline-12">
+Verify installation and fix problems
+</h4>
+<div id="outline-text-headline-12" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/etc/default/sawtooth-validator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>journalctl -u sawtooth-settings-tp -u sawtooth-validator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> $ journalctl -u sawtooth-validator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>genesis<span style="color:#f92672">]</span> genesis_batch_file: /var/lib/sawtooth/genesis.batch
+</span></span><span style="display:flex;"><span>genesis<span style="color:#f92672">]</span> block_chain_id: not yet specified
+</span></span><span style="display:flex;"><span>genesis<span style="color:#f92672">]</span> Producing genesis block from /var/lib/sawtooth/genesis.batch
+</span></span><span style="display:flex;"><span>genesis<span style="color:#f92672">]</span> Adding <span style="color:#ae81ff">1</span> batches
+</span></span><span style="display:flex;"><span>executor<span style="color:#f92672">]</span> no transaction processors registered <span style="color:#66d9ef">for</span> processor type sawtooth_settings: 1.0
+</span></span><span style="display:flex;"><span>executor<span style="color:#f92672">]</span> Waiting <span style="color:#66d9ef">for</span> transaction processor <span style="color:#f92672">(</span>sawtooth_settings, 1.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/etc/default/sawtooth-validator</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-4">
+<h4 id="headline-13">
+Connect TP to a validator
+</h4>
+<div id="outline-text-headline-13" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl start sawtooth-settings-tp.services
+</span></span><span style="display:flex;"><span>processor_handlers<span style="color:#f92672">]</span> registered transaction processor: connection_id<span style="color:#f92672">=</span>1, family<span style="color:#f92672">=</span>sawtooth_settings, version<span style="color:#f92672">=</span>1.0, namespaces<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;000000&#39;</span><span style="color:#f92672">]</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-4">
+<h4 id="headline-14">
+Verify system meets hardware, requirements
+</h4>
+<div id="outline-text-headline-14" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ps
+</span></span><span style="display:flex;"><span>top</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
+Configuration
+</h3>
+<div id="outline-text-headline-15" class="outline-text-3">
+<div id="outline-container-headline-16" class="outline-4">
+<h4 id="headline-16">
+Configure validator peering and network
+</h4>
+<div id="outline-text-headline-16" class="outline-text-4">
+<p>
+ –peers tcp://127.0.0.1:8800 for static and –seeds for dynamic</p>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+Configure consensus (?)
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>For PoET 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sawset proposal create -k /etc/sawtooth/keys/validator.priv <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sawtooth.consensus.algorithm<span style="color:#f92672">=</span>poet <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sawtooth.poet.report_public_key_pem<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>cat /etc/sawtooth/ias_rk_pub.pem<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sawtooth.poet.valid_enclave_measurements<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>poet enclave --enclave-module sgx measurement<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sawtooth.poet.valid_enclave_basenames<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>poet enclave --enclave-module sgx basename<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sawtooth.poet.enclave_module_name<span style="color:#f92672">=</span>sawtooth_poet_sgx.poet_enclave_sgx.poet_enclave <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-o config.batch</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-4">
+<h4 id="headline-18">
+Configure logging
+</h4>
+<div id="outline-text-headline-18" class="outline-text-4">
+<p>
+ Can be found in: /etc/sawtooth/log_config</p>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+Configure REST API
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<p>
+ Starting the REST API can be made via Ubuntu systemd scripts or by hand</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo systemctl start sawtooth-rest-api.service</span></span></code></pre></div></p>
+<p>
+ Configuration for the service is made at /etc/default/sawtooth-rest-api
+ To set another port of validator node set –conect tcp://localhost:4004</p>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-4">
+<h4 id="headline-20">
+Configure L3 network ports/firewall
+</h4>
+<div id="outline-text-headline-20" class="outline-text-4">
+<p>
+ iptables </p>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-4">
+<h4 id="headline-21">
+Configure metrics
+</h4>
+<div id="outline-text-headline-21" class="outline-text-4">
+<p>
+ Setup InfluxDb - <a href="https://knabben.github.io/posts/sawtooth-grafana/">https://knabben.github.io/posts/sawtooth-grafana/</a></p>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-4">
+<h4 id="headline-22">
+Configure transaction processor endpoint
+</h4>
+<div id="outline-text-headline-22" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>In the TP to connect use: -C tcp://localhost:4004
+</span></span><span style="display:flex;"><span>In the validator-process set: --bind component:tcp://127.0.0.1:4004</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
+Configure systemd services
+</h4>
+<div id="outline-text-headline-23" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Systemd services setup</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+Choose parallel/sync scheduler
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo -u sawtooth sawtooth-validator -vv --scheduler parallel <span style="color:#f92672">||</span> serial</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
+Configure storage paths
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/etc/sawtooth/path.toml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  key_dir
+</span></span><span style="display:flex;"><span>  data_dir
+</span></span><span style="display:flex;"><span>  log_dir
+</span></span><span style="display:flex;"><span>  policy_dir</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-26" class="outline-4">
+<h4 id="headline-26">
+Configure sawtooth cli
+</h4>
+<div id="outline-text-headline-26" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/etc/sawtooth/cli.toml</span></span></code></pre></div></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-3">
+<h3 id="headline-27">
+Lifecycle
+</h3>
+<div id="outline-text-headline-27" class="outline-text-3">
+<div id="outline-container-headline-28" class="outline-4">
+<h4 id="headline-28">
+Create new network
+</h4>
+<div id="outline-text-headline-28" class="outline-text-4">
+<p>
+start the validators using Peering static or dynamic, with the first node with genesis block.</p>
+</div>
+</div>
+<div id="outline-container-headline-29" class="outline-4">
+<h4 id="headline-29">
+Joining an existing network
+</h4>
+<div id="outline-text-headline-29" class="outline-text-4">
+<p>
+set –peers on all nodes</p>
+</div>
+</div>
+<div id="outline-container-headline-30" class="outline-4">
+<h4 id="headline-30">
+Remove validator node from the network
+</h4>
+<div id="outline-text-headline-30" class="outline-text-4">
+<p>
+remove –peers value from the nodes, and turn the daemon off</p>
+</div>
+</div>
+<div id="outline-container-headline-31" class="outline-4">
+<h4 id="headline-31">
+Rejoin network after network failure
+</h4>
+<div id="outline-text-headline-31" class="outline-text-4">
+<p>
+restart the sawtooth-validator</p>
+</div>
+</div>
+<div id="outline-container-headline-32" class="outline-4">
+<h4 id="headline-32">
+Changing consensus mode
+</h4>
+<div id="outline-text-headline-32" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sawset proposal create -k /etc/sawtooth/keys/validator.priv sawtooth.consensus.algorithm<span style="color:#f92672">=</span>dev</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-33" class="outline-4">
+<h4 id="headline-33">
+Restart validator after crash or maintenance
+</h4>
+<div id="outline-text-headline-33" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl restart sawtooth-validator</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-34" class="outline-4">
+<h4 id="headline-34">
+Restart component after crash or maintenance
+</h4>
+<div id="outline-text-headline-34" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl restart sawtooth-rest-api
+</span></span><span style="display:flex;"><span>sudo systemctl restart sawtooth-settings-tp</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-35" class="outline-4">
+<h4 id="headline-35">
+Add new transaction processor
+</h4>
+<div id="outline-text-headline-35" class="outline-text-4">
+<p>
+ Set transaction processor connection to validator 4004 connect</p>
+</div>
+</div>
+<div id="outline-container-headline-36" class="outline-4">
+<h4 id="headline-36">
+Change network configuration
+</h4>
+<div id="outline-text-headline-36" class="outline-text-4">
+<p>
+ Edit configuration on /etc/sawtooth/validators.toml</p>
+</div>
+</div>
+<div id="outline-container-headline-37" class="outline-4">
+<h4 id="headline-37">
+Update sawtooth software
+</h4>
+<div id="outline-text-headline-37" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt-get upgrade</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-38" class="outline-4">
+<h4 id="headline-38">
+Update transaction processor version
+</h4>
+<div id="outline-text-headline-38" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt-get install sawtooth*</span></span></code></pre></div></p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-39" class="outline-3">
+<h3 id="headline-39">
+Permissioning, Identity Management and Security
+</h3>
+<div id="outline-text-headline-39" class="outline-text-3">
+<div id="outline-container-headline-40" class="outline-4">
+<h4 id="headline-40">
+Identify network ID / system / peer ID
+</h4>
+<div id="outline-text-headline-40" class="outline-text-4">
+<p>
+ cat /etc/sawtooth/keys/validator.pub</p>
+</div>
+</div>
+<div id="outline-container-headline-41" class="outline-4">
+<h4 id="headline-41">
+Permission a transaction processor
+</h4>
+<div id="outline-text-headline-41" class="outline-text-4">
+<p>
+https://knabben.github.io/posts/sawtooth-permission/</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sawtooth-identity</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-42" class="outline-4">
+<h4 id="headline-42">
+Policy management
+</h4>
+<div id="outline-text-headline-42" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sawtooth identity policy create policy <span style="color:#e6db74">&#34;DENY_KEY *&#34;</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-43" class="outline-4">
+<h4 id="headline-43">
+Validator registration
+</h4>
+<div id="outline-text-headline-43" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sawset proposal create sawtooth.identity.allowed_keys</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-44" class="outline-4">
+<h4 id="headline-44">
+System permissions
+</h4>
+<div id="outline-text-headline-44" class="outline-text-4">
+<p>
+Network identity </p>
+</div>
+</div>
+<div id="outline-container-headline-45" class="outline-4">
+<h4 id="headline-45">
+Configure validator local policy file
+</h4>
+<div id="outline-text-headline-45" class="outline-text-4">
+<p>
+On policy_dir must create the correct policy_name file.</p>
+</div>
+</div>
+<div id="outline-container-headline-46" class="outline-4">
+<h4 id="headline-46">
+Validator key permission
+</h4>
+<div id="outline-text-headline-46" class="outline-text-4">
+<p>
+Trust and challenge authorization types.</p>
+</div>
+</div>
+<div id="outline-container-headline-47" class="outline-4">
+<h4 id="headline-47">
+Role management: transactor roles
+</h4>
+<div id="outline-text-headline-47" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sawtooth identity role transactor policy_name</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-48" class="outline-4">
+<h4 id="headline-48">
+Role management: network roles
+</h4>
+<div id="outline-text-headline-48" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sawtooth identity role network policy_name</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-49" class="outline-4">
+<h4 id="headline-49">
+Configure transactor permissions
+</h4>
+<div id="outline-text-headline-49" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/etc/sawtooth/validator.toml - <span style="color:#66d9ef">for</span> off-chain use the configuration file:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>permissions<span style="color:#f92672">]</span> ROLE <span style="color:#f92672">=</span> POLICY_NAME
+</span></span><span style="display:flex;"><span>policy_dir - policy_name</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-50" class="outline-4">
+<h4 id="headline-50">
+Secure connections between components/validators
+</h4>
+</div>
+<div id="outline-container-headline-51" class="outline-4">
+<h4 id="headline-51">
+Use a proxy server to authorize the REST API
+</h4>
+<div id="outline-text-headline-51" class="outline-text-4">
+<p>
+ Apache and Nginx</p>
+</div>
+</div>
+<div id="outline-container-headline-52" class="outline-4">
+<h4 id="headline-52">
+Manage validator keys and secrets
+</h4>
+<div id="outline-text-headline-52" class="outline-text-4">
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sawset proposal create sawtooth.identity.allowed_keys<span style="color:#f92672">=</span>xxx</span></span></code></pre></div></p>
+</div>
+</div>
+</div>
+</div>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2019/1225/" title="Kubernetes in Docker"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2019/1208/" title="Sawtooth Permissioning" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1754967291"></script>
+    <script src="/js/perfect-scrollbar.min.js?1754967291"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1754967291"></script>
+    <script src="/js/jquery.sticky.js?1754967291"></script>
+    <script src="/js/featherlight.min.js?1754967291"></script>
+    <script src="/js/highlight.pack.js?1754967291"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1754967291"></script>
+    <script src="/js/learn.js?1754967291"></script>
+    <script src="/js/hugo-learn.js?1754967291"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1754967291"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

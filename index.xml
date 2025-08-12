@@ -40,6 +40,276 @@ Installing the tools VirtualBox Since we are on MacOSX, and Kubelet nodes works 
     </item>
     
     <item>
+      <title>Kubernetes Networking 101</title>
+      <link>https://opssec.in/2019/1228/</link>
+      <pubDate>Sat, 28 Dec 2019 23:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1228/</guid>
+      <description>Networking The first and easiest way to access the Pod container port is via port-forward command:
+$ kubectl port-forward &amp;lt;pod_name&amp;gt; &amp;lt;local_port&amp;gt;:&amp;lt;remote_port&amp;gt;
+Take a look on the dynamic port-forwarder.
+Service An abstract way to expose an application running on a set of Pods as a network service.
+a Service is an abstraction which defines a logical set of Pods and a policy by which to access them . The set of Pods targeted by a Service is usually determined by a selector.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Deployment Workloads</title>
+      <link>https://opssec.in/2019/12282/</link>
+      <pubDate>Sat, 28 Dec 2019 11:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/12282/</guid>
+      <description>ReplicaSets A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. So, starting with the ReplicaSetSpec.
+// ReplicaSetSpec is the specification of a ReplicaSet. type ReplicaSetSpec struct { // Replicas is the number of desired replicas. // More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller Replicas *int32 `json:&amp;#34;replicas,omitempty&amp;#34;` // Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Container API</title>
+      <link>https://opssec.in/2019/12283/</link>
+      <pubDate>Sat, 28 Dec 2019 10:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/12283/</guid>
+      <description>Container from PodSpec The abstraction of the container is find inside a list of Container objects inside the PodSpec, it means the possibility to create multiple containers in a unique Pod.
+// A single application container that you want to run within a pod. type Container struct { // Name of the container specified as a DNS_LABEL. Name string `json:&amp;#34;name&amp;#34;` // Docker image name. // More info: https://kubernetes.io/docs/concepts/containers/images Image string `json:&amp;#34;image,omitempty&amp;#34;` // Entrypoint array.</description>
+    </item>
+    
+    <item>
+      <title>Pod specification</title>
+      <link>https://opssec.in/2019/1227/</link>
+      <pubDate>Fri, 27 Dec 2019 15:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1227/</guid>
+      <description>Introduction Lets take a look in the default Kind definition of the Pod, with this we can enumerate all the fields and attached capabilities of the Pod. For this post only the main Spec of the Pod object is going to be detailed with examples and tasks, we let the container configuration for other posts. Get after it.
+POD diagram Pod struct
+PS: The detailing and lab section above extracts text, insights and possible examples from the links in the Spec struct.</description>
+    </item>
+    
+    <item>
+      <title>Kubectl Walkthrough</title>
+      <link>https://opssec.in/2019/1226/</link>
+      <pubDate>Thu, 26 Dec 2019 15:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1226/</guid>
+      <description>Introduction This is swiss-knife of the Kubernetes operator, the kubectl is a tools for translating declarative resources in Kubernetes objects via the API, so the operator can load, remove or update workloads, configurations and more.
+The main source of truth is the Kubectl book but this post will try to summarize and organize the main capabilities of the tool.
+Kubectl debugging and API server Kubectl is a client for the master API server, you can confirm this fact settings the verbose to 8, and you can fetch both the request and the response.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes in Docker</title>
+      <link>https://opssec.in/2019/1225/</link>
+      <pubDate>Wed, 25 Dec 2019 22:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1225/</guid>
+      <description>Introduction This post is for discussing more about Kind, setup some cluster examples with some particular customizations, and exlain what components it brings up.
+The initial topics are a summary from Kind quickstart
+Installing To install Kind you should use:
+$ brew install kind
+Or from source:
+$ GO111MODULE=&amp;#34;on&amp;#34; go get sigs.k8s.io/kind@v0.6.1
+First steps To create a new cluster you must run:
+# Default cluster name is kind $ kind create cluster Creating cluster &amp;#34;kind&amp;#34; # A new cluster with context named 2k8s $ kind create cluster --name 2k8s Creating cluster &amp;#34;2k8s&amp;#34;</description>
+    </item>
+    
+    <item>
+      <title>Sawtooth Cheatsheet</title>
+      <link>https://opssec.in/2019/1215/</link>
+      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1215/</guid>
+      <description>Installation Ubuntu For local ubuntu Installation is being used Ubuntu Xenial - 16.04 LTS, via vagrant
+$ vagrant init ubuntu/xenial64 $ vagrant up
+After the box is up we need to add the correct repository:
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD $ sudo add-apt-repository &amp;#39;deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe&amp;#39; $ sudo apt update
+Install the package:
+$ sudo apt install -y sawtooth
+Docker Install Docker adding key and repo:</description>
+    </item>
+    
+    <item>
+      <title>Sawtooth Permissioning</title>
+      <link>https://opssec.in/2019/1208/</link>
+      <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1208/</guid>
+      <description>Introduction Sawtooth has two different kinds of permissioning, the first is the transaction permissioning, it controls who (user/clients) can submit transactions and batches to a validator, the second is validator key permissioning, this controls which nodes can connect to the Sawtooth network, only available with on-chain settings.
+For this debugging and testing scenario we will have 2 nodes:
+version: &amp;#34;2.1&amp;#34; services: v1: image: hyperledger/sawtooth-validator:1.1 container_name: v1 command: bash expose: - 8000 v2: image: hyperledger/sawtooth-validator:1.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Audit Sink</title>
+      <link>https://opssec.in/2019/1127/</link>
+      <pubDate>Wed, 27 Nov 2019 10:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1127/</guid>
+      <description>Introduction The idea of this post is to test the Audit dynamic backend with a KIND cluster.
+Kubernetes has 4 stages:
+RequestReceived - The stage for events generated as soon as the audit handler receives the request, and before it is delegated down the handler chain. ResponseStarted - Once the response headers are sent, but before the response body is sent. This stage is only generated for long-running requests (e.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes API client</title>
+      <link>https://opssec.in/2019/1123/</link>
+      <pubDate>Sat, 23 Nov 2019 10:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1123/</guid>
+      <description>Introduction This is an overview and notes on how to use the client-go Kubernetes API.
+Kubernetes API resources Accessing via API The API is versioned for extensability propose, the levels are Alpha level (v1alpha1), Beta (b2beta3) stabel (v1).
+You can notice the groups of the resources exists inside the version. To access the endpoints directly start the proxy with $ kubectl proxy --port=8080 $ curl http://localhost:8080/apis/ # To dig deeper in versions and existent resources $ kubectl api-resources &amp;amp;&amp;amp; kubectl api-version</description>
+    </item>
+    
+    <item>
+      <title>From Dev to PoET</title>
+      <link>https://opssec.in/2019/11161/dev-poet/</link>
+      <pubDate>Sat, 16 Nov 2019 01:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/11161/dev-poet/</guid>
+      <description>Introduction DevMode is very cool for development of transaction processors, but when you go to production it don&amp;#39;t grant a correct fork resolution of your chain, and you can end up with different HEAD in the nodes.
+Some Byzantine Fault Tolerant protocols were created to fix this problem, in version 1.0.5 we have the famous PoET, when used with SGX (intel protection) it can guarantee the BFT characteristic.
+But without it this algorithm becomes Crash Fault Tolerant only, for our proposes it&amp;#39;s enough.</description>
+    </item>
+    
+    <item>
+      <title>Sawtooth Network Monitoring</title>
+      <link>https://opssec.in/2019/1116/</link>
+      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1116/</guid>
+      <description>Introduction I need to agree with Prometheus vision, instrument everything. Every library, subsystem and service should have at least a few metrics to give you a rough idea of how it is performing.
+It&amp;#39;s easier with instrumentation to get a snapshot of your system state in a particular time, the one can discovery outliers and misbehaviors and if you need more details you always have debugging logs.
+Saying that, in this post we will analyze how to monitor a Sawtooth Validator Node, using InfluxDB and Grafana.</description>
+    </item>
+    
+    <item>
+      <title>Gossip networks</title>
+      <link>https://opssec.in/2019/1111/</link>
+      <pubDate>Mon, 11 Nov 2019 02:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2019/1111/</guid>
+      <description>Introduction This is based on Sawtooth 1.0.5 source code for Gossip and static peering.
+%load_ext autoreload %autoreload 2 import logging logger = logging.getLogger() logger.setLevel(logging.DEBUG) logging.info(&amp;#34;Starting&amp;#34;) from sawtooth_validator.networking.handlers import PingHandler from sawtooth_validator.journal.responder import ResponderBlockResponseHandler from sawtooth_validator.journal.responder import BlockResponderHandler from sawtooth_validator.state.settings_cache import SettingsCache from sawtooth_validator.gossip.gossip_handlers import PeerRegisterHandler from sawtooth_validator.networking.handlers import ConnectHandler from sawtooth_validator.server.keys import load_identity_signer from sawtooth_validator.concurrent.threadpool import InstrumentedThreadPoolExecutor from sawtooth_validator.networking.handlers import AuthorizationTrustRequestHandler from sawtooth_validator.gossip.permission_verifier import PermissionVerifier from sawtooth_validator.journal.block_store import BlockStore from sawtooth_validator.</description>
+    </item>
+    
+    <item>
+      <title>Golang essays (part II)</title>
+      <link>https://opssec.in/2018/08072/</link>
+      <pubDate>Wed, 07 Aug 2019 01:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/08072/</guid>
+      <description>Pointers A variable is a piece of storage containing a value. A pointer value is the memory address of a variable.
+The type *T is a pointer to a T. The operator that generates the pointer is the &amp;amp;.
+x := 1 p := &amp;amp;x // p, of type *int, points to x fmt.Println(*p) // &amp;#34;1&amp;#34; *p = 2 // dereferencing or indirecting fmt.Println(x)
+Struct Is an aggregate data type that groups together zero or more named values of arbitrary types as a single entity:</description>
+    </item>
+    
+    <item>
+      <title>Golang essays (part I)</title>
+      <link>https://opssec.in/2018/0807/</link>
+      <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/0807/</guid>
+      <description>Introduction Starting with the printed Hello World, create a main.go file with the following content:
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;math/rand&amp;#34; ) func main() { fmt.Println(&amp;#34;Hello, world\n&amp;#34;, rand.Intn(10)) }
+On line 1 we have the package our programming is running. We import built-in packages on line 2, 3, 4. By convention, the package name is the same as the last element of the imported path, i.e. math/rand, use rand.*</description>
+    </item>
+    
+    <item>
+      <title>Rust 101</title>
+      <link>https://opssec.in/2018/0704/langs2/</link>
+      <pubDate>Thu, 04 Jul 2019 08:00:00 -0400</pubDate>
+      
+      <guid>https://opssec.in/2018/0704/langs2/</guid>
+      <description>Introduction To keep the research in , I started some basic repository with the some official Rust book code compilation, I will try in this post comment some of the features and tricks I got while reading it:
+https://github.com/knabben/spec-lang/tree/master/go https://github.com/knabben/spec-lang/tree/master/rust Guess Tag 0.0.1 println! is used to send the value to stdout.
+let mut guess = String::new();
+For rust you can create an immutable and a mutable variable, this is defined with the mut keyword in front.</description>
+    </item>
+    
+    <item>
+      <title>Hyperledger Sawtooth</title>
+      <link>https://opssec.in/2018/0602/sawtooth/</link>
+      <pubDate>Sun, 02 Jun 2019 16:50:00 -0400</pubDate>
+      
+      <guid>https://opssec.in/2018/0602/sawtooth/</guid>
+      <description>Sawtooth A RUST permissioned/permissionless distribuded ledger created by Intel, an official project under the Hyperledger umbrella. From the characteristics of the sawtooth we can have: distributed, immutable, secure.
+There&amp;#39;s a separation between the application level and the core system. It provides smartcontract abstraction that allows application developers to write contract logic in a language of their choice.
+An application can be a native business logic or a smart contract virtual machine.</description>
+    </item>
+    
+    <item>
+      <title>Bootstraping languages</title>
+      <link>https://opssec.in/2018/0527/langs1/</link>
+      <pubDate>Mon, 27 May 2019 14:04:34 -0400</pubDate>
+      
+      <guid>https://opssec.in/2018/0527/langs1/</guid>
+      <description>Long time I don&amp;#39;t write here.
+And, as a matter to learn other languages I&amp;#39;m going to share here some notes while in this path, giving the appropriate (or not) comments for each the steps taken in the journey. As a good start let&amp;#39;s grab two modern interesting languages,
+The summary bellow came from wikipedia an works as a good introduction about both:
+Summary Golang A statically typed, compiled programming language designed at Google by Robert Griesemer, Rob Pike, and Ken Thompson.</description>
+    </item>
+    
+    <item>
+      <title>Service Mesh</title>
+      <link>https://opssec.in/2018/0806/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/0806/</guid>
+      <description>Introducing Kubernetes November 2015, I started to use containers in production, and found some crazy problems involved with this in the process, it went from service discovery to persistent storage in a few days. The environment I used were basically a CoreOS cluster with some peculiarities, like starting services remote with fleet (like kubectl). The setup were composed of a etcd/fleet cluster with 3 machines and units being deployed with an external FLEETCTL_TUNNEL variable.</description>
+    </item>
+    
+    <item>
+      <title>Technical indicators</title>
+      <link>https://opssec.in/2018/0325/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2018/0325/</guid>
+      <description>Introduction According to investopedia - are mathematical calculations based on the price, volume, or open interest of a security or contract. So by analyzing historical data, technical analysts use indicators to predict the future price movements.
+The idea of this post is to show up how to calculate the most common one using the so famous SciPy stack, this is far from being an advising in this field, but a playground and notes about the research.</description>
+    </item>
+    
+    <item>
+      <title>More statistics and Python</title>
+      <link>https://opssec.in/2017/1012/</link>
+      <pubDate>Thu, 12 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2017/1012/</guid>
+      <description>Simple linear regression Introduction This is again a collection of notes about stats and finance, with focus on covariance, correlation and simple linear regression, the idea here is to analyse some tools to measure risk. For a better representation let&amp;#39;s get some Bovespa companies from the sector of Cyclic Consumption, they are: MGLU3, BTOW3, LAME3, LREN3.
+Getting financial data import pandas as pd import numpy as np import pandas_datareader as web import matplotlib.</description>
+    </item>
+    
+    <item>
+      <title>Probability</title>
+      <link>https://opssec.in/2017/0701/</link>
+      <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2017/0701/</guid>
+      <description>Sample space An experiment is a process that, when performed, results in one and only one of many observations. These observations are called outcomes of the experiment. The collection of all outcomes for an experiment is called a sample space.
+| Experiment | Outcomes | Sample Space | |------------------|-------------|-------------------| | Roll a die | 1,2,3,4,5,6 | S = {1,2,3,4,5,6} | | Tooss a coin once| Head, Tail | S = {Head, Tail} |</description>
+    </item>
+    
+    <item>
+      <title>Statistics and Python</title>
+      <link>https://opssec.in/2017/0625/</link>
+      <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2017/0625/</guid>
+      <description>Descriptive Measures Measures of Central tendency for Ungrouped data Mean Or the arithimetic mean, is the most frequently used measure of central tendency, the mean is the sum of all values / number of values.
+import numpy as np np.mean([1, 3, 6, 10, 20, 50]) # 15.0
+Median Is the value of the middle term in a dataset that has been ranked in increasing order. If the dataset is odd the median is given by the value of the middle term, if even the median is given by the average of the values of the two middle terms.</description>
+    </item>
+    
+    <item>
+      <title>Android APK hacking</title>
+      <link>https://opssec.in/2016/1216/apk/</link>
+      <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/1216/apk/</guid>
+      <description>Introduction The post today is about fun, Kali Linux and Android apps hacking. Check it out!
+Why? Because people hide your access and don&amp;#39;t provide you a plain, well structured and easy to use API, no SDK, nothing. You are probalby locked in those apps, that normally share less than what you want.
+Host enumeration The good old nmap should do the trick, find your network subnet, scan your hosts and look for obvious MAC address like Samsung Eletronics, for this post propouse we do have access to the cellphone, so obviously this step is not necessary.</description>
+    </item>
+    
+    <item>
       <title>Continuous Deployment and DEIS</title>
       <link>https://opssec.in/2016/1127/</link>
       <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
@@ -48,6 +318,46 @@ Installing the tools VirtualBox Since we are on MacOSX, and Kubelet nodes works 
       <description>Introduction Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
 &amp;#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&amp;#34;
 What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback.</description>
+    </item>
+    
+    <item>
+      <title>Ecto vs. Django ORM</title>
+      <link>https://opssec.in/2016/0618/ecto/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0618/ecto/</guid>
+      <description>Introduction Django [1] is awesome, it applies a lot of design patterns in different layers. First of you have the model layer, or the abstraction layer (models), you can define models that maps to the tables of your database. We are going to see some features that the Django ORM offers.
+On the other side, Phoenix Framework [2] is a web framework written in Elixir, it applies the MVC pattern too, and have Ecto as a &amp;#34;language integrated query composition tool&amp;#34; and a database wrapper.</description>
+    </item>
+    
+    <item>
+      <title>CPython Debugging</title>
+      <link>https://opssec.in/2016/0416/cpython/</link>
+      <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0416/cpython/</guid>
+      <description>Introduction Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.
+The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it?</description>
+    </item>
+    
+    <item>
+      <title>Golang vs. Python</title>
+      <link>https://opssec.in/2016/0123/</link>
+      <pubDate>Sat, 23 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0123/</guid>
+      <description>Introduction Everybody lives Python, the syntax is fast to get used to and you can write most of your code on a constant pattern if you follow the PEP8. Lots of libraries are available and the community is vibrant and enthusiastic with the evolution of the language.
+For this exercise, the goal will be create a piece of code on Python that does the same thing on Golang. It will parse a CSV file with two columns [source, destination] and send an HTTP POST with the information for a pre-configured URL, as much as the lines of the files.</description>
+    </item>
+    
+    <item>
+      <title>Monitoring MySQL w/ Prometheus</title>
+      <link>https://opssec.in/2016/0116/</link>
+      <pubDate>Sat, 16 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2016/0116/</guid>
+      <description>Introduction On the last post we started prometheus on a CoreOS with cloud-init scripts, lets automate a little more the project an initialize our CoreOS dockers with service discovery for all services and a complete metric gather from an external MySQL database.
+So we already have an infrastructure, we just need two more containers, the first one is the MySQL metrics exporter, and the other is Grafana with Prometheus configured.</description>
     </item>
     
     <item>

@@ -1,0 +1,3386 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.113.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>CPython Debugging :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1754967291" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1754967291" rel="stylesheet">
+    <link href="/css/hybrid.css?1754967291" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1754967291" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1754967291" rel="stylesheet">
+    <link href="/css/auto-complete.css?1754967291" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1754967291" rel="stylesheet">
+    <link href="/css/theme.css?1754967291" rel="stylesheet">
+    <link href="/css/tabs.css?1754967291" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1754967291" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1754967291" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1754967291"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2016/0416/cpython/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  עֹז
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1754967291"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1754967291"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1754967291"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/" title="2024" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/">
+          2024
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0201/" title="Kubernetes vSphere CSI on Windows" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0201/">
+          Kubernetes vSphere CSI on Windows
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0104/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0104/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/1230/" title="Running Windows cluster locally" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/1230/">
+          Running Windows cluster locally
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0801/" title="sigstore policy-controller validation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0801/">
+          sigstore policy-controller validation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0721/" title="Ztunnel SPIRE implementation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0721/">
+          Ztunnel SPIRE implementation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0702/" title="Waypoint Proxy for the app layer" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0702/">
+          Waypoint Proxy for the app layer
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0903/" title="Windows and Calico overlay networking" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0903/">
+          Windows and Calico overlay networking
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2020/" title="2020" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2020/">
+          2020
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/1227/" title="Network Policy E2E test suite" class="dd-item ">
+        <a href="/2020/1227/">
+        Network Policy E2E test suite
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/2405/" title="Kubelet Dynamic Configuration" class="dd-item ">
+        <a href="/2020/2405/">
+        Kubelet Dynamic Configuration
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/1005/" title="Kubelet Debugging Session" class="dd-item ">
+        <a href="/2020/1005/">
+        Kubelet Debugging Session
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2019/" title="2019" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2019/">
+          2019
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1228/" title="Kubernetes Networking 101" class="dd-item ">
+        <a href="/2019/1228/">
+        Kubernetes Networking 101
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/12282/" title="Kubernetes Deployment Workloads" class="dd-item ">
+        <a href="/2019/12282/">
+        Kubernetes Deployment Workloads
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/12283/" title="Kubernetes Container API" class="dd-item ">
+        <a href="/2019/12283/">
+        Kubernetes Container API
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1227/" title="Pod specification" class="dd-item ">
+        <a href="/2019/1227/">
+        Pod specification
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1226/" title="Kubectl Walkthrough" class="dd-item ">
+        <a href="/2019/1226/">
+        Kubectl Walkthrough
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1225/" title="Kubernetes in Docker" class="dd-item ">
+        <a href="/2019/1225/">
+        Kubernetes in Docker
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1215/" title="Sawtooth Cheatsheet" class="dd-item ">
+        <a href="/2019/1215/">
+        Sawtooth Cheatsheet
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1208/" title="Sawtooth Permissioning" class="dd-item ">
+        <a href="/2019/1208/">
+        Sawtooth Permissioning
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1127/" title="Kubernetes Audit Sink" class="dd-item ">
+        <a href="/2019/1127/">
+        Kubernetes Audit Sink
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1123/" title="Kubernetes API client" class="dd-item ">
+        <a href="/2019/1123/">
+        Kubernetes API client
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/11161/dev-poet/" title="From Dev to PoET" class="dd-item ">
+        <a href="/2019/11161/dev-poet/">
+        From Dev to PoET
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1116/" title="Sawtooth Network Monitoring" class="dd-item ">
+        <a href="/2019/1116/">
+        Sawtooth Network Monitoring
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2019/1111/" title="Gossip networks" class="dd-item ">
+        <a href="/2019/1111/">
+        Gossip networks
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2018/" title="2018" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2018/">
+          2018
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/08072/" title="Golang essays (part II)" class="dd-item ">
+        <a href="/2018/08072/">
+        Golang essays (part II)
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0807/" title="Golang essays (part I)" class="dd-item ">
+        <a href="/2018/0807/">
+        Golang essays (part I)
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0704/langs2/" title="Rust 101" class="dd-item ">
+        <a href="/2018/0704/langs2/">
+        Rust 101
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0602/sawtooth/" title="Hyperledger Sawtooth" class="dd-item ">
+        <a href="/2018/0602/sawtooth/">
+        Hyperledger Sawtooth
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0527/langs1/" title="Bootstraping languages" class="dd-item ">
+        <a href="/2018/0527/langs1/">
+        Bootstraping languages
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0806/" title="Service Mesh" class="dd-item ">
+        <a href="/2018/0806/">
+        Service Mesh
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2018/0325/" title="Technical indicators" class="dd-item ">
+        <a href="/2018/0325/">
+        Technical indicators
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2017/" title="2017" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2017/">
+          2017
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2017/1012/" title="More statistics and Python" class="dd-item ">
+        <a href="/2017/1012/">
+        More statistics and Python
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2017/0701/" title="Probability" class="dd-item ">
+        <a href="/2017/0701/">
+        Probability
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2017/0625/" title="Statistics and Python" class="dd-item ">
+        <a href="/2017/0625/">
+        Statistics and Python
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2016/" title="2016" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2016/">
+          2016
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/1216/apk/" title="Android APK hacking" class="dd-item ">
+        <a href="/2016/1216/apk/">
+        Android APK hacking
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/1127/" title="Continuous Deployment and DEIS" class="dd-item ">
+        <a href="/2016/1127/">
+        Continuous Deployment and DEIS
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0618/ecto/" title="Ecto vs. Django ORM" class="dd-item ">
+        <a href="/2016/0618/ecto/">
+        Ecto vs. Django ORM
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0416/cpython/" title="CPython Debugging" class="dd-item active">
+        <a href="/2016/0416/cpython/">
+        CPython Debugging
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0123/" title="Golang vs. Python" class="dd-item ">
+        <a href="/2016/0123/">
+        Golang vs. Python
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/0116/" title="Monitoring MySQL w/ Prometheus" class="dd-item ">
+        <a href="/2016/0116/">
+        Monitoring MySQL w/ Prometheus
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2015/" title="2015" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2015/">
+          2015
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/0309/consul/" title="Consul - Service Discovery" class="dd-item ">
+        <a href="/2015/0309/consul/">
+        Consul - Service Discovery
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/0908/finance/" title="General finance formulas" class="dd-item ">
+        <a href="/2015/0908/finance/">
+        General finance formulas
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/2607/" title="Tsung Capacity Test" class="dd-item ">
+        <a href="/2015/2607/">
+        Tsung Capacity Test
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2024</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+  <br />
+  <br />
+
+  <a href="https://md.opssec.in">win32 API </i></a>
+
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2016/'>2016</a> > CPython Debugging
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">Introduction </a>
+</li>
+<li><a href="#headline-2">The bytecode</a>
+</li>
+<li><a href="#headline-3">Python Main</a>
+</li>
+<li><a href="#headline-4">Python Frame</a>
+</li>
+<li><a href="#headline-5">Modules and built-in</a>
+</li>
+<li><a href="#headline-6">Reference</a>
+<ul>
+<li><a href="#headline-7">[1] http://podoliaka.org/2016/04/10/debugging-cpython-gdb/</a>
+</li>
+<li><a href="#headline-8">[2] https://wiki.python.org/moin/DebuggingWithGdb</a>
+</li>
+<li><a href="#headline-9">[3] http://fedoraproject.org/wiki/Features/EasierPythonDebugging</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              CPython Debugging
+            </h1>
+          
+
+        
+
+
+
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Introduction 
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+Python Weekly this week bring a very cool article [1] about GDB and Python, so I thought it was a great opportunity to get into Python internals, the idea here is to understand (in more details) how Python executes your scripts and how it calls code functions.</p>
+<p>
+The code is very simple, and uses the random module with two built-in functions (range and sorted), the question is: Can we via GDB see the stack of it? Check it out!</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+The bytecode
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+From the Python glossary:</p>
+<p>
+Python source code is compiled into bytecode, the internal representation of a Python program in the CPython interpreter. The bytecode is also cached in .pyc and .pyo files so that executing the same file is faster the second time (recompilation from source to bytecode can be avoided). This “intermediate language” is said to run on a virtual machine that executes the machine code corresponding to each bytecode.</p>
+<p>
+We can get the bytecode from Python with the dis module:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> dis
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_random</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sorted([random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>)])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dis<span style="color:#f92672">.</span>dis(gen_random)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>	      <span style="color:#ae81ff">0</span> LOAD_GLOBAL              <span style="color:#ae81ff">0</span> (sorted)
+</span></span><span style="display:flex;"><span>		  <span style="color:#ae81ff">3</span> BUILD_LIST               <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>		  <span style="color:#ae81ff">6</span> LOAD_GLOBAL              <span style="color:#ae81ff">1</span> (range)
+</span></span><span style="display:flex;"><span>		  <span style="color:#ae81ff">9</span> LOAD_CONST               <span style="color:#ae81ff">1</span> (<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">12</span> LOAD_CONST               <span style="color:#ae81ff">2</span> (<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">15</span> CALL_FUNCTION            <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">18</span> GET_ITER
+</span></span><span style="display:flex;"><span> 		 <span style="color:#ae81ff">19</span> FOR_ITER                <span style="color:#ae81ff">24</span> (to <span style="color:#ae81ff">46</span>)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">22</span> STORE_FAST               <span style="color:#ae81ff">0</span> (i)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">25</span> LOAD_GLOBAL              <span style="color:#ae81ff">2</span> (random)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">28</span> LOAD_ATTR                <span style="color:#ae81ff">3</span> (randint)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">31</span> LOAD_CONST               <span style="color:#ae81ff">1</span> (<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">34</span> LOAD_CONST               <span style="color:#ae81ff">3</span> (<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">37</span> CALL_FUNCTION            <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">40</span> LIST_APPEND              <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">43</span> JUMP_ABSOLUTE           <span style="color:#ae81ff">19</span>
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">46</span> CALL_FUNCTION            <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		 <span style="color:#ae81ff">49</span> RETURN_VALUE</span></span></code></pre></div></p>
+<p>
+Here we have the bytecode that will be translated to our frame. LOAD_GLOBAL starts the function, BUILD_LIST creates a new list for the comprehension with 0 len, LOAD_CONST starts the args, it starts with the range function, storing the value of the iterator on i, after that random.randint is called CALL_FUNCTION, we are going to debug and focus on the call_function method.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Python Main
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+I am using the Python 2.7.9, on Misc folder you can get the ~/.gdbinit file to give you some shortcuts on gdb, you can set a breakpoint on the main.c</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gdb --args python gen_random.py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gdb&gt; b Py_Main
+</span></span><span style="display:flex;"><span>gdb&gt; r</span></span></code></pre></div></p>
+<p>
+We are running stuff from the command line so we hit the flow PyRun_AnyFileExFlags -&gt; PyRun_SimpleFileExFlags (pythonrun.c), We can see something interesting like CPython trying to open the bytecode file first:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>pythonrun.c:<span style="color:#ae81ff">936</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">maybe_pyc_file</span>(fp, filename, ext, closeit)) {
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/* Try to run a pyc file. First, re-open in binary */</span></span></span></code></pre></div></p>
+<p>
+We dont have the pyc yet, so the interpreter goes to PyRun_FileExFlags, do a (bt) command, and see that if you do a py-bt, you have nothing yet.</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ae81ff">0</span>  <span style="color:#a6e22e">PyRun_FileExFlags</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">1349</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0x081302f5</span> in <span style="color:#a6e22e">PyRun_SimpleFileExFlags</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">949</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0x080daa21</span> in <span style="color:#a6e22e">Py_Main</span> () at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>main.c:<span style="color:#ae81ff">640</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">0x080da48b</span> in <span style="color:#a6e22e">main</span> (argc<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, argv<span style="color:#f92672">=</span><span style="color:#ae81ff">0xbffff994</span>) at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>python.c:<span style="color:#ae81ff">23</span></span></span></code></pre></div></p>
+<p>
+Cool, looks like we are almost running it, on PyParser_ASTFromFile, the interpreter is parsing the tree structure on Python syntax, it is called AST (Abstract Syntax Tree). Next, we hit the run_mod function:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> PyObject <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">run_mod</span>(mod_ty mod, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>filename, PyObject <span style="color:#f92672">*</span>globals, PyObject <span style="color:#f92672">*</span>locals,
+</span></span><span style="display:flex;"><span>         PyCompilerFlags <span style="color:#f92672">*</span>flags, PyArena <span style="color:#f92672">*</span>arena)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    PyCodeObject <span style="color:#f92672">*</span>co;
+</span></span><span style="display:flex;"><span>    PyObject <span style="color:#f92672">*</span>v;
+</span></span><span style="display:flex;"><span>    co <span style="color:#f92672">=</span> <span style="color:#a6e22e">PyAST_Compile</span>(mod, filename, flags, arena);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (co <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>    v <span style="color:#f92672">=</span> <span style="color:#a6e22e">PyEval_EvalCode</span>(co, globals, locals);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Py_DECREF</span>(co);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> v;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Python Frame
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+Besides the PyAST_Compile we have the frame execution here: PyEval_EvalCode -&gt; PyEval_EvalCodeEx -&gt; PyEval_EvalFrameEx, here the magic happens, it gets all opcodes and creates a StackFrame from it, inside the EvalFrameEx we have a for(;;) loop and a switch(opcode) that iterates on all opcodes:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>(gdb) bt
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>  <span style="color:#a6e22e">PyEval_EvalFrameEx</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">1100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0x08105f95</span> in <span style="color:#a6e22e">PyEval_EvalCodeEx</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">3265</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0x0813a3ec</span> in <span style="color:#a6e22e">PyEval_EvalCode</span> (
+</span></span><span style="display:flex;"><span>    locals<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;__builtins__&#34;</span><span style="color:#f92672">:</span>  ,<span style="color:#e6db74">&#34;__file__&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;teste.py&#34;</span>, ...
+</span></span><span style="display:flex;"><span>    globals<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;__builtins__&#34;</span><span style="color:#f92672">:</span> ,<span style="color:#e6db74">&#34;__file__&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;teste.py&#34;</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span>  run_mod.<span style="color:#a6e22e">lto_priv</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">1371</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">0x08131148</span> in <span style="color:#a6e22e">PyRun_FileExFlags</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">1357</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">0x081302f5</span> in <span style="color:#a6e22e">PyRun_SimpleFileExFlags</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>pythonrun.c:<span style="color:#ae81ff">949</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">0x080daa21</span> in <span style="color:#a6e22e">Py_Main</span> () at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>main.c:<span style="color:#ae81ff">640</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">0x080da48b</span> in <span style="color:#a6e22e">main</span> (argc<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, argv<span style="color:#f92672">=</span><span style="color:#ae81ff">0xbffff994</span>) at ..<span style="color:#f92672">/</span>Modules<span style="color:#f92672">/</span>python.c:<span style="color:#ae81ff">23</span></span></span></code></pre></div></p>
+<p>
+On a CALL_FUNCTION opcode we have the call_function method, it have two branches a &#34;PyCFunction_Check&#34; for C functions and for Python methods &#34;PyMethod_GET_FUNCTION&#34;.</p>
+<p>
+You can put a breakpoint on call_function after PyCFunction_Check. the first thing to be loaded on our code is the import random, and all the submodules like openssl, nothing very interesting here.</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>breakpoint <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">call_function</span> (oparg<span style="color:#f92672">=</span>, pp_stack<span style="color:#f92672">=</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4010</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4010</span>            PyThreadState <span style="color:#f92672">*</span>tstate <span style="color:#f92672">=</span> <span style="color:#a6e22e">PyThreadState_GET</span>();
+</span></span><span style="display:flex;"><span>(gdb) py<span style="color:#f92672">-</span>bt
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### -- Garbage from submodules dependencies
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#ae81ff">1</span> Frame <span style="color:#ae81ff">0xb7c93194</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>hashlib.py, line <span style="color:#ae81ff">102</span>, ...
+</span></span><span style="display:flex;"><span>    f <span style="color:#f92672">=</span> <span style="color:#a6e22e">getattr</span>(_hashlib, <span style="color:#e6db74">&#34;openssl_&#34;</span> <span style="color:#f92672">+</span> name)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> Frame <span style="color:#ae81ff">0xb7cfa5ac</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>hashlib.py, line <span style="color:#ae81ff">147</span>, in <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span> ()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">globals</span>()[__func_name] <span style="color:#f92672">=</span> <span style="color:#a6e22e">__get_hash</span>(__func_name)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">16</span> Frame <span style="color:#ae81ff">0xb7cd253c</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>random.py, line <span style="color:#ae81ff">49</span>, in <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span> ()
+</span></span><span style="display:flex;"><span>    import hashlib as _hashlib
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">28</span> Frame <span style="color:#ae81ff">0xb7d10d4c</span>, <span style="color:#66d9ef">for</span> file teste.py, line <span style="color:#ae81ff">1</span>, in <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span> ()
+</span></span><span style="display:flex;"><span>    import <span style="color:#a6e22e">random</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(gdb) bt
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### -- Top of the call_function, here it will choose what to run based on the AST code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#ae81ff">0</span>  <span style="color:#a6e22e">call_function</span> (oparg<span style="color:#f92672">=&lt;&gt;</span>, pp_stack<span style="color:#f92672">=&lt;&gt;</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4010</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>  <span style="color:#a6e22e">PyEval_EvalFrameEx</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">2679</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0x081078bb</span> in <span style="color:#a6e22e">fast_function</span> (nk<span style="color:#f92672">=&lt;&gt;</span>, na<span style="color:#f92672">=</span>...
+</span></span><span style="display:flex;"><span>    func<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4119</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span>  <span style="color:#a6e22e">call_function</span> (oparg<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span>  <span style="color:#a6e22e">PyEval_EvalFrameEx</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">2679</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">0x08105f95</span> in <span style="color:#a6e22e">PyEval_EvalCodeEx</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">3265</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">0x08105952</span> in <span style="color:#a6e22e">PyEval_EvalCode</span> (co<span style="color:#f92672">=</span><span style="color:#ae81ff">0xb7ca4410</span>,</span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+Modules and built-in
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+Hit some continue gdb commands, you can see the <span style="text-decoration: underline;"><span style="text-decoration: underline;">init</span></span> seeding the random module.</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>(gdb) py<span style="color:#f92672">-</span>bt
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> Frame <span style="color:#ae81ff">0xb7c93194</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>random.py, line <span style="color:#ae81ff">118</span>, in seed
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">super</span>(Random, self).<span style="color:#a6e22e">seed</span>(a)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> Frame <span style="color:#ae81ff">0xb7cf258c</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>random.py, line <span style="color:#ae81ff">97</span>, in __init__
+</span></span><span style="display:flex;"><span>    self.<span style="color:#a6e22e">seed</span>(x)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">16</span> Frame <span style="color:#ae81ff">0xb7cd253c</span>, <span style="color:#66d9ef">for</span> file <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python2<span style="color:#ae81ff">.7</span><span style="color:#f92672">/</span>random.py, line <span style="color:#ae81ff">885</span>, in <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span> ()
+</span></span><span style="display:flex;"><span>    _inst <span style="color:#f92672">=</span> <span style="color:#a6e22e">Random</span>()</span></span></code></pre></div></p>
+<p>
+Keep digging! We are going to get some built-in functions, lets say: sorted.</p>
+<p>
+It is a built-in method so the bt-py keeps on the oneline frame, but C backtrace hits the bltinmodule.c via a call_function.</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>(gdb) py<span style="color:#f92672">-</span>bt
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> Frame <span style="color:#ae81ff">0xb7c93464</span>, <span style="color:#66d9ef">for</span> file teste.py, line <span style="color:#ae81ff">4</span>, in <span style="color:#a6e22e">gen_random</span> (i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sorted</span>([random.<span style="color:#a6e22e">randint</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">for</span> i in <span style="color:#a6e22e">range</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>)])
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> Frame <span style="color:#ae81ff">0xb7d10d4c</span>, <span style="color:#66d9ef">for</span> file teste.py, line <span style="color:#ae81ff">6</span>, in <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span> ()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">print</span>(<span style="color:#a6e22e">gen_random</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(gdb) bt
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>  builtin_sorted.<span style="color:#a6e22e">lto_priv</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>bltinmodule.c:<span style="color:#ae81ff">2217</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0x0810739d</span> in <span style="color:#a6e22e">call_function</span> (oparg<span style="color:#f92672">=&lt;&gt;</span>, pp_stack<span style="color:#f92672">=&lt;&gt;</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4033</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>  <span style="color:#a6e22e">PyEval_EvalFrameEx</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">2679</span></span></span></code></pre></div></p>
+<p>
+Thats very interesting, this buildin_sorted comes from:</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>Python<span style="color:#f92672">/</span>ceval.c <span style="color:#f92672">-</span> call_function
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">C_TRACE</span>(x, <span style="color:#a6e22e">PyCFunction_Call</span>(func,callargs,NULL))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>On Objects<span style="color:#f92672">/</span>methodobject.c <span style="color:#f92672">-</span> PyCFunction_call
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PyCFunction meth <span style="color:#f92672">=</span> <span style="color:#a6e22e">PyCFunction_GET_FUNCTION</span>(func);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> METH_OLDARGS <span style="color:#f92672">|</span> METH_KEYWORDS:
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> (<span style="color:#f92672">*</span>(PyCFunctionWithKeywords)meth)(self, arg, kw);</span></span></code></pre></div></p>
+<p>
+The bltinmodule.c:buildin_sorted:2245 function now calls a PyObject_Call with our list as a parameter for the method listsort.</p>
+<p>
+After more walkthrough, we can get the algorithm that Python uses to order lists: Objects/listobject.c (listsort)</p>
+<p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* An adaptive, stable, natural mergesort.  See listsort.txt.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Returns Py_None on success, NULL on error.  Even in case of error, the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * list will be some permutation of its input state (nothing is lost or
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * duplicated).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>  listsort.<span style="color:#a6e22e">lto_priv</span> () at ..<span style="color:#f92672">/</span>Objects<span style="color:#f92672">/</span>listobject.c:<span style="color:#ae81ff">2069</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0x0816f4d1</span> in <span style="color:#a6e22e">PyObject_Call</span> (kw<span style="color:#f92672">=</span><span style="color:#ae81ff">0x0</span>, arg<span style="color:#f92672">=</span>(), func<span style="color:#f92672">=&lt;&gt;</span>) at ..<span style="color:#f92672">/</span>Objects<span style="color:#f92672">/</span>abstract.c:<span style="color:#ae81ff">2529</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>  builtin_sorted.<span style="color:#a6e22e">lto_priv</span> () at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>bltinmodule.c:<span style="color:#ae81ff">2245</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">0x0810739d</span> in <span style="color:#a6e22e">call_function</span> (oparg<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>, pp_stack<span style="color:#f92672">=&lt;</span>optimized out<span style="color:#f92672">&gt;</span>) at ..<span style="color:#f92672">/</span>Python<span style="color:#f92672">/</span>ceval.c:<span style="color:#ae81ff">4033</span></span></span></code></pre></div></p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+Reference
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<div id="outline-container-headline-7" class="outline-5">
+<h5 id="headline-7">
+[1] <a href="http://podoliaka.org/2016/04/10/debugging-cpython-gdb/">http://podoliaka.org/2016/04/10/debugging-cpython-gdb/</a>
+</h5>
+</div>
+<div id="outline-container-headline-8" class="outline-5">
+<h5 id="headline-8">
+[2] <a href="https://wiki.python.org/moin/DebuggingWithGdb">https://wiki.python.org/moin/DebuggingWithGdb</a>
+</h5>
+</div>
+<div id="outline-container-headline-9" class="outline-5">
+<h5 id="headline-9">
+[3] <a href="http://fedoraproject.org/wiki/Features/EasierPythonDebugging">http://fedoraproject.org/wiki/Features/EasierPythonDebugging</a>
+</h5>
+</div>
+</div>
+</div>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2016/0618/ecto/" title="Ecto vs. Django ORM"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2016/0123/" title="Golang vs. Python" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1754967291"></script>
+    <script src="/js/perfect-scrollbar.min.js?1754967291"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1754967291"></script>
+    <script src="/js/jquery.sticky.js?1754967291"></script>
+    <script src="/js/featherlight.min.js?1754967291"></script>
+    <script src="/js/highlight.pack.js?1754967291"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1754967291"></script>
+    <script src="/js/learn.js?1754967291"></script>
+    <script src="/js/hugo-learn.js?1754967291"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1754967291"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+
