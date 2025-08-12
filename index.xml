@@ -8,14 +8,45 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 01 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://opssec.in/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Network Policy E2E test suite</title>
+      <link>https://opssec.in/2020/1227/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2020/1227/</guid>
+      <description>Network policy This post documents a few steps to test the E2E framework using the Kind cluster with different CNIs, giving the developer some good tooling for debugging and quick test replication.
+Use this script to bring a Kind cluster with a specific CNI setup.
+Finding the config parameters In the ~/.kube/config you can find the Cluster sections host, use the IP and Port to start the tests.
+apiVersion: v1clusters:- cluster:certificate-authority-data: .</description>
+    </item>
+    
+    <item>
+      <title>Kubelet Dynamic Configuration</title>
+      <link>https://opssec.in/2020/2405/</link>
+      <pubDate>Sun, 24 May 2020 16:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2020/2405/</guid>
+      <description>Introduction On Kubernetes 1.10+ a new way to configure Kubelet via YAML became v1beta1, the struct KubeletConfiguration become available via the –config flag. So most of the regular ones can be configured via this file. This approach is extensively used by kubeadm for setting up the installation as was noted in last post.
+The idea of this post now is to do a code walkthrough and take a look in some KEPs and designs for the subsystem that reload this configuration at flight giving Kubelet a Dynamic Configuration capacity, this feature became beta on 1.</description>
+    </item>
+    
+    <item>
+      <title>Kubelet Debugging Session</title>
+      <link>https://opssec.in/2020/1005/</link>
+      <pubDate>Sun, 10 May 2020 16:00:00 +0000</pubDate>
+      
+      <guid>https://opssec.in/2020/1005/</guid>
+      <description>Introduction This post reflects some work on setting up a development environment for Kubernetes. We must have Goland, Virtualbox, Delve and MacOS installed. If you&amp;#39;re using Linux probably the vm part is not necessary.
+Installing the tools VirtualBox Since we are on MacOSX, and Kubelet nodes works only on Linux and Windows the setup of a vm is necessary for this step a Debian Buster image is going to be used, the Virtualbox is 6.</description>
+    </item>
+    
+    <item>
       <title>Continuous Deployment and DEIS</title>
-      <link>https://opssec.in/2016/</link>
+      <link>https://opssec.in/2016/1127/</link>
       <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://opssec.in/2016/</guid>
-      <description>** Introduction
-Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
-&amp;ldquo;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&amp;rdquo;
+      <guid>https://opssec.in/2016/1127/</guid>
+      <description>Introduction Continuous Deployment and Continuous Integration are topics that you can evolve and improve forever. The best reading on it IMO is [1] by Jez Humble, and it will be the guide for this post.
+&amp;#34;The time from deciding that you need to make a change to having it in production is known as the cycle time, and it is a vital metric for any project.&amp;#34;
 What we want here is do reduce the cycle time of the project in a reliable, secure and low-risk way, an automated process that is trusted enough to not be rolledback.</description>
     </item>
     

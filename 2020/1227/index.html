@@ -1,0 +1,2669 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.113.0">
+    <meta name="description" content="Walkthrough on netpol E2E framework">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Network Policy E2E test suite :: compulsory thinking</title>
+
+    
+    <link href="/css/nucleus.css?1754964801" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1754964801" rel="stylesheet">
+    <link href="/css/hybrid.css?1754964801" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1754964801" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1754964801" rel="stylesheet">
+    <link href="/css/auto-complete.css?1754964801" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1754964801" rel="stylesheet">
+    <link href="/css/theme.css?1754964801" rel="stylesheet">
+    <link href="/css/tabs.css?1754964801" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1754964801" rel="stylesheet">
+    
+    <link href="/css/theme-blue.css?1754964801" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1754964801"></script>
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXHZPRXGDZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SXHZPRXGDZ');
+    </script>
+    <script>
+    if (location.host.indexOf("localhost") < 0 && location.protocol !== "https:") {
+      location.protocol = "https:";
+    }
+    </script>
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2020/1227/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href='/'>
+  עֹז
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1754964801"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1754964801"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/opssec.in\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1754964801"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/" title="2024" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/">
+          2024
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0201/" title="Kubernetes vSphere CSI on Windows" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0201/">
+          Kubernetes vSphere CSI on Windows
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2024/0104/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2024/0104/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/" title="2023" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/">
+          2023
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/1230/" title="Running Windows cluster locally" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/1230/">
+          Running Windows cluster locally
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0801/" title="sigstore policy-controller validation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0801/">
+          sigstore policy-controller validation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0721/" title="Ztunnel SPIRE implementation" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0721/">
+          Ztunnel SPIRE implementation
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0702/" title="Waypoint Proxy for the app layer" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0702/">
+          Waypoint Proxy for the app layer
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0630/" title="Ztunnel on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0630/">
+          Ztunnel on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0628/" title="Istio CNI on Ambient Mesh" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0628/">
+          Istio CNI on Ambient Mesh
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0622/" title="Istio Ambient Service Mesh Demo" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0622/">
+          Istio Ambient Service Mesh Demo
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0611/" title="SPIFFE/SPIRE for gRPC authz" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0611/">
+          SPIFFE/SPIRE for gRPC authz
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0608/" title="Secure gRPC services with mTLS" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0608/">
+          Secure gRPC services with mTLS
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0406/" title="Windows CNI tracing and deep dive" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0406/">
+          Windows CNI tracing and deep dive
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0330/" title="Windows Containers and .NET apps" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0330/">
+          Windows Containers and .NET apps
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2023/0322/" title="Multi AZ on Kubernetes and vSphere" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2023/0322/">
+          Multi AZ on Kubernetes and vSphere
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/" title="2022" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/">
+          2022
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0712/" title="Hybrid nodes with ClusterClass on Amazon Web Service" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0712/">
+          Hybrid nodes with ClusterClass on Amazon Web Service
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0610/" title="Border Gateway Protocol (BGP) and Kubernetes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0610/">
+          Border Gateway Protocol (BGP) and Kubernetes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0320/" title="Cluster API Provider for Azure" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0320/">
+          Cluster API Provider for Azure
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2022/0122/" title="Kube-Proxy Next Gen Windows Userspace" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2022/0122/">
+          Kube-Proxy Next Gen Windows Userspace
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/" title="2021" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/">
+          2021
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1218/" title="Kube-proxy Windows Kernelspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1218/">
+          Kube-proxy Windows Kernelspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1127/" title="Kube-proxy Linux Userspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1127/">
+          Kube-proxy Linux Userspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/1017/" title="Kube-proxy Winuserspace Mode" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/1017/">
+          Kube-proxy Winuserspace Mode
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0903/" title="Windows and Calico overlay networking" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0903/">
+          Windows and Calico overlay networking
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0828/" title="CNI plugins and kindnet" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0828/">
+          CNI plugins and kindnet
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0614/" title="Kube-proxy ClusterIP" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0614/">
+          Kube-proxy ClusterIP
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2021/0228/" title="Kubernetes Windows Nodes" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2021/0228/">
+          Kubernetes Windows Nodes
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2020/" title="2020" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/2020/">
+          2020
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/1227/" title="Network Policy E2E test suite" class="dd-item active">
+        <a href="/2020/1227/">
+        Network Policy E2E test suite
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/2405/" title="Kubelet Dynamic Configuration" class="dd-item ">
+        <a href="/2020/2405/">
+        Kubelet Dynamic Configuration
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2020/1005/" title="Kubelet Debugging Session" class="dd-item ">
+        <a href="/2020/1005/">
+        Kubelet Debugging Session
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2016/" title="2016" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2016/">
+          2016
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2016/1127/" title="Continuous Deployment and DEIS" class="dd-item ">
+        <a href="/2016/1127/">
+        Continuous Deployment and DEIS
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2015/" title="2015" class="dd-item
+        
+        
+        
+        ">
+      <a href="/2015/">
+          2015
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/0309/consul/" title="Consul - Service Discovery" class="dd-item ">
+        <a href="/2015/0309/consul/">
+        Consul - Service Discovery
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/0908/finance/" title="General finance formulas" class="dd-item ">
+        <a href="/2015/0908/finance/">
+        General finance formulas
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/2015/2607/" title="Tsung Capacity Test" class="dd-item ">
+        <a href="/2015/2607/">
+        Tsung Capacity Test
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <center>
+  <p><b>Amim Knabben</b> - 2024</p>
+    amim.knabben@gmail.com
+  <br/>
+  <a href="https://github.com/knabben"><i class="fab fa-github"></i></a>
+  <a href="https://twitter.com/ak_ndb"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com/in/amim"><i class="fab fa-linkedin"></i></a>
+  <br />
+  <br />
+
+  <a href="https://md.opssec.in">win32 API </i></a>
+
+</center>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/2020/'>2020</a> > Network Policy E2E test suite
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#network-policy">Network policy</a>
+      <ul>
+        <li><a href="#finding-the-config-parameters">Finding the config parameters</a></li>
+        <li><a href="#focused-tests">Focused tests</a></li>
+        <li><a href="#antrea">Antrea</a></li>
+        <li><a href="#cilium">Cilium</a></li>
+        <li><a href="#calico">Calico</a></li>
+        <li><a href="#no-cni">No CNI</a></li>
+      </ul>
+    </li>
+    <li><a href="#more-information">More information</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Network Policy E2E test suite
+            </h1>
+          
+
+        
+
+
+<h2 id="network-policy">Network policy</h2>
+<p>This post documents a few steps to test the E2E framework using the Kind cluster with different
+CNIs, giving the developer some good tooling for debugging and quick test replication.</p>
+<p>Use this <a href="https://github.com/jayunit100/k8sprototypes/blob/master/kind/kind-local-up.sh">script</a> to bring a
+Kind cluster with a specific CNI setup.</p>
+<h3 id="finding-the-config-parameters">Finding the config parameters</h3>
+<p>In the <em>~/.kube/config</em> you can find the Cluster sections host, use the IP and Port to start the tests.</p>
+<pre tabindex="0"><code>apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: ...
+    server: https://127.0.0.1:39913
+</code></pre><h3 id="focused-tests">Focused tests</h3>
+<p>Use this command to start the test suite:</p>
+<pre tabindex="0"><code>KUBERNETES_SERVICE_HOST=127.0.0.1 KUBERNETES_SERVICE_PORT=39913 \
+    _output/local/bin/linux/amd64/e2e.test \
+    --provider=local \
+    --ginkgo.focus=&#34;Netpol&#34; \
+    --kubeconfig=/root/.kube/config \
+    --report-dir=/tmp/output
+</code></pre><p>The focus will provide the <em>Network Policy</em> under <em>test/e2e/netpol/network_policy.go</em> on this namespace:</p>
+<ul>
+<li><strong>[sig-network] Netpol [LinuxOnly] NetworkPolicy between server and client</strong></li>
+</ul>
+<p>More details and stdout are on <em>junit_01.xml</em> files on each folder.</p>
+<h3 id="antrea">Antrea</h3>
+<p>Time: <a href="../output_antrea/junit_01.xml">1451.601s</a></p>
+<p>Command:</p>
+<pre tabindex="0"><code>sandbox:~$ CLUSTER=antrea ./kind-local-up.sh
+</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">41.3918</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.7032</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.072</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.149</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">41.0726</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">44.5425</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.6281</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.2286</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">36.7815</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.8188</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">54.6405</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">59.7764</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.7333</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.2669</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.9143</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.8143</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.8272</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.5747</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">36.7824</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.2507</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.7376</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.2833</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">49.4517</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.1706</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.1481</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.1034</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+</tr>
+<tr>
+<td style="text-align:right">189.733</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.0466</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">44.9421</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">41.5988</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">44.2273</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cilium">Cilium</h3>
+<p>Time: <a href="../output_cilium/junit_01.xml">1370.553s</a></p>
+<p>Command:</p>
+<pre tabindex="0"><code>sandbox:~$ CLUSTER=cilium ./kind-local-up.sh
+</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">43.7662</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.4651</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.7539</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">50.204</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">48.8958</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.9659</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">46.3589</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">36.8897</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">44.3379</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">40.0372</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.7602</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">52.7325</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.2191</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.8015</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">36.4353</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.2781</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.684</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.2452</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.326</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.603</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.2863</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.1103</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">40.9576</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">41.2865</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.2095</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.474</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+</tr>
+<tr>
+<td style="text-align:right">112.803</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">41.3663</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.0023</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.1974</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">43.8719</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="calico">Calico</h3>
+<p>Time: <a href="../output_calico/junit_01.xml">1324.684s</a></p>
+<p>Command:</p>
+<pre tabindex="0"><code>sandbox:~$ CLUSTER=calico ./kind-local-up.sh
+</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">35.8095</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">34.0198</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.3741</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.5764</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">72.1853</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">44.9761</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.9649</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.2776</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">34.4918</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.5749</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.7623</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">45.2768</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.146</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.3511</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">34.7001</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">35.1533</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">35.1159</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">41.341</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.4367</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">56.606</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">35.0263</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">39.1988</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.3293</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.7177</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.6838</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.4298</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+</tr>
+<tr>
+<td style="text-align:right">108.302</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">41.1466</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.3876</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">41.9732</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">44.1808</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="no-cni">No CNI</h3>
+<p>Time: <a href="../output_nocni/junit_01.xml">1093.335</a></p>
+<p>Command (without Netpol support):</p>
+<pre tabindex="0"><code>sandbox:~$ kind cluster create
+</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:right">time</th>
+<th style="text-align:left">failed</th>
+<th style="text-align:left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">36.8562</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow egress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.117</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.6975</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from namespace on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.4686</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated namespace [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">32.0948</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access from updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">36.5492</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should allow ingress access on one named port [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">36.3705</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should deny ingress access to updated pod [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.9346</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce egress policy allowing traffic to a server in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.477</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce except clause while egress access to server in CIDR block [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.6098</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple egress policies with egress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.2607</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple ingress policies with ingress allow-all policy taking precedence [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.4111</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce multiple, stacked policies with overlapping podSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">36.2295</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policies to check ingress and egress policies can be controlled independently based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">31.8398</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on Multiple PodSelectors and NamespaceSelectors [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.3985</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on NamespaceSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.3989</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">32.5186</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on PodSelector or NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.3631</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on PodSelector with MatchExpressions[Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">32.8972</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy based on Ports [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">32.2191</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy to allow traffic from pods within server namespace based on PodSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.2643</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a different namespace, based on NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.6517</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce policy to allow traffic only from a pod in a different namespace based on PodSelector and NamespaceSelector [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">40.643</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should enforce updated policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">32.9202</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should ensure an IP overlapping both IPBlock.CIDR and IPBlock.Except is allowed [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">42.4549</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only SCTP [Feature:NetworkPolicy] [Feature:SCTP]</td>
+</tr>
+<tr>
+<td style="text-align:right">37.3655</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should not allow access by TCP when a policy specifies only UDP [Feature:NetworkPolicy] [Feature:UDP]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.5486</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should stop enforcing policies after they are deleted [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">33.6928</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should support a 'default-deny-all' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">38.0615</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should support a 'default-deny-ingress' policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">31.8662</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">should support allow-all policy [Feature:NetworkPolicy]</td>
+</tr>
+<tr>
+<td style="text-align:right">32.9995</td>
+<td style="text-align:left"><em>failed</em></td>
+<td style="text-align:left">should work with Ingress, Egress specified together [Feature:NetworkPolicy]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="more-information">More information</h2>
+<ul>
+<li>@jayunit100 - test matrix - <a href="https://github.com/kubernetes/kubernetes/pull/91592">https://github.com/kubernetes/kubernetes/pull/91592</a></li>
+<li>Initial setup post - <a href="https://jayunit100.blogspot.com/2020/05/visualize-networkpolicies-as-truthtables.html">https://jayunit100.blogspot.com/2020/05/visualize-networkpolicies-as-truthtables.html</a></li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2020/" title="2020"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2020/2405/" title="Kubelet Dynamic Configuration" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1754964801"></script>
+    <script src="/js/perfect-scrollbar.min.js?1754964801"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1754964801"></script>
+    <script src="/js/jquery.sticky.js?1754964801"></script>
+    <script src="/js/featherlight.min.js?1754964801"></script>
+    <script src="/js/highlight.pack.js?1754964801"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1754964801"></script>
+    <script src="/js/learn.js?1754964801"></script>
+    <script src="/js/hugo-learn.js?1754964801"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1754964801"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+
